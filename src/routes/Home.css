@@ -1,0 +1,42 @@
+.homeContainer h1{
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+
+.sessionsHome{
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #fff;
+    padding-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.sessionsHome h2::first-letter{
+    text-transform: uppercase
+}
+
+.sessionInfo {
+    display: flex;
+    gap: 1rem;
+}
+
+.sessionInfo img{
+    max-width: 200px;
+    height: 200px;
+}
+
+.sessionInfo .info{
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    font-size: 15px;
+}
+
+.btn{
+    max-width: 150px;
+    text-align: center;
+    margin: 0 auto  ;
+}
