@@ -1,0 +1,102 @@
+.registerContainer{
+   background-color: #17191f;
+   padding: 2rem;
+   margin: 0 auto;
+   border-radius: 1rem;
+   display: flex;
+   gap: 1rem;
+   max-width: 500px;
+   flex-direction: column;
+}
+
+.registerForm{
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   gap: 1rem;
+   width: 350px;
+   flex-grow: 3;
+   margin: 0 auto;
+}
+
+.registerFormControl,
+.inputError {
+   display: flex;
+   flex-direction: column;
+   gap: .5rem;
+}
+
+
+.registerFormControl input:focus,
+.inputError input:focus {
+   outline: none;
+   box-shadow: none;
+}
+
+.passwordInput{
+   position: relative
+}
+
+.registerFormControl input{
+  width: 100%;
+  padding: 10px;
+  padding-right: 40px;
+  font-size: 13px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.inputError input {
+   width: 100%;
+   padding: 10px;
+   padding-right: 40px;
+   font-size: 13px;
+   border: 1px solid #e53935;
+   border-radius: 4px;
+   background-color: #ffebee;
+   
+}
+
+
+.passwordInput button{
+   position: absolute;
+   top: 50%;
+   right: 10px;
+   transform: translateY(-50%);
+   background: none;
+   border: none;
+   cursor: pointer;
+   outline: none;
+}
+
+.register-btn {
+    color:#fff;
+    font-weight: bold;
+    border: 1px solid #fff;
+    padding: .5rem 1rem;
+    border-radius: 1rem;
+    opacity: 1;
+    transition: .3s;
+    background-color: #17191f;
+    width: 100px;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.register-btn:hover {
+   color: #17191f;
+   background-color: #fff;
+}
+
+.errorMessage {
+   padding: 0 .5rem;
+   font-size: 13px;
+   color: #e53935;
+}
+
+.serverErrorMessage{
+   padding: 0 2rem;
+   margin: 0 auto;
+   max-width: 300px; 
+   color: #e53935; 
+}

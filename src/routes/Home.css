@@ -21,6 +21,8 @@
 .sessionInfo {
     display: flex;
     gap: 1rem;
+    padding: 1rem;
+    background-color: #17191f;
 }
 
 .sessionInfo img{

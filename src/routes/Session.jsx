@@ -4,6 +4,8 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
+import StarRating from '../components/StarRating';
+
 const Session = () => {
 
     const { id } = useParams();
@@ -42,7 +44,7 @@ const Session = () => {
                             session.reviews.map((review) => (
                                 <div key={review.id} className="review">
                                     <h4>{review.userName}</h4>
-                                    <p>{review.rating}</p>
+                                    <StarRating rating={review.rating}/>
                                     <p>{review.comment}</p>
                                     <p>{review.date}</p>
                                 </div>
