@@ -1,0 +1,26 @@
+.sessionFilterContainer{
+    text-align: center; 
+    padding: 1rem;
+    margin-bottom: 1rem;   
+}
+
+.btnFilter {
+    background-color: #17191f;
+    color:#fff;
+    max-width: 150px;
+    text-align: center;
+    margin: 0 auto;
+    padding: 1rem;
+    border: 1px solid #fff;
+    transition: .3s;
+}
+
+.selected{
+    background-color: #fff;
+    color: #17191f;
+}
+
+.btnFilter:hover{
+    background-color: #fff;
+    color:#17191f;
+}

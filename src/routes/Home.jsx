@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import StarRating from '../components/StarRating';
-
+import SessionFilterByDate from '../components/SessionFilterByDate';
 import "./Home.css";
 
 
@@ -22,12 +22,23 @@ const Home = () => {
     }
   }
 
+  const getSessionsByDay = async(day) => {
+    try{
+      const response = await axios.get(`http://localhost:8080/api/sessions/ofDay/${day}`);
+      const data = response.data;
+      setSessions(data);
+    }catch (error){
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     getSessions();
   }, []);
 
   return (
     <div className='homeContainer'>
+      <SessionFilterByDate getSessionsByDay={getSessionsByDay} getSessions={getSessions}/>
       <h1>Sessões</h1>
       {sessions.length === 0 ? <p>Carregando...</p> :
         sessions.map((session) => (
