@@ -7,6 +7,7 @@ import Home from './routes/Home.jsx'
 import Login from './routes/Login.jsx'
 import Register from './routes/Register.jsx'
 import Session from './routes/Session.jsx'
+import SearchPage from './routes/SearchPage.jsx'
 
 import { createBrowserRouter, RouterProvider, Route } from 'react-router-dom';
 
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
         path:"/session/:id",
         element:<Session/>,
       },
+      {
+        path:"/movies",
+        element:<SearchPage/>
+      }
     ]
   }
 ])

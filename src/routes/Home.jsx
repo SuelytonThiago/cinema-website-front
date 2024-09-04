@@ -38,8 +38,9 @@ const Home = () => {
 
   return (
     <div className='homeContainer'>
-      <SessionFilterByDate getSessionsByDay={getSessionsByDay} getSessions={getSessions}/>
       <h1>Sessões</h1>
+      <SessionFilterByDate getSessionsByDay={getSessionsByDay} getSessions={getSessions}/>
+      
       {sessions.length === 0 ? <p>Carregando...</p> :
         sessions.map((session) => (
           <div className="sessionsHome" key={session.id}>

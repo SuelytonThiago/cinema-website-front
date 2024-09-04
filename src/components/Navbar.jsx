@@ -1,8 +1,9 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
 import './Navbar.css';
+import { FaSearch } from 'react-icons/fa';
 
 const Navbar = () => {
+
     return (
         <div>
             <nav className='navbarContainer'>
@@ -10,6 +11,11 @@ const Navbar = () => {
                     <Link to={'/'}>cinemax</Link>
                 </h2>
                 <ul>
+                    <li>
+                        <Link className='searchBtn' to={`/movies`}>
+                            <FaSearch/> 
+                        </Link>
+                    </li>
                     <li>
                         <Link to={"/login"} className='btn'>
                             Entrar

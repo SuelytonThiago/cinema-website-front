@@ -3,6 +3,7 @@ import "./SessionFilterByDay.css"
 import { FaTimes } from 'react-icons/fa'; 
 import { useState } from 'react';
 
+
 const daysOfWeek = [
     {id: 1, name: "SEG"},
     {id: 2, name: "TER"},
@@ -35,11 +36,13 @@ const SessionFilterByDate = ({getSessionsByDay, getSessions}) => {
                 {day.name}
             </button>
         ))}
-        <button 
-        className='btnFilter'
-        onClick={() => goToHome()}>
-            <FaTimes/>
-        </button>
+        {selectedDay &&  
+            <button 
+            className='btnFilter'
+            onClick={() => goToHome()}>
+                <FaTimes/>
+            </button>
+        }
     </div>
   )
 }

@@ -29,3 +29,20 @@
     background-color: #fff;
 }
 
+
+
+.searchBtn{
+    border: none;
+    background-color: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #fff;
+    background-color: transparent;
+    transition: .3s;
+    opacity: .7;
+}
+
+.searchBtn:hover{
+    opacity: 1;
+}
+
