@@ -1,0 +1,21 @@
+
+.moviesResultContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4rem;
+    justify-content: center;
+    
+}
+
+.movieInfoContainer{
+    max-width: 200px;
+    text-align: center;
+}
+
+.movieImg img {
+    width: 100%;
+}
+
+.movieInfo p{
+    font-size: 13px;
+}
