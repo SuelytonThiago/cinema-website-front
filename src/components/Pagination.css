@@ -1,9 +1,14 @@
+.paginationControls{
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+}
 
 .moviesResultContainer {
     display: flex;
     flex-wrap: wrap;
     gap: 4rem;
-    justify-content: center;
+    justify-content: start;
     
 }
 
@@ -18,4 +23,26 @@
 
 .movieInfo p{
     font-size: 13px;
+}
+
+.paginationControls {
+    display: flex;
+    gap: .5rem;
+}
+
+.paginationBtn{
+    padding: .3rem;
+    color: #fff;
+    background-color: transparent;
+    border:none;
+    font-size: 12px;
+    text-align: center;
+}
+
+.fixed {
+    font-size: 14px;
+}
+
+.atualPage{
+    border-bottom: 1px solid #ccc;
 }

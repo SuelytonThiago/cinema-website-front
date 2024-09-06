@@ -1,7 +1,47 @@
+.sessionFilterContainer{
+    background-color: #17191f;
+    display: flex;
+    height: 70px;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.filterBtn{
+    background-color: transparent;
+    color: #666;
+    border: none;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.selected {
+    font-size: 20px;
+    color: #fff;
+}
+
+.homeContainer {
+    margin-top: 1rem;
+}
+
 .homeContainer h1{
     text-transform: uppercase;
     margin-bottom: 1.5rem;
     text-align: center;
+}
+
+.homeContainer h2 {
+    margin-bottom: .3rem;
+    
+}
+
+.filterContainer{
+    text-align: center;
+}
+
+.filterContainer p {
+    margin-bottom: 1rem;
+    
 }
 
 

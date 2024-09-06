@@ -2,12 +2,13 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: "Raleway";
+  font-family: "Noto Sans", sans-serif;
 }
 
 body{
-  background-color: #0e1217;
+  background:  linear-gradient(to bottom, black, gray);;
   color: #fff;
+  min-height: 100vh;
 }
 
 ul{

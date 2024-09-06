@@ -4,6 +4,8 @@ import {useState, useEffect} from 'react'
 import './Pagination.css'
 import {Link} from 'react-router-dom'
 import StarRating from './StarRating.jsx'
+import { FiChevronsLeft } from 'react-icons/fi';
+import { FiChevronsRight } from 'react-icons/fi';
 
 const Pagination = ({nameMovie}) => {
 
@@ -12,7 +14,6 @@ const Pagination = ({nameMovie}) => {
   const [totalPages , setTotalPages] = useState(0);
   const [pageSize, setPageSize] = useState(12);
   const [typingTimeout, setTypingTimeout] = useState(null);
-  const [offSet, setOffSet] = useState();
   
   useEffect(() => {
     setCurrentPage(0);
@@ -47,24 +48,27 @@ const Pagination = ({nameMovie}) => {
         }
       });
       setMovies(response.data.content);
-      setTotalPages(response.data.totalPages);
-      setOffSet(response.data.offSet)
+      setTotalPages(response.data.totalPages - 1);
+      console.log(totalPages)
     } catch(error){
       console.log(error)
     }
   } 
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages - 1) {
-      setCurrentPage((prevPage) => prevPage + 1);
-    }
-  };
+  const goToFirstPage = () => {
+    setCurrentPage(0);
+  }
 
-  const handlePreviousPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage((prevPage) => prevPage - 1);
-    }
-  };
+  const goToLastPage = () => {
+    setCurrentPage(totalPages)
+  }
+  const goToNextPage = () => {
+    setCurrentPage((prevPage) => Math.min(prevPage + 1 , totalPages))
+  }
+
+  const goToPreviousPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage -1, 0))
+  }
   
   return (
     <div>
@@ -88,23 +92,36 @@ const Pagination = ({nameMovie}) => {
           ))
         }
       </div>
-        <div>
-          {totalPages > 1 && (
-          <div className="paginationControls">
-            <button onClick={handlePreviousPage} disabled={currentPage === 0}>
-              Página Anterior
-            </button>
-            <button onClick={handleNextPage} disabled={currentPage >= totalPages - 1}>
-              Próxima Página
-            </button>
-          </div>
-        )}
+      <div className='paginationControls'>
+        
+        <button 
+        className='paginationBtn fixed'
+        onClick={goToFirstPage} disabled={currentPage == 0 }>
+          <FiChevronsLeft/>
+        </button>
+  
+        {currentPage >= 1 && 
+          <button
+          className='paginationBtn' 
+          onClick={goToPreviousPage}>
+            {currentPage }
+          </button>
+        }
 
-        {totalPages > 0 && (
-          <div>
-            <span>Página {currentPage + 1} de {totalPages}</span>
-          </div>
-        )}
+         <span className='paginationBtn atualPage'>{currentPage + 1}</span>
+
+        { currentPage < totalPages  &&
+          <button
+          className='paginationBtn' 
+          onClick={goToNextPage}>
+           {currentPage + 2}
+          </button>
+        }
+         <button
+         className='paginationBtn fixed' 
+         onClick={goToLastPage} disabled={currentPage == totalPages}>
+            <FiChevronsRight/>
+         </button>
       </div>
     </div>
   )
