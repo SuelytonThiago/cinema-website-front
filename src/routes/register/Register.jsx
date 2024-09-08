@@ -3,13 +3,13 @@ import { useState, useRef } from 'react';
 import './Register.css';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import InputMask from 'react-input-mask';
-import isValidCPF from '../js/cpfValidation';
-import isValidContactNumber from '../js/phoneValidation';
-import isValidEmail from '../js/emailValidation';
-import isValidName from '../js/nameValidation';
-import isValidPassword from '../js/passwordValidation';
-import cineFetch from '../axios/config';
+import isValidCPF from '../../js/cpfValidation';
+import isValidContactNumber from '../../js/phoneValidation';
+import isValidEmail from '../../js/emailValidation';
+import isValidName from '../../js/nameValidation';
+import isValidPassword from '../../js/passwordValidation';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Register = () => {
 
@@ -77,7 +77,7 @@ const Register = () => {
 
     if (Object.keys(validateErrors).length === 0) {
       try {
-        await cineFetch.post('/users/create', user);
+        await axios.post('/users/create', user);
         navigate('/login');
       } catch (e) {
         const error = e.response.data.Message

@@ -3,9 +3,9 @@ import axios from 'axios'
 import {useState, useEffect} from 'react'
 import './Pagination.css'
 import {Link} from 'react-router-dom'
-import StarRating from './StarRating.jsx'
 import { FiChevronsLeft } from 'react-icons/fi';
 import { FiChevronsRight } from 'react-icons/fi';
+import StarRating from './StarRating'
 
 const Pagination = ({nameMovie}) => {
 
@@ -82,8 +82,8 @@ const Pagination = ({nameMovie}) => {
                 </div>
                 <div className="movieInfo">
                   <h2>{movie.name}</h2>
-                  <StarRating rating ={movie.rating}/>
-                  <Link to = {`/movies/${movie.id}`}>
+                  <StarRating rating={movie.rating}/>
+                  <Link to = {`/movie/${movie.id}`}>
                     ver detalhes
                   </Link>
                 </div>
@@ -92,37 +92,38 @@ const Pagination = ({nameMovie}) => {
           ))
         }
       </div>
-      <div className='paginationControls'>
-        
-        <button 
-        className='paginationBtn fixed'
-        onClick={goToFirstPage} disabled={currentPage == 0 }>
-          <FiChevronsLeft/>
-        </button>
-  
-        {currentPage >= 1 && 
-          <button
-          className='paginationBtn' 
-          onClick={goToPreviousPage}>
-            {currentPage }
+      {movies.length >0 && 
+        <div className='paginationControls'>
+          <button 
+          className='paginationBtn fixed'
+          onClick={goToFirstPage} disabled={currentPage == 0 }>
+            <FiChevronsLeft/>
           </button>
-        }
+    
+          {currentPage >= 1 && 
+            <button
+            className='paginationBtn' 
+            onClick={goToPreviousPage}>
+              {currentPage }
+            </button>
+          }
 
-         <span className='paginationBtn atualPage'>{currentPage + 1}</span>
+          <span className='paginationBtn atualPage'>{currentPage + 1}</span>
 
-        { currentPage < totalPages  &&
+          { currentPage < totalPages  &&
+            <button
+            className='paginationBtn' 
+            onClick={goToNextPage}>
+            {currentPage + 2}
+            </button>
+          }
           <button
-          className='paginationBtn' 
-          onClick={goToNextPage}>
-           {currentPage + 2}
+          className='paginationBtn fixed' 
+          onClick={goToLastPage} disabled={currentPage == totalPages}>
+              <FiChevronsRight/>
           </button>
-        }
-         <button
-         className='paginationBtn fixed' 
-         onClick={goToLastPage} disabled={currentPage == totalPages}>
-            <FiChevronsRight/>
-         </button>
-      </div>
+        </div>
+      }
     </div>
   )
 }

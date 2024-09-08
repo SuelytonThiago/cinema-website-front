@@ -42,7 +42,40 @@
     opacity: .7;
 }
 
+
+
+.userIcon {
+    color: #000;
+    font-size: 20px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+
+
 .searchBtn:hover{
     opacity: 1;
+}
+
+.navBarInfoRespContainer{
+    display: none;
+    gap: 1rem;
+}
+
+@media (max-width: 425px) {
+    .navBarInfoRespContainer{
+        display: flex;
+    }
+
+    .navbarLinks {
+        display: none;
+    }
+
+
 }
 

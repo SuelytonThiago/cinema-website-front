@@ -3,11 +3,12 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 
-import Home from './routes/Home.jsx'
-import Login from './routes/Login.jsx'
-import Register from './routes/Register.jsx'
-import Session from './routes/Session.jsx'
-import SearchPage from './routes/SearchPage.jsx'
+import Home from './routes/home/Home.jsx'
+import Login from './routes/login/Login.jsx'
+import Register from './routes/register/Register.jsx'
+import SearchPage from './routes/search-page/SearchPage.jsx'
+import Movie from './routes/movie/Movie.jsx'
+import Session from './routes/session/Session.jsx'
 
 import { createBrowserRouter, RouterProvider, Route } from 'react-router-dom';
 
@@ -28,12 +29,16 @@ const router = createBrowserRouter([
         element: <Register />,
       },
       {
-        path:"/session/:id",
-        element:<Session/>,
+        path:"/movie/:id",
+        element:<Movie/>,
       },
       {
         path:"/movies",
         element:<SearchPage/>
+      },
+      {
+        path:"/session/:id",
+        element:<Session/>,
       }
     ]
   }

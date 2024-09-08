@@ -2,13 +2,13 @@ import React from 'react';
 import { useState } from 'react';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import InputMask from 'react-input-mask';
-import isValidEmail from '../js/emailValidation';
-import isValidPassword from '../js/passwordValidation';
-import cineFetch from '../axios/config';
+import isValidEmail from '../../js/emailValidation';
+import isValidPassword from '../../js/passwordValidation';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
 import Cookies from 'js-cookie';
+import axios from 'axios';
 
 const Login = () => {
 
@@ -32,7 +32,7 @@ const Login = () => {
       password: password
     }
     try{
-      const response = await cineFetch.post("/auth/login",login);
+      const response = await axios.post("http://localhost:8080/auth/login",login);
 
       const aToken = response.data.accessToken;
       const rToken = response.data.refreshToken;

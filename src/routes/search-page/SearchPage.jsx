@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useState } from 'react'
 import './SearchPage.css'
 import { FaTimes } from 'react-icons/fa'
-import Pagination from '../components/Pagination'
+import Pagination from '../../components/Pagination.jsx'
 
 
 const SearchPage = () => {

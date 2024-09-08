@@ -1,6 +1,6 @@
 import React from 'react'
 import { FaStar, FaRegStar } from 'react-icons/fa';
-
+import './StarRating.css'
 
 const StarRating = ({rating}) => {
     const maxStars = 5;
@@ -11,11 +11,11 @@ const StarRating = ({rating}) => {
       let stars = [];
       for (let i = 0; i < maxStars; i++) {
         if (i < fullStars) {
-          stars.push(<FaStar key={i} />);
+          stars.push(<FaStar className='starIcon'key={i} />);
         } else if (i === fullStars && hasHalfStar) {
-          stars.push(<FaStar half key={i} />);
+          stars.push(<FaStar className='starIcon' half key={i} />);
         } else {
-          stars.push(<FaRegStar key={i} />);
+          stars.push(<FaRegStar className='starIcon' key={i} />);
         }
       }
       return stars;
