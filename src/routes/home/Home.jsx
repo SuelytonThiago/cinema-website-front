@@ -4,31 +4,9 @@ import { useState, useEffect, useRef } from 'react';
 import "./Home.css";
 import { Link } from 'react-router-dom';
 import StarRating from '../../components/StarRating';
-
-const getDayOfWeek = (date) => {
-  const daysOfWeek = ['SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SAB','DOM'];
-  return daysOfWeek[date.getDay()];
-};
-
-const formatDate = (date) => {
-  const dayOfWeek = getDayOfWeek(date);
-  const day = String(date.getDate()).padStart(2, '0');
-  const month = String(date.getMonth() + 1).padStart(2, '0'); 
-  
-  return {
-    dayOfWeek,
-    formattedDate: `${day}/${month}`
-  };
-};
-
-const formatHours = ( date ) => { 
-  const hours = String(date.getHours()).padStart(2,'0');
-  const minutes = String(date.getMinutes()).padStart(2,'0');
-
-  const timeString = `${hours}:${minutes}`;
-
-  return timeString;
-}
+import formatDate from '../../js/formatDate';
+import formatHours from '../../js/formatHours';
+import getDayOfWeek from '../../js/getDayOfWeek';
 
 const Home = () => {
 
@@ -99,7 +77,7 @@ const Home = () => {
               <h2>Sessões para {selectedDate}</h2>
               <div className='sessionsContainer'>
                 {groupedSessions[selectedDate].map((session) => (
-                  <div className='session'>
+                  <div className='session' key={session.id}>
                     <div className='sessionImg'>
                       <img src={session.imageUrl} alt={session.movieName} />
                     </div>

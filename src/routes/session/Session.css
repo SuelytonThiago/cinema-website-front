@@ -1,23 +1,40 @@
+.sessionContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.sessionInformations {
+    display: flex;
+    gap: 1rem;
+}
+
+.selectChairContainer{
+    flex: 3;
+}
+
 .chairsContainer{
     display: flex;
     background-color: #17191f;
     padding: 1rem;
-    max-width: 490px;
+    flex-direction: column;
 }
 
 .chairs {
     display: flex;
     flex-wrap: wrap; 
     justify-content: center; 
+    align-items: center;
     gap: 10px; 
-    max-width: 280px;
-    padding: 1rem;
+    padding: 2rem;
     background-color: #17191f;
+    max-width: 65%;
+    margin: 0 auto;
 }
 
 .chair {
-    width: 30px;  /* Largura de cada cadeira */
-    height: 30px; /* Altura de cada cadeira */
+    width: 30px; 
+    height: 30px; 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -26,24 +43,22 @@
     border: none;
     border-radius: 50%;
     padding: .5rem;
-    
+   
 }
 
 .chairAvailable {
-    background-color: #FFD700;
+    background-color: #fff;
     color: #000;
     opacity: .8;
     transition: .3s;
 }
 
 .chairAvailable:hover {
-    background-color: #FFD700;
     opacity: 1;
-    color: #000;
 }
 
 .chairUnavailable {
-    background-color: #777;
+    background-color: #444;
     color: white;
 }
 
@@ -53,12 +68,128 @@
     color: #Fff;
 }
 
+.selectedChair{
+    background-color: #FFD700;
+    opacity: 1;
+    color: #000;
+}
+
 .legendContainer {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: .5rem;
-    padding: 1rem  ;
+    gap: 1rem;
+    padding: 1rem ;
     background-color: #17191f;
-    border-left: 1px solid #fff;
+    justify-content: space-around;
+    border-top: 1px solid #fff;
 }
+
+.legendInfo {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+}
+
+.roomScreen{
+    width: 100%; 
+    height: 20px; 
+    background-color: rgb(87, 184, 216); 
+    clip-path: polygon(0% 0%, 100% 0%, 80% 100%, 20% 100%);
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    color: white; 
+    font-size: 16px; 
+    margin-top: 2rem;
+}
+
+.sessionInfoTime{
+    padding: 1rem;
+    background-color: #282c36;
+    display: flex;
+    gap: 5rem;
+    justify-content: center;
+
+}
+
+.editDate{
+    display: flex;
+    gap: .3rem;
+    align-items: center;
+}
+
+.sessionRequestInformations{
+    background: #17191f;
+    flex: 1;
+    padding: .5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.movieInformations{
+    display: flex;
+    gap: 10px;
+}
+
+.movieInformations img {
+    width: 100px;
+    height: auto;
+}
+
+.movieInformations p {
+    max-width: 150px;
+    overflow: hidden;
+    font-weight: bold;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.sessionTime {
+    display: flex;
+    justify-content: space-between;
+}
+
+.sessionTime p{
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.sessionTime .editDate {
+    font-size: 15px;
+    gap: 10px;
+}
+
+.sessionRequestControl{
+    background-color: #17191f;
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.sessionControlBtn{
+    width: 100px;
+    height: 50px;
+    border-radius: 15px;
+    border: none;
+    font-weight: bold;
+    color: #ccc;
+    opacity: .7;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.sessionControlBtn:hover{
+    opacity: 1;
+}
+
+.back{
+    background-color: transparent;
+    border: 3px solid #ccc;
+} 
+
+.next {
+    background-color: #FFD700;
+    color: #17191f;
+}
+
