@@ -1,12 +1,11 @@
 import React from 'react'
 import axios from 'axios';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import "./Home.css";
 import { Link } from 'react-router-dom';
 import StarRating from '../../components/StarRating';
 import formatDate from '../../js/formatDate';
 import formatHours from '../../js/formatHours';
-import getDayOfWeek from '../../js/getDayOfWeek';
 
 const Home = () => {
 

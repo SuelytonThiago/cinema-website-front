@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useRef } from 'react';
 import './Register.css';
-import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+import { AiFillEye, AiFillEyeInvisible, AiOutlineCheck   } from 'react-icons/ai';
 import InputMask from 'react-input-mask';
 import isValidCPF from '../../js/cpfValidation';
 import isValidContactNumber from '../../js/phoneValidation';
@@ -15,12 +15,12 @@ const Register = () => {
 
   const navigate = useNavigate();
 
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [confirm, setConfirm] = useState();
-  const [cpf, setCpf] = useState();
-  const [contactNumber, setContactNumber] = useState();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirm, setConfirm] = useState('');
+  const [cpf, setCpf] = useState('');
+  const [contactNumber, setContactNumber] = useState('');
   const [errors, setErrors] = useState({});
   const [serverError, setServerError] = useState();
 
@@ -77,7 +77,12 @@ const Register = () => {
 
     if (Object.keys(validateErrors).length === 0) {
       try {
-        await axios.post('/users/create', user);
+        await axios.post('http://localhost:8080/api/users/create',user ,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          });
         navigate('/login');
       } catch (e) {
         const error = e.response.data.Message
@@ -93,14 +98,16 @@ const Register = () => {
           {serverError && <div className='serverErrorMessage'>{serverError}</div>}
         </div>
         <form onSubmit={(e) => createUser(e)} className='registerForm'>
+          <h2>Cadastre-se</h2>
+          <p>Campos obrigatórios *</p>
           <div className={errors.name ? 'inputError' : 'registerFormControl'}>
             <label htmlFor="name">Nome</label>
             <input
               type="text"
-              placeholder="Digite seu nome"
+              placeholder="* Digite seu nome"
               id="name"
               onChange={(e) => setName(e.target.value)}
-
+      
             />
             {errors.name && <div className='errorMessage'>{errors.name}</div>}
           </div>
@@ -108,7 +115,7 @@ const Register = () => {
             <label htmlFor="email">Email</label>
             <input
               type="text"
-              placeholder="digite um email"
+              placeholder="* Digite um email"
               id="email"
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -118,7 +125,7 @@ const Register = () => {
             <label htmlFor="cpf">CPF</label>
             <InputMask
               mask='999.999.999-99'
-              placeholder='digite seu CPF'
+              placeholder='* Digite seu CPF'
               id='cpf'
               onChange={(e) => setCpf(e.target.value)}
               className='inputMask'
@@ -129,7 +136,7 @@ const Register = () => {
             <label htmlFor="contactNumber">Telefone</label>
             <InputMask
               mask='(99)99999-9999'
-              placeholder="digite seu telefone"
+              placeholder="* Digite seu telefone"
               id="contactNumber"
               onChange={(e) => setContactNumber(e.target.value)}
               className='inputMask'
@@ -141,7 +148,7 @@ const Register = () => {
             <div className='passwordInput'>
               <input
                 type={show ? 'text' : 'password'}
-                placeholder="digite uma senha"
+                placeholder="* Digite uma senha"
                 id="password"
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -151,12 +158,19 @@ const Register = () => {
             </div>
             {errors.password && <div className='errorMessage'>{errors.password}</div>}
           </div>
+          <div>
+            <p>Sua senha precisa atender aos seguintes critérios:</p>
+            <p><AiOutlineCheck className={ /[A-Z]/.test(password) ? 'checked' : ''}/> Mínimo uma letra minúscula *</p>
+            <p><AiOutlineCheck className={/[a-z]/.test(password) ? 'checked' : ''}/> Mínimo uma letra maiúscula *</p>
+            <p><AiOutlineCheck className={/[0-9]/.test(password) ? 'checked' : ''}/> Mínimo um número *</p>
+            <p><AiOutlineCheck className={password.length  >= 8 ? 'checked' : ''} /> Mínimo de 8 caracteres *</p>
+          </div>
           <div className={errors.name ? 'inputError' : 'registerFormControl'}>
             <label htmlFor="confirmPassword">Confirmar senha</label>
             <div className='passwordInput'>
               <input
                 type={show ? 'text' : 'password'}
-                placeholder='repita a senha'
+                placeholder='* Repita a senha'
                 id="confirmPassword"
                 onChange={(e) => setConfirm(e.target.value)}
               />

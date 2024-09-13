@@ -2,7 +2,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
+    height: 80px;
+    padding: 0 2rem;
     background-color: #17191f;
 }
 
@@ -56,26 +57,13 @@
     text-align: center;
 }
 
-
-
 .searchBtn:hover{
     opacity: 1;
 }
 
-.navBarInfoRespContainer{
-    display: none;
-    gap: 1rem;
+.navbarTools{
+    display: flex;
+    justify-content: space-between;
 }
 
-@media (max-width: 425px) {
-    .navBarInfoRespContainer{
-        display: flex;
-    }
-
-    .navbarLinks {
-        display: none;
-    }
-
-
-}
 

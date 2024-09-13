@@ -9,6 +9,7 @@ import Register from './routes/register/Register.jsx'
 import SearchPage from './routes/search-page/SearchPage.jsx'
 import Movie from './routes/movie/Movie.jsx'
 import Session from './routes/session/Session.jsx'
+import {QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import { createBrowserRouter, RouterProvider, Route } from 'react-router-dom';
 
@@ -44,9 +45,13 @@ const router = createBrowserRouter([
   }
 ])
 
+const client = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>,
+  <QueryClientProvider client={client}>
+    <React.StrictMode>
+      <RouterProvider router={router} />
+    </React.StrictMode>,
+  </QueryClientProvider>
+
 )

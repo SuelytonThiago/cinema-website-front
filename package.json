@@ -16,6 +16,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@hookform/resolvers": "^3.9.0",
+    "@tanstack/react-query": "^5.56.2",
     "axios": "^1.7.2",
     "framer-motion": "^11.5.4",
     "glob": "^10.4.2",

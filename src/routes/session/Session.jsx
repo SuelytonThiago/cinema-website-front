@@ -7,47 +7,26 @@ import formatHours from '../../js/formatHours';
 import { FaCalendarAlt } from 'react-icons/fa';
 import { FaClock } from 'react-icons/fa'; 
 import StarRating from '../../components/StarRating';
+import SelectChairComponent from '../../components/SelectChairComponent';
 
 
 const Session = () => {
     const { id } = useParams();
-    const [chairs, setChairs] = useState([]);
     const [sessionInfoData, setSessionInfoData] = useState({});
-    const [selectedChairId, setSelectedChairId] = useState();
 
     const getSessionInfo = async () => {
         try {
             const response = await axios.get(`http://localhost:8080/api/sessions/info/${id}`);
             const sessionData = response.data;
-            console.log('Session info data:', sessionData);
             setSessionInfoData(sessionData);
         } catch (error) {
             console.error('Error fetching session info:', error);
         }
     };
 
-    const getChairs = async () => {
-        try {
-            const response = await axios.get(`http://localhost:8080/api/chairs/${id}`);
-            const chairsData = response.data;
-            setChairs(chairsData);
-        } catch (error) {
-            console.error('Error fetching chairs:', error);
-        }
-    };
-
     useEffect(() => {
-        const fetchData = async () => {
-            await getChairs();
-            await getSessionInfo();
-        };
-
-        fetchData();
+        getSessionInfo();
     }, [id]);
-
-    const handleChairClick = (id) => {
-        setSelectedChairId(id);
-    };
 
     return (
         <div className='sessionContainer'>
@@ -61,36 +40,7 @@ const Session = () => {
                             
                             <p className='editDate'><FaClock/> {formatHours(new Date(sessionInfoData.dateStart))}</p>
                     </div>
-                    <div className='chairsContainer'>
-                        <div className='chairs'>
-                            {chairs.map(chair => (
-                                <button
-                                    key={chair.chairNumber}
-                                    className={`chair ${chair.available ? 'chairAvailable' : 'chairUnavailable'} 
-                                    ${selectedChairId === chair.chairNumber ? 'selectedChair' : ''}`}
-                                    onClick={() => handleChairClick(chair.chairNumber)}
-                                    disabled={!chair.available}
-                                >
-                                    {chair.chairNumber}
-                                </button>
-                            ))}
-                            <div className='roomScreen'>Tela</div>
-                        </div>
-                        <div className='legendContainer'>
-                            <div className='legendInfo'>
-                                <span className='chair chairAvailable'>c</span>
-                                <p> cadeira disponível</p>
-                            </div>
-                            <div className='legendInfo'>
-                                <span className='chair chairUnavailable'>c</span>
-                                <p> cadeira indisponível</p>
-                            </div>
-                            <div className='legendInfo'>
-                                <span className='chair selectedChair'>c</span>
-                                <p> cadeira selecionada</p>
-                            </div>
-                        </div>
-                    </div>
+                    <SelectChairComponent id={id}/>
                 </div>
                 <div className='sessionRequestInformations'>
                     <h3>Resumo do pedido</h3>

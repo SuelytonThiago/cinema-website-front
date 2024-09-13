@@ -42,8 +42,9 @@
   padding: 10px;
   padding-right: 40px;
   font-size: 13px;
-  border: 1px solid #ccc;
   border-radius: 4px;
+  border: none;
+  border-left:6px solid #1262da;
 }
 
 .inputError input {
@@ -54,7 +55,6 @@
    border: 1px solid #e53935;
    border-radius: 4px;
    background-color: #ffebee;
-   
 }
 
 
@@ -99,4 +99,8 @@
    margin: 0 auto;
    max-width: 300px; 
    color: #e53935; 
+}
+
+.checked {
+   color: #0ee04d;
 }
