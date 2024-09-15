@@ -3,6 +3,10 @@
     display: inline-block;
 }
 
+.active {
+    background-color: #000000;
+}
+
 .menuButton {
     background-color: transparent;
     border: none;
@@ -18,11 +22,19 @@
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 184%;
-    left: 0;
-    z-index: 1000;
-    background-color: #17191f;
+    top: 137%;
+    left: -4.5rem;
+    z-index: 2000;
+    background-color: #000000;
     padding: 1rem;
+    width: 190px;
+
+}
+
+.menuItem {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
 }
 
 
@@ -38,13 +50,15 @@
 
 
 .menuButton img {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
     background-color: #Fff;
 }
 
 .outBtn {
+    display: flex;
+    align-items: center;
     background-color: transparent;
     color: #fff;
     border: none;
@@ -53,8 +67,14 @@
     opacity: .6;
     font-size: 15px;
     transition: .3s;
+    gap: .5rem;
 }
 
 .outBtn:hover {
     opacity: 1;
+}
+
+.UserDataBtn{
+    display: flex;
+    justify-content: space-between;
 }

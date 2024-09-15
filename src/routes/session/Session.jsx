@@ -6,9 +6,9 @@ import formatDate from '../../js/formatDate';
 import formatHours from '../../js/formatHours';
 import { FaCalendarAlt } from 'react-icons/fa';
 import { FaClock } from 'react-icons/fa'; 
-import StarRating from '../../components/StarRating';
-import SelectChairComponent from '../../components/SelectChairComponent';
-
+import StarRating from '../../components/starRating/StarRating';
+import SelectChairComponent from '../../components/selectChairComponent/SelectChairComponent';
+import SelectTicket from '../../components/select-ticket/SelectTicket'
 
 const Session = () => {
     const { id } = useParams();
@@ -31,20 +31,13 @@ const Session = () => {
     return (
         <div className='sessionContainer'>
             <div className='sessionInformations'>
-                <div className='selectChairContainer'>
-                    <div className='sessionInfoTime'>
-                            <div className='editDate'>
-                                <p><FaCalendarAlt/>  {formatDate(new Date(sessionInfoData.dateStart)).dayOfWeek}</p>
-                                <p>{formatDate(new Date(sessionInfoData.dateStart)).formattedDate}</p>
-                            </div>
-                            
-                            <p className='editDate'><FaClock/> {formatHours(new Date(sessionInfoData.dateStart))}</p>
-                    </div>
-                    <SelectChairComponent id={id}/>
+                <div className='entryRequesting'>
+                    
+                    <SelectTicket/>
                 </div>
                 <div className='sessionRequestInformations'>
                     <h3>Resumo do pedido</h3>
-                    <div>
+                    <div className='ticketRequestInformations'>
                         <div className='movieInformations'>
                             <img src={sessionInfoData.imageUrl} alt={sessionInfoData.movieName} />
                             <div>

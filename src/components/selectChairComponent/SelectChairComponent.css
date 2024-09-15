@@ -1,3 +1,22 @@
+.ChairsInfoContainer{
+    flex: 1;
+}
+
+.sessionInfoTime{
+    padding: 1rem;
+    background-color: #282c36;
+    display: flex;
+    gap: 5rem;
+    justify-content: center;
+
+}
+
+.editDate{
+    display: flex;
+    gap: .3rem;
+    align-items: center;
+}
+
 .chairsContainer{
     display: flex;
     background-color: #17191f;
@@ -13,7 +32,7 @@
     gap: 10px; 
     padding: 2rem;
     background-color: #17191f;
-    max-width: 65%;
+    max-width:60%;
     margin: 0 auto;
 }
 

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import './Movie.css';
 import { FiUser } from 'react-icons/fi';
 
-import StarRating from '../../components/StarRating';
+import StarRating from '../../components/starRating/StarRating';
 
 const Movie = () => {
 

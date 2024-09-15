@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react'
-import axios from 'axios'
 import { useState } from 'react'
 import './SearchPage.css'
 import { FaTimes } from 'react-icons/fa'
-import Pagination from '../../components/Pagination.jsx'
+import Pagination from '../../components/pagination/Pagination'
 
 
 const SearchPage = () => {

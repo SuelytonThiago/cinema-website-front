@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import "./Home.css";
 import { Link } from 'react-router-dom';
-import StarRating from '../../components/StarRating';
+import StarRating from '../../components/starRating/StarRating';
 import formatDate from '../../js/formatDate';
 import formatHours from '../../js/formatHours';
 

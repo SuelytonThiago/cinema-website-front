@@ -9,25 +9,16 @@
     gap: 1rem;
 }
 
-.selectChairContainer{
+.entryRequesting{
     flex: 3;
-}
-
-
-
-.sessionInfoTime{
-    padding: 1rem;
-    background-color: #282c36;
     display: flex;
-    gap: 5rem;
     justify-content: center;
-
+    align-items: center;
+    background-color: #17191f;
 }
 
-.editDate{
-    display: flex;
-    gap: .3rem;
-    align-items: center;
+.ticketRequestInformations{
+    height: 530px;
 }
 
 .sessionRequestInformations{

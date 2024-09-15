@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import './Register.css';
 import { AiFillEye, AiFillEyeInvisible, AiOutlineCheck   } from 'react-icons/ai';
 import InputMask from 'react-input-mask';

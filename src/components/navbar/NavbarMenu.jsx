@@ -29,7 +29,7 @@ const menu = ({user}) => {
     }
 
     return (
-        <div className = 'menuContainer'>
+        <div className={`menuContainer ${isOpen ? 'active' : ''}`}>
             <button 
             className='menuButton'
             onClick={() => toggleMenu()}>
@@ -40,17 +40,17 @@ const menu = ({user}) => {
                  <div>
                     <div className='overlay' onClick={() => closeMenu()}></div>
                     <ul className='menuItems'>
-                        <li className='menuItem'>
-                            <Link>
+                        <li >
+                            <Link className='menuItem'>
                                 <FaPen/> Meus dados
                             </Link>
                         </li>
-                        <li className='menuItem'>
-                            <Link>
+                        <li >
+                            <Link className='menuItem'>
                                 <FaTicketAlt/> Meus ingressos  
                             </Link>
                         </li>
-                        <li className='menuItem'>
+                        <li >
                             <button 
                             className='outBtn'
                             onClick={() => logOut()}>
