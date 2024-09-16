@@ -18,7 +18,7 @@ export function useUserData() {
     const query = useQuery({
         queryFn: getUserData,
         queryKey: ['user-data'],
-        retry: false,
+        retry: 1,
     })
     return query;
 }

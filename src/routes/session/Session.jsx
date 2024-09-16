@@ -1,39 +1,96 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import './Session.css';
 import formatDate from '../../js/formatDate';
 import formatHours from '../../js/formatHours';
-import { FaCalendarAlt } from 'react-icons/fa';
-import { FaClock } from 'react-icons/fa'; 
+import { FaCalendarAlt, FaUser, FaClock} from 'react-icons/fa';
 import StarRating from '../../components/starRating/StarRating';
 import SelectChairComponent from '../../components/selectChairComponent/SelectChairComponent';
 import SelectTicket from '../../components/select-ticket/SelectTicket'
+import { useSessionData } from '../../hooks/UseSessionData';
+import { useTicketMutate } from '../../hooks/UseTicketMutate';
+import { useNavigate } from 'react-router-dom';
+import LoginModal from '../login/LoginModal.jsx';
+
+import Cookies from 'js-cookie';
 
 const Session = () => {
-    const { id } = useParams();
-    const [sessionInfoData, setSessionInfoData] = useState({});
 
-    const getSessionInfo = async () => {
-        try {
-            const response = await axios.get(`http://localhost:8080/api/sessions/info/${id}`);
-            const sessionData = response.data;
-            setSessionInfoData(sessionData);
-        } catch (error) {
-            console.error('Error fetching session info:', error);
+    const navigate = useNavigate();
+    const { id } = useParams();
+    const [showComponent, setShowComponent] = useState(true);
+    const [showViewLogin, setShowViewLogin] = useState(false);
+    const [selectedChairId, setSelectedChairId] = useState(null);
+    const [selectedTicket, setSelectedTicket] = useState(null);
+
+    const {data: sessionInfoData, isLoading, error} = useSessionData(id);
+
+    const mutation = useTicketMutate();
+
+    const handleAddTicket = () => {
+        if(!!Cookies.get("accessToken")){
+            const sessionId = id;
+            const price = selectedTicket?.price;
+
+            const chairNumber = selectedChairId - 1;
+
+            mutation.mutate({ sessionId, price, chairNumber });
+            navigate('/');
+        }
+        else {
+           setShowViewLogin(true);
         }
     };
 
-    useEffect(() => {
-        getSessionInfo();
-    }, [id]);
+    const handleLoginSuccess = () => {
+        setShowViewLogin(false);
+    }
+
+    
+    const selectTicket = (ticket) => {
+        setSelectedTicket(ticket)
+    }
+
+    const handleChairSelect = (id) => {
+        if(id === selectedChairId) {
+            setSelectedChairId(null)
+        }
+        else {
+            setSelectedChairId(id);
+        }
+    };
+
+    const next = () =>{
+        setShowComponent(false)
+    }
+
+    const back = () =>{
+        setShowComponent(true)
+        setSelectedTicket(null)
+    }
+
+    if (isLoading) {
+        return <p>Loading...</p>;
+    }
+    
+    if (error) {
+        return <p>Error: {error.message}</p>;
+    }
+    
+    if (!sessionInfoData) {
+        return <p>No session data available</p>;
+    }
 
     return (
         <div className='sessionContainer'>
             <div className='sessionInformations'>
                 <div className='entryRequesting'>
-                    
-                    <SelectTicket/>
+                    {showComponent ? (
+                            <SelectChairComponent id={id} session ={sessionInfoData} onChairSelect={handleChairSelect} chairId={selectedChairId}/>
+                        ) : (
+                            <SelectTicket selectTicket={selectTicket}/>
+                        )
+                    }
                 </div>
                 <div className='sessionRequestInformations'>
                     <h3>Resumo do pedido</h3>
@@ -58,13 +115,41 @@ const Session = () => {
                                 </div>
                             </div>
                         </div>
+                        {!!selectedChairId && (
+                            <div className='chairInformation'>
+                                <p>Assento: {selectedChairId}</p>
+                            </div>
+                        )}
+                        {!!selectedTicket && (
+                            <div className='ticketInformation'>
+                                <p>ingresso</p>
+                                <div className='tInfo'>
+                                    <p>{selectedTicket.type}</p>
+                                    <p>{selectedTicket.price}</p>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
             <div className='sessionRequestControl'>
-                <button className='sessionControlBtn back'>Voltar</button>
-                <button className='sessionControlBtn next'>Proximo</button>
+                <button className='sessionControlBtn back'onClick={back}>Voltar</button>
+                {showComponent ? (
+                    <button className={`sessionControlBtn next ${!selectedChairId  ? 'disabled' : ''}`} onClick={next} disabled={!selectedChairId}>Próximo</button>
+                ) : (   
+                        <button className ={`sessionControlBtn next ${!selectedTicket  ? 'disabled' : ''}`} onClick={handleAddTicket}>Finalizar</button>
+                )}
+                
             </div>
+            {showViewLogin && 
+                <div>
+                    <div className='overlay'></div>
+                    <div className='authenticationTab'>
+                    <div className='authenticationTitle'><FaUser/>Identificação</div>
+                        <LoginModal handleLoginSuccess={handleLoginSuccess}/>
+                    </div>
+                </div>
+            }
         </div>
     );
 };

@@ -53,3 +53,8 @@
 .deselect {
     background-color: #1c1c20;
 }
+
+.ticketTitle{
+    font-weight: bold;
+    color: #fff;
+}

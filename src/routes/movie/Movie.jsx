@@ -56,6 +56,13 @@ const Movie = () => {
                             </div>
                         </div>
                     </div>
+                    <div>
+                        <p>seu comentário</p>
+                        <form action="">
+                            <input type="text" />
+                            <input type="submit"  value='Enviar'/>
+                        </form>
+                    </div>
                    
                     <div className="commentsContainer">
                         {movie.reviews.length === 0 ? (

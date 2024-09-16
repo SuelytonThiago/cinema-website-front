@@ -7,12 +7,11 @@ import formatHours from '../../js/formatHours';
 import { FaCalendarAlt } from 'react-icons/fa';
 import { FaClock } from 'react-icons/fa'; 
 
-const SelectChairComponent = ({ session, id}) => {
+const SelectChairComponent = ({ session, id, onChairSelect, chairId}) => {
     const { data: chairsData, isLoading, isError } = useChairData(id);
-    const [selectedChairId, setSelectedChairId] = useState();
 
     const handleChairClick = (chairId) => {
-        setSelectedChairId(chairId);
+        onChairSelect(chairId);
     };
 
     return (
@@ -32,7 +31,7 @@ const SelectChairComponent = ({ session, id}) => {
                             <button
                                 key={chair.chairNumber}
                                 className={`chair ${chair.available ? 'chairAvailable' : 'chairUnavailable'} 
-                                ${selectedChairId === chair.chairNumber ? 'selectedChair' : ''}`}
+                                ${chairId === chair.chairNumber ? 'selectedChair' : ''}`}
                                 onClick={() => handleChairClick(chair.chairNumber)}
                                 disabled={!chair.available}
                             >

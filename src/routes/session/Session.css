@@ -19,6 +19,8 @@
 
 .ticketRequestInformations{
     height: 530px;
+    display: flex;
+    flex-direction: column;
 }
 
 .sessionRequestInformations{
@@ -33,6 +35,7 @@
 .movieInformations{
     display: flex;
     gap: 10px;
+    
 }
 
 .movieInformations img {
@@ -51,6 +54,8 @@
 .sessionTime {
     display: flex;
     justify-content: space-between;
+    border-bottom: 1px solid #Fff;
+    padding: .5rem 0;
 }
 
 .sessionTime p{
@@ -86,6 +91,10 @@
     opacity: 1;
 }
 
+.disabled:hover {
+    opacity: .7;
+}
+
 .back{
     background-color: transparent;
     border: 3px solid #ccc;
@@ -95,4 +104,58 @@
     background-color: #FFD700;
     color: #17191f;
 }
+
+.chairInformation{
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #Fff;
+    padding: .5rem 0;
+}
+
+.ticketInformation {
+    border-bottom: 1px solid #Fff;
+    padding: .5rem 0;
+}
+
+.tInfo{
+    display: flex;
+    justify-content: space-between;
+}
+
+.disabled {
+    background-color: #ccc;
+}
+
+.authenticationTab{
+    position: fixed;
+    top: 0;
+    left: 70%;
+    width: 30%;
+    height: 100vh;
+    background-color: #202229;
+    display: flex;
+    flex-direction: column;
+    gap: 20rem;
+    z-index: 2;
+}
+
+.authenticationTitle{
+    padding: 1rem;
+    border-bottom: 1px solid #fff;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
 
