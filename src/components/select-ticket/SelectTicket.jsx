@@ -1,6 +1,6 @@
 import React from 'react'
 import './SelectTicket.css'
-import { FaTicketAlt,FaGlasses, FaStar } from 'react-icons/fa';
+import { FaTicketAlt} from 'react-icons/fa';
 import {useState} from 'react'
 import tickets from '../../data/ticketData.js'
 
@@ -40,7 +40,7 @@ const SelectTicket = ({selectTicket}) => {
   return (
     <div className='ticketContainer'>
         {tickets.map(ticket => (
-            <div className = 'ticket entire'>
+            <div className = 'ticket entire' key={ticket.id}>
                 <div className='ticketInfo'>
                     <FaTicketAlt className='ticketIcon'/>
                     <div>

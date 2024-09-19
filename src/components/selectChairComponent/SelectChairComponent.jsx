@@ -1,6 +1,5 @@
 import React from 'react';
 import './SelectChairComponent.css';
-import { useState } from 'react';
 import { useChairData } from '../../hooks/UseChairData';
 import formatDate from '../../js/formatDate';
 import formatHours from '../../js/formatHours';
@@ -8,7 +7,7 @@ import { FaCalendarAlt } from 'react-icons/fa';
 import { FaClock } from 'react-icons/fa'; 
 
 const SelectChairComponent = ({ session, id, onChairSelect, chairId}) => {
-    const { data: chairsData, isLoading, isError } = useChairData(id);
+    const { data: chairsData} = useChairData(id);
 
     const handleChairClick = (chairId) => {
         onChairSelect(chairId);

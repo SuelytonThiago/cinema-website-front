@@ -8,20 +8,27 @@ import {useState} from 'react'
 import { FaTimes } from 'react-icons/fa'
 import { FaTicketAlt } from 'react-icons/fa';
 import { FaPen } from 'react-icons/fa';
+import { useDispatch } from 'react-redux'
+import { logoutUser } from '../../redux/user/actions'
+
+import { useNavigate } from 'react-router-dom'
 
 
 const menu = ({user}) => {
 
+    const navigate = useNavigate();
+
+    const dispatch = useDispatch();
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleMenu = () => {
         setIsOpen(!isOpen)
-        console.log(isOpen)
     }
 
     const logOut = () => {
         Cookie.set('accessToken', '', {path: '/'});
-        window.location.reload();
+        dispatch(logoutUser());
+        navigate('/');
     }
 
     const closeMenu = () => {

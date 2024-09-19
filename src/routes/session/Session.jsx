@@ -137,7 +137,7 @@ const Session = () => {
                 {showComponent ? (
                     <button className={`sessionControlBtn next ${!selectedChairId  ? 'disabled' : ''}`} onClick={next} disabled={!selectedChairId}>Próximo</button>
                 ) : (   
-                        <button className ={`sessionControlBtn next ${!selectedTicket  ? 'disabled' : ''}`} onClick={handleAddTicket}>Finalizar</button>
+                    <button className ={`sessionControlBtn next ${!selectedTicket  ? 'disabled' : ''}`} onClick={handleAddTicket}>Finalizar</button>
                 )}
                 
             </div>

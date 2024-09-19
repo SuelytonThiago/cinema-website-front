@@ -1,5 +1,5 @@
 const tickets = [
-    {
+    { 
         type: 'Inteira',
         price: 19.99,
     },

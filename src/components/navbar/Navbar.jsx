@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom'
 import './Navbar.css';
 import { FaSearch } from 'react-icons/fa';
-import { useUserData } from '../../hooks/UseUserData.jsx';
 import Menu from './NavbarMenu.jsx'
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
-    const { data: userData } = useUserData();
+    const {currentUser} = useSelector((rootReducer) => rootReducer.userReducer);
 
     return (
         <div>
@@ -14,7 +14,7 @@ const Navbar = () => {
                     <h2>
                         <Link to={'/'}>cinemax</Link>
                     </h2>
-                    {!userData ? 
+                    {!currentUser ? 
                         (
                             <div>
                                 <div>
@@ -47,7 +47,7 @@ const Navbar = () => {
                                         </Link>
                                     </li>
                                     <li className='navbarMenuContainer'>
-                                        <Menu user={userData} />
+                                        <Menu user={currentUser} />
                                     </li>
                                 </ul>
                             </div>

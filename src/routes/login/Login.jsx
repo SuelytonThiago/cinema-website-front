@@ -1,13 +1,9 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState} from 'react';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
-
-
-
-import Cookies from 'js-cookie';
-import axios from 'axios';
+import {useLoginMutate} from '../../hooks/UseLoginMutate.jsx'
 
 const Login = () => {
 
@@ -17,12 +13,9 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [show, setShow] = useState(false);
   const [errors, setErrors] = useState({});
-  const [serverError, setServerError] = useState(null);
 
-  const handleTogglePassword = (e) => {
-    e.preventDefault();
-    setShow(!show);
-  }
+  const mutation = useLoginMutate();
+  
 
   const validateErrors = () => {
     const errors = {};
@@ -40,46 +33,32 @@ const Login = () => {
     return errors;
   }
 
-  const signIn = async (e) => {
+  const handleLoginUser = (e) => {
     e.preventDefault();
-    setServerError('');
-    
-    const login = {
-      email: email,
-      password: password
-    };
-  
     const validate = validateErrors();
     setErrors(validate);
   
     if (Object.keys(validate).length === 0) {
-      try {
-        const response = await axios.post("http://localhost:8080/api/auth/login", login, {
-          headers: {
-            'Content-Type': 'application/json',
+      mutation.mutate({email, password},
+        {
+          onSuccess: () => {
+            navigate('/')
           }
         });
-  
-        const aToken = response.data.accessToken;
-        const rToken = response.data.refreshToken;
-  
-        Cookies.set('accessToken', aToken);
-        Cookies.set('refreshToken', rToken);
-  
-        navigate('/');
-        window.location.reload();
-      } catch (e) {
-        setServerError("email ou senha inválidos");
-      }
-    } 
-  };
+    }
+  }
+
+  const handleTogglePassword = (e) => {
+    e.preventDefault();
+    setShow(!show);
+  }
   
 
   return (
     <div className='signinContainer'>
       <div className='signFormContainer'>
-        {serverError && <div className='serverErrorMessage'>{serverError}</div>}
-        <form onSubmit={(e) => signIn(e)} className='signinForm'>
+        {mutation.isError && <div className='serverErrorMessage'>email ou senha invalidos</div>}
+        <form onSubmit={(e) => handleLoginUser(e)} className='signinForm'>
           <div className='signinFormControl'>
             <label htmlFor="email">Email</label>
             <input
