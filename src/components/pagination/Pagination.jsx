@@ -1,97 +1,77 @@
-import React from 'react'
-import {useState, useEffect} from 'react'
-import './Pagination.css'
-import {Link} from 'react-router-dom'
-import { FiChevronsLeft } from 'react-icons/fi';
-import { FiChevronsRight } from 'react-icons/fi';
-import StarRating from './../starRating/StarRating'
-import { useMovieData } from '../../hooks/UseMovieData'
+import React, { useState } from 'react';
+import './Pagination.css';
+import { FiChevronsLeft, FiChevronsRight } from 'react-icons/fi';
+import MovieTemplate from '../movie-template/MovieTemplate';
 
-const Pagination = ({nameMovie}) => {
+const Pagination = ({ objectList }) => {
+  const itemsPerPage = 12;
+  const totalPages = Math.ceil(objectList.length / itemsPerPage);
+  const [currentPage, setCurrentPage] = useState(1);
 
-
-  const [currentPage, setCurrentPage] = useState(0);
-  const {data: moviesData = []} = useMovieData(nameMovie, currentPage);
-  
-  const movies = moviesData.content || [];
-  const totalPages = moviesData.totalPages || 0;
-  
-  useEffect(() => {
-    setCurrentPage(0);
-    
-  }, [nameMovie]);
+  const currentItems = objectList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   const goToFirstPage = () => {
-    setCurrentPage(0);
-  }
+    setCurrentPage(1); 
+  };
 
   const goToLastPage = () => {
-    setCurrentPage(totalPages - 1)
-  }
+    setCurrentPage(totalPages);
+  };
+
   const goToNextPage = () => {
-    setCurrentPage((prevPage) => Math.min(prevPage + 1 , totalPages))
-  }
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
+  };
 
   const goToPreviousPage = () => {
-    setCurrentPage((prevPage) => Math.max(prevPage -1, 0))
-  }
-  
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1)); 
+  };
+
   return (
     <div>
       <div className='moviesResultContainer'>
-        { 
-          movies.map((movie) => (
-            <div className="movieContainer" key={movie.id}>
-              <div className="movieInfoContainer">
-                <div className="movieImg">
-                  <img src={movie.imageUrl} alt={movie.name} />
-                </div>
-                <div className="movieInfo">
-                  <h2>{movie.name}</h2>
-                  <StarRating rating={movie.averageRating}/>
-                  <Link to = {`/movie/${movie.id}`}>
-                    ver detalhes
-                  </Link> 
-                </div>
-              </div>
-            </div>
-          ))
-        }
+        {currentItems.map((movie) => (
+          <MovieTemplate key={movie.id} movie={movie} /> 
+        ))}
       </div>
-      {movies.length > 0 && 
+      {currentItems.length > 0 && (
         <div className='paginationControls'>
           <button 
-          className='paginationBtn fixed'
-          onClick={goToFirstPage} disabled={currentPage == 0 }>
-            <FiChevronsLeft/>
+            className='paginationBtn fixed'
+            onClick={goToFirstPage} 
+            disabled={currentPage === 1}
+          >
+            <FiChevronsLeft />
           </button>
-    
-          {currentPage >= 1 && 
-            <button
-            className='paginationBtn' 
-            onClick={goToPreviousPage}>
-              {currentPage }
-            </button>
-          }
 
-          <span className='paginationBtn atualPage'>{currentPage + 1}</span>
-
-          { currentPage < totalPages -1  &&
-            <button
+          <button 
             className='paginationBtn' 
-            onClick={goToNextPage}>
-            {currentPage + 2}
-            </button>
-          }
+            onClick={goToPreviousPage} 
+            disabled={currentPage === 1} 
+          >
+            {currentPage > 1 ? currentPage - 1 : null}
+          </button>
+
+          <span className='paginationBtn atualPage'>{currentPage}</span>
+
           <button
-          className='paginationBtn fixed' 
-          onClick={goToLastPage} disabled={currentPage == totalPages}>
-              <FiChevronsRight/>
+            className='paginationBtn' 
+            onClick={goToNextPage} 
+            disabled={currentPage >= totalPages}
+          >
+            {currentPage < totalPages ? currentPage + 1 : null}
+          </button>
+
+          <button
+            className='paginationBtn fixed' 
+            onClick={goToLastPage} 
+            disabled={currentPage === totalPages} 
+          >
+            <FiChevronsRight />
           </button>
         </div>
-      }
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default Pagination
+export default Pagination;

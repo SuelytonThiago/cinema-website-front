@@ -3,11 +3,13 @@ import { useState } from 'react'
 import './SearchPage.css'
 import { FaTimes } from 'react-icons/fa'
 import Pagination from '../../components/pagination/Pagination'
+import { useMovieData } from '../../hooks/UseMovieData'
 
 
 const SearchPage = () => {
   const [name, setName] = useState('');
-
+  const {data: moviesData = []} = useMovieData(name);
+  
   const cleanName = () =>{
     setName("");
   }
@@ -28,7 +30,9 @@ const SearchPage = () => {
           </button>
         }
       </div>
-      <Pagination nameMovie={name}/>
+      {console.log('moviesData:', moviesData, 'Type:', typeof moviesData)}
+
+      <Pagination objectList={moviesData}/>
     </div>
   )
 }

@@ -34,6 +34,11 @@ const Navbar = () => {
                                                 Criar conta
                                             </Link>
                                         </li>
+                                        <li>
+                                            <Link to={"/category-movies"} className='btn'>
+                                                Filmes
+                                            </Link>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -44,6 +49,11 @@ const Navbar = () => {
                                     <li>
                                         <Link className='searchBtn' to={`/movies`}>
                                             <FaSearch/> 
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to={"/category-movies"} className='btn'>
+                                            Filmes
                                         </Link>
                                     </li>
                                     <li className='navbarMenuContainer'>

@@ -1,11 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-const fetchMovies = async(name,page)=> {
+const fetchMovies = async(name)=> {
       const response = await axios.get('http://localhost:8080/api/movies/search', {
         params: {
-          name: name,
-          page: page,
+          name: name
         }
       });
       
@@ -13,11 +12,11 @@ const fetchMovies = async(name,page)=> {
   } 
 
 
-export function useMovieData(  name, page) {
+export function useMovieData( name) {
     const query = useQuery({
-        queryFn: () => fetchMovies(name, page),
-        queryKey: ['movie-data', name, page],
-        enabled: !!name && page !== undefined,
+        queryFn: () => fetchMovies(name),
+        queryKey: ['movie-data', name],
+        enabled: !!name,
     })
     return query;
 }
