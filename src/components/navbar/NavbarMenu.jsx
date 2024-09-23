@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import './NavbarMenu.css'
 import Cookie from 'js-cookie'
 
-import {useState} from 'react'
+import { useState } from 'react'
 
 import { FaTimes } from 'react-icons/fa'
 import { FaTicketAlt } from 'react-icons/fa';
@@ -14,7 +14,7 @@ import { logoutUser } from '../../redux/user/actions'
 import { useNavigate } from 'react-router-dom'
 
 
-const menu = ({user}) => {
+const menu = ({ user }) => {
 
     const navigate = useNavigate();
 
@@ -26,9 +26,8 @@ const menu = ({user}) => {
     }
 
     const logOut = () => {
-        Cookie.set('accessToken', '', {path: '/'});
+        Cookie.set('accessToken', '', { path: '/' });
         dispatch(logoutUser());
-        navigate('/');
     }
 
     const closeMenu = () => {
@@ -37,31 +36,31 @@ const menu = ({user}) => {
 
     return (
         <div className={`menuContainer ${isOpen ? 'active' : ''}`}>
-            <button 
-            className='menuButton'
-            onClick={() => toggleMenu()}>
+            <button
+                className='menuButton'
+                onClick={() => toggleMenu()}>
                 <img src={user.profileImg} alt="profileImg" />
                 <p>Olá, {user.name}</p>
             </button>
-            { isOpen && (
-                 <div>
+            {isOpen && (
+                <div>
                     <div className='overlay' onClick={() => closeMenu()}></div>
                     <ul className='menuItems'>
                         <li >
                             <Link className='menuItem'>
-                                <FaPen/> Meus dados
+                                <FaPen /> Meus dados
                             </Link>
                         </li>
                         <li >
                             <Link className='menuItem'>
-                                <FaTicketAlt/> Meus ingressos  
+                                <FaTicketAlt /> Meus ingressos
                             </Link>
                         </li>
                         <li >
-                            <button 
-                            className='outBtn'
-                            onClick={() => logOut()}>
-                                <FaTimes/> Sair
+                            <button
+                                className='outBtn'
+                                onClick={() => logOut()}>
+                                <FaTimes /> Sair
                             </button>
                         </li>
                     </ul>

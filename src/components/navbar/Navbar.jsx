@@ -5,7 +5,7 @@ import Menu from './NavbarMenu.jsx'
 import { useSelector } from 'react-redux';
 
 const Navbar = () => {
-    const {currentUser} = useSelector((rootReducer) => rootReducer.userReducer);
+    const { currentUser } = useSelector((rootReducer) => rootReducer.userReducer);
 
     return (
         <div>
@@ -14,14 +14,14 @@ const Navbar = () => {
                     <h2>
                         <Link to={'/'}>cinemax</Link>
                     </h2>
-                    {!currentUser ? 
+                    {!currentUser ?
                         (
                             <div>
                                 <div>
                                     <ul className='navbarLinks'>
                                         <li>
                                             <Link className='searchBtn' to={`/movies`}>
-                                                <FaSearch/> 
+                                                <FaSearch />
                                             </Link>
                                         </li>
                                         <li>
@@ -42,13 +42,13 @@ const Navbar = () => {
                                     </ul>
                                 </div>
                             </div>
-                        ) : 
-                        (   
+                        ) :
+                        (
                             <div >
                                 <ul className='navbarLinks'>
                                     <li>
                                         <Link className='searchBtn' to={`/movies`}>
-                                            <FaSearch/> 
+                                            <FaSearch />
                                         </Link>
                                     </li>
                                     <li>
@@ -61,7 +61,7 @@ const Navbar = () => {
                                     </li>
                                 </ul>
                             </div>
-                        )   
+                        )
                     }
                 </div>
             </nav>

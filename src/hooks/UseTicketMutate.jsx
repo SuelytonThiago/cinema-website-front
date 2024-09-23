@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import axios from 'axios';
 import Cookies from 'js-cookie'
 
-const addTicket = async({sessionId, price, chairNumber}) => {
+const addTicket = async ({ sessionId, price, chairNumber }) => {
 
     const accessToken = Cookies.get('accessToken');
 
@@ -11,8 +11,6 @@ const addTicket = async({sessionId, price, chairNumber}) => {
         price,
         chairNumber,
     };
-
-    console.log('dados do ticket :' , ticket)
 
     return await axios.post('http://localhost:8080/api/tickets/add', ticket, {
         headers: {
@@ -32,6 +30,6 @@ export function useTicketMutate() {
             console.error('Error adding ticket:', error);
         }
     })
-    
+
     return mutate;
 }

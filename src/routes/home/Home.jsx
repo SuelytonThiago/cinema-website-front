@@ -27,17 +27,17 @@ const Home = () => {
   }
 
   useEffect(() => {
-      const grouped = sessions.reduce((acc, session) => {
-          const dateKey = formatDate(new Date(session.dateStart)).formattedDate;
-          if (!acc[dateKey]) {
-              acc[dateKey] = [];
-          }
-          acc[dateKey].push(session);
-          return acc;
-      }, {});
-      setGroupedSessions(grouped);
+    const grouped = sessions.reduce((acc, session) => {
+      const dateKey = formatDate(new Date(session.dateStart)).formattedDate;
+      if (!acc[dateKey]) {
+        acc[dateKey] = [];
+      }
+      acc[dateKey].push(session);
+      return acc;
+    }, {});
+    setGroupedSessions(grouped);
 
-      const sortedGrouped = Object.keys(grouped)
+    const sortedGrouped = Object.keys(grouped)
       .sort((a, b) => {
         const dateA = new Date(a.split('/').reverse().join('/'));
         const dateB = new Date(b.split('/').reverse().join('/'));
@@ -48,8 +48,8 @@ const Home = () => {
         return acc;
       }, {});
 
-      setGroupedSessions(sortedGrouped);
-      
+    setGroupedSessions(sortedGrouped);
+
   }, [sessions]);
 
 
@@ -60,49 +60,49 @@ const Home = () => {
   return (
     <div>
       <div className='sessionFilterContainer'>
-          {Object.keys(groupedSessions).map(date => (
-              <div key={date}>
-                  <button 
-                  className={`filterBtn ${selectedDate === date ? 'selected' : ''}`}
-                  onClick={() => setSelectedDate(date)}>
-                      <div>{formatDate(new Date(date.split('/').reverse().join('/'))).dayOfWeek}</div>
-                      <div>{formatDate(new Date(date.split('/').reverse().join('/'))).formattedDate}</div>
-                  </button>
-              </div>
-          ))}
+        {Object.keys(groupedSessions).map(date => (
+          <div key={date}>
+            <button
+              className={`filterBtn ${selectedDate === date ? 'selected' : ''}`}
+              onClick={() => setSelectedDate(date)}>
+              <div>{formatDate(new Date(date.split('/').reverse().join('/'))).dayOfWeek}</div>
+              <div>{formatDate(new Date(date.split('/').reverse().join('/'))).formattedDate}</div>
+            </button>
+          </div>
+        ))}
       </div>
       {selectedDate && groupedSessions[selectedDate] && (
-          <div>
-              <h2>Sessões para {selectedDate}</h2>
-              <div className='sessionsContainer'>
-                {groupedSessions[selectedDate].map((session) => (
-                  <div className='session' key={session.id}>
-                    <div className='sessionImg'>
-                      <img src={session.imageUrl} alt={session.movieName} />
+        <div>
+          <h2>Sessões para {selectedDate}</h2>
+          <div className='sessionsContainer'>
+            {groupedSessions[selectedDate].map((session) => (
+              <div className='session' key={session.id}>
+                <div className='sessionImg'>
+                  <img src={session.imageUrl} alt={session.movieName} />
+                </div>
+                <div className='sessionInfoContainer'>
+                  <h2>{session.movieName}</h2>
+                  <div className='sessionInfo'>
+                    <div className='details'>
+                      <p>duração: {session.duration}</p>
+                      <StarRating rating={session.rating} />
                     </div>
-                    <div className='sessionInfoContainer'>
-                      <h2>{session.movieName}</h2>
-                      <div className='sessionInfo'>
-                        <div className='details'>
-                          <p>duração: {session.duration}</p>
-                          <StarRating rating={session.rating}/>
-                        </div>
-                        <div 
-                        className='btnSession'>
-                          <Link to={`/session/${session.id}`}
-                          className='ticketBtn' 
-                           onMouseEnter={() => setHoveredSessionId(session.id)}
-                           onMouseLeave={() => setHoveredSessionId(null)}>
-                            {hoveredSessionId === session.id ? "Comprar" : formatHours(new Date(session.dateStart))}
-                          </Link>
-                        </div>
-                      </div>
-
+                    <div
+                      className='btnSession'>
+                      <Link to={`/session/${session.id}`}
+                        className='ticketBtn'
+                        onMouseEnter={() => setHoveredSessionId(session.id)}
+                        onMouseLeave={() => setHoveredSessionId(null)}>
+                        {hoveredSessionId === session.id ? "Comprar" : formatHours(new Date(session.dateStart))}
+                      </Link>
                     </div>
                   </div>
-                ))}
+
+                </div>
               </div>
+            ))}
           </div>
+        </div>
       )}
     </div>
   )

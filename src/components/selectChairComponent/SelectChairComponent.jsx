@@ -4,10 +4,10 @@ import { useChairData } from '../../hooks/UseChairData';
 import formatDate from '../../js/formatDate';
 import formatHours from '../../js/formatHours';
 import { FaCalendarAlt } from 'react-icons/fa';
-import { FaClock } from 'react-icons/fa'; 
+import { FaClock } from 'react-icons/fa';
 
-const SelectChairComponent = ({ session, id, onChairSelect, chairId}) => {
-    const { data: chairsData} = useChairData(id);
+const SelectChairComponent = ({ session, id, onChairSelect, chairId }) => {
+    const { data: chairsData } = useChairData(id);
 
     const handleChairClick = (chairId) => {
         onChairSelect(chairId);
@@ -17,11 +17,11 @@ const SelectChairComponent = ({ session, id, onChairSelect, chairId}) => {
         <div className='ChairsInfoContainer'>
             <div className='sessionInfoTime'>
                 <div className='editDate'>
-                    <p><FaCalendarAlt/>  {formatDate(new Date(session.dateStart)).dayOfWeek}</p>
+                    <p><FaCalendarAlt />  {formatDate(new Date(session.dateStart)).dayOfWeek}</p>
                     <p>{formatDate(new Date(session.dateStart)).formattedDate}</p>
                 </div>
-                
-                <p className='editDate'><FaClock/> {formatHours(new Date(session.dateStart))}</p>
+
+                <p className='editDate'><FaClock /> {formatHours(new Date(session.dateStart))}</p>
             </div>
             <div className='chairsContainer'>
                 <div className='chairs'>

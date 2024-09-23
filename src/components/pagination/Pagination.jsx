@@ -11,7 +11,7 @@ const Pagination = ({ objectList }) => {
   const currentItems = objectList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   const goToFirstPage = () => {
-    setCurrentPage(1); 
+    setCurrentPage(1);
   };
 
   const goToLastPage = () => {
@@ -23,30 +23,30 @@ const Pagination = ({ objectList }) => {
   };
 
   const goToPreviousPage = () => {
-    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1)); 
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
   };
 
   return (
     <div>
       <div className='moviesResultContainer'>
         {currentItems.map((movie) => (
-          <MovieTemplate key={movie.id} movie={movie} /> 
+          <MovieTemplate key={movie.id} movie={movie} />
         ))}
       </div>
       {currentItems.length > 0 && (
         <div className='paginationControls'>
-          <button 
+          <button
             className='paginationBtn fixed'
-            onClick={goToFirstPage} 
+            onClick={goToFirstPage}
             disabled={currentPage === 1}
           >
             <FiChevronsLeft />
           </button>
 
-          <button 
-            className='paginationBtn' 
-            onClick={goToPreviousPage} 
-            disabled={currentPage === 1} 
+          <button
+            className='paginationBtn'
+            onClick={goToPreviousPage}
+            disabled={currentPage === 1}
           >
             {currentPage > 1 ? currentPage - 1 : null}
           </button>
@@ -54,17 +54,17 @@ const Pagination = ({ objectList }) => {
           <span className='paginationBtn atualPage'>{currentPage}</span>
 
           <button
-            className='paginationBtn' 
-            onClick={goToNextPage} 
+            className='paginationBtn'
+            onClick={goToNextPage}
             disabled={currentPage >= totalPages}
           >
             {currentPage < totalPages ? currentPage + 1 : null}
           </button>
 
           <button
-            className='paginationBtn fixed' 
-            onClick={goToLastPage} 
-            disabled={currentPage === totalPages} 
+            className='paginationBtn fixed'
+            onClick={goToLastPage}
+            disabled={currentPage === totalPages}
           >
             <FiChevronsRight />
           </button>

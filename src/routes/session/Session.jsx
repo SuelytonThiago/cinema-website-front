@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import './Session.css';
 import formatDate from '../../js/formatDate';
 import formatHours from '../../js/formatHours';
-import { FaCalendarAlt, FaUser, FaClock} from 'react-icons/fa';
+import { FaCalendarAlt, FaUser, FaClock } from 'react-icons/fa';
 import StarRating from '../../components/starRating/StarRating';
 import SelectChairComponent from '../../components/selectChairComponent/SelectChairComponent';
 import SelectTicket from '../../components/select-ticket/SelectTicket'
@@ -11,24 +11,27 @@ import { useSessionData } from '../../hooks/UseSessionData';
 import { useTicketMutate } from '../../hooks/UseTicketMutate';
 import { useNavigate } from 'react-router-dom';
 import LoginModal from '../login/LoginModal.jsx';
-
-import Cookies from 'js-cookie';
+import { useDispatch, useSelector } from 'react-redux';
+import { showLoginModal } from '../../redux/show-login-modal/actions.js';
 
 const Session = () => {
 
     const navigate = useNavigate();
     const { id } = useParams();
     const [showComponent, setShowComponent] = useState(true);
-    const [showViewLogin, setShowViewLogin] = useState(false);
     const [selectedChairId, setSelectedChairId] = useState(null);
     const [selectedTicket, setSelectedTicket] = useState(null);
 
-    const {data: sessionInfoData, isLoading, error} = useSessionData(id);
+    const { data: sessionInfoData, isLoading, error } = useSessionData(id);
+
+    const { isVisible } = useSelector((rootReducer) => rootReducer.loginModalReducer)
+    const { currentUser } = useSelector((rootReducer) => rootReducer.userReducer);
+    const dispatch = useDispatch();
 
     const mutation = useTicketMutate();
 
     const handleAddTicket = () => {
-        if(!!Cookies.get("accessToken")){
+        if (!!currentUser) {
             const sessionId = id;
             const price = selectedTicket?.price;
 
@@ -38,21 +41,16 @@ const Session = () => {
             navigate('/');
         }
         else {
-           setShowViewLogin(true);
+            dispatch(showLoginModal());
         }
     };
 
-    const handleLoginSuccess = () => {
-        setShowViewLogin(false);
-    }
-
-    
     const selectTicket = (ticket) => {
         setSelectedTicket(ticket)
     }
 
     const handleChairSelect = (id) => {
-        if(id === selectedChairId) {
+        if (id === selectedChairId) {
             setSelectedChairId(null)
         }
         else {
@@ -60,11 +58,11 @@ const Session = () => {
         }
     };
 
-    const next = () =>{
+    const next = () => {
         setShowComponent(false)
     }
 
-    const back = () =>{
+    const back = () => {
         setShowComponent(true)
         setSelectedTicket(null)
     }
@@ -72,11 +70,11 @@ const Session = () => {
     if (isLoading) {
         return <p>Loading...</p>;
     }
-    
+
     if (error) {
         return <p>Error: {error.message}</p>;
     }
-    
+
     if (!sessionInfoData) {
         return <p>No session data available</p>;
     }
@@ -86,10 +84,10 @@ const Session = () => {
             <div className='sessionInformations'>
                 <div className='entryRequesting'>
                     {showComponent ? (
-                            <SelectChairComponent id={id} session ={sessionInfoData} onChairSelect={handleChairSelect} chairId={selectedChairId}/>
-                        ) : (
-                            <SelectTicket selectTicket={selectTicket}/>
-                        )
+                        <SelectChairComponent id={id} session={sessionInfoData} onChairSelect={handleChairSelect} chairId={selectedChairId} />
+                    ) : (
+                        <SelectTicket selectTicket={selectTicket} />
+                    )
                     }
                 </div>
                 <div className='sessionRequestInformations'>
@@ -99,18 +97,18 @@ const Session = () => {
                             <img src={sessionInfoData.imageUrl} alt={sessionInfoData.movieName} />
                             <div>
                                 <p>{sessionInfoData.movieName}</p>
-                                <StarRating rating={sessionInfoData.rating}/>
+                                <StarRating rating={sessionInfoData.rating} />
                                 <p>duração {sessionInfoData.duration}</p>
                             </div>
                         </div>
                         <div className='chairInformations'>
-                            <div className = 'sessionTime'>
+                            <div className='sessionTime'>
                                 <p>{sessionInfoData.sessionName}</p>
                                 <div>
                                     <div className='editDate'>
-                                        <p><FaCalendarAlt/>{formatDate(new Date(sessionInfoData.dateStart)).dayOfWeek}</p>
+                                        <p><FaCalendarAlt />{formatDate(new Date(sessionInfoData.dateStart)).dayOfWeek}</p>
                                         <p>{formatDate(new Date(sessionInfoData.dateStart)).formattedDate}</p>
-                                        <p><FaClock/>{formatHours(new Date(sessionInfoData.dateStart))}</p>
+                                        <p><FaClock />{formatHours(new Date(sessionInfoData.dateStart))}</p>
                                     </div>
                                 </div>
                             </div>
@@ -133,23 +131,15 @@ const Session = () => {
                 </div>
             </div>
             <div className='sessionRequestControl'>
-                <button className='sessionControlBtn back'onClick={back}>Voltar</button>
+                <button className='sessionControlBtn back' onClick={back}>Voltar</button>
                 {showComponent ? (
-                    <button className={`sessionControlBtn next ${!selectedChairId  ? 'disabled' : ''}`} onClick={next} disabled={!selectedChairId}>Próximo</button>
-                ) : (   
-                    <button className ={`sessionControlBtn next ${!selectedTicket  ? 'disabled' : ''}`} onClick={handleAddTicket}>Finalizar</button>
+                    <button className={`sessionControlBtn next ${!selectedChairId ? 'disabled' : ''}`} onClick={next} disabled={!selectedChairId}>Próximo</button>
+                ) : (
+                    <button className={`sessionControlBtn next ${!selectedTicket ? 'disabled' : ''}`} onClick={handleAddTicket}>Finalizar</button>
                 )}
-                
+
             </div>
-            {showViewLogin && 
-                <div>
-                    <div className='overlay'></div>
-                    <div className='authenticationTab'>
-                    <div className='authenticationTitle'><FaUser/>Identificação</div>
-                        <LoginModal handleLoginSuccess={handleLoginSuccess}/>
-                    </div>
-                </div>
-            }
+            {isVisible && <LoginModal />}
         </div>
     );
 };

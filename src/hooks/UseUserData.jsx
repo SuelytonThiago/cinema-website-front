@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import axios from "axios";
 
 
-const getUserData = async() => {
+const getUserData = async () => {
     const accessToken = Cookies.get("accessToken");
     const response = await axios.get('http://localhost:8080/api/users', {
         headers: {

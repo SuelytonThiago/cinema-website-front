@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import './Register.css';
-import { AiFillEye, AiFillEyeInvisible, AiOutlineCheck   } from 'react-icons/ai';
+import { AiFillEye, AiFillEyeInvisible, AiOutlineCheck } from 'react-icons/ai';
 import InputMask from 'react-input-mask';
 import isValidCPF from '../../js/cpfValidation';
 import isValidContactNumber from '../../js/phoneValidation';
@@ -77,7 +77,7 @@ const Register = () => {
 
     if (Object.keys(validateErrors).length === 0) {
       try {
-        await axios.post('http://localhost:8080/api/users/create',user ,
+        await axios.post('http://localhost:8080/api/users/create', user,
           {
             headers: {
               'Content-Type': 'application/json',
@@ -107,7 +107,7 @@ const Register = () => {
               placeholder="* Digite seu nome"
               id="name"
               onChange={(e) => setName(e.target.value)}
-      
+
             />
             {errors.name && <div className='errorMessage'>{errors.name}</div>}
           </div>
@@ -160,10 +160,10 @@ const Register = () => {
           </div>
           <div>
             <p>Sua senha precisa atender aos seguintes critérios:</p>
-            <p><AiOutlineCheck className={ /[A-Z]/.test(password) ? 'checked' : ''}/> Mínimo uma letra minúscula *</p>
-            <p><AiOutlineCheck className={/[a-z]/.test(password) ? 'checked' : ''}/> Mínimo uma letra maiúscula *</p>
-            <p><AiOutlineCheck className={/[0-9]/.test(password) ? 'checked' : ''}/> Mínimo um número *</p>
-            <p><AiOutlineCheck className={password.length  >= 8 ? 'checked' : ''} /> Mínimo de 8 caracteres *</p>
+            <p><AiOutlineCheck className={/[A-Z]/.test(password) ? 'checked' : ''} /> Mínimo uma letra minúscula *</p>
+            <p><AiOutlineCheck className={/[a-z]/.test(password) ? 'checked' : ''} /> Mínimo uma letra maiúscula *</p>
+            <p><AiOutlineCheck className={/[0-9]/.test(password) ? 'checked' : ''} /> Mínimo um número *</p>
+            <p><AiOutlineCheck className={password.length >= 8 ? 'checked' : ''} /> Mínimo de 8 caracteres *</p>
           </div>
           <div className={errors.name ? 'inputError' : 'registerFormControl'}>
             <label htmlFor="confirmPassword">Confirmar senha</label>

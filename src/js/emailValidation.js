@@ -1,8 +1,8 @@
-const isValidEmail = (email) =>{
+const isValidEmail = (email) => {
     const emailRegext = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/
 
-    if(!email) return false;
-    if(!emailRegext.test(email)) return false;
+    if (!email) return false;
+    if (!emailRegext.test(email)) return false;
 
     return true;
 }

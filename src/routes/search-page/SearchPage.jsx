@@ -3,36 +3,35 @@ import { useState } from 'react'
 import './SearchPage.css'
 import { FaTimes } from 'react-icons/fa'
 import Pagination from '../../components/pagination/Pagination'
-import { useMovieData } from '../../hooks/UseMovieData'
+import { useMovieData } from '../../hooks/UseMoviesData'
 
 
 const SearchPage = () => {
   const [name, setName] = useState('');
-  const {data: moviesData = []} = useMovieData(name);
-  
-  const cleanName = () =>{
+  const { data: moviesData = [] } = useMovieData(name);
+
+  const cleanName = () => {
     setName("");
   }
   return (
     <div>
       <div className='inputContainer'>
-        <input type="text" 
-        id='search'
-        name='search'
-        placeholder='Buscar...'
-        value = {name}
-        onChange={(e) => setName(e.target.value)}
-        autoComplete='off'/>
+        <input type="text"
+          id='search'
+          name='search'
+          placeholder='Buscar...'
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          autoComplete='off' />
         {
-          name &&  
+          name &&
           <button className='inputBtn' onClick={cleanName}>
-            <FaTimes/>
+            <FaTimes />
           </button>
         }
       </div>
-      {console.log('moviesData:', moviesData, 'Type:', typeof moviesData)}
 
-      <Pagination objectList={moviesData}/>
+      <Pagination objectList={moviesData} />
     </div>
   )
 }

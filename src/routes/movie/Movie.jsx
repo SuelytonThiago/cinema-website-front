@@ -1,94 +1,78 @@
-import React from 'react'
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import './Movie.css';
-import { FiUser } from 'react-icons/fi';
-
+import RateMovie from '../../components/starRating/RateMovie';
 import StarRating from '../../components/starRating/StarRating';
+import { useSelector } from 'react-redux';
+import LoginModal from '../login/LoginModal';
+import { useGetMovieData } from '../../hooks/useGetMovieData';
 
 const Movie = () => {
-
     const { id } = useParams();
-    const [movie, setMovie] = useState({});
+    const { isVisible } = useSelector((rootReducer) => rootReducer.loginModalReducer);
+    const { data: movieData, error } = useGetMovieData(id);
 
-    const getMovieInfo = async () => {
-        try {
-            const response = await axios.get(`http://localhost:8080/api/movies/${id}`);
-            const data = response.data;
-            setMovie(data);
-
-        } catch (error) {
-            console.log(error);
-        }
+    if (error) {
+        return <p>Erro ao carregar os dados do filme.</p>;
     }
 
-    useEffect(() => {
-        getMovieInfo();
-    }, []);
-
+    if (!movieData) {
+        return <p>Carregando...</p>;
+    }
 
     return (
         <div className="movieContainer">
-            {!movie.name ? (
-                <p>Carregando...</p>
-            ) : (
-                <div className="movie">
-                    <div className='movieHeader'>
-                        <div>
-                            <img src={movie.imageUrl} alt={movie.name} />
-                        </div>
-                        <div className ='infoContainer'>
-                            <div className='infoHeader'>
-                                <div>
-                                    <h2>{movie.name}</h2>
-                                    <StarRating rating={movie.rating}/>
-                                    <p>data de lançamento: {movie.releaseData}</p>
-                                </div>
-                                <div>
-                                    <h3>Sinopse</h3>
-                                    <p>{movie.description}</p>
-                                </div>
-                            </div>
-                            <div className='linkSessionContainer'>
-                                <Link className="buyTicketBtn">Comprar ingresso</Link>
-                            </div>
-                        </div>
-                    </div>
+            <div className="movie">
+                <div className='movieHeader'>
                     <div>
-                        <p>seu comentário</p>
-                        <form action="">
-                            <input type="text" />
-                            <input type="submit"  value='Enviar'/>
-                        </form>
+                        <img src={movieData.imageUrl} alt={movieData.name} />
                     </div>
-                   
-                    <div className="commentsContainer">
-                        {movie.reviews.length === 0 ? (
-                            <p>Nenhum Comentário</p>
-                        ) : (
-                            movie.reviews.map((review) => (
-                                <div key={review.id} className="review">
-                                    <FiUser className='userIcon'/>
-                                    <div className='reviewInfo'>
-                                        <div className = 'reviewUserInfo'>
-                                            <h4>{review.userName}</h4>
-                                            <StarRating rating={review.rating}/>
-                                        </div>
-                                        <div classNname= 'commentInfo'>
-                                            <p>{review.comment}</p>
-                                            <p className='date'>{review.date}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))
-                        )}
+                    <div className='infoContainer'>
+                        <div className='infoHeader'>
+                            <div>
+                                <h2>{movieData.name}</h2>
+                                <StarRating rating={movieData.rating} />
+                                <p>Data de lançamento: {movieData.releaseData}</p>
+                            </div>
+                            <div>
+                                <h3>Sinopse</h3>
+                                <p>{movieData.description}</p>
+                            </div>
+                        </div>
+                        <div className='linkSessionContainer'>
+                            <Link className="buyTicketBtn">Comprar ingresso</Link>
+                        </div>
                     </div>
                 </div>
-            )}
+                <div className='commentUserData'>
+                    <RateMovie id={id} />
+                </div>
+                <div className="commentsContainer">
+                    {movieData.reviews.length === 0 ? (
+                        <p>Nenhum Comentário</p>
+                    ) : (
+                        movieData.reviews.map((review) => (
+                            <div key={review.id} className="review">
+                                <img className='userIcon' src={review.profileImgUser} alt={review.userName} />
+                                <div className='reviewInfo'>
+                                    <div className='reviewUserInfo'>
+                                        <h4>{review.userName}</h4>
+                                        <StarRating rating={review.rating} />
+                                    </div>
+                                    <div className='commentInfo'>
+                                        <p>{review.comment}</p>
+                                        <p className='date'>{review.date}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                    )}
+                </div>
+            </div>
+            {isVisible && <LoginModal />}
         </div>
-    )
-}
+    );
+};
 
-export default Movie
+export default Movie;

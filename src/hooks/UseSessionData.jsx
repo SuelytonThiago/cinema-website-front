@@ -11,6 +11,6 @@ export function useSessionData(id) {
         queryFn: () => getSessionInfo(id),
         queryKey: ['session-data', id],
         enabled: !!id,
-        retry: 1,       
+        retry: 1,
     });
 }
