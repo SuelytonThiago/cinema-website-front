@@ -1,48 +1,44 @@
 import React from 'react'
-import axios from 'axios';
 import { useState, useEffect } from 'react';
 import "./Home.css";
-import { Link } from 'react-router-dom';
-import StarRating from '../../components/starRating/StarRating';
 import formatDate from '../../js/formatDate';
+
+import { useSessionsData } from '../../hooks/UseSessionsData';
+import StarRating from '../../components/starRating/StarRating';
+import { Link } from 'react-router-dom';
 import formatHours from '../../js/formatHours';
+import getDayOfWeek from '../../js/getDayOfWeek';
+
 
 const Home = () => {
 
   const [hoveredSessionId, setHoveredSessionId] = useState(null);
-  const [sessions, setSessions] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
   const [groupedSessions, setGroupedSessions] = useState({});
 
-  const getSessions = async () => {
-    try {
-      const response = await axios.get("http://localhost:8080/api/sessions");
-
-      const data = response.data;
-      setSessions(data);
-
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  const { data: sessionsData = [], isLoading, error } = useSessionsData();
 
   useEffect(() => {
-    const grouped = sessions.reduce((acc, session) => {
-      const dateKey = formatDate(new Date(session.dateStart)).formattedDate;
+    const grouped = sessionsData.reduce((acc, session) => {
+      const dateKey = new Date(session.dateStart).toISOString().split('T')[0];
+      const dayOfWeek = getDayOfWeek(session.dateStart); 
+
       if (!acc[dateKey]) {
-        acc[dateKey] = [];
+        acc[dateKey] = {
+          day: dayOfWeek, 
+          sessions: [], 
+        };
       }
-      acc[dateKey].push(session);
+
+      acc[dateKey].sessions.push(session);
+
       return acc;
     }, {});
+
     setGroupedSessions(grouped);
 
     const sortedGrouped = Object.keys(grouped)
-      .sort((a, b) => {
-        const dateA = new Date(a.split('/').reverse().join('/'));
-        const dateB = new Date(b.split('/').reverse().join('/'));
-        return dateA - dateB;
-      })
+      .sort((a, b) => new Date(a) - new Date(b))
       .reduce((acc, key) => {
         acc[key] = grouped[key];
         return acc;
@@ -50,12 +46,15 @@ const Home = () => {
 
     setGroupedSessions(sortedGrouped);
 
-  }, [sessions]);
+    if (selectedDate === null && Object.keys(sortedGrouped).length > 0) {
+      setSelectedDate(Object.keys(sortedGrouped)[0]);
+    }
+
+  }, [sessionsData]);
 
 
-  useEffect(() => {
-    getSessions();
-  }, []);
+  if (isLoading) return <div>Carregando...</div>;
+  if (error) return <div>Erro ao carregar as sessões</div>;
 
   return (
     <div>
@@ -65,7 +64,7 @@ const Home = () => {
             <button
               className={`filterBtn ${selectedDate === date ? 'selected' : ''}`}
               onClick={() => setSelectedDate(date)}>
-              <div>{formatDate(new Date(date.split('/').reverse().join('/'))).dayOfWeek}</div>
+              <div>{getDayOfWeek(date.split('/').reverse().join('/'))}</div>
               <div>{formatDate(new Date(date.split('/').reverse().join('/'))).formattedDate}</div>
             </button>
           </div>
@@ -75,7 +74,7 @@ const Home = () => {
         <div>
           <h2>Sessões para {selectedDate}</h2>
           <div className='sessionsContainer'>
-            {groupedSessions[selectedDate].map((session) => (
+            {groupedSessions[selectedDate].sessions.map((session) => (
               <div className='session' key={session.id}>
                 <div className='sessionImg'>
                   <img src={session.imageUrl} alt={session.movieName} />

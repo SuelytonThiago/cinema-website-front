@@ -72,11 +72,11 @@ const RateMovie = ({ id }) => {
               <form className='commentUserForm' onSubmit={handleAddRating}>
                 <input
                   type="text"
-                  value={comment} 
+                  value={currentUser ? comment : ''} 
                   placeholder='adicione sua avaliação sobre o filme'
                   onChange={(e) => setComment(e.target.value)}
                 />
-                <input type="submit" value={reviewUser ? 'Salvar' : 'Enviar'} />
+                <input type="submit" value={currentUser ? 'Salvar' : 'Publicar'} />
               </form>
             </>
           )}

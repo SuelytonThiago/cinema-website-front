@@ -1,0 +1,62 @@
+.session {
+    display: flex;
+    height: auto;
+    background-color: #17191f;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.sessionInfoContainer {
+    width: 100%;
+}
+
+.sessionTimes {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sessionRoom {
+    text-transform: uppercase;
+}
+
+.sessionDetails {
+    border-bottom: 1px solid #fff;
+    padding-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.sessionInfo {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    height: 70%;
+}
+
+.details {
+    flex-grow: 1;
+
+}
+
+.btnSession {
+    flex-grow: 2;
+
+}
+
+.ticketsContainer {
+    display: flex;
+    gap: 10px;
+    font-size: 15px;
+    padding: 1rem 0;
+}
+
+.ticketsContainer p {
+    background-color:#1262da ;
+    color: #ffffff;
+    padding: .1rem;
+    border-radius: 5px;
+}

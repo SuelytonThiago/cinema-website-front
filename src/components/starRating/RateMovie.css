@@ -38,16 +38,39 @@
     max-width: 50px;
     height: auto;
     border-radius: 50%;
+    font-size: 40px;
 }
 
 .commentUserForm{
     padding: .5rem 0;
     color: #fff;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
 }
 
-.commentUserForm input[type= "textarea"]{
+.commentUserForm input[type= "text"]{
     background-color: #ffffff;
     border: none;
+    width: 400px;
+    height: 40px;
+    border-radius: 25px;
+    padding: 0 .5rem;
+}
+
+.commentUserForm input[type= "submit"]{
+    background-color: transparent;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+    color: #fff;
+    opacity: .7;
+    transition: .3s;
+}
+
+.commentUserForm input[type= "submit"]:hover {
+    opacity: 1;
+    color: #1262da;
 }
 
 .editBtn{

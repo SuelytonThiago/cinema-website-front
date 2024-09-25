@@ -1,13 +1,16 @@
 .movieHeader {
     display: flex;
-    
     gap: 1rem;
+}
+
+.movieHeaderImg img{
+    max-width: 220px;
+    height: auto;
 }
 
 .infoContainer {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
 }
 
 .infoHeader{
@@ -28,31 +31,38 @@
     text-align: center;
 }
 
-.review {
+.sessionsMovieContainer {
+    
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    
+}
+
+.sessionsMovieContainer{
     background-color: #17191f;
-    padding: 1rem;
+}
+
+.btnMovieContainer{
     display: flex;
-    gap: 1rem;
+    gap: 10px;
+    background-color: #17191f;
+    border-bottom: 3px solid #c7baba2c;
 }
 
-.userIcon {
-    background-color: #fff;
-    color: #000;
-    font-size: 100px;
-    border-radius: 50%;
+.btnMovieInfoControl{
+    background-color: transparent;
+    color: #fff;
+    border: none;
+    font-size: 20px;
+    padding: .5rem;
+    position: relative;
+    cursor: pointer;
 }
 
-.reviewUserInfo {
-    display: flex;
-    gap: 1rem;
-    text-transform: uppercase;
-}
-
-.commentInfo p{ 
-    font-size: 15px;
-}
-
-.date{
-    font-size: 12px;
+.isVisible{
+    border-bottom: 3px solid #1262da ;
+    margin-bottom: -3px;
+    font-weight: bold;
 }
 

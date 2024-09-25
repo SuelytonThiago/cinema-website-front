@@ -10,6 +10,7 @@ import SearchPage from './routes/search-page/SearchPage.jsx'
 import Movie from './routes/movie/Movie.jsx'
 import Session from './routes/session/Session.jsx'
 import CategoryMovies from './routes/category-movies/CategoryMovies.jsx'
+
 import {QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import { createBrowserRouter, RouterProvider, Route } from 'react-router-dom';
@@ -48,7 +49,7 @@ const router = createBrowserRouter([
       {
         path:"/category-movies",
         element:<CategoryMovies/>
-      }
+      },
     ]
   }
 ])

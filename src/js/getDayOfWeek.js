@@ -1,5 +1,6 @@
-const getDayOfWeek = (date) => {
-  const daysOfWeek = ['SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SAB', 'DOM'];
+const getDayOfWeek = (dateString) => {
+  const date = new Date(dateString)
+  const daysOfWeek = [ 'DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SAB'];
   return daysOfWeek[date.getDay()];
 };
 

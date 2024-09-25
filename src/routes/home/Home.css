@@ -21,51 +21,16 @@
     color: #fff;
 }
 
-.sessionsContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-
-.session {
-    display: flex;
-    height: auto;
-    background-color: #17191f;
-    gap: 1rem;
-    padding: .5rem;
-    border-radius: 5px;
-}
-
 .sessionImg img {
     width: 200px;
     border-radius: 5px;
 }
 
-.sessionInfoContainer {
-    width: 100%;
-}
 
-.sessionInfoContainer h2 {
-    border-bottom: 1px solid #fff;
-    padding-bottom: 1rem;
-}
-
-.sessionInfo {
-    margin-top: 1rem;
+.sessionsContainer {
     display: flex;
     flex-direction: column;
-    height: 70%;
-}
-
-.details {
-    flex-grow: 1;
-
-}
-
-.btnSession {
-    flex-grow: 2;
-
+    gap: 1rem;
 }
 
 .ticketBtn {

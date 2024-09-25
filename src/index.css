@@ -9,7 +9,7 @@
 }
 
 body{
-  background:  linear-gradient(to bottom, black, gray);;
+  background:  linear-gradient(to bottom, black, gray);
   color: #fff;
   min-height: 100vh;
 }
