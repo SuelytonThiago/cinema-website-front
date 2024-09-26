@@ -1,12 +1,44 @@
-.movieInfoContainer{
+.movieContainer {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+  }
+  
+  .movieInfoContainer {
     max-width: 200px;
     text-align: center;
-}
-
-.movieImg img {
+    margin: 0 auto;
+  }
+  
+  .movieImg img {
     width: 100%;
-}
-
-.movieInfo p{
+    height: 300px; /* Defina uma altura fixa para todas as imagens */
+    object-fit: cover; /* Garante que a imagem ocupe o container sem distorção */
+    border-radius: 8px; /* Bordas arredondadas */
+  }
+  
+  
+  .movieInfo h2 {
+    font-size: 18px;
+    margin: 10px 0;
+  }
+  
+  .movieInfo p {
     font-size: 13px;
-}
+  }
+  
+  .movieInfo a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #007BFF;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .movieInfo a:hover {
+    background-color: #0056b3;
+  }
+  

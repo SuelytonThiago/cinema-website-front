@@ -1,0 +1,50 @@
+.userDataControl{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-width: 350px;
+    height: 80vh;
+    background-color: #17191f;
+    padding: 2rem 0 2rem 2rem;
+}
+
+.userDataLinks{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: space-around;
+}
+
+.userDataBtn {
+    background-color: #4f535f;
+    padding: .5rem;
+    border: none;
+    border-radius: 25px 0 0 25px;
+    color: #fff;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.userDataOutBtn{
+    background-color: transparent;
+    color: #1877F2;
+    border: none;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    opacity: .78;
+    transition: .3s;
+}
+
+.userDataOutBtn:hover {
+    opacity: 1;
+}
+
+.activatebtnSS{
+    background-color: #1877F2;
+}

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import './Movie.css';
 import RateMovie from '../../components/starRating/RateMovie';
 import StarRating from '../../components/starRating/StarRating';
@@ -11,6 +10,7 @@ import { useSessionsByMovie } from '../../hooks/UseSessionsByMovie';
 import CommentTemplate from '../../components/comments-template/CommentTemplate';
 import SessionTemplate from '../../components/session-template/SessionTemplate';
 import formatDate from '../../js/formatDate';
+import classificationMovie from '../../js/Classification.js'
 
 const Movie = () => {
     const { id } = useParams();
@@ -18,6 +18,12 @@ const Movie = () => {
     const { data: movieData, error } = useGetMovieData(id);
     const { data: sessionsMovieData = [] } = useSessionsByMovie(id);
     const [showSessions, setShowSessions] = useState(false);
+
+    const [isExpanded, setIsExpanded] = useState(false);
+
+    const toggleDescription = () => {
+        setIsExpanded(!isExpanded);
+    };
 
     if (error) {
         return <p>Erro ao carregar os dados do filme.</p>;
@@ -65,9 +71,23 @@ const Movie = () => {
                                 <StarRating rating={movieData.rating} />
                                 <p>Data de lançamento: {movieData.releaseData}</p>
                             </div>
+                            <div className='categoriesFilm'>
+                                {movieData.categories.map((category) => (
+                                    <p key={category.name}>{category.name}</p>
+                                ))}
+                            </div>
+                            <div className='classificationControl'>
+                                classificação: <p className ={`classificationMovie ${classificationMovie(movieData.classification)}`}>{movieData.classification}</p>
+                            </div>
                             <div>
                                 <h3>Sinopse</h3>
-                                <p>{movieData.description}</p>
+                                <p className={isExpanded ? 'showFullDescript' : 'description'}>
+                                    {movieData.description}
+                                </p>
+
+                                <button className = 'showDescrptBtn'onClick={toggleDescription}>
+                                    {isExpanded ? 'Ler menos' : 'Ler mais'}
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -79,7 +99,7 @@ const Movie = () => {
                 {showSessions ? (
                     <div className='sessionsMovieContainer'>
                         <div className='Sessoes'>
-                            {groupSessionsByDate(sessionsMovieData).length === 0 ? ( 
+                            {groupSessionsByDate(sessionsMovieData).length === 0 ? (
                                 <p>Nenhuma sessão encontrada para este filme.</p>
                             ) : (
                                 groupSessionsByDate(sessionsMovieData).map(group => (

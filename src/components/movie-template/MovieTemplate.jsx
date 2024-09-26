@@ -6,7 +6,7 @@ import StarRating from './../starRating/StarRating'
 const MovieTemplate = ({ movie }) => {
   return (
     <div>
-      <div className="movieContainer" key={movie.id}>
+      <div className="movieContainer" >
         <div className="movieInfoContainer">
           <div className="movieImg">
             <img src={movie.imageUrl} alt={movie.name} />

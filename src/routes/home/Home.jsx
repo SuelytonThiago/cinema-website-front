@@ -35,8 +35,6 @@ const Home = () => {
       return acc;
     }, {});
 
-    setGroupedSessions(grouped);
-
     const sortedGrouped = Object.keys(grouped)
       .sort((a, b) => new Date(a) - new Date(b))
       .reduce((acc, key) => {

@@ -28,11 +28,13 @@ const menu = ({ user }) => {
     const logOut = () => {
         Cookie.set('accessToken', '', { path: '/' });
         dispatch(logoutUser());
+        navigate("/")
     }
 
     const closeMenu = () => {
         setIsOpen(false)
     }
+
 
     return (
         <div className={`menuContainer ${isOpen ? 'active' : ''}`}>
@@ -47,12 +49,12 @@ const menu = ({ user }) => {
                     <div className='overlay' onClick={() => closeMenu()}></div>
                     <ul className='menuItems'>
                         <li >
-                            <Link className='menuItem'>
+                            <Link className='menuItem' to={'/user/data'} onClick={() => setIsOpen(false)}>
                                 <FaPen /> Meus dados
                             </Link>
                         </li>
                         <li >
-                            <Link className='menuItem'>
+                            <Link className='menuItem' to={'/user/data'} onClick={() => setIsOpen(false)}>
                                 <FaTicketAlt /> Meus ingressos
                             </Link>
                         </li>
