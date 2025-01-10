@@ -52,7 +52,7 @@ const router = createBrowserRouter([
         element:<CategoryMovies/>
       },
       {
-        path: "/user/data",
+        path: "/user/data/:section",
         element:<UserData/>,
       },
     ]

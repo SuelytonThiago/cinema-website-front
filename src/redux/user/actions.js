@@ -6,6 +6,19 @@ export const loginUser = (payload) => ({
 });
 
 export const logoutUser = () => ({
-    type: UserActionTypes.LOGIN,
+    type: UserActionTypes.LOGOUT,
     payload: null,
 });
+
+export const updateUser = () => ({
+    type: UserActionTypes.SET_USER_DATA,
+    payload,
+})
+
+export const updateProfileImage = (profileImg) => {
+    return {
+      type: UserActionTypes.UPDATE_PROFILE_IMG,
+      payload: profileImg,
+    };
+  };
+

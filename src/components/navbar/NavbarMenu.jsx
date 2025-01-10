@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux'
 import { logoutUser } from '../../redux/user/actions'
 
 import { useNavigate } from 'react-router-dom'
+import useLogout from '../../js/Logout'
 
 
 const menu = ({ user }) => {
@@ -25,15 +26,15 @@ const menu = ({ user }) => {
         setIsOpen(!isOpen)
     }
 
-    const logOut = () => {
-        Cookie.set('accessToken', '', { path: '/' });
-        dispatch(logoutUser());
-        navigate("/")
-    }
-
     const closeMenu = () => {
         setIsOpen(false)
     }
+
+    const logout = useLogout();
+
+    const handleLogoutClick = () => {
+        logout();
+    };
 
 
     return (
@@ -49,19 +50,19 @@ const menu = ({ user }) => {
                     <div className='overlay' onClick={() => closeMenu()}></div>
                     <ul className='menuItems'>
                         <li >
-                            <Link className='menuItem' to={'/user/data'} onClick={() => setIsOpen(false)}>
+                            <Link className='menuItem' to={`/user/data/${'meus-dados'}`} onClick={() => setIsOpen(false)}>
                                 <FaPen /> Meus dados
                             </Link>
                         </li>
                         <li >
-                            <Link className='menuItem' to={'/user/data'} onClick={() => setIsOpen(false)}>
+                            <Link className='menuItem' to={`/user/data/${'meus-ingressos'}`} onClick={() => setIsOpen(false)}>
                                 <FaTicketAlt /> Meus ingressos
                             </Link>
                         </li>
                         <li >
                             <button
                                 className='outBtn'
-                                onClick={() => logOut()}>
+                                onClick={handleLogoutClick}>
                                 <FaTimes /> Sair
                             </button>
                         </li>

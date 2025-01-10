@@ -1,18 +1,35 @@
 import UserActionTypes from "./action-types";
 
 const initialState = {
-    currentUser: null,
+    currentUser: {
+        name: '',
+        email: '',
+        cpf: '',
+        contactNumber: '',
+        password: '',
+        profileImg: '',
+      },
 };
 
 const userReducer = (state = initialState, action) => {
-    switch (action.type){
+    switch (action.type) {
         case UserActionTypes.LOGIN:
             return { ...state, currentUser: action.payload }
-        case UserActionTypes.LOGOUT: 
+        case UserActionTypes.LOGOUT:
             return { ...state, currentUser: null }
+        case UserActionTypes.SET_USER_DATA:
+            return { ...state, currentUser: action.payload };
+        case UserActionTypes.UPDATE_PROFILE_IMG:
+            return {...state,
+                currentUser: {
+                    ...state.currentUser,
+                    profileImg: action.payload, 
+                },
+            };
+
         default:
-            return state
+            return state;
     }
-}
+};
 
 export default userReducer;

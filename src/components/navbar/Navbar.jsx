@@ -5,8 +5,9 @@ import Menu from './NavbarMenu.jsx'
 import { useSelector } from 'react-redux';
 
 const Navbar = () => {
+    
     const { currentUser } = useSelector((rootReducer) => rootReducer.userReducer);
-
+    
     return (
         <div>
             <nav className='navbarContainer'>

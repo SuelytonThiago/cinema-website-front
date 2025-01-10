@@ -33,8 +33,10 @@ const Movie = () => {
         return <p>Carregando...</p>;
     }
 
-    const toggleShowSessions = () => {
-        setShowSessions(prevState => !prevState);
+    const toggleShowSessions = (shouldShowSessions) => {
+        if (shouldShowSessions !== showSessions) {
+            setShowSessions(shouldShowSessions);
+        }
     }
 
     const groupSessionsByDate = (sessions) => {
@@ -93,8 +95,8 @@ const Movie = () => {
                     </div>
                 </div>
                 <div className='btnMovieContainer'>
-                    <button className={`btnMovieInfoControl ${showSessions ? 'isVisible' : ''}`} onClick={toggleShowSessions}>Sessoes</button>
-                    <button className={`btnMovieInfoControl ${!showSessions ? 'isVisible' : ''}`} onClick={toggleShowSessions}>Comentários</button>
+                    <button className={`btnMovieInfoControl ${showSessions ? 'isVisible' : ''}`} onClick={() => toggleShowSessions(true)}>Sessoes</button>
+                    <button className={`btnMovieInfoControl ${!showSessions ? 'isVisible' : ''}`} onClick={() => toggleShowSessions(false)}>Comentários</button>
                 </div>
                 {showSessions ? (
                     <div className='sessionsMovieContainer'>
