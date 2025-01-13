@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import './LoginForm.css';
 import { useLoginMutate } from '../../hooks/UseLoginMutate.jsx';
+import { Link } from 'react-router-dom';
 
 const LoginForm = ({ onSuccess }) => {
   const [email, setEmail] = useState('');
@@ -49,7 +50,7 @@ const LoginForm = ({ onSuccess }) => {
       {mutation.isError && <div className='serverErrorMessage'>Email ou senha inválidos</div>}
       <form onSubmit={handleLoginUser} className='signinForm'>
         <div className='signinFormControl'>
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email"></label>
           <input
             type="text"
             placeholder="Digite um email"
@@ -60,7 +61,7 @@ const LoginForm = ({ onSuccess }) => {
           {errors.email && <div className='errorMessage'>{errors.email}</div>}
         </div>
         <div className='signinFormControl'>
-          <label htmlFor="password">Senha</label>
+          <label htmlFor="password"></label>
           <div className='passwordInput'>
             <input
               type={show ? 'text' : 'password'}
@@ -75,7 +76,13 @@ const LoginForm = ({ onSuccess }) => {
           </div>
           {errors.password && <div className='errorMessage'>{errors.password}</div>}
         </div>
+        <Link to={`/recover`}>
+          <p class="forgoutPass">esqueceu sua senha?</p>
+        </Link>
         <input type="submit" value="Entrar" className='signin-btn' />
+        <div className='register-link-btn'>
+          <p>Ainda não tem uma conta? <span><Link to={"/register"} className='regislink'>Cadastre-se agora</Link></span></p>
+        </div>
       </form>
     </div>
   );

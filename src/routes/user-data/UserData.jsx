@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './UserData.css';
 import { FaTicketAlt, FaIdCard, FaSignOutAlt, FaPen } from 'react-icons/fa';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useUserDataMutation } from '../../hooks/UseUserDataMutate';
 import useLogout from '../../js/Logout.js'
 import InputMask from 'react-input-mask'
@@ -75,7 +75,7 @@ const UserData = () => {
                 console.log("Imagem enviada com sucesso!");
 
             },
-            onError: (error) => {   
+            onError: (error) => {
                 toast.error(`Erro ao enviar imagem: ${error.message || "Algo deu errado."}`);
             },
         });
@@ -185,7 +185,9 @@ const UserData = () => {
                                 disabled
                                 value='***********' />
                         </div>
-                        <button className='changePassBtn'>alterar senha</button>
+                        <Link className='searchBtn' to={`/recover`}>
+                            <p className='changePassBtn'>alterar senha</p>
+                        </Link> 
                     </div>
 
                 </div>

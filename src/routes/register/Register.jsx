@@ -1,14 +1,14 @@
 import React from 'react';
 import { useState } from 'react';
 import './Register.css';
-import { AiFillEye, AiFillEyeInvisible, AiOutlineCheck } from 'react-icons/ai';
+import { AiFillEye, AiFillEyeInvisible, AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
 import InputMask from 'react-input-mask';
 import isValidCPF from '../../js/cpfValidation';
 import isValidContactNumber from '../../js/phoneValidation';
 import isValidEmail from '../../js/emailValidation';
 import isValidName from '../../js/nameValidation';
 import isValidPassword from '../../js/passwordValidation';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Register = () => {
@@ -93,95 +93,99 @@ const Register = () => {
 
   return (
     <>
-      <div className='registerContainer'>
-        <div>
-          {serverError && <div className='serverErrorMessage'>{serverError}</div>}
-        </div>
-        <form onSubmit={(e) => createUser(e)} className='registerForm'>
-          <h2>Cadastre-se</h2>
-          <p>Campos obrigatórios *</p>
-          <div className={errors.name ? 'inputError' : 'registerFormControl'}>
-            <label htmlFor="name">Nome</label>
-            <input
-              type="text"
-              placeholder="* Digite seu nome"
-              id="name"
-              onChange={(e) => setName(e.target.value)}
-
-            />
-            {errors.name && <div className='errorMessage'>{errors.name}</div>}
-          </div>
-          <div className={errors.name ? 'inputError' : 'registerFormControl'}>
-            <label htmlFor="email">Email</label>
-            <input
-              type="text"
-              placeholder="* Digite um email"
-              id="email"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            {errors.email && <div className='errorMessage'>{errors.email}</div>}
-          </div>
-          <div className={errors.name ? 'inputError' : 'registerFormControl'}>
-            <label htmlFor="cpf">CPF</label>
-            <InputMask
-              mask='999.999.999-99'
-              placeholder='* Digite seu CPF'
-              id='cpf'
-              onChange={(e) => setCpf(e.target.value)}
-              className='inputMask'
-            />
-            {errors.cpf && <div className='errorMessage'>{errors.cpf}</div>}
-          </div>
-          <div className={errors.name ? 'inputError' : 'registerFormControl'}>
-            <label htmlFor="contactNumber">Telefone</label>
-            <InputMask
-              mask='(99)99999-9999'
-              placeholder="* Digite seu telefone"
-              id="contactNumber"
-              onChange={(e) => setContactNumber(e.target.value)}
-              className='inputMask'
-            />
-            {errors.contactNumber && <div className='errorMessage'>{errors.contactNumber}</div>}
-          </div>
-          <div className={errors.name ? 'inputError' : 'registerFormControl'}>
-            <label htmlFor="password">Senha</label>
-            <div className='passwordInput'>
-              <input
-                type={show ? 'text' : 'password'}
-                placeholder="* Digite uma senha"
-                id="password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <button onClick={(e) => handleTogglePassword(e)}>
-                {show ? <AiFillEyeInvisible size={22} /> : <AiFillEye size={22} />}
-              </button>
-            </div>
-            {errors.password && <div className='errorMessage'>{errors.password}</div>}
-          </div>
+      <div className='backgroundRegisterContainer'>
+        <button class="crossBtn"> <Link to={'/'}><AiOutlineClose/></Link></button>
+        <div className='registerContainer'>
           <div>
-            <p>Sua senha precisa atender aos seguintes critérios:</p>
-            <p><AiOutlineCheck className={/[A-Z]/.test(password) ? 'checked' : ''} /> Mínimo uma letra minúscula *</p>
-            <p><AiOutlineCheck className={/[a-z]/.test(password) ? 'checked' : ''} /> Mínimo uma letra maiúscula *</p>
-            <p><AiOutlineCheck className={/[0-9]/.test(password) ? 'checked' : ''} /> Mínimo um número *</p>
-            <p><AiOutlineCheck className={password.length >= 8 ? 'checked' : ''} /> Mínimo de 8 caracteres *</p>
+            {serverError && <div className='serverErrorMessage'>{serverError}</div>}
           </div>
-          <div className={errors.name ? 'inputError' : 'registerFormControl'}>
-            <label htmlFor="confirmPassword">Confirmar senha</label>
-            <div className='passwordInput'>
+          <form onSubmit={(e) => createUser(e)} className='registerForm'>
+            <h2>Cadastre-se</h2>
+            <p>Campos obrigatórios *</p>
+            <div className={errors.name ? 'inputError' : 'registerFormControl'}>
+              <label htmlFor="name">Nome</label>
               <input
-                type={show ? 'text' : 'password'}
-                placeholder='* Repita a senha'
-                id="confirmPassword"
-                onChange={(e) => setConfirm(e.target.value)}
+                type="text"
+                placeholder="* Digite seu nome"
+                id="name"
+                onChange={(e) => setName(e.target.value)}
+
               />
-              <button onClick={(e) => handleTogglePassword(e)}>
-                {show ? <AiFillEyeInvisible size={22} /> : <AiFillEye size={22} />}
-              </button>
+              {errors.name && <div className='errorMessage'>{errors.name}</div>}
             </div>
-            {errors.confirm && <div className='errorMessage'>{errors.confirm}</div>}
-          </div>
-          <input type="submit" value="Criar conta" className='register-btn' />
-        </form>
+            <div className={errors.name ? 'inputError' : 'registerFormControl'}>
+              <label htmlFor="email">Email</label>
+              <input
+                type="text"
+                placeholder="* Digite um email"
+                id="email"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              {errors.email && <div className='errorMessage'>{errors.email}</div>}
+            </div>
+            <div className={errors.name ? 'inputError' : 'registerFormControl'}>
+              <label htmlFor="cpf">CPF</label>
+              <InputMask
+                mask='999.999.999-99'
+                placeholder='* Digite seu CPF'
+                id='cpf'
+                onChange={(e) => setCpf(e.target.value)}
+                className='inputMask'
+              />
+              {errors.cpf && <div className='errorMessage'>{errors.cpf}</div>}
+            </div>
+            <div className={errors.name ? 'inputError' : 'registerFormControl'}>
+              <label htmlFor="contactNumber">Telefone</label>
+              <InputMask
+                mask='(99)99999-9999'
+                placeholder="* Digite seu telefone"
+                id="contactNumber"
+                onChange={(e) => setContactNumber(e.target.value)}
+                className='inputMask'
+              />
+              {errors.contactNumber && <div className='errorMessage'>{errors.contactNumber}</div>}
+            </div>
+            <div className={errors.name ? 'inputError' : 'registerFormControl'}>
+              <label htmlFor="password">Senha</label>
+              <div className='passwordInput'>
+                <input
+                  type={show ? 'text' : 'password'}
+                  placeholder="* Digite uma senha"
+                  id="password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <button onClick={(e) => handleTogglePassword(e)}>
+                  {show ? <AiFillEyeInvisible size={22} /> : <AiFillEye size={22} />}
+                </button>
+              </div>
+              {errors.password && <div className='errorMessage'>{errors.password}</div>}
+            </div>
+            <div>
+              <p>Sua senha precisa atender aos seguintes critérios:</p>
+              <p><AiOutlineCheck className={/[A-Z]/.test(password) ? 'checked' : ''} /> Mínimo uma letra minúscula *</p>
+              <p><AiOutlineCheck className={/[a-z]/.test(password) ? 'checked' : ''} /> Mínimo uma letra maiúscula *</p>
+              <p><AiOutlineCheck className={/[0-9]/.test(password) ? 'checked' : ''} /> Mínimo um número *</p>
+              <p><AiOutlineCheck className={password.length >= 8 ? 'checked' : ''} /> Mínimo de 8 caracteres *</p>
+            </div>
+            <div className={errors.name ? 'inputError' : 'registerFormControl'}>
+              <label htmlFor="confirmPassword">Confirmar senha</label>
+              <div className='passwordInput'>
+                <input
+                  type={show ? 'text' : 'password'}
+                  placeholder='* Repita a senha'
+                  id="confirmPassword"
+                  onChange={(e) => setConfirm(e.target.value)}
+                />
+                <button onClick={(e) => handleTogglePassword(e)}>
+                  {show ? <AiFillEyeInvisible size={22} /> : <AiFillEye size={22} />}
+                </button>
+              </div>
+              {errors.confirm && <div className='errorMessage'>{errors.confirm}</div>}
+            </div>
+            <input type="submit" value="Criar conta" className='register-btn' />
+            <p className='logLink'>tem uma conta? <span><Link to={"/login"} className='regislink'>conecte-se</Link></span></p>
+          </form>
+        </div>
       </div>
     </>
   )

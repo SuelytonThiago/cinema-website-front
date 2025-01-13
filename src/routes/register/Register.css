@@ -1,18 +1,47 @@
+.backgroundRegisterContainer {
+   background-image: url('https://minhas-imagens-2025.s3.sa-east-1.amazonaws.com/background.jpg');
+   background-size: cover;
+   background-position: center;
+   background-repeat: no-repeat;
+   height: 100vh;
+   display: flex;
+   position: relative;
+}
+
+.crossBtn {
+   position: absolute;
+   top: 0;
+   right: 0;
+   margin: 3rem 5rem;
+   background-color: transparent;
+   color: #fff;
+   border: none;
+   padding: .5rem;
+   font-weight: bold;
+   font-size: 30px;
+   cursor: pointer;
+   transition: .3s;
+   opacity: .7;
+}
+
+.crossBtn:hover {
+   opacity: 1;
+}
+
 .registerContainer{
    background-color: #17191f;
    padding: 2rem;
    margin: 0 auto;
-   border-radius: 1rem;
-   display: flex;
+   border-radius: 10px;
    gap: 1rem;
    max-width: 500px;
    flex-direction: column;
+   align-self: center;
 }
 
 .registerForm{
    display: flex;
    flex-direction: column;
-   justify-content: center;
    gap: 1rem;
    width: 350px;
    flex-grow: 3;
@@ -21,9 +50,9 @@
 
 .registerFormControl,
 .inputError {
-   display: flex;
+   display: grid;
    flex-direction: column;
-   gap: .5rem;
+   grid-gap: .5rem;
 }
 
 
@@ -44,7 +73,7 @@
   font-size: 13px;
   border-radius: 4px;
   border: none;
-  border-left:6px solid #1262da;
+  border-left:6px solid #17191f;
 }
 
 .inputError input {
@@ -103,4 +132,11 @@
 
 .checked {
    color: #0ee04d;
+}
+
+.logLink{
+   text-align: center;
+   font-weight: 100;
+   color: #fff;
+   font-size: 15px;
 }

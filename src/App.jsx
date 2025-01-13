@@ -1,5 +1,5 @@
 
-import './App.css'
+import './app.css'
 
 import { Outlet } from 'react-router-dom'
 
@@ -26,7 +26,7 @@ function App() {
 
   return (
     <>
-      <Navbar />
+      <Navbar/>
       <div className="container">
         <ToastContainer />
         <Outlet />

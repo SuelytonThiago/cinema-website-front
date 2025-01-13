@@ -189,7 +189,8 @@
     color: #1877F2;
     cursor: pointer;
     transition: .2s;
-    width: 170px;
+    width: 110px;
+    font-size: 15px;
 }
 
 .changePassBtn:hover{

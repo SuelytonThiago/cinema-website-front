@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
+import AuthApp from './AuthApp.jsx'
 import './index.css'
 
 import Home from './routes/home/Home.jsx'
@@ -11,6 +12,7 @@ import Movie from './routes/movie/Movie.jsx'
 import Session from './routes/session/Session.jsx'
 import CategoryMovies from './routes/category-movies/CategoryMovies.jsx'
 import UserData from './routes/user-data/UserData.jsx'
+import RecoverPassword from './components/recover-password-template/RecoverPassword.jsx'
 
 import {QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
@@ -18,6 +20,7 @@ import { createBrowserRouter, RouterProvider, Route } from 'react-router-dom';
 
 import {Provider} from 'react-redux'
 import store from './redux/store.js'
+import ChangePassword from './routes/change-password/ChangePassword.jsx'
 
 const router = createBrowserRouter([
   {
@@ -26,14 +29,6 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
-      },
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/register",
-        element: <Register />,
       },
       {
         path:"/movie/:id",
@@ -56,7 +51,25 @@ const router = createBrowserRouter([
         element:<UserData/>,
       },
     ]
-  }
+  },
+  {
+   
+    element: <AuthApp />,
+    children: [
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
+      },
+      {
+        path: "/recover",
+        element: <ChangePassword />,
+      },
+    ],
+  },
 ])
 
 const client = new QueryClient();
