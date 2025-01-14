@@ -123,13 +123,6 @@
    color: #e53935;
 }
 
-.serverErrorMessage{
-   padding: 0 2rem;
-   margin: 0 auto;
-   max-width: 300px; 
-   color: #e53935; 
-}
-
 .checked {
    color: #0ee04d;
 }

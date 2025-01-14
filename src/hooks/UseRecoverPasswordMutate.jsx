@@ -18,12 +18,10 @@ export function useRecoverPasswordMutate() {
     const mutation = useMutation({
         mutationFn: handleRecoverPass,
         onSuccess: (data) => {
-          
-            Cookies.set('accessToken', data);
-            console.log(data);
+            Cookies.set('recoveryEmail', data);
         },
         onError: (error) => {  
-            console.error('Erro ao autenticar:', error);
+            console.error('Erro ao enviar email:', error);
         }
     });
 

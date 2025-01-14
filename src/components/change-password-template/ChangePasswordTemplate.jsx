@@ -3,6 +3,7 @@ import { AiFillEye, AiFillEyeInvisible, AiOutlineCheck } from 'react-icons/ai';
 import { useState } from 'react';
 import isValidPassword from '../../js/passwordValidation';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie'
 
 import './ChangePasswordTemplate.css'
 import { useChangePasswordMutate } from '../../hooks/UseChangePasswordMutate';
@@ -39,11 +40,13 @@ const ChangePasswordTemplate = () => {
     const handleChangePassword = () => {
         const err = validate();
         setErrors(err);
-        
-        if(Object.keys(errors).length === 0){
-            mutation.mutate({password},
+
+        if (Object.keys(errors).length === 0) {
+            mutation.mutate(password,
                 {
                     onSuccess: () => {
+                        Cookies.remove("recoveryEmail");
+                        Cookies.remove("accessToken");
                         navigate('/login');
                     }
                 }
@@ -57,8 +60,8 @@ const ChangePasswordTemplate = () => {
         <div>
             <div className='changePasswordContainer'>
                 <h1>Atualizar senha</h1>
-                <div className={errors.name ? 'inputError' : 'changeFormControl'}>
-                    <div className='changePasswordInput'>
+                <div className={'changeFormControl'}>
+                    <div className={`changePasswordInput ${errors.password ? "changePasswordInputError" : ""}`}>
                         <input
                             type={show ? 'text' : 'password'}
                             placeholder="* Digite uma senha"
@@ -69,8 +72,7 @@ const ChangePasswordTemplate = () => {
                             {show ? <AiFillEyeInvisible size={22} /> : <AiFillEye size={22} />}
                         </button>
                     </div>
-                    {errors.password && <div className='errorMessage'>{errors.password}</div>}
-                    <div className= "filterChangePassword">
+                    <div className="filterChangePassword">
                         <p>Sua senha precisa atender aos seguintes critérios:</p>
                         <p><AiOutlineCheck className={/[A-Z]/.test(password) ? 'checked' : ''} /> Mínimo uma letra maiúscula *</p>
                         <p><AiOutlineCheck className={/[a-z]/.test(password) ? 'checked' : ''} /> Mínimo uma letra  minuscula*</p>
@@ -79,8 +81,8 @@ const ChangePasswordTemplate = () => {
                     </div>
                 </div>
 
-                <div className={errors.name ? 'inputError' : 'changeFormControl'}>
-                    <div className='changePasswordInput'>
+                <div className={'changeFormControl'}>
+                    <div className={`changePasswordInput ${errors.password ? "changePasswordInputError" : ""}`}>
                         <input
                             type={show ? 'text' : 'password'}
                             placeholder='* Repita a senha'
@@ -91,12 +93,12 @@ const ChangePasswordTemplate = () => {
                             {show ? <AiFillEyeInvisible size={22} /> : <AiFillEye size={22} />}
                         </button>
                     </div>
-                    {errors.confirm && <div className='errorMessage'>{errors.confirm}</div>}
+                    <div className='errorChangePassMessage'>{errors.confirm}</div>
                 </div>
                 <div className='changePassowrdBtn'>
                     <button onClick={handleChangePassword}>Salvar</button>
                 </div>
-                
+
             </div>
         </div>
     )

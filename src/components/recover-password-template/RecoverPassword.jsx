@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
 import './RecoverPassword.css'
 import { Link } from 'react-router-dom';
-import VerifyCode from '../../components/verify-code-template/VerifyCode.jsx'
 import { useRecoverPasswordMutate } from '../../hooks/UseRecoverPasswordMutate.jsx';
 import isValidEmail from '../../js/emailValidation';
 
-const RecoverPassword = () => {
+const RecoverPassword = ({ goNext }) => {
 
     const [errorEmail, setErrorEmail] = useState("");
     const [email, setEmail] = useState("");
@@ -26,8 +25,12 @@ const RecoverPassword = () => {
         const error = validateEmail();
         setErrorEmail(error);
 
-        if (!errorEmail) {
-            mutation.mutate(email);
+        if (!error) {
+            mutation.mutate(email, {
+                onSuccess: () => {
+                    goNext();
+                }
+            });
 
         }
     }
@@ -40,7 +43,7 @@ const RecoverPassword = () => {
 
             <h2>Esqueceu sua senha?</h2>
             <p>Informe seu endereço de e-mail ou CPF que, caso exista uma conta cadastrada, enviaremos um e-mail para recuperar sua senha.</p>
-            <div className='recoverInput'>
+            <div className={`recoverInput ${errorEmail ? 'errorEmailInput' : ''}`}>
                 <input
                     type="text"
                     id="email"
@@ -48,6 +51,7 @@ const RecoverPassword = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     autoComplete='off' />
             </div>
+                <div className='errorRecoverMessage'>{errorEmail}</div>
             <div className='controlRecoverContainer'>
                 <Link to={"/login"} className='bbutton'>Voltar</Link>
                 <button onClick={handleChangePassword} className='rbutton'>Recuperar senha</button>

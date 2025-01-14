@@ -10,6 +10,7 @@ import isValidName from '../../js/nameValidation';
 import isValidPassword from '../../js/passwordValidation';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const Register = () => {
 
@@ -22,7 +23,6 @@ const Register = () => {
   const [cpf, setCpf] = useState('');
   const [contactNumber, setContactNumber] = useState('');
   const [errors, setErrors] = useState({});
-  const [serverError, setServerError] = useState();
 
   const [show, setShow] = useState(false);
 
@@ -85,8 +85,10 @@ const Register = () => {
           });
         navigate('/login');
       } catch (e) {
-        const error = e.response.data.Message
-        setServerError(error);
+        const error = e.response.data.Message;
+        console.log(error);
+        toast.error(error);
+
       }
     }
   }
@@ -96,9 +98,6 @@ const Register = () => {
       <div className='backgroundRegisterContainer'>
         <button class="crossBtn"> <Link to={'/'}><AiOutlineClose/></Link></button>
         <div className='registerContainer'>
-          <div>
-            {serverError && <div className='serverErrorMessage'>{serverError}</div>}
-          </div>
           <form onSubmit={(e) => createUser(e)} className='registerForm'>
             <h2>Cadastre-se</h2>
             <p>Campos obrigatórios *</p>

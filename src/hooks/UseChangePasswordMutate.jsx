@@ -3,9 +3,10 @@ import axios from "axios";
 import Cookies from 'js-cookie'
 
 const handleChangePassword = async(password) => {
+
     const accessToken = Cookies.get('accessToken');
 
-    return await axios.post("http://localhost:8080/api/users/change-password", {
+    return await axios.post("http://localhost:8080/api/users/change-password", null, {
         params: {
             password: password
         },
