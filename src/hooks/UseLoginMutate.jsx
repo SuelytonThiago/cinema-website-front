@@ -2,8 +2,8 @@ import { useMutation } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { useUserData } from './UseUserData';
 import { loginUser } from '../redux/user/actions';
+import { toast } from 'react-toastify';
 
 const authenticateUser = async ({ email, password }) => {
     const response = await axios.post("http://localhost:8080/api/auth/login", { email, password }, {
@@ -12,7 +12,7 @@ const authenticateUser = async ({ email, password }) => {
         }
     });
 
-    return response.data;
+    return response?.data;
 }
 
 export function useLoginMutate() {
@@ -30,14 +30,12 @@ export function useLoginMutate() {
                     'Authorization': `Bearer ${accessToken}`,
                 }
             });
-            console.log(userData.data)
-
             if (userData.data) {
                 dispatch(loginUser(userData.data));
             }
         },
         onError: (error) => {
-            console.error('Erro ao autenticar:', error);
+            toast.error(error)
         }
     });
 

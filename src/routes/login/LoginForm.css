@@ -104,10 +104,11 @@
    color: #e53935;
  }
  
- .errorMessage {
+ .errorLoginMessage {
    padding: 0 .5rem;
    font-size: 13px;
    color: #e53935;
+   height: 20px;
  }
  
 
@@ -125,5 +126,9 @@
  .regislink {
    color: #1877F2;
    font-weight: bold;
+ }
+
+ .loginInputError input{
+    border: 1px solid red;
  }
  

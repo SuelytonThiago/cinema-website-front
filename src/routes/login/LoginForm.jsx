@@ -4,6 +4,8 @@ import './LoginForm.css';
 import { useLoginMutate } from '../../hooks/UseLoginMutate.jsx';
 import { Link } from 'react-router-dom';
 
+import { toast } from 'react-toastify';
+
 const LoginForm = ({ onSuccess }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -41,28 +43,32 @@ const LoginForm = ({ onSuccess }) => {
         onSuccess: () => {
           if (onSuccess) onSuccess();
         },
+        onError: () => {
+          toast.error("Email ou senha inválidos")
+        },
       });
     }
   };
 
   return (
     <div className='signFormContainer'>
-      {mutation.isError && <div className='serverErrorMessage'>Email ou senha inválidos</div>}
       <form onSubmit={handleLoginUser} className='signinForm'>
         <div className='signinFormControl'>
           <label htmlFor="email"></label>
-          <input
-            type="text"
-            placeholder="Digite um email"
-            id="email"
-            autoComplete='current-email'
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          {errors.email && <div className='errorMessage'>{errors.email}</div>}
+          <div className={`passwordInput ${errors.email ? 'loginInputError' : ''}`}>
+            <input
+              type="text"
+              placeholder="Digite um email"
+              id="email"
+              autoComplete='current-email'
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className='errorLoginMessage'>{errors.email}</div>
         </div>
         <div className='signinFormControl'>
           <label htmlFor="password"></label>
-          <div className='passwordInput'>
+          <div className={`passwordInput ${errors.password ? 'loginInputError' : ''}`}>
             <input
               type={show ? 'text' : 'password'}
               placeholder="Digite uma senha"
@@ -74,7 +80,7 @@ const LoginForm = ({ onSuccess }) => {
               {show ? <AiFillEyeInvisible size={22} /> : <AiFillEye size={22} />}
             </button>
           </div>
-          {errors.password && <div className='errorMessage'>{errors.password}</div>}
+          <div className='errorLoginMessage'>{errors.password}</div>
         </div>
         <Link to={`/recover`}>
           <p class="forgoutPass">esqueceu sua senha?</p>

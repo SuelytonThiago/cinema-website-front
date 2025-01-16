@@ -8,10 +8,6 @@ import { AiOutlineClose } from 'react-icons/ai';
 
 const ChangePassword = () => {
 
-    const [showRecoverPassword, setShowRecoverPassword] = useState(true);
-    const [showVerifyCode, setShowVerifyCode] = useState(false);
-    const [showChangePasswordTemplate, setShowChangePasswordTemplate] = useState(false);
-
     const steps = [
         <RecoverPassword key="step1" />,
         <VerifyCode key="step2" />,

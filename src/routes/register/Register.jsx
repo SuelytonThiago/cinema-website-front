@@ -23,11 +23,11 @@ const Register = () => {
   const [cpf, setCpf] = useState('');
   const [contactNumber, setContactNumber] = useState('');
   const [errors, setErrors] = useState({});
-
   const [show, setShow] = useState(false);
 
-  const handleTogglePassword = (e) => {
-    e.preventDefault();
+  const [step, setStep] = useState(1);
+
+  const handleTogglePassword = () => {
     setShow(!show);
   }
 
@@ -54,6 +54,10 @@ const Register = () => {
       errors.password = 'a senha deve conter 8 caracteres incluindo letras e números';
     }
 
+    if (!confirm) {
+      errors.confirm = 'não pode ficar em branco';
+    }
+
     if (password !== confirm) {
       errors.confirm = 'as senhas não coincidem';
     }
@@ -61,8 +65,11 @@ const Register = () => {
     return errors;
   }
 
-  const createUser = async (e) => {
-    e.preventDefault();
+  const changeStep = () => {
+    setStep(prevStep => prevStep === 1 ? 2 : 1);
+  }
+
+  const createUser = async () => {
 
     const user = {
       name: name,
@@ -96,94 +103,117 @@ const Register = () => {
   return (
     <>
       <div className='backgroundRegisterContainer'>
-        <button class="crossBtn"> <Link to={'/'}><AiOutlineClose/></Link></button>
+        <button class="crossBtn"> <Link to={'/'}><AiOutlineClose /></Link></button>
         <div className='registerContainer'>
-          <form onSubmit={(e) => createUser(e)} className='registerForm'>
-            <h2>Cadastre-se</h2>
-            <p>Campos obrigatórios *</p>
-            <div className={errors.name ? 'inputError' : 'registerFormControl'}>
-              <label htmlFor="name">Nome</label>
-              <input
-                type="text"
-                placeholder="* Digite seu nome"
-                id="name"
-                onChange={(e) => setName(e.target.value)}
+          <h2>Cadastre-se</h2>
+          <p>Campos obrigatórios *</p>
+          <div className='registerForm'>
+            {step === 1 ? (
+              <>
 
-              />
-              {errors.name && <div className='errorMessage'>{errors.name}</div>}
+                <div className={errors.name ? 'inputError' : 'registerFormControl'}>
+                  <label htmlFor="name">Nome</label>
+                  <input
+                    type="text"
+                    placeholder="* Digite seu nome"
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                  <div className="errorMessage">{errors.name}</div>
+                </div>
+
+                <div className={errors.email ? 'inputError' : 'registerFormControl'}>
+                  <label htmlFor="email">Email</label>
+                  <input
+                    type="text"
+                    placeholder="* Digite um email"
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <div className="errorMessage">{errors.email}</div>
+                </div>
+
+                <div className={errors.cpf ? 'inputError' : 'registerFormControl'}>
+                  <label htmlFor="cpf">CPF</label>
+                  <InputMask
+                    mask="999.999.999-99"
+                    placeholder="* Digite seu CPF"
+                    id="cpf"
+                    value={cpf}
+                    onChange={(e) => setCpf(e.target.value)}
+                    className="inputMask"
+                  />
+                  <div className="errorMessage">{errors.cpf}</div>
+                </div>
+
+                <div className={errors.contactNumber ? 'inputError' : 'registerFormControl'}>
+                  <label htmlFor="contactNumber">Telefone</label>
+                  <InputMask
+                    mask="(99) 99999-9999"
+                    placeholder="* Digite seu telefone"
+                    id="contactNumber"
+                    value={contactNumber}
+                    onChange={(e) => setContactNumber(e.target.value)}
+                    className="inputMask"
+                  />
+                  <div className="errorMessage">{errors.contactNumber}</div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className={errors.name ? 'inputError' : 'registerFormControl'}>
+                  <label htmlFor="password">Senha</label>
+                  <div className='passwordInput'>
+                    <input
+                      type={show ? 'text' : 'password'}
+                      placeholder="* Digite uma senha"
+                      id="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <button onClick={(e) => handleTogglePassword(e)}>
+                      {show ? <AiFillEyeInvisible size={22} /> : <AiFillEye size={22} />}
+                    </button>
+                  </div>
+                  <div>
+                    <p>Sua senha precisa atender aos seguintes critérios:</p>
+                    <p><AiOutlineCheck className={/[A-Z]/.test(password) ? 'checked' : ''} /> Mínimo uma letra minúscula *</p>
+                    <p><AiOutlineCheck className={/[a-z]/.test(password) ? 'checked' : ''} /> Mínimo uma letra maiúscula *</p>
+                    <p><AiOutlineCheck className={/[0-9]/.test(password) ? 'checked' : ''} /> Mínimo um número *</p>
+                    <p><AiOutlineCheck className={password.length >= 8 ? 'checked' : ''} /> Mínimo de 8 caracteres *</p>
+                  </div>
+                </div>
+                <div className={errors.name ? 'inputError' : 'registerFormControl'}>
+                  <label htmlFor="confirmPassword">Confirmar senha</label>
+                  <div className='passwordInput'>
+                    <input
+                      type={show ? 'text' : 'password'}
+                      placeholder='* Repita a senha'
+                      value={confirm}
+                      id="confirmPassword"
+                      onChange={(e) => setConfirm(e.target.value)}
+                    />
+                    <button onClick={(e) => handleTogglePassword(e)}>
+                      {show ? <AiFillEyeInvisible size={22} /> : <AiFillEye size={22} />}
+                    </button>
+                  </div>
+                  <div className='errorMessage'>{errors.confirm}</div>
+                </div>
+              </>
+            )
+
+            }
+            <div className='registerControl'>
+              <button onClick={changeStep}>{step === 1 ? 'Próximo' : 'Voltar'}</button>
+              {step === 2 && (
+                <button className='createBtn' onClick={createUser}>Criar Conta</button>
+              )}
+            
             </div>
-            <div className={errors.name ? 'inputError' : 'registerFormControl'}>
-              <label htmlFor="email">Email</label>
-              <input
-                type="text"
-                placeholder="* Digite um email"
-                id="email"
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              {errors.email && <div className='errorMessage'>{errors.email}</div>}
-            </div>
-            <div className={errors.name ? 'inputError' : 'registerFormControl'}>
-              <label htmlFor="cpf">CPF</label>
-              <InputMask
-                mask='999.999.999-99'
-                placeholder='* Digite seu CPF'
-                id='cpf'
-                onChange={(e) => setCpf(e.target.value)}
-                className='inputMask'
-              />
-              {errors.cpf && <div className='errorMessage'>{errors.cpf}</div>}
-            </div>
-            <div className={errors.name ? 'inputError' : 'registerFormControl'}>
-              <label htmlFor="contactNumber">Telefone</label>
-              <InputMask
-                mask='(99)99999-9999'
-                placeholder="* Digite seu telefone"
-                id="contactNumber"
-                onChange={(e) => setContactNumber(e.target.value)}
-                className='inputMask'
-              />
-              {errors.contactNumber && <div className='errorMessage'>{errors.contactNumber}</div>}
-            </div>
-            <div className={errors.name ? 'inputError' : 'registerFormControl'}>
-              <label htmlFor="password">Senha</label>
-              <div className='passwordInput'>
-                <input
-                  type={show ? 'text' : 'password'}
-                  placeholder="* Digite uma senha"
-                  id="password"
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <button onClick={(e) => handleTogglePassword(e)}>
-                  {show ? <AiFillEyeInvisible size={22} /> : <AiFillEye size={22} />}
-                </button>
-              </div>
-              {errors.password && <div className='errorMessage'>{errors.password}</div>}
-            </div>
-            <div>
-              <p>Sua senha precisa atender aos seguintes critérios:</p>
-              <p><AiOutlineCheck className={/[A-Z]/.test(password) ? 'checked' : ''} /> Mínimo uma letra minúscula *</p>
-              <p><AiOutlineCheck className={/[a-z]/.test(password) ? 'checked' : ''} /> Mínimo uma letra maiúscula *</p>
-              <p><AiOutlineCheck className={/[0-9]/.test(password) ? 'checked' : ''} /> Mínimo um número *</p>
-              <p><AiOutlineCheck className={password.length >= 8 ? 'checked' : ''} /> Mínimo de 8 caracteres *</p>
-            </div>
-            <div className={errors.name ? 'inputError' : 'registerFormControl'}>
-              <label htmlFor="confirmPassword">Confirmar senha</label>
-              <div className='passwordInput'>
-                <input
-                  type={show ? 'text' : 'password'}
-                  placeholder='* Repita a senha'
-                  id="confirmPassword"
-                  onChange={(e) => setConfirm(e.target.value)}
-                />
-                <button onClick={(e) => handleTogglePassword(e)}>
-                  {show ? <AiFillEyeInvisible size={22} /> : <AiFillEye size={22} />}
-                </button>
-              </div>
-              {errors.confirm && <div className='errorMessage'>{errors.confirm}</div>}
-            </div>
-            <input type="submit" value="Criar conta" className='register-btn' />
             <p className='logLink'>tem uma conta? <span><Link to={"/login"} className='regislink'>conecte-se</Link></span></p>
-          </form>
+          </div>
         </div>
       </div>
     </>
