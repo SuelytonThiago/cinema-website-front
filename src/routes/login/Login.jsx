@@ -14,7 +14,7 @@ const Login = () => {
     <div className='sigContainer'>
       <button class="crossBtn"> <Link to={'/'}><AiOutlineClose/></Link></button>
       <div className='signinContainer'>
-        <LoginForm onSuccess={handleLoginSuccess} />
+        <LoginForm loginSuccess={handleLoginSuccess} />
       </div>
 
       <div className='backImg'>

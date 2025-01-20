@@ -7,8 +7,9 @@ import { useUserDataMutation } from '../../hooks/UseUserDataMutate';
 import useLogout from '../../js/Logout.js'
 import InputMask from 'react-input-mask'
 import { useChangeUserImgMutate } from '../../hooks/UseChangeUserImgMutate.jsx'
-import { updateProfileImage } from '../../redux/user/actions.js';
+import { updateProfileImage, updateUser } from '../../redux/user/actions.js';
 import { toast } from 'react-toastify';
+import CreatePasswordProfile from '../../components/change-password-profile/CreatePasswordProfile.jsx';
 
 const UserData = () => {
     const { currentUser } = useSelector((rootReducer) => rootReducer.userReducer);
@@ -16,11 +17,12 @@ const UserData = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const [showChangePassWindow, setShowChangePassWindow] = useState(false)
+
     const { section } = useParams();
 
-    const userMutation = useUserDataMutation();
-    const { mutate: uploadImage, isLoading, onSuccess, onError } = useChangeUserImgMutate();
-    const [imgFile, setImgFile] = useState(null);
+    const { mutate: userMutation } = useUserDataMutation();
+    const { mutate: uploadImage } = useChangeUserImgMutate();
     const inputFileRef = useRef(null);
 
     const [password, setPassword] = useState('')
@@ -30,7 +32,6 @@ const UserData = () => {
         email: '',
         cpf: '',
         contactNumber: '',
-        password: '',
         profileImg: '',
     });
 
@@ -41,11 +42,14 @@ const UserData = () => {
                 email: currentUser.email,
                 cpf: currentUser.cpf,
                 contactNumber: currentUser.contactNumber,
-                password: password,
                 profileImg: currentUser.profileImg,
             })
         }
     }, [currentUser])
+
+    const handleShowWindow = () => {
+        setShowChangePassWindow(!showChangePassWindow);
+    }
 
     const handleChange = (e) => {
         e.preventDefault();
@@ -60,26 +64,37 @@ const UserData = () => {
         inputFileRef.current.click();
     };
 
-    const handleFileChange = (event) => {
-        event.preventDefault();
+    const handleFileChange = () => {
+
         const file = event.target.files[0];
 
         if (!file) {
-            console.log("Selecione uma imagem para enviar.");
+            toast.error('Selecione uma imagem para enviar.');
             return;
         }
 
         uploadImage(file, {
             onSuccess: (response) => {
-                dispatch(updateProfileImage(response))
-                console.log("Imagem enviada com sucesso!");
-
+                dispatch(updateProfileImage(response));
             },
-            onError: (error) => {
-                toast.error(`Erro ao enviar imagem: ${error.message || "Algo deu errado."}`);
+            onError: () => {
+                toast.error('Algo deu errado');
             },
         });
     };
+
+    const handleChangeUserData = () => {
+
+        userMutation({ formData, password }, {
+            onSuccess: () => {
+                dispatch(updateUser(formData))
+            },
+            onError: () => {
+                toast.error('Algo deu errado');
+            },
+        }
+        );
+    }
 
 
 
@@ -96,7 +111,7 @@ const UserData = () => {
             <div className='userDataControl'>
                 <div className='userImgProfileContainer'>
                     <div className='userImg'>
-                        <img src={formData.profileImg} alt="profileImg" />
+                        <img onClick={handleButtonClick} src={formData.profileImg} alt="profileImg" />
                         <input
                             type="file"
                             ref={inputFileRef}
@@ -104,14 +119,11 @@ const UserData = () => {
                             accept="image/*"
                             onChange={handleFileChange}
                         />
-                        <button onClick={handleButtonClick}>
-                            <FaPen className='userImgEdit' />
-                        </button>
                     </div>
-                    <div>
+                    <div className='UserInfos'>
                         {!!currentUser && (
                             <>
-                                <h3>Olá {currentUser.name} :)</h3>
+                                <h3>Olá, {currentUser.name} :)</h3>
                                 <h3>Esta é sua conta.</h3>
                                 <p>{currentUser.email}</p>
                             </>
@@ -171,6 +183,7 @@ const UserData = () => {
                         <InputMask
                             mask='(99)99999-9999'
                             value={formData.contactNumber}
+                            name='contactNumber'
                             id="contactNumber"
                             onChange={handleChange}
 
@@ -185,25 +198,29 @@ const UserData = () => {
                                 disabled
                                 value='***********' />
                         </div>
-                        <Link className='searchBtn' to={`/recover`}>
-                            <p className='changePassBtn'>alterar senha</p>
-                        </Link> 
+                        <button className='changePassBtn' onClick={handleShowWindow}>alterar senha</button>
+
                     </div>
 
                 </div>
                 <div className='UserDataSubmit'>
                     <h3>Salvar todas as alterações</h3>
                     <p>Por questões de segurança, você precisa digitar sua senha para confirmar as alterações feitas no seu cadastro.</p>
-                    <form className='UserFormSubmitControl'>
+                    <div className='UserFormSubmitControl'>
                         <div className='UserFormSubmit'>
                             <label htmlFor="senha">Senha *</label>
                             <input
                                 type="password"
-                                id="password1" />
+                                id="verifyPassword"
+                                onChange={(e) => setPassword(e.target.value)} />
                         </div>
-                        <input type="submit" value="Salvar" />
-                    </form>
+                        <button disabled={!password} onClick={handleChangeUserData}>Salvar</button>
+                    </div>
                 </div>
+                {showChangePassWindow && (
+                    <CreatePasswordProfile handleShowWindow={handleShowWindow} />
+                )}
+
             </div>
         </div>
     );

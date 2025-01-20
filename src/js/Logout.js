@@ -8,8 +8,8 @@ const useLogout = () => {
     const navigate = useNavigate();
 
     const logout = () => {
-        Cookie.set('accessToken', '', { path: '/' });
-        Cookie.set('refreshToken', '', { path: '/' });
+        Cookie.remove('accessToken');
+        Cookie.remove('refreshToken');
         dispatch(logoutUser());
         navigate('/');
     };

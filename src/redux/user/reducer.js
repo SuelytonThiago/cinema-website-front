@@ -1,14 +1,7 @@
 import UserActionTypes from "./action-types";
 
 const initialState = {
-    currentUser: {
-        name: '',
-        email: '',
-        cpf: '',
-        contactNumber: '',
-        password: '',
-        profileImg: '',
-      },
+    currentUser: null,
 };
 
 const userReducer = (state = initialState, action) => {

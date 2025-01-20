@@ -12,9 +12,9 @@
   
   .movieImg img {
     width: 100%;
-    height: 300px; /* Defina uma altura fixa para todas as imagens */
-    object-fit: cover; /* Garante que a imagem ocupe o container sem distorção */
-    border-radius: 8px; /* Bordas arredondadas */
+    height: 300px; 
+    object-fit: cover; 
+    border-radius: 8px;
   }
   
   

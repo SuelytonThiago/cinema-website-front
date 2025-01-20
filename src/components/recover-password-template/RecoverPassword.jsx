@@ -38,7 +38,7 @@ const RecoverPassword = ({ goNext }) => {
 
 
     return (
-        <div className='RecoverContainer'>
+        <div className='RecoverContainer '>
             <h1 className='logo'>CINEMAX</h1>
 
             <h2>Esqueceu sua senha?</h2>

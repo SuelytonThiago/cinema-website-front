@@ -26,12 +26,6 @@ const handleChangeUserImg = async (file) => {
 
 export function useChangeUserImgMutate() {
     return useMutation({
-        mutationFn: handleChangeUserImg,
-        onError: (error) => {
-            console.error("Erro no upload da imagem:", error.message);
-        },
-        onSuccess: (data) => {
-            console.log("Upload realizado com sucesso:", data);
-        },
+        mutationFn: handleChangeUserImg
     });
 }

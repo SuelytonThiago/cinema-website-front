@@ -34,6 +34,10 @@ const ChangePasswordTemplate = () => {
             errors.confirm = 'as senhas não coincidem';
         }
 
+        if (!confirm) {
+            errors.confirm = 'não pode ficar em branco';
+        }
+
         return errors;
     }
 
@@ -48,6 +52,7 @@ const ChangePasswordTemplate = () => {
                         Cookies.remove("recoveryEmail");
                         Cookies.remove("accessToken");
                         navigate('/login');
+                        Cookies.remove('recoveryEmail');
                     }
                 }
             );

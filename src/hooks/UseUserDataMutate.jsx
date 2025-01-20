@@ -4,12 +4,12 @@ import Cookies from 'js-cookie'
 
 const handleChangeUserData = async ({formData, password}) => {
     const access = Cookies.get("accessToken");
-    return await axios.patch('http://localhost:8080/api/users/update', formData, {
+    return await axios.put('http://localhost:8080/api/users/update', formData, {
         params : {
             password: password
         },
         headers: {
-            'Content-type': 'multipart/form-data',
+            'Content-Type': 'application/json',
             'Authorization': `Bearer ${access}`,
         }
     });

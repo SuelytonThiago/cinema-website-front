@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 import { toast } from 'react-toastify';
 
-const LoginForm = ({ onSuccess }) => {
+const LoginForm = ({ loginSuccess }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [show, setShow] = useState(false);
@@ -41,7 +41,7 @@ const LoginForm = ({ onSuccess }) => {
     if (Object.keys(validate).length === 0) {
       mutation.mutate({ email, password }, {
         onSuccess: () => {
-          if (onSuccess) onSuccess();
+           loginSuccess();
         },
         onError: () => {
           toast.error("Email ou senha inválidos")

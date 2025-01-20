@@ -5,9 +5,9 @@ import Menu from './NavbarMenu.jsx'
 import { useSelector } from 'react-redux';
 
 const Navbar = () => {
-    
+
     const { currentUser } = useSelector((rootReducer) => rootReducer.userReducer);
-    
+
     return (
         <div>
             <nav className='navbarContainer'>
@@ -15,7 +15,26 @@ const Navbar = () => {
                     <h2>
                         <Link to={'/'}>cinemax</Link>
                     </h2>
-                    {!currentUser ?
+                    {currentUser ?
+                        (
+                            <div >
+                                <ul className='navbarLinks'>
+                                    <li>
+                                        <Link className='searchBtn' to={`/movies`}>
+                                            <FaSearch />
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to={"/category-movies"} className='btn'>
+                                            Filmes
+                                        </Link>
+                                    </li>
+                                    <li className='navbarMenuContainer'>
+                                        <Menu user={currentUser} />
+                                    </li>
+                                </ul>
+                            </div>
+                        ) :
                         (
                             <div>
                                 <div>
@@ -42,25 +61,6 @@ const Navbar = () => {
                                         </li>
                                     </ul>
                                 </div>
-                            </div>
-                        ) :
-                        (
-                            <div >
-                                <ul className='navbarLinks'>
-                                    <li>
-                                        <Link className='searchBtn' to={`/movies`}>
-                                            <FaSearch />
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link to={"/category-movies"} className='btn'>
-                                            Filmes
-                                        </Link>
-                                    </li>
-                                    <li className='navbarMenuContainer'>
-                                        <Menu user={currentUser} />
-                                    </li>
-                                </ul>
                             </div>
                         )
                     }

@@ -9,8 +9,6 @@ const VerifyCode = ({ goNext, goBack }) => {
 
   const email = Cookies.get('recoveryEmail');
 
-  const navigate = useNavigate();
-
   const [pins, setPins] = useState(["", "", "", "", "", ""]);
   const mutation = useVerifyCodeMutate();
 

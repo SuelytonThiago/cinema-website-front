@@ -7,6 +7,7 @@ import './LoginModal.css';
 const LoginModal = () => {
 
   const dispatch = useDispatch()
+  
   const handleHideLoginModal = () => {
     dispatch(hideLoginModal())
   };

@@ -17,13 +17,19 @@
     align-items: center;
 }
 
+.menuButton p {
+    max-width: 100px;
+    overflow: hidden;
+    display: flex;
+}
+
 .menuItems{
     
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 137%;
-    left: -4.5rem;
+    top: 3rem;
+    right: -15px;
     z-index: 2000;
     background-color: #000000;
     padding: 1rem;

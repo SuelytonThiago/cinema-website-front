@@ -1,25 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import './NavbarMenu.css'
-import Cookie from 'js-cookie'
-
 import { useState } from 'react'
-
 import { FaTimes } from 'react-icons/fa'
 import { FaTicketAlt } from 'react-icons/fa';
 import { FaPen } from 'react-icons/fa';
-import { useDispatch } from 'react-redux'
-import { logoutUser } from '../../redux/user/actions'
-
-import { useNavigate } from 'react-router-dom'
 import useLogout from '../../js/Logout'
 
 
 const menu = ({ user }) => {
 
-    const navigate = useNavigate();
 
-    const dispatch = useDispatch();
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleMenu = () => {
@@ -43,7 +34,7 @@ const menu = ({ user }) => {
                 className='menuButton'
                 onClick={() => toggleMenu()}>
                 <img src={user.profileImg} alt="profileImg" />
-                <p>Olá, {user.name}</p>
+                <p>Olá, <span>{user.name}</span></p>
             </button>
             {isOpen && (
                 <div>

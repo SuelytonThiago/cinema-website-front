@@ -10,7 +10,7 @@ export const logoutUser = () => ({
     payload: null,
 });
 
-export const updateUser = () => ({
+export const updateUser = (payload) => ({
     type: UserActionTypes.SET_USER_DATA,
     payload,
 })
