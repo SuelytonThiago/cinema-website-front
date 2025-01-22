@@ -1,38 +1,43 @@
-import React from 'react'
-import { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react'
 import "./Home.css";
-import formatDate from '../../js/formatDate';
-
-import { useSessionsData } from '../../hooks/UseSessionsData';
-import StarRating from '../../components/starRating/StarRating';
-import { Link } from 'react-router-dom';
-import formatHours from '../../js/formatHours';
+import backend from "../../../api/index"
+import Session from '../../components/session/Session';
 import getDayOfWeek from '../../js/getDayOfWeek';
-
+import formatDate from '../../js/formatDate';
 
 const Home = () => {
 
-  const [hoveredSessionId, setHoveredSessionId] = useState(null);
+  const [sessions, setSessions] = useState([])
+  const [groupedSessions, setGroupedSessions] = useState([])
   const [selectedDate, setSelectedDate] = useState(null);
-  const [groupedSessions, setGroupedSessions] = useState({});
-
-  const { data: sessionsData = [], isLoading, error } = useSessionsData();
 
   useEffect(() => {
-    const grouped = sessionsData.reduce((acc, session) => {
+    async function getSessions() {
+      try {
+        const response = await backend.sessionAPI.getAll();
+        setSessions(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    getSessions();
+  }, []);
+
+  useEffect(() => {
+    const grouped = sessions.reduce((acc, session) => {
       const dateKey = new Date(session.dateStart).toISOString().split('T')[0];
-      const dayOfWeek = getDayOfWeek(session.dateStart); 
+      const dayOfWeek = getDayOfWeek(session.dateStart);
 
       if (!acc[dateKey]) {
         acc[dateKey] = {
-          day: dayOfWeek, 
-          sessions: [], 
+          day: dayOfWeek,
+          sessions: [],
         };
       }
 
       acc[dateKey].sessions.push(session);
-
       return acc;
+
     }, {});
 
     const sortedGrouped = Object.keys(grouped)
@@ -48,60 +53,37 @@ const Home = () => {
       setSelectedDate(Object.keys(sortedGrouped)[0]);
     }
 
-  }, [sessionsData]);
-
-
-  if (isLoading) return <div>Carregando...</div>;
-  if (error) return <div>Erro ao carregar as sessões</div>;
+  }, [sessions]);
 
   return (
     <div>
-      <div className='sessionFilterContainer'>
-        {Object.keys(groupedSessions).map(date => (
-          <div key={date}>
-            <button
-              className={`filterBtn ${selectedDate === date ? 'selected' : ''}`}
-              onClick={() => setSelectedDate(date)}>
-              <div>{getDayOfWeek(date.split('/').reverse().join('/'))}</div>
-              <div>{formatDate(new Date(date.split('/').reverse().join('/'))).formattedDate}</div>
-            </button>
-          </div>
-        ))}
-      </div>
-      {selectedDate && groupedSessions[selectedDate] && (
+      <div>
         <div>
-          <h2>Sessões para {selectedDate}</h2>
-          <div className='sessionsContainer'>
-            {groupedSessions[selectedDate].sessions.map((session) => (
-              <div className='session' key={session.id}>
-                <div className='sessionImg'>
-                  <img src={session.imageUrl} alt={session.movieName} />
-                </div>
-                <div className='sessionInfoContainer'>
-                  <h2>{session.movieName}</h2>
-                  <div className='sessionInfo'>
-                    <div className='details'>
-                      <p>duração: {session.duration}</p>
-                      <StarRating rating={session.rating} />
-                    </div>
-                    <div
-                      className='btnSession'>
-                      <Link to={`/session/${session.id}`}
-                        className='ticketBtn'
-                        onMouseEnter={() => setHoveredSessionId(session.id)}
-                        onMouseLeave={() => setHoveredSessionId(null)}>
-                        {hoveredSessionId === session.id ? "Comprar" : formatHours(new Date(session.dateStart))}
-                      </Link>
-                    </div>
-                  </div>
-
-                </div>
+          <div className='sessionFilterContainer'>
+            {Object.keys(groupedSessions).map(date => (
+              <div key={date}>
+                <button
+                  className={`filterBtn ${selectedDate === date ? 'selected' : ''}`}
+                  onClick={() => setSelectedDate(date)}>
+                  <div>{getDayOfWeek(date.split('/').reverse().join('/'))}</div>
+                  <div>{formatDate(new Date(date.split('/').reverse().join('/'))).formattedDate}</div>
+                </button>
               </div>
             ))}
           </div>
         </div>
-      )}
-    </div>
+        <h2>Sessões para {formatDate(new Date(selectedDate)).formattedDate}</h2>
+        <div className='sessionsContainer'>
+          {selectedDate && groupedSessions[selectedDate] ? (
+            groupedSessions[selectedDate].sessions.map(s => (
+              <Session session={s} key={s.id} />
+            ))
+          ) : (
+            <div>Loading sessions...</div>
+          )}
+        </div>
+      </div>
+    </div >
   )
 }
 

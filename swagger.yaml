@@ -1,0 +1,941 @@
+---
+openapi: 3.0.1
+info:
+  title: API CINEMAX
+  description: API FOR A CINEMA TICKETS PURCHASE SITE
+  contact:
+    url: https://www.linkedin.com/in/suelyton-souza-0baaa127a/
+    email: suelytonsouza0202@gmail.com
+  version: v1
+servers:
+  - url: http://localhost:8080
+    description: Generated server url
+paths:
+  "/api/users/update":
+    put:
+      tags:
+        - user-controller
+      summary: update user data
+      operationId: updatePassword
+      parameters:
+        - name: password
+          in: query
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UserUpdateRequestDto"
+        required: true
+      responses:
+        "200":
+          description: OK
+      security:
+        - bearerAuth: []
+  "/api/users/update-password":
+    put:
+      tags:
+        - user-controller
+      summary: change user password
+      operationId: updateUserPassword
+      parameters:
+        - name: oldPassword
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: newPassword
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+      security:
+        - bearerAuth: []
+  "/api/movies/update/{id}":
+    put:
+      tags:
+        - movie-controller
+      summary: update movie data
+      operationId: updateMovie
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/MovieRequestDto"
+        required: true
+      responses:
+        "200":
+          description: OK
+      security:
+        - bearerAuth: []
+  "/api/verify-code":
+    post:
+      tags:
+        - recover-pass-controller
+      summary: check if the code is correct
+      operationId: verifyCode
+      parameters:
+        - name: code
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: email
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: string
+      security:
+        - bearerAuth: []
+  "/api/users/create":
+    post:
+      tags:
+        - user-controller
+      summary: create a new account
+      operationId: createNewUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UserRequestDto"
+        required: true
+      responses:
+        "200":
+          description: OK
+      security:
+        - bearerAuth: []
+  "/api/users/change-password":
+    post:
+      tags:
+        - user-controller
+      summary: change user password
+      operationId: changePassword
+      parameters:
+        - name: password
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+      security:
+        - bearerAuth: []
+  "/api/tickets/add":
+    post:
+      tags:
+        - ticket-controller
+      summary: buy a new ticket
+      operationId: addTicket
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/TicketRequestDto"
+        required: true
+      responses:
+        "200":
+          description: OK
+      security:
+        - bearerAuth: []
+  "/api/sessions/add":
+    post:
+      tags:
+        - session-controller
+      summary: add a new session
+      operationId: addSession
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/SessionRequestDto"
+        required: true
+      responses:
+        "200":
+          description: OK
+      security:
+        - bearerAuth: []
+  "/api/reviews/add":
+    post:
+      tags:
+        - review-controller
+      summary: add a note and comment to the film
+      operationId: addReviewToFilm
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ReviewRequestDto"
+        required: true
+      responses:
+        "200":
+          description: OK
+      security:
+        - bearerAuth: []
+  "/api/recover-password":
+    post:
+      tags:
+        - recover-pass-controller
+      summary: send an email with a code to recover your password
+      operationId: recoverPassword
+      parameters:
+        - name: email
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: string
+      security:
+        - bearerAuth: []
+  "/api/movies/add":
+    post:
+      tags:
+        - movie-controller
+      summary: add a new movie
+      operationId: addMovie
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/MovieRequestDto"
+        required: true
+      responses:
+        "200":
+          description: OK
+      security:
+        - bearerAuth: []
+  "/api/movies/add/category":
+    post:
+      tags:
+        - movie-controller
+      summary: add a category to the movie
+      operationId: addCategoryToFilm
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/AddCategoryToMovieRequestDto"
+        required: true
+      responses:
+        "200":
+          description: OK
+      security:
+        - bearerAuth: []
+  "/api/files/upload":
+    post:
+      tags:
+        - file-controller
+      summary: insert file into aws bucket
+      operationId: uploadFile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - file
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: string
+      security:
+        - bearerAuth: []
+  "/api/categories/add":
+    post:
+      tags:
+        - category-controller
+      summary: add a new category
+      operationId: addNewCategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CategoryRequestDto"
+        required: true
+      responses:
+        "200":
+          description: OK
+      security:
+        - bearerAuth: []
+  "/api/auth/refresh":
+    post:
+      tags:
+        - auth-controller
+      summary: update access token
+      operationId: refreshToken
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: string
+      security:
+        - bearerAuth: []
+  "/api/auth/login":
+    post:
+      tags:
+        - auth-controller
+      summary: do user authentication
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UserLoginDto"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+      security:
+        - bearerAuth: []
+  "/api/tickets/invalidate/{id}":
+    patch:
+      tags:
+        - ticket-controller
+      summary: invalidate ticket
+      operationId: invalidateTicket
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+      security:
+        - bearerAuth: []
+  "/api/sessions/update/{id}":
+    patch:
+      tags:
+        - session-controller
+      summary: update sessions
+      operationId: updateData
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+      security:
+        - bearerAuth: []
+  "/api/reviews/update/{id}":
+    patch:
+      tags:
+        - review-controller
+      summary: update the note and/or comment
+      operationId: updateReview
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ReviewRequestDto"
+        required: true
+      responses:
+        "200":
+          description: OK
+      security:
+        - bearerAuth: []
+  "/api/users":
+    get:
+      tags:
+        - user-controller
+      operationId: findById
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/UserResponseDto"
+      security:
+        - bearerAuth: []
+  "/api/tickets":
+    get:
+      tags:
+        - ticket-controller
+      summary: get user tickets
+      operationId: getTickets
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/TicketsResponseDto"
+      security:
+        - bearerAuth: []
+  "/api/sessions":
+    get:
+      tags:
+        - session-controller
+      summary: search all sessions
+      operationId: getAll
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/SessionResponseDto"
+      security:
+        - bearerAuth: []
+  "/api/sessions/movie/{id}":
+    get:
+      tags:
+        - session-controller
+      summary: search sessions by film
+      operationId: findByMovie
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/SessionResponseDto"
+      security:
+        - bearerAuth: []
+  "/api/sessions/info/{id}":
+    get:
+      tags:
+        - session-controller
+      summary: get session information
+      operationId: getInfoSession
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/SessionResponseDto"
+      security:
+        - bearerAuth: []
+  "/api/reviews/data/{userId}/{movieId}":
+    get:
+      tags:
+        - review-controller
+      summary: search user review by user id and movie id
+      operationId: getUserReview
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: movieId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/ReviewsResponseDto"
+      security:
+        - bearerAuth: []
+  "/api/movies":
+    get:
+      tags:
+        - movie-controller
+      summary: search all movies
+      operationId: findAll
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/MovieResponseDto"
+      security:
+        - bearerAuth: []
+  "/api/movies/{id}":
+    get:
+      tags:
+        - movie-controller
+      summary: search movie by id
+      operationId: findMovieById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/MovieResponseDto"
+      security:
+        - bearerAuth: []
+  "/api/movies/search":
+    get:
+      tags:
+        - movie-controller
+      summary: search movie by name
+      operationId: findByName
+      parameters:
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/MovieResponseDto"
+      security:
+        - bearerAuth: []
+  "/api/movies/category/{id}":
+    get:
+      tags:
+        - movie-controller
+      summary: search movies by category
+      operationId: findByCategory
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/MovieResponseDto"
+      security:
+        - bearerAuth: []
+  "/api/files/presigned-url":
+    get:
+      tags:
+        - file-controller
+      summary: get the image url from within the aws bucket
+      operationId: getPresignedUrl
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: string
+      security:
+        - bearerAuth: []
+  "/api/chairs/{id}":
+    get:
+      tags:
+        - chair-controller
+      summary: takes all available and unavailable chairs for the session
+      operationId: getAllChairs
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/ChairResponseDto"
+      security:
+        - bearerAuth: []
+  "/api/categories":
+    get:
+      tags:
+        - category-controller
+      summary: search all categories
+      operationId: findAll_1
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Categories"
+      security:
+        - bearerAuth: []
+  "/api/reviews/delete/{id}":
+    delete:
+      tags:
+        - review-controller
+      summary: delete user review
+      operationId: deleteReview
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+      security:
+        - bearerAuth: []
+  "/api/movies/delete/{id}":
+    delete:
+      tags:
+        - movie-controller
+      summary: delete the movie
+      operationId: deleteMovie
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+      security:
+        - bearerAuth: []
+components:
+  schemas:
+    UserUpdateRequestDto:
+      required:
+        - contactNumber
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+        contactNumber:
+          type: string
+    MovieRequestDto:
+      required:
+        - classification
+        - description
+        - imageUrl
+        - name
+        - releaseData
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        releaseData:
+          type: string
+        classification:
+          type: string
+        imageUrl:
+          type: string
+    UserRequestDto:
+      required:
+        - contactNumber
+        - cpf
+        - email
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        cpf:
+          type: string
+        contactNumber:
+          type: string
+        password:
+          type: string
+        profileImg:
+          type: string
+    TicketRequestDto:
+      required:
+        - sessionId
+      type: object
+      properties:
+        sessionId:
+          type: integer
+          format: int64
+        price:
+          type: number
+          format: double
+        chairNumber:
+          type: integer
+          format: int32
+        type:
+          type: string
+    SessionRequestDto:
+      required:
+        - movieId
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+        movieId:
+          type: integer
+          format: int64
+        dateStart:
+          type: string
+        dateEnd:
+          type: string
+    ReviewRequestDto:
+      required:
+        - rating
+      type: object
+      properties:
+        comment:
+          type: string
+        rating:
+          type: integer
+          format: int32
+        movieId:
+          type: integer
+          format: int64
+    AddCategoryToMovieRequestDto:
+      required:
+        - categoryName
+        - movieId
+      type: object
+      properties:
+        movieId:
+          type: integer
+          format: int64
+        categoryName:
+          type: string
+    CategoryRequestDto:
+      required:
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+    UserLoginDto:
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    UserResponseDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        email:
+          type: string
+        cpf:
+          type: string
+        contactNumber:
+          type: string
+        password:
+          type: string
+        profileImg:
+          type: string
+    TicketsResponseDto:
+      type: object
+      properties:
+        movieName:
+          type: string
+        sessionName:
+          type: string
+        price:
+          type: number
+          format: double
+        chairNumber:
+          type: integer
+          format: int32
+    ReviewsResponseDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        userName:
+          type: string
+        profileImgUser:
+          type: string
+        comment:
+          type: string
+        rating:
+          type: integer
+          format: int32
+        date:
+          type: string
+    SessionResponseDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        movieName:
+          type: string
+        sessionName:
+          type: string
+        duration:
+          type: string
+        movieSynopsis:
+          type: string
+        rating:
+          type: number
+          format: double
+        imageUrl:
+          type: string
+        dateStart:
+          type: string
+          format: date-time
+        reviews:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ReviewsResponseDto"
+    CategoryResponseDto:
+      type: object
+      properties:
+        name:
+          type: string
+    MovieResponseDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        rating:
+          type: number
+          format: double
+        releaseData:
+          type: string
+        imageUrl:
+          type: string
+        classification:
+          type: string
+        categories:
+          type: array
+          items:
+            "$ref": "#/components/schemas/CategoryResponseDto"
+        reviews:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ReviewsResponseDto"
+    ChairResponseDto:
+      type: object
+      properties:
+        chairNumber:
+          type: integer
+          format: int32
+        available:
+          type: boolean
+    Categories:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      description: JWT auth description
+      in: header
+      scheme: bearer
+      bearerFormat: JWT

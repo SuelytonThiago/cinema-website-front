@@ -3,6 +3,7 @@ import './Navbar.css';
 import { FaSearch } from 'react-icons/fa';
 import Menu from './NavbarMenu.jsx'
 import { useSelector } from 'react-redux';
+import { Button } from '../Button.jsx';
 
 const Navbar = () => {
 

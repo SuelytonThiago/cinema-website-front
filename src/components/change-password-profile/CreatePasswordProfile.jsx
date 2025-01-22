@@ -1,16 +1,15 @@
+
 import React from 'react'
 import { AiFillEye, AiFillEyeInvisible, AiOutlineCheck } from 'react-icons/ai';
 import { useState } from 'react';
 import isValidPassword from '../../js/passwordValidation';
 import './CreatePasswordProfile.css'
 import { useCreateNewPasswordMutate } from '../../hooks/UseCreateNewPasswordMutate';
-import { Link } from 'react-router-dom';
-import { AiOutlineClose } from 'react-icons/ai';
+import { Button, EyesButton } from '../Button';
+import { Input } from '../Input';
+
 
 const CreatePasswordProfile = ({ handleShowWindow }) => {
-
-
-
     const [oldPassword, setOldPassword] = useState('');
     const [errors, setErrors] = useState({});
     const [newPassword, setNewPassword] = useState('');
@@ -72,33 +71,33 @@ const CreatePasswordProfile = ({ handleShowWindow }) => {
             
             <div className='createNewPassContainer'>
                 <h1>Atualizar senha</h1>
-                <div className={'createFormControl'}>
+                <div >
                     <div className={`createPasswordInput ${errors.oldPassword ? "createPasswordInputError" : ""}`}>
-                        <input
+                        <Input
                             type={show ? 'text' : 'password'}
                             placeholder="* Digite sua antiga senha"
-                            id="password"
+                            id="oldPassword"
                             onChange={(e) => setOldPassword(e.target.value)}
                         />
-                        <button onClick={(e) => handleTogglePassword(e)}>
+                        <EyesButton onClick={(e) => handleTogglePassword(e)}>
                             {show ? <AiFillEyeInvisible size={22} /> : <AiFillEye size={22} />}
-                        </button>
+                        </EyesButton>
                     </div>
                     <div className='errorCreatePassMessage'>{errors.oldPassword}</div>
                 </div>
-                <div className={'createFormControl'}>
+                <div >
                     <div className={`createPasswordInput ${errors.newPassword ? "createPasswordInputError" : ""}`}>
-                        <input
+                        <Input
                             type={show ? 'text' : 'password'}
                             placeholder="* Digite uma nova senha"
-                            id="password"
+                            id="newPassword"
                             onChange={(e) => setNewPassword(e.target.value)}
                         />
-                        <button onClick={(e) => handleTogglePassword(e)}>
+                        <EyesButton onClick={(e) => handleTogglePassword(e)}>
                             {show ? <AiFillEyeInvisible size={22} /> : <AiFillEye size={22} />}
-                        </button>
+                        </EyesButton>
                     </div>
-                    <div className="filterCreatePassword">
+                    <div >
                         <p>Sua senha precisa atender aos seguintes critérios:</p>
                         <p><AiOutlineCheck className={/[A-Z]/.test(newPassword) ? 'checked' : ''} /> Mínimo uma letra maiúscula *</p>
                         <p><AiOutlineCheck className={/[a-z]/.test(newPassword) ? 'checked' : ''} /> Mínimo uma letra  minuscula*</p>
@@ -107,23 +106,23 @@ const CreatePasswordProfile = ({ handleShowWindow }) => {
                     </div>
                 </div>
 
-                <div className={'createFormControl'}>
+                <div>
                     <div className={`createPasswordInput ${errors.confirm ? "createPasswordInputError" : ""}`}>
-                        <input
+                        <Input
                             type={show ? 'text' : 'password'}
                             placeholder='* Repita a senha'
                             id="confirmPassword"
                             onChange={(e) => setConfirm(e.target.value)}
                         />
-                        <button onClick={(e) => handleTogglePassword(e)}>
+                        <EyesButton onClick={(e) => handleTogglePassword(e)}>
                             {show ? <AiFillEyeInvisible size={22} /> : <AiFillEye size={22} />}
-                        </button>
+                        </EyesButton>
                     </div>
                     <div className='errorCreatePassMessage'>{errors.confirm}</div>
                 </div>
                 <div className='createPassowrdBtn'>
-                    <button onClick={handleShowWindow}>Cancelar</button>
-                    <button onClick={handleChangeUserData}>Salvar</button>
+                    <Button onClick={handleShowWindow}>Cancelar</Button>
+                    <Button onClick={handleChangeUserData}>Salvar</Button>
                 </div>
 
             </div>
