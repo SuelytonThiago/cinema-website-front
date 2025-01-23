@@ -1,131 +1,91 @@
 
 import React from 'react'
-import { AiFillEye, AiFillEyeInvisible, AiOutlineCheck } from 'react-icons/ai';
 import { useState } from 'react';
 import isValidPassword from '../../js/passwordValidation';
 import './CreatePasswordProfile.css'
-import { useCreateNewPasswordMutate } from '../../hooks/UseCreateNewPasswordMutate';
-import { Button, EyesButton } from '../Button';
-import { Input } from '../Input';
+import { Button } from '../Button';
+import { InputSubit } from '../Input';
+import backend from '../../../api/index'
+import { toast } from 'react-toastify';
+import Cookies from 'js-cookie'
+import InputWithFilter from '../input-form/InputWithFilter';
+import InputWithoutFilter from '../input-form/InputWithoutFilter';
 
+import useForm from '../../hooks/UseForm';
 
 const CreatePasswordProfile = ({ handleShowWindow }) => {
-    const [oldPassword, setOldPassword] = useState('');
-    const [errors, setErrors] = useState({});
-    const [newPassword, setNewPassword] = useState('');
-    const [confirm, setConfirm] = useState('');
-    const [show, setShow] = useState(false);
-    const { mutate: createPass } = useCreateNewPasswordMutate();
 
-    const handleTogglePassword = (e) => {
-        e.preventDefault();
-        setShow(!show);
+    const [errors, setErrors] = useState({});
+   
+    const initialFormData = {
+        oldPassword:"",
+        newPassword:"",
+        confirm:"",
     }
+
+    const {formData, handleChange } = useForm(initialFormData)
 
     const validate = () => {
         const errors = {}
 
-        if (!isValidPassword(newPassword)) {
+        if (!isValidPassword(formData.newPassword)) {
             errors.newPassword = 'a senha deve conter 8 caracteres incluindo letras e números';
         }
 
-        if (newPassword !== confirm) {
+        if (formData.newPassword !== formData.confirm) {
             errors.confirm = 'as senhas não coincidem';
         }
 
-        if (!confirm) {
+        if (!formData.confirm) {
             errors.confirm = 'não pode ficar em branco';
         }
 
-        if (!oldPassword) {
+        if (!formData.oldPassword) {
             errors.oldPassword = 'não pode ficar em branco';
         }
 
         return errors;
     }
 
-    const handleChangeUserData = () => {
+    const handleChangePassword = async (e) => {
+        e.preventDefault();
         const err = validate();
         setErrors(err);
 
         if (Object.keys(errors).length === 0) {
-            createPass({ oldPassword, newPassword }, {
-                onSuccess: () => {
-                    handleShowWindow();
-                },
-                onError: () => {
-                    toast.error('Algo deu errado');
-                    handleShowWindow();
-                },
+            try {
+                await backend.userAPI.updateUserPassword(formData.oldPassword, formData.newPassword, {
+                    headers: {
+                        Authorization: `Bearer ${Cookies.get("accessToken")}`
+                    }
+                });
+
+                handleShowWindow(); 
+            } catch (err) {
+                toast.error('Algo deu errado');
             }
-            );
-
         }
+
     }
-
-
 
     return (
         <div>
             <div className='overlay'></div>
-            
-            <div className='createNewPassContainer'>
-                <h1>Atualizar senha</h1>
-                <div >
-                    <div className={`createPasswordInput ${errors.oldPassword ? "createPasswordInputError" : ""}`}>
-                        <Input
-                            type={show ? 'text' : 'password'}
-                            placeholder="* Digite sua antiga senha"
-                            id="oldPassword"
-                            onChange={(e) => setOldPassword(e.target.value)}
-                        />
-                        <EyesButton onClick={(e) => handleTogglePassword(e)}>
-                            {show ? <AiFillEyeInvisible size={22} /> : <AiFillEye size={22} />}
-                        </EyesButton>
-                    </div>
-                    <div className='errorCreatePassMessage'>{errors.oldPassword}</div>
-                </div>
-                <div >
-                    <div className={`createPasswordInput ${errors.newPassword ? "createPasswordInputError" : ""}`}>
-                        <Input
-                            type={show ? 'text' : 'password'}
-                            placeholder="* Digite uma nova senha"
-                            id="newPassword"
-                            onChange={(e) => setNewPassword(e.target.value)}
-                        />
-                        <EyesButton onClick={(e) => handleTogglePassword(e)}>
-                            {show ? <AiFillEyeInvisible size={22} /> : <AiFillEye size={22} />}
-                        </EyesButton>
-                    </div>
-                    <div >
-                        <p>Sua senha precisa atender aos seguintes critérios:</p>
-                        <p><AiOutlineCheck className={/[A-Z]/.test(newPassword) ? 'checked' : ''} /> Mínimo uma letra maiúscula *</p>
-                        <p><AiOutlineCheck className={/[a-z]/.test(newPassword) ? 'checked' : ''} /> Mínimo uma letra  minuscula*</p>
-                        <p><AiOutlineCheck className={/[0-9]/.test(newPassword) ? 'checked' : ''} /> Mínimo um número *</p>
-                        <p><AiOutlineCheck className={newPassword.length >= 8 ? 'checked' : ''} /> Mínimo de 8 caracteres *</p>
-                    </div>
-                </div>
 
-                <div>
-                    <div className={`createPasswordInput ${errors.confirm ? "createPasswordInputError" : ""}`}>
-                        <Input
-                            type={show ? 'text' : 'password'}
-                            placeholder='* Repita a senha'
-                            id="confirmPassword"
-                            onChange={(e) => setConfirm(e.target.value)}
-                        />
-                        <EyesButton onClick={(e) => handleTogglePassword(e)}>
-                            {show ? <AiFillEyeInvisible size={22} /> : <AiFillEye size={22} />}
-                        </EyesButton>
-                    </div>
-                    <div className='errorCreatePassMessage'>{errors.confirm}</div>
-                </div>
+            <form onSubmit={handleChangePassword} className='createNewPassContainer'>
+                <h1>Atualizar senha</h1>
+                <InputWithoutFilter handleChange={handleChange} error={errors.oldPassword} nameInput={"oldPassword"} />
+
+                <InputWithFilter handleChange={handleChange} error={errors.newPassword} newPassword={formData.newPassword} />
+
+                <InputWithoutFilter handleChange={handleChange} error={errors.newPassword} nameInput={"confirm"} />
+
                 <div className='createPassowrdBtn'>
                     <Button onClick={handleShowWindow}>Cancelar</Button>
-                    <Button onClick={handleChangeUserData}>Salvar</Button>
+                    <InputSubit type='submit' value='Salvar' />
                 </div>
 
-            </div>
+            </form>
         </div>
     )
 }

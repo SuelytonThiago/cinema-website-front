@@ -12,7 +12,7 @@ const Login = () => {
 
   return (
     <div className='sigContainer'>
-      <button class="crossBtn"> <Link to={'/'}><AiOutlineClose/></Link></button>
+      <button className="crossBtn"> <Link to={'/'}><AiOutlineClose/></Link></button>
       <div className='signinContainer'>
         <LoginForm loginSuccess={handleLoginSuccess} />
       </div>

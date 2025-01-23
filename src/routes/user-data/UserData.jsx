@@ -65,7 +65,6 @@ const UserData = () => {
     };
 
     const handleFileChange = () => {
-
         const file = event.target.files[0];
 
         if (!file) {
@@ -84,7 +83,6 @@ const UserData = () => {
     };
 
     const handleChangeUserData = () => {
-
         userMutation({ formData, password }, {
             onSuccess: () => {
                 dispatch(updateUser(formData))

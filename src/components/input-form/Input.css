@@ -1,0 +1,29 @@
+.createPasswordInput {
+    position: relative
+}
+
+.createPasswordInput {
+    position: relative
+}
+
+
+.createPassowrdBtn {
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+}
+
+
+.errorCreatePassMessage {
+    color: red;
+    height: 10px;
+}
+
+
+
+.errorRecoverMessage {
+    color: red;
+    height: 30px;
+}
+
+

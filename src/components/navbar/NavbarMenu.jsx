@@ -7,7 +7,6 @@ import { FaTicketAlt } from 'react-icons/fa';
 import { FaPen } from 'react-icons/fa';
 import useLogout from '../../js/Logout'
 
-
 const menu = ({ user }) => {
 
 

@@ -31,3 +31,20 @@ export const EyesButton = styled.button`
         color: #17191f;
 
 `
+
+export const NextButton = styled.button`
+    padding: .5rem 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: .2s;
+    font-weight: bold;
+    opacity: .8;
+    background-color: #17191f;
+    border: none;
+    color: #fff;
+
+    &:hover {
+        opacity: 1;
+    }
+
+`
