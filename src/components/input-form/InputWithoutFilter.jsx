@@ -5,7 +5,7 @@ import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import './Input.css'
 import { MessageError } from '../Paragraph';
 
-const InputWithout = ({ handleChange, error, nameInput }) => {
+const InputWithoutFilter = ({ handleChange, error, nameInput }) => {
 
   const [show, setShow] = useState(false);
   const handleTogglePassword = (e) => {
@@ -20,14 +20,14 @@ const InputWithout = ({ handleChange, error, nameInput }) => {
           <ErrorInput
             type={show ? 'text' : 'password'}
             placeholder="* Digite uma nova senha"
-            id="password"
+            id={nameInput}
             name={nameInput}
             onChange={handleChange}
           />) : (
           <Input
             type={show ? 'text' : 'password'}
             placeholder="* Digite uma nova senha"
-            id="password"
+            id={nameInput}
             name={nameInput}
             onChange={handleChange}
           />)
@@ -43,4 +43,4 @@ const InputWithout = ({ handleChange, error, nameInput }) => {
   )
 }
 
-export default InputWithout
+export default InputWithoutFilter

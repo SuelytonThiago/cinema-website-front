@@ -1,13 +1,28 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import './SelectChairComponent.css';
-import { useChairData } from '../../hooks/UseChairData';
 import formatDate from '../../js/formatDate';
 import formatHours from '../../js/formatHours';
 import { FaCalendarAlt } from 'react-icons/fa';
 import { FaClock } from 'react-icons/fa';
 
+import backend from '../../../api/'
+
 const SelectChairComponent = ({ session, id, onChairSelect, chairId }) => {
-    const { data: chairsData } = useChairData(id);
+
+    const [chairsData, setChairsData] = useState([]);
+
+    useEffect(() => {
+        async function handleGetChairsSession() {
+            try {
+                const response = await backend.chairAPI.getAllChairs(id)
+                setChairsData(response.data);
+            } catch(err) {
+                console.log(err)
+            }
+        }
+
+        handleGetChairsSession();
+    }, [])
 
     const handleChairClick = (chairId) => {
         onChairSelect(chairId);

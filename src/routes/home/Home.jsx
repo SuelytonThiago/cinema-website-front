@@ -76,7 +76,7 @@ const Home = () => {
         <div className='sessionsContainer'>
           {selectedDate && groupedSessions[selectedDate] ? (
             groupedSessions[selectedDate].sessions.map(s => (
-              <Session session={s} key={s.id} />
+              <Session session={s} />
             ))
           ) : (
             <div>Loading sessions...</div>

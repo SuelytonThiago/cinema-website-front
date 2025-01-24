@@ -5,13 +5,13 @@ import { useSelector } from 'react-redux'
 import Pagination from '../../components/pagination/Pagination'
 
 const CategoryMovies = () => {
-
     const { currentCategoryId } = useSelector((rootReducer) => rootReducer.categoryReducer);
     const { data: categoryMoviesData } = useGetMoviesWithCategory(currentCategoryId)
 
+
     return (
         <div>
-            <ShowCategories />
+            <ShowCategories/>
             {!!categoryMoviesData && <Pagination objectList={categoryMoviesData} />}
         </div>
     )

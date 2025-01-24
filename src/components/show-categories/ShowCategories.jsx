@@ -2,18 +2,21 @@ import React, { useState } from 'react'
 import { useCategoriesData } from '../../hooks/UseCategoriesData'
 import './ShowCategories.css'
 import { FiChevronRight } from 'react-icons/fi';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setCategoryId } from '../../redux/category-id/actions';
 
 const ShowCategories = () => {
 
+    const [activeBtn, setActiveBtn] = useState(null);
     const { data: categoriesData } = useCategoriesData();
     const dispatch = useDispatch();
-    const id = null;
 
 
     const handleChangeCategory = (id) => {
-        dispatch(setCategoryId(id))
+        setActiveBtn(id)
+        dispatch(setCategoryId(id));
+        console.log(currentCategory )
+        console.log(id )
     }
 
     return (
@@ -22,12 +25,14 @@ const ShowCategories = () => {
                 categoriesData.map(category => (
                     <button
                         key={category.id}
-                        className='categoryBtn'
+                        className={`categoryBtn ${activeBtn === category.id ? 'active' : ''}`}
                         onClick={() => handleChangeCategory(category.id)}>
                         <FiChevronRight />{category.name}
                     </button>
+                    
                 ))
             }
+            
         </div>
     )
 }

@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 import './VerifyCode.css'
 import { useVerifyCodeMutate } from '../../hooks/UseVerifyCodeMutate';
 import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
+
 
 const VerifyCode = ({ goNext, goBack }) => {
 

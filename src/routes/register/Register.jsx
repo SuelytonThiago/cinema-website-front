@@ -4,7 +4,6 @@ import './Register.css';
 import { AiFillEye, AiFillEyeInvisible, AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
 import InputMask from 'react-input-mask';
 import isValidCPF from '../../js/cpfValidation';
-import isValidContactNumber from '../../js/phoneValidation';
 import isValidEmail from '../../js/emailValidation';
 import isValidName from '../../js/nameValidation';
 import isValidPassword from '../../js/passwordValidation';
@@ -36,10 +35,6 @@ const Register = () => {
 
     if (!isValidCPF(cpf)) {
       errors.cpf = 'insira um cpf válido';
-    }
-
-    if (!isValidContactNumber(contactNumber)) {
-      errors.contactNumber = 'insira um telefone válido';
     }
 
     if (!isValidEmail(email)) {

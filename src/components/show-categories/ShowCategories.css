@@ -28,4 +28,10 @@
     opacity: 1;
 }
 
+.active {
+    color: #1877F2;
+    opacity: 1;
+    font-weight: bold;
+}
+
 

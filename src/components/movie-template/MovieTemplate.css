@@ -21,6 +21,9 @@
   .movieInfo h2 {
     font-size: 18px;
     margin: 10px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
   
   .movieInfo p {

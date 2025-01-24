@@ -47,3 +47,8 @@ export const InputSubit = styled.input`
     
     }
 `
+
+export const InputWithForm = styled.input`
+
+
+`

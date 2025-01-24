@@ -3,21 +3,23 @@ import { Input, ErrorInput } from '../Input'
 import './Input.css'
 import { MessageError } from '../Paragraph'
 
-const InputText = ({ error, handleChange, nameInput }) => {
+const InputText = ({ error, handleChange, nameInput, value }) => {
     return (
         <div>
             {error ? (
                 <ErrorInput
                     type="text"
-                    id="email"
+                    id={nameInput}
                     name={nameInput}
+                    value={value || ''}
                     onChange={handleChange}
                     autoComplete='off' />
             ) : (
                 <Input
                     type="text"
-                    id="email"
+                    id={nameInput}
                     name={nameInput}
+                    value={value || ''}
                     onChange={handleChange}
                     autoComplete='off' />
 

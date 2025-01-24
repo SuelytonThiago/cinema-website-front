@@ -3,29 +3,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import './UserData.css';
 import { FaTicketAlt, FaIdCard, FaSignOutAlt, FaPen } from 'react-icons/fa';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { useUserDataMutation } from '../../hooks/UseUserDataMutate';
 import useLogout from '../../js/Logout.js'
-import InputMask from 'react-input-mask'
 import { useChangeUserImgMutate } from '../../hooks/UseChangeUserImgMutate.jsx'
 import { updateProfileImage, updateUser } from '../../redux/user/actions.js';
 import { toast } from 'react-toastify';
-import CreatePasswordProfile from '../../components/change-password-profile/CreatePasswordProfile.jsx';
+
+import MyUserData from '../../components/my-user-data/MyUserData.jsx';
+import TicketsUserData from '../../components/tickets-user-data/TicketsUserData.jsx';
 
 const UserData = () => {
     const { currentUser } = useSelector((rootReducer) => rootReducer.userReducer);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    const [showChangePassWindow, setShowChangePassWindow] = useState(false)
-
+    
     const { section } = useParams();
 
-    const { mutate: userMutation } = useUserDataMutation();
     const { mutate: uploadImage } = useChangeUserImgMutate();
     const inputFileRef = useRef(null);
-
-    const [password, setPassword] = useState('')
 
     const [formData, setFormData] = useState({
         name: '',
@@ -46,10 +41,6 @@ const UserData = () => {
             })
         }
     }, [currentUser])
-
-    const handleShowWindow = () => {
-        setShowChangePassWindow(!showChangePassWindow);
-    }
 
     const handleChange = (e) => {
         e.preventDefault();
@@ -82,19 +73,6 @@ const UserData = () => {
         });
     };
 
-    const handleChangeUserData = () => {
-        userMutation({ formData, password }, {
-            onSuccess: () => {
-                dispatch(updateUser(formData))
-            },
-            onError: () => {
-                toast.error('Algo deu errado');
-            },
-        }
-        );
-    }
-
-
 
     const logout = useLogout();
 
@@ -102,7 +80,7 @@ const UserData = () => {
         logout();
     };
 
-
+    /*<MyUserData formData={formData} handleChange={handleChange}/>*/
 
     return (
         <div className='userDataContainer'>
@@ -145,81 +123,8 @@ const UserData = () => {
                 </div>
                 <button className='userDataOutBtn' onClick={handleLogoutClick}><FaSignOutAlt /> Sair</button>
             </div>
-            <div className='UserDataForm'>
-                <h3>Dados Pessoais</h3>
-                <div className='UserFormControl'>
-                    <div className='UserFormInput'>
-                        <label htmlFor="name">Nome *</label>
-                        <input
-                            type="text"
-                            id="name"
-                            value={formData.name}
-                            name='name'
-                            onChange={handleChange} />
-                    </div>
-                    <div className='UserFormInput disabledInput'>
-                        <label htmlFor="email">Email *</label>
-                        <input
-                            type="text"
-                            id="email"
-                            name='email'
-                            value={formData.email}
-                            disabled />
-                    </div>
-                    <div className='UserFormInput disabledInput'>
-                        <label htmlFor="cpf">CPF *</label>
-                        <input
-                            type="text"
-                            id="cpf"
-                            name='cpf'
-                            value={formData.cpf}
-                            onChange={handleChange}
-                            disabled />
-                    </div>
-                    <div className='UserFormInput'>
-                        <label htmlFor="contactNumber">Telefone *</label>
-                        <InputMask
-                            mask='(99)99999-9999'
-                            value={formData.contactNumber}
-                            name='contactNumber'
-                            id="contactNumber"
-                            onChange={handleChange}
-
-                        />
-                    </div>
-                    <div className='passwordInputContainer'>
-                        <div className='UserFormInput disabledInput'>
-                            <label htmlFor="senha">Senha *</label>
-                            <input
-                                type="password"
-                                id="password"
-                                disabled
-                                value='***********' />
-                        </div>
-                        <button className='changePassBtn' onClick={handleShowWindow}>alterar senha</button>
-
-                    </div>
-
-                </div>
-                <div className='UserDataSubmit'>
-                    <h3>Salvar todas as alterações</h3>
-                    <p>Por questões de segurança, você precisa digitar sua senha para confirmar as alterações feitas no seu cadastro.</p>
-                    <div className='UserFormSubmitControl'>
-                        <div className='UserFormSubmit'>
-                            <label htmlFor="senha">Senha *</label>
-                            <input
-                                type="password"
-                                id="verifyPassword"
-                                onChange={(e) => setPassword(e.target.value)} />
-                        </div>
-                        <button disabled={!password} onClick={handleChangeUserData}>Salvar</button>
-                    </div>
-                </div>
-                {showChangePassWindow && (
-                    <CreatePasswordProfile handleShowWindow={handleShowWindow} />
-                )}
-
-            </div>
+            
+            <TicketsUserData/>
         </div>
     );
 }
