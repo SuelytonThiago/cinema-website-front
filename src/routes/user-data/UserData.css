@@ -13,44 +13,18 @@
     padding: 2rem 0 2rem 2rem;
 }
 
-.UserFormControl {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.UserFormInput,
-.UserFormSubmit {
-    width: 100%;
-    padding: .5rem;
-    border-radius: 7px;
-    border: none;
-    border-left: 8px solid #ccc;
-    font-size: 12px;
-    background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-
-.UserFormSubmit {
-    width: 300px;
-}
-
-.UserFormInput input,
-.UserFormSubmit input {
-    border: none;
-    outline: none;
-    background-color: transparent;
-}
 
 .UserInfos{
     max-width: 200px;
-    overflow: hidden;
 }
 
-.UserFormInput:c,
+.UserInfos h3 {
+    white-space: nowrap; 
+    overflow: hidden;  
+    text-overflow: ellipsis; 
+}
+
+.UserFormInput,
 .UserFormSubmit:focus-within {
     border-left: 8px solid #1877F2;
 
@@ -86,16 +60,10 @@
 }
 
 .changeImgProfile {
-    
     color: #000;
     z-index: 1;
 }
 
-.UserFormInput label,
-.UserFormSubmit label {
-    transition: 0.2s ease all;
-    color: #999;
-}
 
 
 .userDataLinks {

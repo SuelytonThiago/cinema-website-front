@@ -4,6 +4,7 @@ import './SearchPage.css'
 import { FaTimes } from 'react-icons/fa'
 import Pagination from '../../components/pagination/Pagination'
 import { useMovieData } from '../../hooks/UseMoviesData'
+import MovieTemplate from '../../components/movie-template/MovieTemplate'
 
 
 const SearchPage = () => {
@@ -31,7 +32,9 @@ const SearchPage = () => {
         }
       </div>
 
-      <Pagination objectList={moviesData} />
+      <Pagination objectList={moviesData} itemsPerPage={12}>
+        <MovieTemplate />
+      </Pagination>
     </div>
   )
 }

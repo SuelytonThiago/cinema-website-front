@@ -12,6 +12,13 @@
     text-transform: uppercase;
 }
 
+.reviewUserInfo h4{
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .commentInfo p{ 
     font-size: 15px;
 }

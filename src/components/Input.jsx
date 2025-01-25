@@ -38,6 +38,7 @@ export const InputSubit = styled.input`
     transition: .2s;
     border-radius: 5px;
     
+    
 
     &:hover {
 

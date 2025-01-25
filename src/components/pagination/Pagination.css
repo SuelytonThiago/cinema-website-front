@@ -1,20 +1,23 @@
-.paginationControls{
+.PaginationContainer{
     display: flex;
-    justify-content: center;
-    padding: 1rem;
+    flex-direction: column;
+    height: 100%;
 }
 
-.moviesResultContainer {
+.itemsResultContainer {
     display: flex;
     flex-wrap: wrap;
-    gap: 4rem;
+    gap: 1rem;
     justify-content: center;
-    
 }
+
 
 .paginationControls {
     display: flex;
     gap: .5rem;
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
 }
 
 .paginationBtn{

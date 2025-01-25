@@ -23,6 +23,7 @@ const InputWithoutFilter = ({ handleChange, error, nameInput }) => {
             id={nameInput}
             name={nameInput}
             onChange={handleChange}
+            autocomplete="current-password" 
           />) : (
           <Input
             type={show ? 'text' : 'password'}
@@ -30,6 +31,7 @@ const InputWithoutFilter = ({ handleChange, error, nameInput }) => {
             id={nameInput}
             name={nameInput}
             onChange={handleChange}
+            autocomplete="current-password" 
           />)
 
         }

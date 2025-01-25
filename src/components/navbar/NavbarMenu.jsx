@@ -33,7 +33,7 @@ const menu = ({ user }) => {
                 className='menuButton'
                 onClick={() => toggleMenu()}>
                 <img src={user.profileImg} alt="profileImg" />
-                <p>Olá, <span>{user.name}</span></p>
+                <p>Olá, <span className='usernameMenu'>{user.name}</span></p>
             </button>
             {isOpen && (
                 <div>

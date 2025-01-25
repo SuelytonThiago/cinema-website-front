@@ -9,14 +9,14 @@ import { updateProfileImage, updateUser } from '../../redux/user/actions.js';
 import { toast } from 'react-toastify';
 
 import MyUserData from '../../components/my-user-data/MyUserData.jsx';
-import TicketsUserData from '../../components/tickets-user-data/TicketsUserData.jsx';
+import TicketUserData from '../../components/tickets-user-data/TicketUserData.jsx';
 
 const UserData = () => {
     const { currentUser } = useSelector((rootReducer) => rootReducer.userReducer);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
+
     const { section } = useParams();
 
     const { mutate: uploadImage } = useChangeUserImgMutate();
@@ -80,7 +80,7 @@ const UserData = () => {
         logout();
     };
 
-    /*<MyUserData formData={formData} handleChange={handleChange}/>*/
+    /*<MyUserData formData={formData} handleChange={handleChange}/>  <TicketUserData/>*/
 
     return (
         <div className='userDataContainer'>
@@ -123,8 +123,12 @@ const UserData = () => {
                 </div>
                 <button className='userDataOutBtn' onClick={handleLogoutClick}><FaSignOutAlt /> Sair</button>
             </div>
-            
-            <TicketsUserData/>
+            {section === 'meus-dados' ? (
+                <MyUserData formData={formData} handleChange={handleChange} />
+            ) : (
+                <TicketUserData />
+            )}
+
         </div>
     );
 }

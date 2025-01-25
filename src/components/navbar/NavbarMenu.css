@@ -17,14 +17,19 @@
     align-items: center;
 }
 
-.menuButton p {
-    max-width: 100px;
-    overflow: hidden;
+.menuButton {
+    max-width: 120px;
     display: flex;
 }
 
-.menuItems{
-    
+.menuButton p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.menuItems {
+
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -80,7 +85,7 @@
     opacity: 1;
 }
 
-.UserDataBtn{
+.UserDataBtn {
     display: flex;
     justify-content: space-between;
 }

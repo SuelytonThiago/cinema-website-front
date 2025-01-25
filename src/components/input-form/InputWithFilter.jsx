@@ -22,6 +22,7 @@ const InputWithFilter = ({ handleChange, error, newPassword }) => {
                         id="newPassword"
                         name="newPassword"
                         onChange={handleChange}
+                        autocomplete="current-password" 
                     />
                 ) : (
                     <Input
@@ -30,6 +31,7 @@ const InputWithFilter = ({ handleChange, error, newPassword }) => {
                         id="newPassword"
                         name="newPassword"
                         onChange={handleChange}
+                        autocomplete="current-password" 
                     />
                 )}
                 <EyesButton onClick={(e) => handleTogglePassword(e)}>

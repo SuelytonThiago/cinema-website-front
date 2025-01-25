@@ -3,7 +3,7 @@ import { Input, ErrorInput } from '../Input'
 import './Input.css'
 import { MessageError } from '../Paragraph'
 
-const InputText = ({ error, handleChange, nameInput, value }) => {
+const InputText = ({ error, handleChange, nameInput, value, placeholder }) => {
     return (
         <div>
             {error ? (
@@ -13,7 +13,8 @@ const InputText = ({ error, handleChange, nameInput, value }) => {
                     name={nameInput}
                     value={value || ''}
                     onChange={handleChange}
-                    autoComplete='off' />
+                    autoComplete='off'
+                    placeholder={placeholder} />
             ) : (
                 <Input
                     type="text"
@@ -21,7 +22,8 @@ const InputText = ({ error, handleChange, nameInput, value }) => {
                     name={nameInput}
                     value={value || ''}
                     onChange={handleChange}
-                    autoComplete='off' />
+                    autoComplete='off' 
+                    placeholder={placeholder} />
 
             )}
 
