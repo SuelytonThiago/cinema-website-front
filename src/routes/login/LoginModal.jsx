@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { hideLoginModal } from '../../redux/show-login-modal/actions';
 import { FaTimes , FaUser } from 'react-icons/fa';
 import './LoginModal.css';
+
 const LoginModal = () => {
 
   const dispatch = useDispatch()
@@ -26,7 +27,7 @@ const LoginModal = () => {
               <FaTimes/>
             </button>
           </div>
-          <LoginForm onSuccess={handleHideLoginModal} />
+          <LoginForm loginSuccess={handleHideLoginModal} />
         </div>
     </div>
   );

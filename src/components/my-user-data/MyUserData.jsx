@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import isValidName from '../../js/nameValidation';
 import CreatePasswordProfile from './../change-password-profile/CreatePasswordProfile';
-import { useUserDataMutation } from '../../hooks/UseUserDataMutate';
 import InputMask from 'react-input-mask'
 import './MyUserData.css'
 import { useDispatch } from 'react-redux';
 import { updateUser } from '../../redux/user/actions';
 import { EyesButton } from '../Button';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+import backend from '../../../api/index'
+
+import Cookies from 'js-cookie'
 
 const MyUserData = ({ formData, handleChange }) => {
 
@@ -15,7 +17,6 @@ const MyUserData = ({ formData, handleChange }) => {
     const [password, setPassword] = useState('');
     const [showChangePassWindow, setShowChangePassWindow] = useState(false);
 
-    const { mutate: userMutation } = useUserDataMutation();
     const dispatch = useDispatch();
 
     const handleShowWindow = () => {
@@ -44,22 +45,25 @@ const MyUserData = ({ formData, handleChange }) => {
         return errors;
     }
 
-    const handleChangeUserData = () => {
+    const handleChangeUserData = async () => {
         const err = validate()
         setDataErrors(err);
         if (Object.keys(err).length === 0) {
-            console.log("clicou")
-            userMutation({ formData, password }, {
-                onSuccess: () => {
-                    dispatch(updateUser(formData))
-                },
-                onError: () => {
-                    toast.error('Algo deu errado');
-                },
+            try {
+                await backend.userAPI.updateUser(password, formData, {
+                    headers: {
+                        Authorization: `Bearer ${Cookies.get('accessToken')}`
+                    }
+                })
+
+                dispatch(updateUser(formData))
+            } catch (err) {
+                toast.error('Algo deu errado');
             }
-            );
+
         }
     }
+
     return (
 
         <div className='UserDataForm'>

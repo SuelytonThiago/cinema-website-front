@@ -15,7 +15,6 @@ import { useEffect } from 'react';
 import backend from '../api/index.ts'
 
 function App() {
-
   const dispatch = useDispatch()
 
   useEffect(() => {

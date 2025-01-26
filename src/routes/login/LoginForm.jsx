@@ -10,9 +10,8 @@ import Cookies from 'js-cookie'
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { loginUser } from '../../redux/user/actions.js';
-import { hideLoginModal } from '../../redux/show-login-modal/actions';
 
-const LoginForm = () => {
+const LoginForm = ({loginSuccess}) => {
 
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch()
@@ -52,7 +51,6 @@ const LoginForm = () => {
         Cookies.set('accessToken', responseLogin.data.accessToken);
         Cookies.set('refreshToken', responseLogin.data.refreshToken);
 
-
         const accessToken = Cookies.get('accessToken')
         const responseUser = await backend.userAPI.findById({
           headers: {
@@ -61,14 +59,14 @@ const LoginForm = () => {
         })
 
         dispatch(loginUser(responseUser.data));
-        dispatch(hideLoginModal());
+        loginSuccess();
 
       } catch (err) {
         toast.error('Email ou senha inválidos')
         console.log(err)
       }
 
-      
+
     }
   };
 
@@ -82,13 +80,13 @@ const LoginForm = () => {
           value={formData.email}
           placeholder={'* Digite o seu email'} />
 
-        <InputWithoutFilter 
-        error={errors.password} 
-        handleChange={handleChange} 
-        nameInput={"password"} />
+        <InputWithoutFilter
+          error={errors.password}
+          handleChange={handleChange}
+          nameInput={"password"} />
 
         <Link to={`/recover`}>
-          <p class="forgoutPass">esqueceu sua senha?</p>
+          <p className="forgoutPass">esqueceu sua senha?</p>
         </Link>
 
         <InputSubit type="submit" value="Entrar" />

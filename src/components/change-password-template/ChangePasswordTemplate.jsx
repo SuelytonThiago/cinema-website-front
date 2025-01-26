@@ -3,15 +3,12 @@ import { useState } from 'react';
 import isValidPassword from '../../js/passwordValidation';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie'
-
 import './ChangePasswordTemplate.css'
-
 import backend from '../../../api/index'
 import { toast } from 'react-toastify';
 import { InputSubit } from '../Input';
 import InputWithFilter from '../input-form/InputWithFilter';
 import InputWithoutFilter from '../input-form/InputWithoutFilter';
-
 import useForm from '../../hooks/UseForm';
 
 const ChangePasswordTemplate = () => {

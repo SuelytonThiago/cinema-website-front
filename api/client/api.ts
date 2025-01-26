@@ -425,6 +425,18 @@ export interface TicketsResponseDto {
      * @memberof TicketsResponseDto
      */
     'chairNumber'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof TicketsResponseDto
+     */
+    'movieImgUrl'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TicketsResponseDto
+     */
+    'sessionDate'?: string;
 }
 /**
  * 
@@ -3182,11 +3194,11 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updatePassword: async (password: string, userUpdateRequestDto: UserUpdateRequestDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateUser: async (password: string, userUpdateRequestDto: UserUpdateRequestDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'password' is not null or undefined
-            assertParamExists('updatePassword', 'password', password)
+            assertParamExists('updateUser', 'password', password)
             // verify required parameter 'userUpdateRequestDto' is not null or undefined
-            assertParamExists('updatePassword', 'userUpdateRequestDto', userUpdateRequestDto)
+            assertParamExists('updateUser', 'userUpdateRequestDto', userUpdateRequestDto)
             const localVarPath = `/api/users/update`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3324,10 +3336,10 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updatePassword(password: string, userUpdateRequestDto: UserUpdateRequestDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updatePassword(password, userUpdateRequestDto, options);
+        async updateUser(password: string, userUpdateRequestDto: UserUpdateRequestDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateUser(password, userUpdateRequestDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UserControllerApi.updatePassword']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['UserControllerApi.updateUser']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -3390,8 +3402,8 @@ export const UserControllerApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updatePassword(password: string, userUpdateRequestDto: UserUpdateRequestDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.updatePassword(password, userUpdateRequestDto, options).then((request) => request(axios, basePath));
+        updateUser(password: string, userUpdateRequestDto: UserUpdateRequestDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.updateUser(password, userUpdateRequestDto, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3457,8 +3469,8 @@ export class UserControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof UserControllerApi
      */
-    public updatePassword(password: string, userUpdateRequestDto: UserUpdateRequestDto, options?: RawAxiosRequestConfig) {
-        return UserControllerApiFp(this.configuration).updatePassword(password, userUpdateRequestDto, options).then((request) => request(this.axios, this.basePath));
+    public updateUser(password: string, userUpdateRequestDto: UserUpdateRequestDto, options?: RawAxiosRequestConfig) {
+        return UserControllerApiFp(this.configuration).updateUser(password, userUpdateRequestDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

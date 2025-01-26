@@ -15,8 +15,6 @@ const ShowCategories = () => {
     const handleChangeCategory = (id) => {
         setActiveBtn(id)
         dispatch(setCategoryId(id));
-        console.log(currentCategory )
-        console.log(id )
     }
 
     return (

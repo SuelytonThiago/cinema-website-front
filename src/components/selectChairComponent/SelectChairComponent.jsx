@@ -5,7 +5,7 @@ import formatHours from '../../js/formatHours';
 import { FaCalendarAlt } from 'react-icons/fa';
 import { FaClock } from 'react-icons/fa';
 
-import backend from '../../../api/'
+import backend from '../../../api/index'
 
 const SelectChairComponent = ({ session, id, onChairSelect, chairId }) => {
 

@@ -14,8 +14,6 @@ import {
 
 } from './client'
 
-import Cookies from 'js-cookie';
-
 const instance = axios.create({
     withCredentials: true,
     baseURL: "http://localhost:8080",

@@ -1,37 +1,67 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './Movie.css';
 import RateMovie from '../../components/starRating/RateMovie';
 import StarRating from '../../components/starRating/StarRating';
 import { useSelector } from 'react-redux';
 import LoginModal from '../login/LoginModal';
-import { useGetMovieData } from '../../hooks/useGetMovieData';
-import { useSessionsByMovie } from '../../hooks/UseSessionsByMovie';
 import CommentTemplate from '../../components/comments-template/CommentTemplate';
 import SessionTemplate from '../../components/session-template/SessionTemplate';
 import formatDate from '../../js/formatDate';
 import classificationMovie from '../../js/Classification.js'
+import backend from '../../../api/index.ts'
+import Cookies from 'js-cookie'
+import { connect } from '../../../web-socket.js';
 
 const Movie = () => {
     const { id } = useParams();
     const { isVisible } = useSelector((rootReducer) => rootReducer.loginModalReducer);
-    const { data: movieData, error } = useGetMovieData(id);
-    const { data: sessionsMovieData = [] } = useSessionsByMovie(id);
+    const [movieData, setMovieData] = useState(null);
+    const [sessionsMovieData, setSessionsMovieData] = useState([]);
     const [showSessions, setShowSessions] = useState(false);
-
+    const [comments, setComments] = useState([]);
     const [isExpanded, setIsExpanded] = useState(false);
 
     const toggleDescription = () => {
         setIsExpanded(!isExpanded);
     };
 
-    if (error) {
-        return <p>Erro ao carregar os dados do filme.</p>;
-    }
+    useEffect(() => {
+        connect((receivedComment) => {
+            setComments((prevComments) => [...prevComments, receivedComment]);
+        });
+    }, []);
 
-    if (!movieData) {
-        return <p>Carregando...</p>;
-    }
+    useEffect(() => {
+        async function handleGetMovieData() {
+            try {
+                const res = await backend.movieAPI.findMovieById(id);
+                setMovieData(res.data)
+            } catch (err) {
+                console.log('algo de de errado')
+            }
+        }
+        handleGetMovieData();
+    }, [])
+
+    useEffect(() => {
+        async function handleGetSessiosDate() {
+            try {
+                const res = await backend.sessionAPI.findByMovie(id, {
+                    headers: {
+                        Authorization: `Bearer ${Cookies.get('accessToken')}`
+                    }
+                })
+
+                setSessionsMovieData(res.data)
+
+            } catch (err) {
+                console.log('Algo deu errado')
+            }
+        }
+
+        handleGetSessiosDate();
+    }, [])
 
     const toggleShowSessions = (shouldShowSessions) => {
         if (shouldShowSessions !== showSessions) {
@@ -58,6 +88,9 @@ const Movie = () => {
     };
 
 
+    if (!movieData || !sessionsMovieData) {
+        return <p>Carregando...</p>;
+    }
 
     return (
         <div className="movieContainer">
@@ -79,7 +112,7 @@ const Movie = () => {
                                 ))}
                             </div>
                             <div className='classificationControl'>
-                                classificação: <p className ={`classificationMovie ${classificationMovie(movieData.classification)}`}>{movieData.classification}</p>
+                                classificação: <p className={`classificationMovie ${classificationMovie(movieData.classification)}`}>{movieData.classification}</p>
                             </div>
                             <div>
                                 <h3>Sinopse</h3>
@@ -87,7 +120,7 @@ const Movie = () => {
                                     {movieData.description}
                                 </p>
 
-                                <button className = 'showDescrptBtn'onClick={toggleDescription}>
+                                <button className='showDescrptBtn' onClick={toggleDescription}>
                                     {isExpanded ? 'Ler menos' : 'Ler mais'}
                                 </button>
                             </div>
@@ -120,10 +153,10 @@ const Movie = () => {
                             <RateMovie id={id} />
                         </div>
                         <div className="commentsContainer">
-                            {movieData.reviews.length === 0 ? (
-                                <p>Nenhum Comentário</p>
+                            {comments === 0 ? (
+                                <p>Sem comentários ainda. Seja o primeiro a comentar!</p>
                             ) : (
-                                movieData.reviews.map((review) => (
+                                comments.map((review) => (
                                     <CommentTemplate review={review} />
                                 ))
                             )}

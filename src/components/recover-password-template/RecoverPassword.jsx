@@ -30,10 +30,10 @@ const RecoverPassword = ({ goNext }) => {
     }
 
     const handleChangePassword = async (e) => {
-        
         e.preventDefault();
         var err = validateEmail();
         setErrorEmail(err);
+        
         if (!errorEmail) {
             console.log("clicou")
             try {

@@ -1,35 +1,93 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaStar, FaRegStar, FaUser, FaPen, FaTimes } from 'react-icons/fa';
 import { useSelector, useDispatch } from 'react-redux';
-import { useReviewMutation } from '../../hooks/UseReviewMutate';
 import { showLoginModal } from '../../redux/show-login-modal/actions';
-import { useReviewUserData } from '../../hooks/UseReviewUserData';
 import StarRating from './StarRating';
-import { UseReviewEditMutation } from '../../hooks/UseReviewEditMutation';
 import './RateMovie.css';
+
+import backend from '../../../api/index.ts'
+import Cookies from 'js-cookie'
+import { InputSubit } from '../Input.jsx';
+import InputText from '../input-form/InputText.jsx';
 
 const RateMovie = ({ id }) => {
   const { currentUser } = useSelector(state => state.userReducer);
-  const { data: reviewUser } = useReviewUserData(currentUser?.id, id);
-  const mutationAddReview = useReviewMutation();
-  const mutationEditReview = UseReviewEditMutation();
   const dispatch = useDispatch();
 
-  const [rating, setRating] = useState(reviewUser?.rating || null);
-  const [comment, setComment] = useState(reviewUser?.comment || '');
   const [isEditing, setIsEditing] = useState(false);
+  const [currentReview, setCurrentReview] = useState(null)
+  const [rating, setRating] = useState(null);
+  const [comment, setComment] = useState('');
 
-  const handleRatingChange = (index) => setRating(index);
+  const handleRatingChange = (index) => {
+    setRating(index);
+  }
 
-  const handleAddRating = (e) => {
+  useEffect(() => {
+      async function handleGetUserReview() {
+        try {
+          const response = await backend.reviewsAPI.getUserReview(currentUser.id, id, {
+            headers: {
+              Authorization: `Bearer ${Cookies.get('accessToken')}`
+            }
+          });
+  
+          if (response.data) {
+            setCurrentReview(response.data);
+            setRating(response.data.rating);
+            setComment(response.data.comment);
+          }
+  
+        } catch (err) {
+          console.log('algo deu errado');
+        }
+      }
+      handleGetUserReview();
+    
+  }, [currentUser, id]);
+  
+
+  const handleAddRating = async (e) => {
     e.preventDefault();
     if (currentUser) {
-      if (reviewUser) {
-        mutationEditReview.mutate({ comment, rating, id: reviewUser.id });
-        setIsEditing(false);
-      } else {
+
+      const formData = {
+        comment: comment,
+        rating: rating,
+        movieId: id,
+      }
+
+      try {
+        if (currentReview) {
+          await backend.reviewsAPI.updateReview(currentReview.id, formData, {
+            headers: {
+              Authorization: `Bearer ${Cookies.get('accessToken')}`
+            }
+          })
+          setCurrentReview({
+            ...currentReview,
+            comment: comment,
+            rating: rating,
+          });
+
+        } else {
+          console.log('form data: ', formData.rating)
+          await backend.reviewsAPI.addReviewToFilm(formData, {
+            headers: {
+              Authorization: `Bearer ${Cookies.get('accessToken')}`
+            }
+          })
+          setCurrentReview({
+            ...currentReview,
+            comment: comment,
+            rating: rating,
+          });
+
+        }
         
-        mutationAddReview.mutate({ comment, rating, id });
+        setIsEditing(false);
+      } catch (err) {
+        console.log('algo deu errado')
       }
     } else {
       dispatch(showLoginModal());
@@ -37,7 +95,7 @@ const RateMovie = ({ id }) => {
   };
 
   const toggleEdit = () => {
-    setIsEditing(!isEditing); 
+    setIsEditing(!isEditing);
   };
 
 
@@ -51,13 +109,12 @@ const RateMovie = ({ id }) => {
             <FaUser className='userImgIcon' />
           )}
         </div>
-
         <div className='userAvaliationForm'>
-          {reviewUser && !isEditing ? (
+          {currentReview && !isEditing ? (
             <>
               <p className='userNameConntnainer'>{currentUser.name}</p>
-              <StarRating rating={reviewUser.rating} />
-              <p>{reviewUser.comment}</p>
+              <StarRating rating={currentReview.rating} />
+              <p>{currentReview.comment}</p>
             </>
           ) : (
             <>
@@ -70,19 +127,18 @@ const RateMovie = ({ id }) => {
                 </button>
               ))}
               <form className='commentUserForm' onSubmit={handleAddRating}>
-                <input
-                  type="text"
-                  
-                  placeholder='adicione sua avaliação sobre o filme'
-                  onChange={(e) => setComment(e.target.value)}
-                />
-                <input type="submit" value={currentUser ? 'Salvar' : 'Publicar'} />
+                <InputText error={''}
+                  handleChange={(e) => setComment(e.target.value)}
+                  nameInput={'comment'}
+                  placeholder={'adicione sua avaliação sobre o filme'}
+                  value={comment} />
+                <InputSubit type="submit" value={currentUser ? 'Salvar' : 'Publicar'} />
               </form>
             </>
           )}
         </div>
       </div>
-      {reviewUser && (
+      {currentReview && (
         <button className='editBtn' onClick={toggleEdit}>
           {isEditing ? <FaTimes /> : <FaPen />}
         </button>

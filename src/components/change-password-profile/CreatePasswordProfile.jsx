@@ -16,14 +16,14 @@ import useForm from '../../hooks/UseForm';
 const CreatePasswordProfile = ({ handleShowWindow }) => {
 
     const [errors, setErrors] = useState({});
-   
+
     const initialFormData = {
-        oldPassword:"",
-        newPassword:"",
-        confirm:"",
+        oldPassword: "",
+        newPassword: "",
+        confirm: "",
     }
 
-    const {formData, handleChange } = useForm(initialFormData)
+    const { formData, handleChange } = useForm(initialFormData)
 
     const validate = () => {
         const errors = {}
@@ -60,7 +60,7 @@ const CreatePasswordProfile = ({ handleShowWindow }) => {
                     }
                 });
 
-                handleShowWindow(); 
+                handleShowWindow();
             } catch (err) {
                 toast.error('Algo deu errado');
             }
