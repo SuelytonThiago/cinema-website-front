@@ -1,59 +1,66 @@
 import React from 'react';
 import { useState } from 'react';
 import './Register.css';
-import { AiFillEye, AiFillEyeInvisible, AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
-import InputMask from 'react-input-mask';
 import isValidCPF from '../../js/cpfValidation';
 import isValidEmail from '../../js/emailValidation';
 import isValidName from '../../js/nameValidation';
 import isValidPassword from '../../js/passwordValidation';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { toast } from 'react-toastify';
+import useForm from '../../hooks/UseForm.jsx'
+import backend from '../../../api/index.ts'
+import InputText from '../../components/input-form/InputText.jsx';
+import InputMaskComponent from '../../components/input-form/InputMaskComponent.jsx';
+import InputWithFilter from '../../components/input-form/InputWithFilter.jsx';
+import InputWithoutFilter from '../../components/input-form/InputWithoutFilter.jsx';
+import { AiOutlineClose } from 'react-icons/ai';
 
 const Register = () => {
 
   const navigate = useNavigate();
-
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirm, setConfirm] = useState('');
-  const [cpf, setCpf] = useState('');
-  const [contactNumber, setContactNumber] = useState('');
   const [errors, setErrors] = useState({});
-  const [show, setShow] = useState(false);
+
+  const initialState = {
+    name: '',
+    email: '',
+    cpf: '',
+    contactNumber: '',
+    newPassword: '',
+    confirm: ''
+  }
+
+  const { formData, handleChange } = useForm(initialState)
 
   const [step, setStep] = useState(1);
-
-  const handleTogglePassword = () => {
-    setShow(!show);
-  }
 
   const validate = () => {
     const errors = {}
 
-    if (!isValidCPF(cpf)) {
+    if (!isValidCPF(formData.cpf)) {
       errors.cpf = 'insira um cpf válido';
     }
 
-    if (!isValidEmail(email)) {
+    if (!isValidEmail(formData.email)) {
       errors.email = 'insira um email válido';
     }
 
-    if (!isValidName(name)) {
+    if (!isValidName(formData.name)) {
       errors.name = 'insira um nome válido';
     }
 
-    if (!isValidPassword(password)) {
-      errors.password = 'a senha deve conter 8 caracteres incluindo letras e números';
+    if (!isValidPassword(formData.newPassword)) {
+      errors.newPassword = 'a senha deve conter 8 caracteres incluindo letras e números';
     }
 
-    if (!confirm) {
+    if (!formData.contactNumber) {
+      errors.contactNumber = 'o telefone não pode estar vazio';
+    }
+
+    if (!formData.confirm) {
       errors.confirm = 'não pode ficar em branco';
     }
 
-    if (password !== confirm) {
+    if (formData.newPassword !== formData.confirm) {
       errors.confirm = 'as senhas não coincidem';
     }
 
@@ -65,32 +72,22 @@ const Register = () => {
   }
 
   const createUser = async () => {
-
     const user = {
-      name: name,
-      email: email,
-      cpf: cpf,
-      contactNumber: contactNumber,
-      password: password,
+      name: formData.name,
+      email: formData.email,
+      cpf: formData.cpf,
+      contactNumber: formData.contactNumber,
+      password: formData.newPassword,
     }
-
     const validateErrors = validate();
     setErrors(validateErrors);
 
     if (Object.keys(validateErrors).length === 0) {
       try {
-        await axios.post('http://localhost:8080/api/users/create', user,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-            }
-          });
+        await backend.userAPI.createNewUser(user);
         navigate('/login');
-      } catch (e) {
-        const error = e.response.data.Message;
-        console.log(error);
-        toast.error(error);
-
+      } catch (err) {
+        toast.error(err.response.data.Message);
       }
     }
   }
@@ -106,95 +103,67 @@ const Register = () => {
             {step === 1 ? (
               <>
 
-                <div className={errors.name ? 'inputError' : 'registerFormControl'}>
+                <div className={'registerFormControl'}>
                   <label htmlFor="name">Nome</label>
-                  <input
-                    type="text"
-                    placeholder="* Digite seu nome"
-                    id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                  <div className="errorMessage">{errors.name}</div>
+                  <InputText
+                    error={errors.name}
+                    handleChange={handleChange}
+                    nameInput={'name'}
+                    value={formData.name}
+                    placeholder={'* Digite o seu nome'} />
                 </div>
 
-                <div className={errors.email ? 'inputError' : 'registerFormControl'}>
+                <div className={'registerFormControl'}>
                   <label htmlFor="email">Email</label>
-                  <input
-                    type="text"
-                    placeholder="* Digite um email"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                  <div className="errorMessage">{errors.email}</div>
+                  <InputText
+                    error={errors.email}
+                    handleChange={handleChange}
+                    nameInput={'email'}
+                    value={formData.email}
+                    placeholder={'* Digite o seu email'} />
                 </div>
 
-                <div className={errors.cpf ? 'inputError' : 'registerFormControl'}>
+                <div className={'registerFormControl'}>
                   <label htmlFor="cpf">CPF</label>
-                  <InputMask
-                    mask="999.999.999-99"
-                    placeholder="* Digite seu CPF"
-                    id="cpf"
-                    value={cpf}
-                    onChange={(e) => setCpf(e.target.value)}
-                    className="inputMask"
+                  <InputMaskComponent
+                    error={errors.cpf}
+                    handleChange={handleChange}
+                    nameInput={'cpf'}
+                    value={formData.cpf}
+                    placeholder={'* Digite o seu cpf'}
+                    mask={'999.999.999-99'}
                   />
-                  <div className="errorMessage">{errors.cpf}</div>
                 </div>
 
-                <div className={errors.contactNumber ? 'inputError' : 'registerFormControl'}>
+                <div className={'registerFormControl'}>
                   <label htmlFor="contactNumber">Telefone</label>
-                  <InputMask
-                    mask="(99) 99999-9999"
-                    placeholder="* Digite seu telefone"
-                    id="contactNumber"
-                    value={contactNumber}
-                    onChange={(e) => setContactNumber(e.target.value)}
-                    className="inputMask"
+                  <InputMaskComponent
+                    error={errors.contactNumber}
+                    handleChange={handleChange}
+                    nameInput={'contactNumber'}
+                    value={formData.contactNumber}
+                    placeholder={'* Digite o seu Telefone'}
+                    mask={"(99) 99999-9999"}
                   />
-                  <div className="errorMessage">{errors.contactNumber}</div>
                 </div>
               </>
             ) : (
               <>
-                <div className={errors.name ? 'inputError' : 'registerFormControl'}>
-                  <label htmlFor="password">Senha</label>
-                  <div className='passwordInput'>
-                    <input
-                      type={show ? 'text' : 'password'}
-                      placeholder="* Digite uma senha"
-                      id="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <button onClick={(e) => handleTogglePassword(e)}>
-                      {show ? <AiFillEyeInvisible size={22} /> : <AiFillEye size={22} />}
-                    </button>
-                  </div>
-                  <div>
-                    <p>Sua senha precisa atender aos seguintes critérios:</p>
-                    <p><AiOutlineCheck className={/[A-Z]/.test(password) ? 'checked' : ''} /> Mínimo uma letra minúscula *</p>
-                    <p><AiOutlineCheck className={/[a-z]/.test(password) ? 'checked' : ''} /> Mínimo uma letra maiúscula *</p>
-                    <p><AiOutlineCheck className={/[0-9]/.test(password) ? 'checked' : ''} /> Mínimo um número *</p>
-                    <p><AiOutlineCheck className={password.length >= 8 ? 'checked' : ''} /> Mínimo de 8 caracteres *</p>
-                  </div>
+                <div className={'registerFormControl'}>
+                  <label htmlFor="newPassword">Senha</label>
+                  <InputWithFilter 
+                  handleChange={handleChange} 
+                  error={errors.password} 
+                  newPassword={formData.newPassword}/>
+
                 </div>
-                <div className={errors.name ? 'inputError' : 'registerFormControl'}>
+                <div className={'registerFormControl'}>
                   <label htmlFor="confirmPassword">Confirmar senha</label>
-                  <div className='passwordInput'>
-                    <input
-                      type={show ? 'text' : 'password'}
-                      placeholder='* Repita a senha'
-                      value={confirm}
-                      id="confirmPassword"
-                      onChange={(e) => setConfirm(e.target.value)}
-                    />
-                    <button onClick={(e) => handleTogglePassword(e)}>
-                      {show ? <AiFillEyeInvisible size={22} /> : <AiFillEye size={22} />}
-                    </button>
-                  </div>
-                  <div className='errorMessage'>{errors.confirm}</div>
+                  <InputWithoutFilter
+                  handleChange={handleChange}
+                  error={errors.confirm}
+                  nameInput={'confirm'}
+                  placeholder={'*Digite novamente sua senha'}/>
                 </div>
               </>
             )
@@ -205,7 +174,7 @@ const Register = () => {
               {step === 2 && (
                 <button className='createBtn' onClick={createUser}>Criar Conta</button>
               )}
-            
+
             </div>
             <p className='logLink'>tem uma conta? <span><Link to={"/login"} className='regislink'>conecte-se</Link></span></p>
           </div>

@@ -3,13 +3,13 @@ import { useState } from 'react';
 import isValidPassword from '../../js/passwordValidation';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie'
-import './ChangePasswordTemplate.css'
 import backend from '../../../api/index'
 import { toast } from 'react-toastify';
 import { InputSubit } from '../Input';
 import InputWithFilter from '../input-form/InputWithFilter';
 import InputWithoutFilter from '../input-form/InputWithoutFilter';
 import useForm from '../../hooks/UseForm';
+import { ChangePasswordContainer } from './ChangePasswordTemplate';
 
 const ChangePasswordTemplate = () => {
 
@@ -18,7 +18,7 @@ const ChangePasswordTemplate = () => {
     const [errors, setErrors] = useState({});
 
     const initialState = {
-        password: '',
+        newPassword: '',
         confirm: ''
     }
 
@@ -27,11 +27,11 @@ const ChangePasswordTemplate = () => {
     const validate = () => {
         const errors = {}
 
-        if (!isValidPassword(formData.password)) {
-            errors.password = 'a senha deve conter 8 caracteres incluindo letras e números';
+        if (!isValidPassword(formData.newPassword)) {
+            errors.newPassword = 'a senha deve conter 8 caracteres incluindo letras e números';
         }
 
-        if (formData.password !== formData.confirm) {
+        if (formData.newPassword !== formData.confirm) {
             errors.confirm = 'as senhas não coincidem';
         }
 
@@ -49,7 +49,7 @@ const ChangePasswordTemplate = () => {
 
         if (Object.keys(errors).length === 0) {
             try {
-                await backend.userAPI.changePassword(formData.password, {
+                await backend.userAPI.changePassword(formData.newPassword, {
                     headers: {
                         Authorization: `Bearer ${Cookies.get("accessToken")}`
                     }
@@ -66,17 +66,25 @@ const ChangePasswordTemplate = () => {
 
     return (
         <div>
-            <form onSubmit={handleChangePassword} className='changePasswordContainer'>
+            <ChangePasswordContainer onSubmit={handleChangePassword}>
                 <h1>Atualizar senha</h1>
 
-                <InputWithFilter error={errors.password} handleChange={handleChange} newPassword={formData.password} />
-                <InputWithoutFilter error={errors.confirm} handleChange={handleChange} nameInput={"confirm"} />
+                <InputWithFilter 
+                error={errors.password} 
+                handleChange={handleChange} 
+                newPassword={formData.newPassword} />
+                
+                <InputWithoutFilter 
+                error={errors.confirm} 
+                handleChange={handleChange} 
+                nameInput={"confirm"} 
+                placeholder={"* Confirme a nova senha"} />
                 
                 <div className='changePassowrdBtn'>
                     <InputSubit type='submit' value='Salvar' />
                 </div>
 
-            </form>
+            </ChangePasswordContainer>
         </div>
     )
 }

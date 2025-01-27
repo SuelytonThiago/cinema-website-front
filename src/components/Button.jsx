@@ -48,3 +48,26 @@ export const NextButton = styled.button`
     }
 
 `
+
+export const ThemeBtn = styled.button`
+padding: .5rem; 
+   font-size: 20px;
+   clip-path: circle(50%);
+   border-radius: 50%;  
+   width: 40px;  
+   height: 40px;  
+   background-color: transparent;
+   color: #fff;
+   border: 2px solid #fff;
+   opacity: .8;
+   cursor: pointer;
+   transition: .2s;
+
+   &:hover {
+        opacity: 1;
+        color:#000;
+        background-color: #fff;
+        border: 2px solid #000;
+   }
+
+`

@@ -2,9 +2,7 @@
 import React from 'react'
 import { useState } from 'react';
 import isValidPassword from '../../js/passwordValidation';
-import './CreatePasswordProfile.css'
 import { Button } from '../Button';
-import { InputSubit } from '../Input';
 import backend from '../../../api/index'
 import { toast } from 'react-toastify';
 import Cookies from 'js-cookie'
@@ -12,9 +10,9 @@ import InputWithFilter from '../input-form/InputWithFilter';
 import InputWithoutFilter from '../input-form/InputWithoutFilter';
 
 import useForm from '../../hooks/UseForm';
+import { ControlBtn, CreateNewPassContainer } from './CreatePasswordProfile';
 
 const CreatePasswordProfile = ({ handleShowWindow }) => {
-
     const [errors, setErrors] = useState({});
 
     const initialFormData = {
@@ -47,12 +45,13 @@ const CreatePasswordProfile = ({ handleShowWindow }) => {
         return errors;
     }
 
-    const handleChangePassword = async (e) => {
+    const handleChangePassword = async(e) => {
         e.preventDefault();
         const err = validate();
         setErrors(err);
+        console.log(errors.confirm);
 
-        if (Object.keys(errors).length === 0) {
+        if (Object.keys(err).length === 0) {
             try {
                 await backend.userAPI.updateUserPassword(formData.oldPassword, formData.newPassword, {
                     headers: {
@@ -62,7 +61,7 @@ const CreatePasswordProfile = ({ handleShowWindow }) => {
 
                 handleShowWindow();
             } catch (err) {
-                toast.error('Algo deu errado');
+                toast.error(err.response.data.Message);
             }
         }
 
@@ -72,20 +71,30 @@ const CreatePasswordProfile = ({ handleShowWindow }) => {
         <div>
             <div className='overlay'></div>
 
-            <form onSubmit={handleChangePassword} className='createNewPassContainer'>
+            <CreateNewPassContainer onSubmit={handleChangePassword} className='createNewPassContainer'>
                 <h1>Atualizar senha</h1>
-                <InputWithoutFilter handleChange={handleChange} error={errors.oldPassword} nameInput={"oldPassword"} />
+                <InputWithoutFilter 
+                    handleChange={handleChange} 
+                    error={errors.oldPassword} 
+                    nameInput={"oldPassword"}
+                    placeholder={"* Digite a sua antiga senha"} />
 
-                <InputWithFilter handleChange={handleChange} error={errors.newPassword} newPassword={formData.newPassword} />
+                <InputWithFilter 
+                    handleChange={handleChange} 
+                    error={errors.newPassword} 
+                    newPassword={formData.newPassword} />
 
-                <InputWithoutFilter handleChange={handleChange} error={errors.newPassword} nameInput={"confirm"} />
+                <InputWithoutFilter 
+                    handleChange={handleChange} 
+                    error={errors.confirm} 
+                    nameInput={"confirm"}
+                    placeholder={"* Confirme a senha"} />
 
-                <div className='createPassowrdBtn'>
+                <ControlBtn >
                     <Button onClick={handleShowWindow}>Cancelar</Button>
-                    <InputSubit type='submit' value='Salvar' />
-                </div>
-
-            </form>
+                    <Button type='submit'>Salvar</Button>
+                </ControlBtn>
+            </CreateNewPassContainer>
         </div>
     )
 }

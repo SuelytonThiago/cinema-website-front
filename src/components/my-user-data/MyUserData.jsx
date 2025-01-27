@@ -10,6 +10,7 @@ import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import backend from '../../../api/index'
 
 import Cookies from 'js-cookie'
+import { toast } from 'react-toastify';
 
 const MyUserData = ({ formData, handleChange }) => {
 
@@ -58,7 +59,7 @@ const MyUserData = ({ formData, handleChange }) => {
 
                 dispatch(updateUser(formData))
             } catch (err) {
-                toast.error('Algo deu errado');
+                toast.error('Senha incorreta!');
             }
 
         }

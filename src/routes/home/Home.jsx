@@ -4,12 +4,42 @@ import backend from "../../../api/index"
 import Session from '../../components/session/Session';
 import getDayOfWeek from '../../js/getDayOfWeek';
 import formatDate from '../../js/formatDate';
+import { Stomp } from "@stomp/stompjs";
+import SockJS from "sockjs-client";
 
 const Home = () => {
 
   const [sessions, setSessions] = useState([])
   const [groupedSessions, setGroupedSessions] = useState([])
   const [selectedDate, setSelectedDate] = useState(null);
+
+  useEffect(() => {
+    const socket = new SockJS("http://localhost:8080/ws");
+    const stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, () => {
+      stompClient.subscribe("/topic/sessions", (message) => {
+        const newSession = JSON.parse(message.body);
+
+        setSessions((prevSessions) => {
+          const existingSessionIndex = prevSessions.findIndex(session => session.id === newSession.id);
+
+          if (existingSessionIndex !== -1) {
+
+            const updatedSession = [...prevSessions];
+            updatedSession[existingSessionIndex] = newSession;
+            return updatedSession;
+          } else {
+            return [...prevSessions, newSession];
+          }
+        });
+      });
+    });
+
+    return () => {
+      stompClient.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     async function getSessions() {
@@ -65,8 +95,18 @@ const Home = () => {
                 <button
                   className={`filterBtn ${selectedDate === date ? 'selected' : ''}`}
                   onClick={() => setSelectedDate(date)}>
-                  <div>{getDayOfWeek(date.split('/').reverse().join('/'))}</div>
-                  <div>{formatDate(new Date(date.split('/').reverse().join('/'))).formattedDate}</div>
+                  {new Date(date).getDate() === new Date().getDate() ?
+                    (
+                      <div>hoje</div>
+                    )
+                    :
+                    (
+                      <div>
+                        <div>{getDayOfWeek(date.split('/').reverse().join('/'))}</div>
+                        <div>{formatDate(new Date(date.split('/').reverse().join('/'))).formattedDate}</div>
+                      </div>
+                    )
+                  }
                 </button>
               </div>
             ))}
@@ -76,7 +116,7 @@ const Home = () => {
         <div className='sessionsContainer'>
           {selectedDate && groupedSessions[selectedDate] ? (
             groupedSessions[selectedDate].sessions.map(s => (
-              <Session session={s} />
+              <Session session={s} key={s.id} />
             ))
           ) : (
             <div>Loading sessions...</div>

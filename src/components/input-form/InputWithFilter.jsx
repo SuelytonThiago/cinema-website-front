@@ -21,6 +21,7 @@ const InputWithFilter = ({ handleChange, error, newPassword }) => {
                         placeholder="* Digite uma nova senha"
                         id="newPassword"
                         name="newPassword"
+                        
                         onChange={handleChange}
                         autocomplete="current-password" 
                     />
@@ -30,6 +31,7 @@ const InputWithFilter = ({ handleChange, error, newPassword }) => {
                         placeholder="* Digite uma nova senha"
                         id="newPassword"
                         name="newPassword"
+                        
                         onChange={handleChange}
                         autocomplete="current-password" 
                     />

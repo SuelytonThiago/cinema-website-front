@@ -8,6 +8,7 @@ import { NextButton } from '../Button.jsx';
 import InputText from '../input-form/InputText.jsx';
 import useForm from '../../hooks/UseForm.jsx';
 
+
 const RecoverPassword = ({ goNext }) => {
 
     const [errorEmail, setErrorEmail] = useState("");
@@ -37,13 +38,11 @@ const RecoverPassword = ({ goNext }) => {
         if (!errorEmail) {
             console.log("clicou")
             try {
-                await backend.recoverAPI.recoverPassword(formData.email, {
-                    headers: {
-                        Authorization: `Bearer ${Cookies.get('accessToken')}`
-                    }
-                })
+                const response = await backend.recoverAPI.recoverPassword(formData.email)
+                Cookies.set('recoveryEmail', response.data);
                 goNext();
             } catch (err) {
+                setErrorEmail('erro ao enviar email, tente novamente mais tarde');   
             }
         }
     }
@@ -56,7 +55,12 @@ const RecoverPassword = ({ goNext }) => {
 
             <h2>Esqueceu sua senha?</h2>
             <p>Informe seu endereço de e-mail ou CPF que, caso exista uma conta cadastrada, enviaremos um e-mail para recuperar sua senha.</p>
-            <InputText error= {errorEmail} handleChange={handleChange}  nameInput={'email'}/>
+            <InputText 
+            error= {errorEmail} 
+            handleChange={handleChange}  
+            nameInput={'email'}
+            value={formData.email}/>
+
             <div className='controlRecoverContainer'>
                 <Link to={"/login"} className='bbutton'>Voltar</Link>
                 <NextButton onClick={handleChangePassword}>Proximo</NextButton>

@@ -1,20 +1,39 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ShowCategories from '../../components/show-categories/ShowCategories'
-import { useGetMoviesWithCategory } from '../../hooks/UseGetMoviesWithCategory'
-import { useSelector } from 'react-redux'
 import Pagination from '../../components/pagination/Pagination'
 import MovieTemplate from '../../components/movie-template/MovieTemplate'
+import backend from './../../../api/index'
+import { toast } from 'react-toastify'
 
 const CategoryMovies = () => {
-    const { currentCategoryId } = useSelector((rootReducer) => rootReducer.categoryReducer);
-    const { data: categoryMoviesData } = useGetMoviesWithCategory(currentCategoryId)
+
+    const [categoryId, setCategoryId] = useState(null);
+    const [movies, setMovies] = useState([])
+    
+    const handleSetActiveCategory = (id) => {
+        setCategoryId(id)
+    }
+
+    useEffect(() => {
+        async function handleGetCategories() {
+            try {
+                const res = await backend.movieAPI.findByCategory(categoryId);
+                setMovies(res.data)
+
+            } catch(err) {
+                toast.error(err.response.data.Message)
+            }
+        }
+
+        handleGetCategories();
+    }, [categoryId])
 
 
     return (
         <div>
-            <ShowCategories />
-            {!!categoryMoviesData &&
-                <Pagination objectList={categoryMoviesData} itemsPerPage={12}>
+            <ShowCategories handleSetActiveCategory={handleSetActiveCategory} />
+            {!!movies &&
+                <Pagination objectList={movies} itemsPerPage={12}>
                     <MovieTemplate />
                 </Pagination>}
         </div>

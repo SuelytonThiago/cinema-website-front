@@ -12,7 +12,7 @@ html,body{
 }
 
 body {
-  background: linear-gradient(to bottom, black, gray);
+  background: black
 }
 
 ul{
@@ -20,8 +20,7 @@ ul{
 }
 
 a {
-  text-decoration: none;
-  color: #fff;
+  text-decoration: none;  
   opacity: .7;
   transition: .3s;
 }

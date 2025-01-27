@@ -1,23 +1,23 @@
 import React from 'react'
 import StarRating from '../starRating/StarRating'
-import './CommentTemplate.css'
+import { Review, ReviewUserInfo, Username } from './CommentTemplate'
 
 const CommentTemplate = ({review}) => {
     return (
         <div>
-            <div key={review.id} className="review">
+            <Review key={review.id}>
                 <img className='userIcon' src={review.profileImgUser} alt={review.userName} />
                 <div className='reviewInfo'>
-                    <div className='reviewUserInfo'>
-                        <h4>{review.userName}</h4>
+                    <ReviewUserInfo>
+                        <Username>{review.userName}</Username>
                         <StarRating rating={review.rating} />
-                    </div>
-                    <div className='commentInfo'>
-                        <p>{review.comment}</p>
-                        <p className='date'>{review.date}</p>
+                    </ReviewUserInfo>
+                    <div >
+                        <p style={{fontSize: '15px'}}>{review.comment}</p>
+                        <p style={{fontSize: '12px'}}>{review.date}</p>
                     </div>
                 </div>
-            </div>
+            </Review>
         </div>
     )
 }

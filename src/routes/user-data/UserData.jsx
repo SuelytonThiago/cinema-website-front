@@ -4,12 +4,12 @@ import './UserData.css';
 import { FaTicketAlt, FaIdCard, FaSignOutAlt, FaPen } from 'react-icons/fa';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import useLogout from '../../js/Logout.js'
-import { useChangeUserImgMutate } from '../../hooks/UseChangeUserImgMutate.jsx'
-import { updateProfileImage, updateUser } from '../../redux/user/actions.js';
+import { updateProfileImage } from '../../redux/user/actions.js';
 import { toast } from 'react-toastify';
-
+import backend from '../../../api/index.ts'
 import MyUserData from '../../components/my-user-data/MyUserData.jsx';
 import TicketUserData from '../../components/tickets-user-data/TicketUserData.jsx';
+import Cookies from 'js-cookie'
 
 const UserData = () => {
     const { currentUser } = useSelector((rootReducer) => rootReducer.userReducer);
@@ -19,7 +19,6 @@ const UserData = () => {
 
     const { section } = useParams();
 
-    const { mutate: uploadImage } = useChangeUserImgMutate();
     const inputFileRef = useRef(null);
 
     const [formData, setFormData] = useState({
@@ -55,7 +54,8 @@ const UserData = () => {
         inputFileRef.current.click();
     };
 
-    const handleFileChange = () => {
+
+    const handleFileChange = async () => {
         const file = event.target.files[0];
 
         if (!file) {
@@ -63,14 +63,18 @@ const UserData = () => {
             return;
         }
 
-        uploadImage(file, {
-            onSuccess: (response) => {
-                dispatch(updateProfileImage(response));
-            },
-            onError: () => {
-                toast.error('Algo deu errado');
-            },
-        });
+        try {
+            const res = await backend.fileAPI.uploadFile(request, {
+                headers: {
+                    Authorization: `Bearer ${Cookies.get('accessToken')}`,
+                    "Content-Type": "multipart/form-data",
+                }
+            })
+            dispatch(updateProfileImage(res));
+        } catch (err) {
+            toast.error('Algo deu errado');
+            console.log(err);
+        }
     };
 
 
@@ -80,7 +84,7 @@ const UserData = () => {
         logout();
     };
 
-    /*<MyUserData formData={formData} handleChange={handleChange}/>  <TicketUserData/>*/
+
 
     return (
         <div className='userDataContainer'>

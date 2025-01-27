@@ -254,7 +254,7 @@ paths:
       operationId: uploadFile
       requestBody:
         content:
-          application/json:
+          multipart/form-data:
             schema:
               required:
               - file

@@ -11,7 +11,8 @@ import formatDate from '../../js/formatDate';
 import classificationMovie from '../../js/Classification.js'
 import backend from '../../../api/index.ts'
 import Cookies from 'js-cookie'
-import { connect } from '../../../web-socket.js';
+import { Stomp } from "@stomp/stompjs";
+import SockJS from "sockjs-client";
 
 const Movie = () => {
     const { id } = useParams();
@@ -27,18 +28,42 @@ const Movie = () => {
     };
 
     useEffect(() => {
-        connect((receivedComment) => {
-            setComments((prevComments) => [...prevComments, receivedComment]);
+        const socket = new SockJS("http://localhost:8080/ws");
+        const stompClient = Stomp.over(socket);
+
+        stompClient.connect({}, () => {
+            stompClient.subscribe("/topic/comments", (message) => {
+                const updatedComment = JSON.parse(message.body);
+
+                setComments((prevComments) => {
+                    const existingCommentIndex = prevComments.findIndex(comment => comment.id === updatedComment.id);
+
+                    if (existingCommentIndex !== -1) {
+                       
+                        const updatedComments = [...prevComments];
+                        updatedComments[existingCommentIndex] = updatedComment;
+                        return updatedComments;
+                    } else {
+                        return [...prevComments, updatedComment];
+                    }
+                });
+            });
         });
+
+        return () => {
+            stompClient.disconnect();
+        };
     }, []);
+
 
     useEffect(() => {
         async function handleGetMovieData() {
             try {
                 const res = await backend.movieAPI.findMovieById(id);
-                setMovieData(res.data)
+                setMovieData(res.data);
+                setComments(res.data.reviews);
             } catch (err) {
-                console.log('algo de de errado')
+                console.log(err)
             }
         }
         handleGetMovieData();
@@ -56,7 +81,7 @@ const Movie = () => {
                 setSessionsMovieData(res.data)
 
             } catch (err) {
-                console.log('Algo deu errado')
+                console.log(err)
             }
         }
 
@@ -157,7 +182,7 @@ const Movie = () => {
                                 <p>Sem comentários ainda. Seja o primeiro a comentar!</p>
                             ) : (
                                 comments.map((review) => (
-                                    <CommentTemplate review={review} />
+                                    <CommentTemplate review={review} key={review.id} />
                                 ))
                             )}
                         </div>

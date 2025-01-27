@@ -48,33 +48,8 @@
    justify-content: space-around;
 }
 
-.registerFormControl,
-.inputError {
-   display: grid;
-   flex-direction: column;
-   grid-gap: .3rem;
-}
 
 
-.registerFormControl input:focus,
-.inputError input:focus {
-   outline: none;
-   box-shadow: none;
-}
-
-.passwordInput{
-   position: relative
-}
-
-.registerFormControl input{
-  width: 100%;
-  padding: 10px;
-  padding-right: 40px;
-  font-size: 13px;
-  border-radius: 4px;
-  border: none;
-  border-left:6px solid #17191f;
-}
 
 .inputError input {
    width: 100%;

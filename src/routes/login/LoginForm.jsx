@@ -83,7 +83,8 @@ const LoginForm = ({loginSuccess}) => {
         <InputWithoutFilter
           error={errors.password}
           handleChange={handleChange}
-          nameInput={"password"} />
+          nameInput={"password"} 
+          placeholder={'* Digite sua senha'} />
 
         <Link to={`/recover`}>
           <p className="forgoutPass">esqueceu sua senha?</p>

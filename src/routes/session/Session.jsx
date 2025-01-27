@@ -7,12 +7,14 @@ import { FaCalendarAlt, FaUser, FaClock } from 'react-icons/fa';
 import StarRating from '../../components/starRating/StarRating';
 import SelectChairComponent from '../../components/selectChairComponent/SelectChairComponent';
 import SelectTicket from '../../components/select-ticket/SelectTicket'
-import { useSessionData } from '../../hooks/UseSessionData';
-import { useTicketMutate } from '../../hooks/UseTicketMutate';
 import { useNavigate } from 'react-router-dom';
 import LoginModal from '../login/LoginModal.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { showLoginModal } from '../../redux/show-login-modal/actions.js';
+import backend from "../../../api/index.ts"
+
+import Cookies from 'js-cookie'
+import { toast } from 'react-toastify';
 
 const Session = () => {
 
@@ -21,26 +23,46 @@ const Session = () => {
     const [showComponent, setShowComponent] = useState(true);
     const [selectedChairId, setSelectedChairId] = useState(null);
     const [selectedTicket, setSelectedTicket] = useState(null);
+    const [sessionData, setSessionData] = useState(null);
 
-    const { data: sessionInfoData, isLoading, error } = useSessionData(id);
+    useEffect(() => {
+        async function handleGetSessionData() {
+            try {
+                const res = await backend.sessionAPI.getInfoSession(id);
+                setSessionData(res.data);
+            } catch (err) {
+                toast.error(err.response.data.Message);
+            }
+        }
+
+        handleGetSessionData();
+    }, [])
 
     const { isVisible } = useSelector((rootReducer) => rootReducer.loginModalReducer)
     const { currentUser } = useSelector((rootReducer) => rootReducer.userReducer);
     const dispatch = useDispatch();
 
-    const mutation = useTicketMutate();
 
-    const handleAddTicket = () => {
-        if (!!currentUser) {
-            const sessionId = id;
-            const price = selectedTicket?.price;
 
-            const chairNumber = selectedChairId - 1;
-
-            mutation.mutate({ sessionId, price, chairNumber });
-            navigate('/');
+    const handleAddTicket = async () => {
+        const ticketData = {
+            sessionId: id,
+            price: selectedTicket?.price,
+            chairNumber: selectedChairId - 1,
         }
-        else {
+        if (currentUser) {
+            try {
+                await backend.ticketAPI.addTicket(ticketData, {
+                    headers: {
+                        Authorization: `Bearer ${Cookies.get('accessToken')}`
+                    }
+                })
+                navigate('/');
+            } catch (err) {
+                toast.error(err.response.data.Message);
+            }
+
+        } else {
             dispatch(showLoginModal());
         }
     };
@@ -67,24 +89,12 @@ const Session = () => {
         setSelectedTicket(null)
     }
 
-    if (isLoading) {
-        return <p>Loading...</p>;
-    }
-
-    if (error) {
-        return <p>Error: {error.message}</p>;
-    }
-
-    if (!sessionInfoData) {
-        return <p>No session data available</p>;
-    }
-
     return (
         <div className='sessionContainer'>
             <div className='sessionInformations'>
                 <div className='entryRequesting'>
                     {showComponent ? (
-                        <SelectChairComponent id={id} session={sessionInfoData} onChairSelect={handleChairSelect} chairId={selectedChairId} />
+                        <SelectChairComponent id={id} session={sessionData} onChairSelect={handleChairSelect} chairId={selectedChairId} />
                     ) : (
                         <SelectTicket selectTicket={selectTicket} />
                     )
@@ -94,21 +104,21 @@ const Session = () => {
                     <h3>Resumo do pedido</h3>
                     <div className='ticketRequestInformations'>
                         <div className='movieInformations'>
-                            <img src={sessionInfoData.imageUrl} alt={sessionInfoData.movieName} />
+                            <img src={sessionData.imageUrl} alt={sessionData.movieName} />
                             <div>
-                                <p>{sessionInfoData.movieName}</p>
-                                <StarRating rating={sessionInfoData.rating} />
-                                <p>duração {sessionInfoData.duration}</p>
+                                <p>{sessionData.movieName}</p>
+                                <StarRating rating={sessionData.rating} />
+                                <p>duração {sessionData.duration}</p>
                             </div>
                         </div>
                         <div className='chairInformations'>
                             <div className='sessionTime'>
-                                <p>{sessionInfoData.sessionName}</p>
+                                <p>{sessionData.sessionName}</p>
                                 <div>
                                     <div className='editDate'>
-                                        <p><FaCalendarAlt />{formatDate(new Date(sessionInfoData.dateStart)).dayOfWeek}</p>
-                                        <p>{formatDate(new Date(sessionInfoData.dateStart)).formattedDate}</p>
-                                        <p><FaClock />{formatHours(new Date(sessionInfoData.dateStart))}</p>
+                                        <p><FaCalendarAlt />{formatDate(new Date(sessionData.dateStart)).dayOfWeek}</p>
+                                        <p>{formatDate(new Date(sessionData.dateStart)).formattedDate}</p>
+                                        <p><FaClock />{formatHours(new Date(sessionData.dateStart))}</p>
                                     </div>
                                 </div>
                             </div>

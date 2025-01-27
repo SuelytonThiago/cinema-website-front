@@ -1,36 +1,50 @@
-import React, { useState } from 'react'
-import { useCategoriesData } from '../../hooks/UseCategoriesData'
+import React, { useEffect, useState } from 'react'
 import './ShowCategories.css'
 import { FiChevronRight } from 'react-icons/fi';
-import { useDispatch, useSelector } from 'react-redux';
-import { setCategoryId } from '../../redux/category-id/actions';
+import backend from './../../../api/index'
+import { toast } from 'react-toastify';
 
-const ShowCategories = () => {
+const ShowCategories = ({handleSetActiveCategory}) => {
 
     const [activeBtn, setActiveBtn] = useState(null);
-    const { data: categoriesData } = useCategoriesData();
-    const dispatch = useDispatch();
+    const [ categories, setCategories ] = useState([]);
+    
+
+    useEffect(() => {
+        async function handleGetCategories() {
+            try {
+                const res = await backend.categoryAPI.findAll1();
+                setCategories(res.data);
+                console.log(categories)
+            }catch(err) {
+                toast.error("Erro ao buscar as categorias");
+                console.log(err)
+            }
+        }
+
+        handleGetCategories();
+    }, [])
 
 
     const handleChangeCategory = (id) => {
         setActiveBtn(id)
-        dispatch(setCategoryId(id));
+        handleSetActiveCategory(id);
     }
 
     return (
         <div className='categoriesContainer'>
-            {Array.isArray(categoriesData) &&
-                categoriesData.map(category => (
+            {Array.isArray(categories) &&
+                categories.map(category => (
                     <button
                         key={category.id}
                         className={`categoryBtn ${activeBtn === category.id ? 'active' : ''}`}
                         onClick={() => handleChangeCategory(category.id)}>
                         <FiChevronRight />{category.name}
                     </button>
-                    
+
                 ))
             }
-            
+
         </div>
     )
 }

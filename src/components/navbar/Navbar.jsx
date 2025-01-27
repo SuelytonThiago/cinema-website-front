@@ -3,8 +3,12 @@ import './Navbar.css';
 import { FaSearch } from 'react-icons/fa';
 import Menu from './NavbarMenu.jsx'
 import { useSelector } from 'react-redux';
+import { Button, ThemeBtn } from '../Button';
+import { FaMoon, FaSun } from 'react-icons/fa';
+import { LinkBtn, SearchBtn } from '../Link.jsx';
 
-const Navbar = () => {
+
+const Navbar = ({ themeToggler, theme }) => {
 
     const { currentUser } = useSelector((rootReducer) => rootReducer.userReducer);
 
@@ -20,14 +24,14 @@ const Navbar = () => {
                             <div >
                                 <ul className='navbarLinks'>
                                     <li>
-                                        <Link className='searchBtn' to={`/movies`}>
+                                        <SearchBtn className='searchBtn' to={`/movies`}>
                                             <FaSearch />
-                                        </Link>
+                                        </SearchBtn>
                                     </li>
                                     <li>
-                                        <Link to={"/category-movies"} className='btn'>
+                                        <LinkBtn to={"/category-movies"} className='btn'>
                                             Filmes
-                                        </Link>
+                                        </LinkBtn>
                                     </li>
                                     <li className='navbarMenuContainer'>
                                         <Menu user={currentUser} />
@@ -40,24 +44,33 @@ const Navbar = () => {
                                 <div>
                                     <ul className='navbarLinks'>
                                         <li>
-                                            <Link className='searchBtn' to={`/movies`}>
+                                            <SearchBtn to={`/movies`}>
                                                 <FaSearch />
-                                            </Link>
+                                            </SearchBtn>
                                         </li>
                                         <li>
-                                            <Link to={"/login"} className='btn'>
+                                            <ThemeBtn onClick={themeToggler}>
+                                                {theme === 'light' ?
+                                                    (<FaMoon />)
+                                                    :
+                                                    (<FaSun />)
+                                                }
+                                            </ThemeBtn>
+                                        </li>
+                                        <li>
+                                            <LinkBtn to={"/login"} >
                                                 Entrar
-                                            </Link>
+                                            </LinkBtn>
                                         </li>
                                         <li>
-                                            <Link to={"/register"} className='btn'>
+                                            <LinkBtn to={"/register"} >
                                                 Criar conta
-                                            </Link>
+                                            </LinkBtn>
                                         </li>
                                         <li>
-                                            <Link to={"/category-movies"} className='btn'>
+                                            <LinkBtn to={"/category-movies"}>
                                                 Filmes
-                                            </Link>
+                                            </LinkBtn>
                                         </li>
                                     </ul>
                                 </div>

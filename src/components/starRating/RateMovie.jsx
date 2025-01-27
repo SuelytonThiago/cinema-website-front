@@ -19,29 +19,26 @@ const RateMovie = ({ id }) => {
   const [rating, setRating] = useState(null);
   const [comment, setComment] = useState('');
 
-  const handleRatingChange = (index) => {
-    setRating(index);
+  async function handleGetUserReview() {
+    try {
+      const response = await backend.reviewsAPI.getUserReview(currentUser.id, id, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('accessToken')}`
+        }
+      });
+
+      if (response.data) {
+        setCurrentReview(response.data);
+        setRating(response.data.rating);
+        setComment(response.data.comment);
+      }
+
+    } catch (err) {
+      
+    }
   }
 
   useEffect(() => {
-      async function handleGetUserReview() {
-        try {
-          const response = await backend.reviewsAPI.getUserReview(currentUser.id, id, {
-            headers: {
-              Authorization: `Bearer ${Cookies.get('accessToken')}`
-            }
-          });
-  
-          if (response.data) {
-            setCurrentReview(response.data);
-            setRating(response.data.rating);
-            setComment(response.data.comment);
-          }
-  
-        } catch (err) {
-          console.log('algo deu errado');
-        }
-      }
       handleGetUserReview();
     
   }, [currentUser, id]);
@@ -71,7 +68,6 @@ const RateMovie = ({ id }) => {
           });
 
         } else {
-          console.log('form data: ', formData.rating)
           await backend.reviewsAPI.addReviewToFilm(formData, {
             headers: {
               Authorization: `Bearer ${Cookies.get('accessToken')}`
@@ -82,12 +78,12 @@ const RateMovie = ({ id }) => {
             comment: comment,
             rating: rating,
           });
-
+          handleGetUserReview();
         }
         
         setIsEditing(false);
       } catch (err) {
-        console.log('algo deu errado')
+        console.log(err)
       }
     } else {
       dispatch(showLoginModal());
@@ -121,7 +117,7 @@ const RateMovie = ({ id }) => {
               {[1, 2, 3, 4, 5].map(index => (
                 <button
                   key={index}
-                  onClick={() => handleRatingChange(index)}
+                  onClick={() => setRating(index)}
                   className='ratingButton'>
                   {rating >= index ? <FaStar className='starIcon' /> : <FaRegStar className='starIcon' />}
                 </button>

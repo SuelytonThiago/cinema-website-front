@@ -10,12 +10,21 @@ import Navbar from './components/navbar/Navbar.jsx'
 import { useDispatch } from 'react-redux';
 import { loginUser } from './redux/user/actions.js';
 import Cookies from 'js-cookie'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import backend from '../api/index.ts'
+import { ThemeProvider } from 'styled-components'
+import { lightTheme, darkTheme } from './theme.js';
+
+import { GlobalStyles } from './GlobalStyles.js';
 
 function App() {
   const dispatch = useDispatch()
+  const [theme, setTheme] = useState('dark');
+
+  const themeToggler = () => {
+    theme === 'light' ? setTheme('dark') : setTheme('light');
+  }
 
   useEffect(() => {
     async function getUserData() {
@@ -23,25 +32,28 @@ function App() {
         const accessToken = Cookies.get('accessToken')
         const response = await backend.userAPI.findById({
           headers: {
-            Authorization : `Bearer ${accessToken}`
+            Authorization: `Bearer ${accessToken}`
           }
         })
 
         dispatch(loginUser(response.data))
-      }catch (err) {
+      } catch (err) {
         console.log(err)
       }
-    } 
+    }
     getUserData();
   }, [dispatch])
 
   return (
     <>
-      <Navbar />
-      <div className="container">
-        <ToastContainer />
-        <Outlet />
-      </div>
+      <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+        <GlobalStyles/>
+        <Navbar themeToggler={themeToggler} theme={theme}/>
+        <div className="container">
+          <ToastContainer />
+          <Outlet />
+        </div>
+      </ThemeProvider>
     </>
   )
 }

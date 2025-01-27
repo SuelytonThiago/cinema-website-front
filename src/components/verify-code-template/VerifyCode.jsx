@@ -1,28 +1,28 @@
 import React, { useState } from 'react'
 import './VerifyCode.css'
-import { useVerifyCodeMutate } from '../../hooks/UseVerifyCodeMutate';
 import Cookies from 'js-cookie';
-
+import { toast } from 'react-toastify';
+import backend from './../../../api/index'
 
 const VerifyCode = ({ goNext, goBack }) => {
 
   const email = Cookies.get('recoveryEmail');
 
   const [pins, setPins] = useState(["", "", "", "", "", ""]);
-  const mutation = useVerifyCodeMutate();
 
   const [invalidCode, setInvalidCode] = useState(false);
 
-  const handleVerifyCode = () => {
+
+  const handleVerifyCode = async () => {
     const code = pins.join("");
-    mutation.mutate({ code, email }, {
-      onSuccess: () => {
-        goNext();
-      },
-      onError: () => {
-        setInvalidCode(true);
-      },
-    });
+    try {
+      const res = await backend.recoverAPI.verifyCode(code, email);
+      Cookies.set('accessToken', res.data)
+      console.log(res);
+      goNext()
+    } catch (err) {
+      toast.error(err.response.data.Message)
+    }
   };
 
 

@@ -3,17 +3,36 @@ import { useState } from 'react'
 import './SearchPage.css'
 import { FaTimes } from 'react-icons/fa'
 import Pagination from '../../components/pagination/Pagination'
-import { useMovieData } from '../../hooks/UseMoviesData'
 import MovieTemplate from '../../components/movie-template/MovieTemplate'
+import backend from '../../../api/index'
+import { toast } from 'react-toastify'
 
 
 const SearchPage = () => {
   const [name, setName] = useState('');
-  const { data: moviesData = [] } = useMovieData(name);
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(async () => {
+      if (name.trim()) {
+        try {
+          const res = await backend.movieAPI.findByName(name);
+          setMovies(res.data);
+        } catch (err) {
+          toast.error(err.response?.data?.Message);
+        }
+      }
+    }, 600);
+
+    return () => clearTimeout(timeoutId);
+  }, [name]);
 
   const cleanName = () => {
-    setName("");
+    setName('');
+    setMovies([]);
   }
+
+
   return (
     <div>
       <div className='inputContainer'>
@@ -32,7 +51,7 @@ const SearchPage = () => {
         }
       </div>
 
-      <Pagination objectList={moviesData} itemsPerPage={12}>
+      <Pagination objectList={movies} itemsPerPage={12}>
         <MovieTemplate />
       </Pagination>
     </div>

@@ -18,7 +18,8 @@
     max-width: 200px;
 }
 
-.UserInfos h3 {
+.UserInfos h3,
+.UserInfos p {
     white-space: nowrap; 
     overflow: hidden;  
     text-overflow: ellipsis; 
