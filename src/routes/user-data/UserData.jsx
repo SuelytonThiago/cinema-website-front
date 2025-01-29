@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import './UserData.css';
-import { FaTicketAlt, FaIdCard, FaSignOutAlt, FaPen } from 'react-icons/fa';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { FaTicketAlt, FaIdCard, FaSignOutAlt } from 'react-icons/fa';
+import { useParams, useNavigate } from 'react-router-dom';
 import useLogout from '../../js/Logout.js'
 import { updateProfileImage } from '../../redux/user/actions.js';
 import { toast } from 'react-toastify';
@@ -10,6 +9,7 @@ import backend from '../../../api/index.ts'
 import MyUserData from '../../components/my-user-data/MyUserData.jsx';
 import TicketUserData from '../../components/tickets-user-data/TicketUserData.jsx';
 import Cookies from 'js-cookie'
+import { Exit, UserDataBtn, UserDataContainer, UserDataControl, UserDataLinks, UserImg, UserImgProfileContainer, UserInfos } from './styles.js';
 
 const UserData = () => {
     const { currentUser } = useSelector((rootReducer) => rootReducer.userReducer);
@@ -87,10 +87,10 @@ const UserData = () => {
 
 
     return (
-        <div className='userDataContainer'>
-            <div className='userDataControl'>
-                <div className='userImgProfileContainer'>
-                    <div className='userImg'>
+        <UserDataContainer>
+            <UserDataControl>
+                <UserImgProfileContainer>
+                    <UserImg>
                         <img onClick={handleButtonClick} src={formData.profileImg} alt="profileImg" />
                         <input
                             type="file"
@@ -99,8 +99,8 @@ const UserData = () => {
                             accept="image/*"
                             onChange={handleFileChange}
                         />
-                    </div>
-                    <div className='UserInfos'>
+                    </UserImg>
+                    <UserInfos>
                         {!!currentUser && (
                             <>
                                 <h3>Olá, {currentUser.name} :)</h3>
@@ -109,31 +109,31 @@ const UserData = () => {
                             </>
                         )
                         }
-                    </div>
-                </div>
-                <div className='userDataLinks'>
-                    <button
+                    </UserInfos>
+                </UserImgProfileContainer>
+                <UserDataLinks>
+                    <UserDataBtn
                         onClick={() => navigate("/user/data/meus-ingressos")}
-                        className={`userDataBtn ${section === 'meus-ingressos' ? 'activatebtnSS' : ''}`}
+                        className={section === 'meus-ingressos' ? 'activatebtnSS' : ''}
                     >
                         <FaTicketAlt /> Meus Ingressos
-                    </button>
-                    <button
+                    </UserDataBtn>
+                    <UserDataBtn
                         onClick={() => navigate("/user/data/meus-dados")}
-                        className={`userDataBtn ${section === 'meus-dados' ? 'activatebtnSS' : ''}`}
+                        className={section === 'meus-dados' ? 'activatebtnSS' : ''}
                     >
                         <FaIdCard /> Dados Pessoais
-                    </button>
-                </div>
-                <button className='userDataOutBtn' onClick={handleLogoutClick}><FaSignOutAlt /> Sair</button>
-            </div>
+                    </UserDataBtn>
+                </UserDataLinks>
+                <Exit onClick={handleLogoutClick}><FaSignOutAlt /> Sair</Exit>
+            </UserDataControl>
             {section === 'meus-dados' ? (
                 <MyUserData formData={formData} handleChange={handleChange} />
             ) : (
                 <TicketUserData />
             )}
 
-        </div>
+        </UserDataContainer>
     );
 }
 

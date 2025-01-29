@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import './SelectChairComponent.css';
 import formatDate from '../../js/formatDate';
 import formatHours from '../../js/formatHours';
 import { FaCalendarAlt } from 'react-icons/fa';
 import { FaClock } from 'react-icons/fa';
 
 import backend from '../../../api/index'
+import { Chair, Chairs, ChairsContainer, EditDate, LegendContainer, LegendInfo, LegendSpan, RoomScreen, SessionInfoTime } from './styles';
 
 const SelectChairComponent = ({ session, id, onChairSelect, chairId }) => {
 
@@ -27,51 +27,50 @@ const SelectChairComponent = ({ session, id, onChairSelect, chairId }) => {
     const handleChairClick = (chairId) => {
         onChairSelect(chairId);
     };
-
+    
     return (
-        <div className='ChairsInfoContainer'>
-            <div className='sessionInfoTime'>
-                <div className='editDate'>
+        <div style={{flex : '1'}}>
+            <SessionInfoTime>
+                <EditDate>
                     <p><FaCalendarAlt />  {formatDate(new Date(session.dateStart)).dayOfWeek}</p>
                     <p>{formatDate(new Date(session.dateStart)).formattedDate}</p>
-                </div>
+                </EditDate>
 
                 <p className='editDate'><FaClock /> {formatHours(new Date(session.dateStart))}</p>
-            </div>
-            <div className='chairsContainer'>
-                <div className='chairs'>
+            </SessionInfoTime>
+            <ChairsContainer>
+                <Chairs>
                     {Array.isArray(chairsData) && chairsData.length > 0 ? (
                         chairsData.map(chair => (
-                            <button
+                            <Chair
                                 key={chair.chairNumber}
-                                className={`chair ${chair.available ? 'chairAvailable' : 'chairUnavailable'} 
-                                ${chairId === chair.chairNumber ? 'selectedChair' : ''}`}
+                                className={`${chair.available ? 'chairAvailable' : 'chairUnavailable'} ${chairId === chair.chairNumber ? 'selectedChair' : ''}`}
                                 onClick={() => handleChairClick(chair.chairNumber)}
                                 disabled={!chair.available}
                             >
                                 {chair.chairNumber}
-                            </button>
+                            </Chair>
                         ))
                     ) : (
                         <p>Nenhuma cadeira disponível</p>
                     )}
-                    <div className='roomScreen'>Tela</div>
-                </div>
-                <div className='legendContainer'>
-                    <div className='legendInfo'>
-                        <span className='chair chairAvailable'>c</span>
+                    <RoomScreen>Tela</RoomScreen>
+                </Chairs>
+                <LegendContainer>
+                    <LegendInfo>
+                        <LegendSpan className='chair chairAvailable'>c</LegendSpan>
                         <p> cadeira disponível</p>
-                    </div>
-                    <div className='legendInfo'>
-                        <span className='chair chairUnavailable'>c</span>
+                    </LegendInfo>
+                    <LegendInfo>
+                        <LegendSpan className='chair chairUnavailable'>c</LegendSpan>
                         <p> cadeira indisponível</p>
-                    </div>
-                    <div className='legendInfo'>
-                        <span className='chair selectedChair'>c</span>
+                    </LegendInfo>
+                    <LegendInfo>
+                        <LegendSpan className='chair selectedChair'>c</LegendSpan>
                         <p> cadeira selecionada</p>
-                    </div>
-                </div>
-            </div>
+                    </LegendInfo>
+                </LegendContainer>
+            </ChairsContainer>
         </div>
     );
 };

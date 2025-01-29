@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import './ShowCategories.css'
 import { FiChevronRight } from 'react-icons/fi';
 import backend from './../../../api/index'
 import { toast } from 'react-toastify';
+import { CategoriesContainer, CategoryBtn } from './styles';
 
 const ShowCategories = ({handleSetActiveCategory}) => {
 
@@ -15,10 +15,8 @@ const ShowCategories = ({handleSetActiveCategory}) => {
             try {
                 const res = await backend.categoryAPI.findAll1();
                 setCategories(res.data);
-                console.log(categories)
             }catch(err) {
                 toast.error("Erro ao buscar as categorias");
-                console.log(err)
             }
         }
 
@@ -31,21 +29,24 @@ const ShowCategories = ({handleSetActiveCategory}) => {
         handleSetActiveCategory(id);
     }
 
+    if(!categories) {
+        return <div>Buscando categorias</div>
+    }
+
     return (
-        <div className='categoriesContainer'>
+        <CategoriesContainer>
             {Array.isArray(categories) &&
                 categories.map(category => (
-                    <button
+                    <CategoryBtn $active={activeBtn === category.id}
                         key={category.id}
-                        className={`categoryBtn ${activeBtn === category.id ? 'active' : ''}`}
                         onClick={() => handleChangeCategory(category.id)}>
-                        <FiChevronRight />{category.name}
-                    </button>
+                            <FiChevronRight />{category.name}
+                    </CategoryBtn>
 
                 ))
             }
 
-        </div>
+        </CategoriesContainer>
     )
 }
 

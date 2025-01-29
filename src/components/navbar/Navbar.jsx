@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom'
-import './Navbar.css';
 import { FaSearch } from 'react-icons/fa';
 import Menu from './NavbarMenu.jsx'
 import { useSelector } from 'react-redux';
-import { Button, ThemeBtn } from '../Button';
+import { ThemeBtn } from '../Button.js';
 import { FaMoon, FaSun } from 'react-icons/fa';
-import { LinkBtn, SearchBtn } from '../Link.jsx';
+import { LinkBtn, SearchBtn } from '../Link.js';
+import { NavbarContainer, NavbarInfo, NavbarLinks } from './styles.js';
 
 
 const Navbar = ({ themeToggler, theme }) => {
@@ -14,19 +14,28 @@ const Navbar = ({ themeToggler, theme }) => {
 
     return (
         <div>
-            <nav className='navbarContainer'>
-                <div className='navbarInfo'>
+            <NavbarContainer>
+                <NavbarInfo>
                     <h2>
                         <Link to={'/'}>cinemax</Link>
                     </h2>
                     {currentUser ?
                         (
                             <div >
-                                <ul className='navbarLinks'>
+                                <NavbarLinks>
                                     <li>
                                         <SearchBtn className='searchBtn' to={`/movies`}>
                                             <FaSearch />
                                         </SearchBtn>
+                                    </li>
+                                    <li>
+                                        <ThemeBtn onClick={themeToggler}>
+                                            {theme === 'light' ?
+                                                (<FaMoon />)
+                                                :
+                                                (<FaSun />)
+                                            }
+                                        </ThemeBtn>
                                     </li>
                                     <li>
                                         <LinkBtn to={"/category-movies"} className='btn'>
@@ -36,13 +45,13 @@ const Navbar = ({ themeToggler, theme }) => {
                                     <li className='navbarMenuContainer'>
                                         <Menu user={currentUser} />
                                     </li>
-                                </ul>
+                                </NavbarLinks>
                             </div>
                         ) :
                         (
                             <div>
                                 <div>
-                                    <ul className='navbarLinks'>
+                                    <NavbarLinks>
                                         <li>
                                             <SearchBtn to={`/movies`}>
                                                 <FaSearch />
@@ -72,13 +81,13 @@ const Navbar = ({ themeToggler, theme }) => {
                                                 Filmes
                                             </LinkBtn>
                                         </li>
-                                    </ul>
+                                    </NavbarLinks>
                                 </div>
                             </div>
                         )
                     }
-                </div>
-            </nav>
+                </NavbarInfo>
+            </NavbarContainer>
         </div>
     )
 }

@@ -1,31 +1,29 @@
 import React from 'react'
-import './TicketTemplate.css'
 import formatDate from '../../js/formatDate';
 import { MdChair } from "react-icons/md";
+import { FilmCover, H4, SessionDate, SessionDay, TicketData, TicketDetails, TicketUserContainer } from './styles';
 
 const TicketTemplate = ({ item }) => {
     return (
 
-        <div className='ticketUserContainer'>
-            <div className='filmCover'>
+        <TicketUserContainer>
+            <FilmCover>
                 <img src={item.movieImgUrl} alt="movie image" />
-            </div>
-            <div className='ticketData'>
-                <div className='sessionDate'>
-                    <div className='titleMovieName'>
-                        <h4>{item.movieName}</h4>
-                    </div>
-                    <div className='sessionDay'>
+            </FilmCover>
+            <TicketData>
+                <SessionDate>
+                    <H4>{item.movieName}</H4>
+                    <SessionDay>
                         <p>{formatDate(new Date(item.sessionDate.split('/').reverse().join('/'))).formattedDate}</p>
-                    </div>
-                    <div className='ticketDetails'>
+                    </SessionDay>
+                    <TicketDetails>
                         <p>{item.sessionName}</p>
                         <p>R$ {item.price}</p>
                         <p><MdChair /> {item.chairNumber}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+                    </TicketDetails>
+                </SessionDate>
+            </TicketData>
+        </TicketUserContainer>
 
     )
 }

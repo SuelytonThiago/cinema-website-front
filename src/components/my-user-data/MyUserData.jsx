@@ -1,19 +1,27 @@
 import React, { useState } from 'react'
 import isValidName from '../../js/nameValidation';
-import CreatePasswordProfile from './../change-password-profile/CreatePasswordProfile';
+import CreatePasswordProfile from './../change-password-profile/CreatePasswordProfile.jsx';
 import InputMask from 'react-input-mask'
-import './MyUserData.css'
 import { useDispatch } from 'react-redux';
 import { updateUser } from '../../redux/user/actions';
-import { EyesButton } from '../Button';
+import { Button, EyesButton } from '../Button.js';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import backend from '../../../api/index'
 
 import Cookies from 'js-cookie'
 import { toast } from 'react-toastify';
+import { 
+    PasswordInputContainer, 
+    UserDataForm, 
+    UserDataSubmit, 
+    UserFormControl, 
+    UserFormInput, 
+    UserFormSubmit, 
+    UserFormSubmitControl, 
+    VerifyPassInput } from './styles.js';
+
 
 const MyUserData = ({ formData, handleChange }) => {
-
     const [dataErrors, setDataErrors] = useState('');
     const [password, setPassword] = useState('');
     const [showChangePassWindow, setShowChangePassWindow] = useState(false);
@@ -22,7 +30,7 @@ const MyUserData = ({ formData, handleChange }) => {
 
     const handleShowWindow = () => {
         setShowChangePassWindow(!showChangePassWindow);
-    }
+    };
 
     const [show, setShow] = useState(false);
     const handleTogglePassword = (e) => {
@@ -30,140 +38,114 @@ const MyUserData = ({ formData, handleChange }) => {
         setShow(!show);
     };
 
-
     const validate = () => {
-        const errors = {}
+        const errors = {};
         if (!formData.contactNumber) {
-            errors.contactNumber = 'insira um numero de telefone válido'
+            errors.contactNumber = 'insira um numero de telefone válido';
         }
         if (!isValidName(formData.name)) {
             errors.name = 'insira um nome válido';
         }
         if (!password) {
-            errors.password = 'insira a sua senha'
+            errors.password = 'insira a sua senha';
         }
 
         return errors;
-    }
+    };
 
     const handleChangeUserData = async () => {
-        const err = validate()
+        const err = validate();
         setDataErrors(err);
         if (Object.keys(err).length === 0) {
             try {
                 await backend.userAPI.updateUser(password, formData, {
                     headers: {
-                        Authorization: `Bearer ${Cookies.get('accessToken')}`
-                    }
-                })
+                        Authorization: `Bearer ${Cookies.get('accessToken')}`,
+                    },
+                });
 
-                dispatch(updateUser(formData))
+                dispatch(updateUser(formData));
             } catch (err) {
                 toast.error('Senha incorreta!');
             }
-
         }
-    }
+    };
 
     return (
-
-        <div className='UserDataForm'>
+        <UserDataForm>
             <h3>Dados Pessoais</h3>
-            <div className='UserFormControl'>
-
-                <div className={`UserFormInput ${dataErrors.name ? 'error' : ''}`}>
-                    <label htmlFor="name" >
-                        <span style={{ color: dataErrors.name ? 'red' : '#4a4a4a' }}>
-                            {dataErrors.name ? dataErrors.name : 'Name *'}
-                        </span>
+            <UserFormControl>
+                <UserFormInput $error={dataErrors.name}>
+                    <label htmlFor="name">
+                        <span>{dataErrors.name || 'Name *'}</span>
                     </label>
                     <input
                         type="text"
                         id="name"
-                        name='name'
+                        name="name"
                         value={formData.name}
                         onChange={handleChange}
                     />
-                </div>
+                </UserFormInput>
 
-                <div className='UserFormInput disabledInput'>
+                <UserFormInput $disabled>
                     <label htmlFor="email">Email *</label>
-                    <input
-                        type="text"
-                        id="email"
-                        name='email'
-                        value={formData.email}
-                        disabled />
-                </div>
-                <div className='UserFormInput disabledInput'>
+                    <input type="text" id="email" name="email" value={formData.email} disabled />
+                </UserFormInput>
+
+                <UserFormInput $disabled>
                     <label htmlFor="cpf">CPF *</label>
-                    <input
-                        type="text"
-                        id="cpf"
-                        name='cpf'
-                        value={formData.cpf}
-                        onChange={handleChange}
-                        disabled />
-                </div>
-                <div className={`UserFormInput ${dataErrors.contactNumber ? 'error' : ''}`}>
+                    <input type="text" id="cpf" name="cpf" value={formData.cpf} disabled />
+                </UserFormInput>
+
+                <UserFormInput $error={dataErrors.contactNumber}>
                     <label htmlFor="contactNumber">
-                        <span style={{ color: dataErrors.contactNumber ? 'red' : '#4a4a4a' }}>
-                            {dataErrors.contactNumber ? dataErrors.contactNumber : 'Telefone *'}
-                        </span>
+                        <span>{dataErrors.contactNumber || 'Telefone *'}</span>
                     </label>
                     <InputMask
-                        mask='(99)99999-9999'
+                        mask="(99)99999-9999"
                         value={formData.contactNumber}
-                        name='contactNumber'
+                        name="contactNumber"
                         id="contactNumber"
                         onChange={handleChange}
-
                     />
-                </div>
-                <div className='passwordInputContainer'>
-                    <div className='UserFormInput disabledInput'>
+                </UserFormInput>
+
+                <PasswordInputContainer>
+                    <UserFormInput $disabled>
                         <label htmlFor="senha">Senha *</label>
-                        <input
-                            type="password"
-                            id="password"
-                            disabled
-                            value='***********' />
-                    </div>
-                    <button className='changePassBtn' onClick={handleShowWindow}>alterar senha</button>
+                        <input type="password" id="password" disabled value="***********" />
+                    </UserFormInput>
+                    <button style={{width: '150px'}} onClick={handleShowWindow}>alterar senha</button>
+                </PasswordInputContainer>
+            </UserFormControl>
 
-                </div>
-
-            </div>
-            <div className='UserDataSubmit'>
+            <UserDataSubmit>
                 <h3>Salvar todas as alterações</h3>
-                <p>Por questões de segurança, você precisa digitar sua senha para confirmar as alterações feitas no seu cadastro.</p>
-                <div className='UserFormSubmitControl'>
-                    <div className={`UserFormSubmit ${dataErrors.password ? 'error' : ''}`}>
-                        <label htmlFor="senha">
-                            <span style={{ color: dataErrors.password ? 'red' : '#4a4a4a' }}>
-                                Senha *
-                            </span>
-                        </label>
-                        <div className='verifyPassInput'>
+                <p>
+                    Por questões de segurança, você precisa digitar sua senha para confirmar as alterações
+                    feitas no seu cadastro.
+                </p>
+                <UserFormSubmitControl>
+                    <UserFormSubmit $error={dataErrors.password}>
+                        <VerifyPassInput>
                             <input
                                 type={show ? 'text' : 'password'}
                                 id="verifyPassword"
-                                onChange={(e) => setPassword(e.target.value)} />
-                            <EyesButton onClick={(e) => handleTogglePassword(e)}>
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                            <EyesButton onClick={handleTogglePassword}>
                                 {show ? <AiFillEyeInvisible size={22} /> : <AiFillEye size={22} />}
                             </EyesButton>
-                        </div>
-                    </div>
-                    <button onClick={handleChangeUserData}>Salvar</button>
-                </div>
-            </div>
-            {showChangePassWindow && (
-                <CreatePasswordProfile handleShowWindow={handleShowWindow} />
-            )}
+                        </VerifyPassInput>
+                    </UserFormSubmit>
+                    <Button onClick={handleChangeUserData}>Salvar</Button>
+                </UserFormSubmitControl>
+            </UserDataSubmit>
 
-        </div>
+            {showChangePassWindow && <CreatePasswordProfile handleShowWindow={handleShowWindow} />}
+        </UserDataForm>
+    );
+};
 
-    )
-}
-
-export default MyUserData
+export default MyUserData;

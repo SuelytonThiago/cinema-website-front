@@ -1,7 +1,9 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import LoginForm from './LoginForm';
 import { AiOutlineClose } from 'react-icons/ai';
+import { CrossBtn } from '../../components/Button';
+import { BackImg, SigContainer, SigninContainer } from './styles';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -11,16 +13,16 @@ const Login = () => {
   };
 
   return (
-    <div className='sigContainer'>
-      <button className="crossBtn"> <Link to={'/'}><AiOutlineClose/></Link></button>
-      <div className='signinContainer'>
+    <SigContainer>
+      <CrossBtn to={'/'}><AiOutlineClose /></CrossBtn>
+      <SigninContainer>
         <LoginForm loginSuccess={handleLoginSuccess} />
-      </div>
+      </SigninContainer>
 
-      <div className='backImg'>
+      <BackImg>
         <img src="https://minhas-imagens-2025.s3.sa-east-1.amazonaws.com/background.jpg" alt="cine" />
-      </div>
-    </div>
+      </BackImg>
+    </SigContainer>
   );
 };
 

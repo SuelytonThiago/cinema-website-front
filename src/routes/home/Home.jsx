@@ -1,11 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import "./Home.css";
 import backend from "../../../api/index"
-import Session from '../../components/session/Session';
 import getDayOfWeek from '../../js/getDayOfWeek';
 import formatDate from '../../js/formatDate';
 import { Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
+import StarRating from '../../components/starRating/StarRating';
+import { Link } from 'react-router-dom';
+import { Button } from '../../components/Button.js';
+import {
+  SessionFilterContainer,
+  FilterBtn,
+  SessionsContainer,
+  Session,
+  SessionImg,
+  SessionTimes,
+  SessionInfo,
+  Details} from './styles.js'
 
 const Home = () => {
 
@@ -85,45 +95,61 @@ const Home = () => {
 
   }, [sessions]);
 
+  
   return (
     <div>
       <div>
-        <div>
-          <div className='sessionFilterContainer'>
-            {Object.keys(groupedSessions).map(date => (
-              <div key={date}>
-                <button
-                  className={`filterBtn ${selectedDate === date ? 'selected' : ''}`}
-                  onClick={() => setSelectedDate(date)}>
-                  {new Date(date).getDate() === new Date().getDate() ?
-                    (
-                      <div>hoje</div>
-                    )
-                    :
-                    (
-                      <div>
-                        <div>{getDayOfWeek(date.split('/').reverse().join('/'))}</div>
-                        <div>{formatDate(new Date(date.split('/').reverse().join('/'))).formattedDate}</div>
-                      </div>
-                    )
-                  }
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-        <h2>Sessões para {formatDate(new Date(selectedDate)).formattedDate}</h2>
-        <div className='sessionsContainer'>
-          {selectedDate && groupedSessions[selectedDate] ? (
-            groupedSessions[selectedDate].sessions.map(s => (
-              <Session session={s} key={s.id} />
-            ))
-          ) : (
-            <div>Loading sessions...</div>
-          )}
-        </div>
+        <SessionFilterContainer>
+          {Object.keys(groupedSessions).map(date => (
+            <div key={date}>
+              <FilterBtn
+                className={selectedDate === date ? 'selected' : ''}
+                onClick={() => setSelectedDate(date)}>
+                {new Date(date).getDate() === new Date().getDate() ?
+                  (
+                    <div>hoje</div>
+                  )
+                  :
+                  (
+                    <div>
+                      <div>{getDayOfWeek(date.split('/').reverse().join('/'))}</div>
+                      <div>{formatDate(new Date(date.split('/').reverse().join('/'))).formattedDate}</div>
+                    </div>
+                  )
+                }
+              </FilterBtn>
+            </div>
+          ))}
+        </SessionFilterContainer>
       </div>
-    </div >
+      <h2>Sessões para {formatDate(new Date(selectedDate)).formattedDate}</h2>
+      <SessionsContainer>
+        {selectedDate && groupedSessions[selectedDate] ? (
+          groupedSessions[selectedDate].sessions.map(session => (
+            <Session>
+              <div >
+                <SessionImg src={session.imageUrl} alt={session.movieName} />
+              </div>
+              <div style={{width: '100%'}}>
+                <h2>{session.movieName}</h2>
+                <SessionInfo>
+                  <div style={{flexGrow: '1'}}>
+                    <p>duração: {session.duration}</p>
+                    <StarRating rating={session.rating} />
+                  </div>
+                  <div style={{flexGrow: '2'}}>
+                    <Link to={`/session/${session.id}`}><Button>Comprar</Button></Link>
+                  </div>
+                </SessionInfo>
+              </div>
+            </Session>
+          ))
+        ) : (
+          <div>Loading sessions...</div>
+        )}
+      </SessionsContainer>
+    </div>
+
   )
 }
 

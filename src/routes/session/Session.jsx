@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import './Session.css';
 import formatDate from '../../js/formatDate';
 import formatHours from '../../js/formatHours';
-import { FaCalendarAlt, FaUser, FaClock } from 'react-icons/fa';
+import { FaCalendarAlt, FaClock, FaTicketAlt  } from 'react-icons/fa';
 import StarRating from '../../components/starRating/StarRating';
 import SelectChairComponent from '../../components/selectChairComponent/SelectChairComponent';
 import SelectTicket from '../../components/select-ticket/SelectTicket'
@@ -12,9 +11,10 @@ import LoginModal from '../login/LoginModal.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { showLoginModal } from '../../redux/show-login-modal/actions.js';
 import backend from "../../../api/index.ts"
-
+import { MdEventSeat } from "react-icons/md";
 import Cookies from 'js-cookie'
 import { toast } from 'react-toastify';
+import { ChairInfo, ChairInformation, EditDate, EntryRequesting, Info, MovieInformations, SessionContainer, SessionControlBtn, SessionInformations, SessionRequestControl, SessionRequestInformations, SessionTime, TicketInfo, TicketInformation, TicketRequestInformations } from './styles.js';
 
 const Session = () => {
 
@@ -24,19 +24,6 @@ const Session = () => {
     const [selectedChairId, setSelectedChairId] = useState(null);
     const [selectedTicket, setSelectedTicket] = useState(null);
     const [sessionData, setSessionData] = useState(null);
-
-    useEffect(() => {
-        async function handleGetSessionData() {
-            try {
-                const res = await backend.sessionAPI.getInfoSession(id);
-                setSessionData(res.data);
-            } catch (err) {
-                toast.error(err.response.data.Message);
-            }
-        }
-
-        handleGetSessionData();
-    }, [])
 
     const { isVisible } = useSelector((rootReducer) => rootReducer.loginModalReducer)
     const { currentUser } = useSelector((rootReducer) => rootReducer.userReducer);
@@ -67,6 +54,20 @@ const Session = () => {
         }
     };
 
+    useEffect(() => {
+        async function handleGetSessionData() {
+            
+            try {
+                const res = await backend.sessionAPI.getInfoSession(id);
+                setSessionData(res.data);
+                
+            } catch (err) {
+                toast.error(err.response.data.Message);
+            }
+        }
+        handleGetSessionData();
+    }, [])
+
     const selectTicket = (ticket) => {
         setSelectedTicket(ticket)
     }
@@ -89,68 +90,85 @@ const Session = () => {
         setSelectedTicket(null)
     }
 
+    if(!sessionData){
+        return <div>Loading</div>
+    }
+
     return (
-        <div className='sessionContainer'>
-            <div className='sessionInformations'>
-                <div className='entryRequesting'>
+        <SessionContainer>
+            <SessionInformations>
+                <EntryRequesting>
                     {showComponent ? (
                         <SelectChairComponent id={id} session={sessionData} onChairSelect={handleChairSelect} chairId={selectedChairId} />
                     ) : (
                         <SelectTicket selectTicket={selectTicket} />
                     )
                     }
-                </div>
-                <div className='sessionRequestInformations'>
+                </EntryRequesting>
+                <SessionRequestInformations>
                     <h3>Resumo do pedido</h3>
-                    <div className='ticketRequestInformations'>
-                        <div className='movieInformations'>
+                    <TicketRequestInformations>
+                        <MovieInformations>
                             <img src={sessionData.imageUrl} alt={sessionData.movieName} />
                             <div>
                                 <p>{sessionData.movieName}</p>
                                 <StarRating rating={sessionData.rating} />
                                 <p>duração {sessionData.duration}</p>
                             </div>
-                        </div>
+                        </MovieInformations>
                         <div className='chairInformations'>
-                            <div className='sessionTime'>
+                            <SessionTime>
                                 <p>{sessionData.sessionName}</p>
                                 <div>
-                                    <div className='editDate'>
+                                    <EditDate>
                                         <p><FaCalendarAlt />{formatDate(new Date(sessionData.dateStart)).dayOfWeek}</p>
                                         <p>{formatDate(new Date(sessionData.dateStart)).formattedDate}</p>
                                         <p><FaClock />{formatHours(new Date(sessionData.dateStart))}</p>
-                                    </div>
+                                    </EditDate>
                                 </div>
-                            </div>
+                            </SessionTime>
                         </div>
                         {!!selectedChairId && (
-                            <div className='chairInformation'>
-                                <p>Assento: {selectedChairId}</p>
-                            </div>
+                            <ChairInformation>
+                                <ChairInfo>
+                                    <MdEventSeat color='#fff' size={20}/>
+                                     {selectedChairId}
+                                </ChairInfo>
+                            </ChairInformation>
                         )}
                         {!!selectedTicket && (
-                            <div className='ticketInformation'>
-                                <p>ingresso</p>
-                                <div className='tInfo'>
-                                    <p>{selectedTicket.type}</p>
+                            <TicketInformation>
+                                <Info>
+                                    <TicketInfo>
+                                        <FaTicketAlt />
+                                        <p>{selectedTicket.type}</p>
+                                    </TicketInfo>
                                     <p>{selectedTicket.price}</p>
-                                </div>
-                            </div>
+                                </Info>
+                            </TicketInformation>
                         )}
-                    </div>
-                </div>
-            </div>
-            <div className='sessionRequestControl'>
-                <button className='sessionControlBtn back' onClick={back}>Voltar</button>
+                    </TicketRequestInformations>
+                </SessionRequestInformations>
+            </SessionInformations>
+            <SessionRequestControl>
+                <SessionControlBtn className='back' onClick={back}>Voltar</SessionControlBtn>
                 {showComponent ? (
-                    <button className={`sessionControlBtn next ${!selectedChairId ? 'disabled' : ''}`} onClick={next} disabled={!selectedChairId}>Próximo</button>
+                    <SessionControlBtn 
+                    className={`next ${!selectedChairId ? 'disabled' : ''}`} 
+                    onClick={next} disabled={!selectedChairId}>
+                        Próximo
+                    </SessionControlBtn>
                 ) : (
-                    <button className={`sessionControlBtn next ${!selectedTicket ? 'disabled' : ''}`} onClick={handleAddTicket}>Finalizar</button>
+                    <SessionControlBtn 
+                    className={`next ${!selectedTicket ? 'disabled' : ''}`} 
+                    onClick={handleAddTicket}>
+                        Finalizar
+                    </SessionControlBtn>
                 )}
 
-            </div>
+            </SessionRequestControl>
             {isVisible && <LoginModal />}
-        </div>
+        </SessionContainer>
     );
 };
 

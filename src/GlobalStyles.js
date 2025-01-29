@@ -13,4 +13,5 @@ export const GlobalStyles = createGlobalStyle`
     body p{
         color: ${props =>props.theme.p}
     }
+
 `

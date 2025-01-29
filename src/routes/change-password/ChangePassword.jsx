@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import VerifyCode from '../../components/verify-code-template/VerifyCode';
 import RecoverPassword from '../../components/recover-password-template/RecoverPassword.jsx';
 import ChangePasswordTemplate from '../../components/change-password-template/ChangePasswordTemplate.jsx';
-import './ChangePassword.css'
 import { AiOutlineClose } from 'react-icons/ai';
+import { BackgroundChangeContainer, ChangeContainer } from './styles.js';
+import { CrossBtn } from '../../components/Button.js';
 
 const ChangePassword = () => {
 
@@ -31,12 +31,12 @@ const ChangePassword = () => {
 
 
     return (
-        <div className='backgroundChangeContainer'>
-            <button class="crossBtn"> <Link to={'/'}><AiOutlineClose /></Link></button>
-            <div className='ChangeContainer'>
+        <BackgroundChangeContainer>
+            <CrossBtn to={'/'}><AiOutlineClose /></CrossBtn>
+            <ChangeContainer>
                 {React.cloneElement(steps[currentStep], { goNext, goBack })}
-            </div>
-        </div>
+            </ChangeContainer>
+        </BackgroundChangeContainer>
     )
 }
 

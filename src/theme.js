@@ -3,6 +3,7 @@ export const lightTheme = {
     fontColor: '#000',
     h1:'#000',
     p: ' #000',
+    container: '#ccc',
 }
 
 
@@ -11,4 +12,5 @@ export const darkTheme = {
     fontColor: '#fff',
     h1:'#fff',
     p: ' #a9abb3',
+    container: '#17191f',
 }

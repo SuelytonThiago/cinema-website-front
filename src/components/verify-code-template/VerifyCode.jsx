@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import './VerifyCode.css'
 import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
 import backend from './../../../api/index'
+import { GoToBackBtn, InputCode, VerifyCodeBtn, VerifyCodeContainer, VerifyInput, VerifyInputContainer } from './styles';
 
 const VerifyCode = ({ goNext, goBack }) => {
 
@@ -10,7 +10,7 @@ const VerifyCode = ({ goNext, goBack }) => {
 
   const [pins, setPins] = useState(["", "", "", "", "", ""]);
 
-  const [invalidCode, setInvalidCode] = useState(false);
+  const [invalidCode, setInvalidCode] = useState(true);
 
 
   const handleVerifyCode = async () => {
@@ -21,8 +21,10 @@ const VerifyCode = ({ goNext, goBack }) => {
       console.log(res);
       goNext()
     } catch (err) {
+      setInvalidCode(true);
       toast.error(err.response.data.Message)
     }
+    console.log(invalidCode);
   };
 
 
@@ -61,16 +63,16 @@ const VerifyCode = ({ goNext, goBack }) => {
 
   return (
     <div>
-      <div className='verifyCodeContainer'>
+      <VerifyCodeContainer>
         <img src="https://minhas-imagens-2025.s3.sa-east-1.amazonaws.com/gif-email.gif" alt="email-gif" />
         <h1>Autenticação de acesso via Email</h1>
         <p>Por favor informe o código de autenticação enviado para o seu email cadastrado em sua conta.</p>
         <h3>{email}</h3>
-        <div className='verifyInputContainer'>
+        <VerifyInputContainer>
           <h5>Informe o seu código de segurança</h5>
-          <div className={`verifyInput ${invalidCode ? 'verifyInputError' : ''}`}>
+          <VerifyInput>
             {pins.map((pin, index) => (
-              <input
+              <InputCode $invalidCode={invalidCode}
                 key={index}
                 id={`pin-${index}`}
                 type="text"
@@ -81,15 +83,15 @@ const VerifyCode = ({ goNext, goBack }) => {
                 onKeyDown={(e) => handleKeyDown(e, index)}
                 onPaste={handlePaste} />
             ))}
-          </div>
-          <button onClick={handleVerifyCode} className='verifyCodeBtn'>Validar meu código</button>
-        </div>
-        <p>Não recebeu o código?
+          </VerifyInput>
+          <VerifyCodeBtn onClick={handleVerifyCode}>Validar meu código</VerifyCodeBtn>
+        </VerifyInputContainer>
+        <p>Não recebeu o código?{' '}
           <span>
-            <button className='goToBackBtn' onClick={() => goBack(0)}> Reenviar por email </button>
+            <GoToBackBtn onClick={() => goBack(0)}> Reenviar por email </GoToBackBtn>
           </span>
         </p>
-      </div>
+      </VerifyCodeContainer>
     </div>
   )
 }

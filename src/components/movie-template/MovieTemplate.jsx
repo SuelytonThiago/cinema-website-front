@@ -1,25 +1,26 @@
 import React from 'react'
-import './MovieTemplate.css'
-import { Link } from 'react-router-dom'
 import StarRating from './../starRating/StarRating'
+import { MovieContainer, MovieImg, MovieInfoContainer } from './styles'
+import { TitleH2 } from '../Title.js'
+import { LinkBtn } from '../Link.js'
 
 const MovieTemplate = ({ item }) => {
   return (
     <div>
-      <div className="movieContainer" >
-        <div className="movieInfoContainer">
-          <div className="movieImg">
-            <img src={item.imageUrl} alt={item.name} />
-          </div>
-          <div className="movieInfo">
-            <h2>{item.name}</h2>
+      <MovieContainer>
+        <MovieInfoContainer>
+          <div>
+            <MovieImg src={item.imageUrl} alt={item.name} />
+            <TitleH2>{item.name}</TitleH2>
             <StarRating rating={item.rating} />
-            <Link to={`/movie/${item.id}`}>
-              ver detalhes
-            </Link>
           </div>
-        </div>
-      </div>
+          <div>
+            <LinkBtn to={`/movie/${item.id}`}>
+              ver detalhes
+            </LinkBtn>
+          </div>
+        </MovieInfoContainer>
+      </MovieContainer>
     </div>
   )
 }

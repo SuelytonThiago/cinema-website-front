@@ -3,7 +3,8 @@ import LoginForm from './LoginForm';
 import { useDispatch } from 'react-redux';
 import { hideLoginModal } from '../../redux/show-login-modal/actions';
 import { FaTimes , FaUser } from 'react-icons/fa';
-import './LoginModal.css';
+import { AuthenticationTab, AuthenticationTitle, Btn, Title } from './styles';
+import { Overlay } from '../../components/Overlay';
 
 const LoginModal = () => {
 
@@ -15,20 +16,18 @@ const LoginModal = () => {
 
   return (
     <div>
-        <div className='overlay'></div>
-        <div className='authenticationTab'>
-          <div className='authenticationTitle'>
-            <div className='title'>
+        <Overlay></Overlay>
+        <AuthenticationTab>
+          <AuthenticationTitle>
+            <Title>
               <FaUser />Identificação
-            </div>
-            <button 
-            onClick={handleHideLoginModal}
-            className='xBtn'>
+            </Title>
+            <Btn onClick={handleHideLoginModal}>
               <FaTimes/>
-            </button>
-          </div>
+            </Btn>
+          </AuthenticationTitle>
           <LoginForm loginSuccess={handleHideLoginModal} />
-        </div>
+        </AuthenticationTab>
     </div>
   );
 };

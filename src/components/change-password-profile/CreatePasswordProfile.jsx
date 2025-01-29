@@ -2,7 +2,7 @@
 import React from 'react'
 import { useState } from 'react';
 import isValidPassword from '../../js/passwordValidation';
-import { Button } from '../Button';
+import { Button } from '../Button.js';
 import backend from '../../../api/index'
 import { toast } from 'react-toastify';
 import Cookies from 'js-cookie'
@@ -10,7 +10,8 @@ import InputWithFilter from '../input-form/InputWithFilter';
 import InputWithoutFilter from '../input-form/InputWithoutFilter';
 
 import useForm from '../../hooks/UseForm';
-import { ControlBtn, CreateNewPassContainer } from './CreatePasswordProfile';
+import { ControlBtn, CreateNewPassContainer } from './styles.js';
+import { Overlay } from '../Overlay.js';
 
 const CreatePasswordProfile = ({ handleShowWindow }) => {
     const [errors, setErrors] = useState({});
@@ -69,7 +70,7 @@ const CreatePasswordProfile = ({ handleShowWindow }) => {
 
     return (
         <div>
-            <div className='overlay'></div>
+            <Overlay></Overlay>
 
             <CreateNewPassContainer onSubmit={handleChangePassword} className='createNewPassContainer'>
                 <h1>Atualizar senha</h1>

@@ -1,11 +1,11 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import './NavbarMenu.css'
 import { useState } from 'react'
 import { FaTimes } from 'react-icons/fa'
 import { FaTicketAlt } from 'react-icons/fa';
 import { FaPen } from 'react-icons/fa';
 import useLogout from '../../js/Logout'
+import { MenuButton, MenuContainer, MenuItem, MenuItems, OutBtn } from './styles'
+import { Overlay } from '../Overlay';
 
 const menu = ({ user }) => {
 
@@ -28,39 +28,37 @@ const menu = ({ user }) => {
 
 
     return (
-        <div className={`menuContainer ${isOpen ? 'active' : ''}`}>
-            <button
-                className='menuButton'
+        <MenuContainer isOpen={isOpen}>
+            <MenuButton
                 onClick={() => toggleMenu()}>
                 <img src={user.profileImg} alt="profileImg" />
-                <p>Olá, <span className='usernameMenu'>{user.name}</span></p>
-            </button>
+                <p>Olá, <span>{user.name}</span></p>
+            </MenuButton>
             {isOpen && (
                 <div>
-                    <div className='overlay' onClick={() => closeMenu()}></div>
-                    <ul className='menuItems'>
+                    <Overlay onClick={() => closeMenu()}></Overlay>
+                    <MenuItems>
                         <li >
-                            <Link className='menuItem' to={`/user/data/${'meus-dados'}`} onClick={() => setIsOpen(false)}>
+                            <MenuItem to={`/user/data/${'meus-dados'}`} onClick={() => setIsOpen(false)}>
                                 <FaPen /> Meus dados
-                            </Link>
+                            </MenuItem>
                         </li>
                         <li >
-                            <Link className='menuItem' to={`/user/data/${'meus-ingressos'}`} onClick={() => setIsOpen(false)}>
+                            <MenuItem className='menuItem' to={`/user/data/${'meus-ingressos'}`} onClick={() => setIsOpen(false)}>
                                 <FaTicketAlt /> Meus ingressos
-                            </Link>
+                            </MenuItem>
                         </li>
                         <li >
-                            <button
-                                className='outBtn'
+                            <OutBtn
                                 onClick={handleLogoutClick}>
                                 <FaTimes /> Sair
-                            </button>
+                            </OutBtn>
                         </li>
-                    </ul>
+                    </MenuItems>
                 </div>
             )
             }
-        </div>
+        </MenuContainer>
     )
 }
 

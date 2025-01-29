@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import './Movie.css';
-import RateMovie from '../../components/starRating/RateMovie';
+import RateMovie from '../../components/rate-movie/RateMovie.jsx';
 import StarRating from '../../components/starRating/StarRating';
 import { useSelector } from 'react-redux';
 import LoginModal from '../login/LoginModal';
-import CommentTemplate from '../../components/comments-template/CommentTemplate';
+import CommentTemplate from '../../components/comments-template/CommentTemplate.jsx';
 import SessionTemplate from '../../components/session-template/SessionTemplate';
 import formatDate from '../../js/formatDate';
 import classificationMovie from '../../js/Classification.js'
 import backend from '../../../api/index.ts'
-import Cookies from 'js-cookie'
 import { Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
+import { BtnMovieContainer, BtnMovieInfoControl, CategoriesFilm, ClassificationControl, ClassificationMovie, Description, InfoContainer, InfoHeader, MovieHeader, MovieImg, SessionsMovieContainer, ShowDescriptBtn } from './styles.js';
 
 const Movie = () => {
     const { id } = useParams();
@@ -39,7 +38,7 @@ const Movie = () => {
                     const existingCommentIndex = prevComments.findIndex(comment => comment.id === updatedComment.id);
 
                     if (existingCommentIndex !== -1) {
-                       
+
                         const updatedComments = [...prevComments];
                         updatedComments[existingCommentIndex] = updatedComment;
                         return updatedComments;
@@ -72,11 +71,7 @@ const Movie = () => {
     useEffect(() => {
         async function handleGetSessiosDate() {
             try {
-                const res = await backend.sessionAPI.findByMovie(id, {
-                    headers: {
-                        Authorization: `Bearer ${Cookies.get('accessToken')}`
-                    }
-                })
+                const res = await backend.sessionAPI.findByMovie(id)
 
                 setSessionsMovieData(res.data)
 
@@ -118,47 +113,59 @@ const Movie = () => {
     }
 
     return (
-        <div className="movieContainer">
-            <div className="movie">
-                <div className='movieHeader'>
-                    <div className='movieHeaderImg'>
-                        <img src={movieData.imageUrl} alt={movieData.name} />
+        <div >
+            <>
+                <MovieHeader>
+                    <div>
+                        <MovieImg src={movieData.imageUrl} alt={movieData.name} />
                     </div>
-                    <div className='infoContainer'>
-                        <div className='infoHeader'>
+                    <InfoContainer>
+                        <InfoHeader>
                             <div>
                                 <h2>{movieData.name}</h2>
                                 <StarRating rating={movieData.rating} />
                                 <p>Data de lançamento: {movieData.releaseData}</p>
                             </div>
-                            <div className='categoriesFilm'>
+                            <CategoriesFilm>
                                 {movieData.categories.map((category) => (
                                     <p key={category.name}>{category.name}</p>
                                 ))}
-                            </div>
-                            <div className='classificationControl'>
-                                classificação: <p className={`classificationMovie ${classificationMovie(movieData.classification)}`}>{movieData.classification}</p>
-                            </div>
+                            </CategoriesFilm>
+                            <ClassificationControl>
+                                classificação:
+                                <ClassificationMovie
+                                    className={classificationMovie(movieData.classification)}>
+                                    {movieData.classification}
+                                </ClassificationMovie>
+                            </ClassificationControl>
                             <div>
                                 <h3>Sinopse</h3>
-                                <p className={isExpanded ? 'showFullDescript' : 'description'}>
+                                <Description $isExpanded={isExpanded}>
                                     {movieData.description}
-                                </p>
+                                </Description>
 
-                                <button className='showDescrptBtn' onClick={toggleDescription}>
+                                <ShowDescriptBtn onClick={toggleDescription}>
                                     {isExpanded ? 'Ler menos' : 'Ler mais'}
-                                </button>
+                                </ShowDescriptBtn>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div className='btnMovieContainer'>
-                    <button className={`btnMovieInfoControl ${showSessions ? 'isVisible' : ''}`} onClick={() => toggleShowSessions(true)}>Sessoes</button>
-                    <button className={`btnMovieInfoControl ${!showSessions ? 'isVisible' : ''}`} onClick={() => toggleShowSessions(false)}>Comentários</button>
-                </div>
+                        </InfoHeader>
+                    </InfoContainer>
+                </MovieHeader>
+                <BtnMovieContainer>
+                    <BtnMovieInfoControl
+                        className={showSessions ? 'isVisible' : ''}
+                        onClick={() => toggleShowSessions(true)}>
+                        Sessoes
+                    </BtnMovieInfoControl>
+                    <BtnMovieInfoControl
+                        className={!showSessions ? 'isVisible' : ''}
+                        onClick={() => toggleShowSessions(false)}>
+                        Comentários
+                    </BtnMovieInfoControl>
+                </BtnMovieContainer>
                 {showSessions ? (
-                    <div className='sessionsMovieContainer'>
-                        <div className='Sessoes'>
+                    <SessionsMovieContainer>
+                        <div>
                             {groupSessionsByDate(sessionsMovieData).length === 0 ? (
                                 <p>Nenhuma sessão encontrada para este filme.</p>
                             ) : (
@@ -171,9 +178,9 @@ const Movie = () => {
                                 ))
                             )}
                         </div>
-                    </div>
+                    </SessionsMovieContainer>
                 ) : (
-                    <div className=''>
+                    <div>
                         <div className='commentUserData'>
                             <RateMovie id={id} />
                         </div>
@@ -190,7 +197,7 @@ const Movie = () => {
 
                 )
                 }
-            </div>
+            </>
             {isVisible && <LoginModal />}
         </div>
     );

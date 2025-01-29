@@ -13,9 +13,9 @@ const StarRating = ({ rating }) => {
     }
 
     return (
-        <div >
+        <div className='starRatingContainer'>
             {stars.map((star, index) => (
-                <span className='starIcon' key={index}>{star}</span>
+                <span style={{color: '#FFD700'}} key={index}>{star}</span>
             ))}
         </div>
     );

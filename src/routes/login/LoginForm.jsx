@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import './LoginForm.css';
-import { Link } from 'react-router-dom';
 import useForm from '../../hooks/UseForm.jsx';
 import InputText from '../../components/input-form/InputText.jsx';
-import { InputSubit } from '../../components/Input.jsx';
+import { InputSubit } from '../../components/Input.js';
 import InputWithoutFilter from '../../components/input-form/InputWithoutFilter.jsx';
 import backend from '../../../api/index.ts'
 import Cookies from 'js-cookie'
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { loginUser } from '../../redux/user/actions.js';
+import { ForgoutPass, RegisterLinkBtn, SigninForm } from './styles.js';
+import { Regislink } from '../../components/Link.js';
 
 const LoginForm = ({loginSuccess}) => {
 
@@ -72,7 +72,7 @@ const LoginForm = ({loginSuccess}) => {
 
   return (
     <div className='signFormContainer'>
-      <form onSubmit={handleLoginUser} className='signinForm'>
+      <SigninForm onSubmit={handleLoginUser}>
         <InputText
           error={errors.email}
           handleChange={handleChange}
@@ -86,15 +86,15 @@ const LoginForm = ({loginSuccess}) => {
           nameInput={"password"} 
           placeholder={'* Digite sua senha'} />
 
-        <Link to={`/recover`}>
+        <ForgoutPass to={`/recover`}>
           <p className="forgoutPass">esqueceu sua senha?</p>
-        </Link>
+        </ForgoutPass>
 
         <InputSubit type="submit" value="Entrar" />
-        <div className='register-link-btn'>
-          <p>Ainda não tem uma conta? <span><Link to={"/register"} className='regislink'>Cadastre-se agora</Link></span></p>
-        </div>
-      </form>
+        <RegisterLinkBtn>
+          <p>Ainda não tem uma conta? <span><Regislink to={"/register"}>Cadastre-se agora</Regislink></span></p>
+        </RegisterLinkBtn>
+      </SigninForm>
     </div>
   );
 };

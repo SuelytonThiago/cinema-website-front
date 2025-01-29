@@ -1,8 +1,7 @@
 import React from 'react'
-import './SelectTicket.css'
-import { FaTicketAlt } from 'react-icons/fa';
 import { useState } from 'react'
 import tickets from '../../data/ticketData.js'
+import { Ticket, TicketButton, TicketContainer, TicketControl, TicketIcon, TicketInfo, TicketTitle } from './styled.js';
 
 const SelectTicket = ({ selectTicket }) => {
 
@@ -38,24 +37,26 @@ const SelectTicket = ({ selectTicket }) => {
 
 
     return (
-        <div className='ticketContainer'>
+        <TicketContainer>
             {tickets.map(ticket => (
-                <div className='ticket entire' key={ticket.id}>
-                    <div className='ticketInfo'>
-                        <FaTicketAlt className='ticketIcon' />
+                <Ticket key={ticket.type}>
+                    <TicketInfo>
+                        <TicketIcon/>
                         <div>
-                            <p className='ticketTitle'>{ticket.type}</p>
+                            <TicketTitle>{ticket.type}</TicketTitle>
                             <p>{ticket.price}</p>
                         </div>
-                    </div>
-                    <div className='ticketControl'>
-                        <button className='ticketButton' onClick={() => removeTicket(ticket.type)} disabled={quantityTicket[ticket.type] === 0}>-</button>
+                    </TicketInfo>
+                    <TicketControl>
+                        <TicketButton 
+                        onClick={() => removeTicket(ticket.type)} disabled={quantityTicket[ticket.type] === 0}>-</TicketButton>
                         {quantityTicket[ticket.type]}
-                        <button className={`ticketButton ${quantityTicket[ticket.type] > 0 ? 'select' : ''}`} onClick={() => addTicket(ticket.type, ticket)} disabled={disableAllButtons}>+</button>
-                    </div>
-                </div>
+                        <TicketButton className={quantityTicket[ticket.type] > 0 ? 'select' : ''} 
+                            onClick={() => addTicket(ticket.type, ticket)} disabled={disableAllButtons}>+</TicketButton>
+                    </TicketControl>
+                </Ticket>
             ))}
-        </div>
+        </TicketContainer>
     )
 }
 

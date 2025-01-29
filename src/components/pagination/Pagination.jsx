@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import './Pagination.css';
 import { FiChevronsLeft, FiChevronsRight } from 'react-icons/fi';
-import MovieTemplate from '../movie-template/MovieTemplate';
+import { AtualPage, ItemsResultContainer, PaginationBtn, PaginationContainer, PaginationControls } from './styles';
 
 const Pagination = ({ objectList, itemsPerPage, children }) => {
   const totalPages = Math.ceil(objectList.length / itemsPerPage);
@@ -26,55 +25,53 @@ const Pagination = ({ objectList, itemsPerPage, children }) => {
   };
 
   return (
-    <div className='PaginationContainer'>
+    <PaginationContainer>
 
-      <div className='itemsResultContainer'>
+      <ItemsResultContainer>
         {currentItems.map((item, index) => (
           React.cloneElement(children, { key: index, item: item })
         ))}
-      </div>
+      </ItemsResultContainer>
 
-      <div className='paginationControls'>
+      <PaginationControls>
         {currentItems.length > 0 && (
           <div >
-            <button
-              className='paginationBtn fixed'
+            <PaginationBtn
+              className='fixed'
               onClick={goToFirstPage}
               disabled={currentPage === 1}
             >
               <FiChevronsLeft />
-            </button>
+            </PaginationBtn>
 
-            <button
-              className='paginationBtn'
+            <PaginationBtn
               onClick={goToPreviousPage}
               disabled={currentPage === 1}
             >
               {currentPage > 1 ? currentPage - 1 : null}
-            </button>
+            </PaginationBtn>
 
-            <span className='paginationBtn atualPage'>{currentPage}</span>
+            <AtualPage className='atualPage'>{currentPage}</AtualPage>
 
-            <button
-              className='paginationBtn'
+            <PaginationBtn
               onClick={goToNextPage}
               disabled={currentPage >= totalPages}
             >
               {currentPage < totalPages ? currentPage + 1 : null}
-            </button>
+            </PaginationBtn>
 
-            <button
-              className='paginationBtn fixed'
+            <PaginationBtn
+              className='fixed'
               onClick={goToLastPage}
               disabled={currentPage === totalPages}
             >
               <FiChevronsRight />
-            </button>
+            </PaginationBtn>
           </div>
         )}
-      </div>
+      </PaginationControls>
       
-    </div>
+    </PaginationContainer>
   );
 };
 

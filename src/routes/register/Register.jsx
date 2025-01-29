@@ -1,11 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
-import './Register.css';
 import isValidCPF from '../../js/cpfValidation';
 import isValidEmail from '../../js/emailValidation';
 import isValidName from '../../js/nameValidation';
 import isValidPassword from '../../js/passwordValidation';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import useForm from '../../hooks/UseForm.jsx'
 import backend from '../../../api/index.ts'
@@ -14,6 +13,9 @@ import InputMaskComponent from '../../components/input-form/InputMaskComponent.j
 import InputWithFilter from '../../components/input-form/InputWithFilter.jsx';
 import InputWithoutFilter from '../../components/input-form/InputWithoutFilter.jsx';
 import { AiOutlineClose } from 'react-icons/ai';
+import { CrossBtn } from '../../components/Button.js';
+import { BackgroundRegisterContainer, LogLink, RegisterContainer, RegisterControl, RegisterForm, RegisterFormControl } from './styles.js';
+import { Regislink } from '../../components/Link.js';
 
 const Register = () => {
 
@@ -94,24 +96,25 @@ const Register = () => {
 
   return (
     <>
-      <div className='backgroundRegisterContainer'>
-        <button class="crossBtn"> <Link to={'/'}><AiOutlineClose /></Link></button>
-        <div className='registerContainer'>
+      <BackgroundRegisterContainer>
+        <CrossBtn to={'/'}><AiOutlineClose /></CrossBtn>
+        <RegisterContainer>
           <h2>Cadastre-se</h2>
           <p>Campos obrigatórios *</p>
-          <div className='registerForm'>
+          <RegisterForm>
             {step === 1 ? (
               <>
 
-                <div className={'registerFormControl'}>
+                <RegisterFormControl>
                   <label htmlFor="name">Nome</label>
                   <InputText
                     error={errors.name}
                     handleChange={handleChange}
                     nameInput={'name'}
                     value={formData.name}
-                    placeholder={'* Digite o seu nome'} />
-                </div>
+                    placeholder={'* Digite o seu nome'}
+                    style={{width: '500px'}} />
+                </RegisterFormControl>
 
                 <div className={'registerFormControl'}>
                   <label htmlFor="email">Email</label>
@@ -120,7 +123,8 @@ const Register = () => {
                     handleChange={handleChange}
                     nameInput={'email'}
                     value={formData.email}
-                    placeholder={'* Digite o seu email'} />
+                    placeholder={'* Digite o seu email'} 
+                    style={{width: '500px'}}/>
                 </div>
 
                 <div className={'registerFormControl'}>
@@ -132,7 +136,7 @@ const Register = () => {
                     value={formData.cpf}
                     placeholder={'* Digite o seu cpf'}
                     mask={'999.999.999-99'}
-                  />
+                    style={{width: '500px'}}/>
                 </div>
 
                 <div className={'registerFormControl'}>
@@ -144,7 +148,7 @@ const Register = () => {
                     value={formData.contactNumber}
                     placeholder={'* Digite o seu Telefone'}
                     mask={"(99) 99999-9999"}
-                  />
+                    style={{width: '500px'}}/>
                 </div>
               </>
             ) : (
@@ -152,34 +156,40 @@ const Register = () => {
                 <div className={'registerFormControl'}>
                   <label htmlFor="newPassword">Senha</label>
                   <InputWithFilter 
-                  handleChange={handleChange} 
-                  error={errors.password} 
-                  newPassword={formData.newPassword}/>
+                    handleChange={handleChange} 
+                    error={errors.newPassword} 
+                    newPassword={formData.newPassword}
+                    style={{width: '500px'}}/>
 
                 </div>
                 <div className={'registerFormControl'}>
                   <label htmlFor="confirmPassword">Confirmar senha</label>
                   <InputWithoutFilter
-                  handleChange={handleChange}
-                  error={errors.confirm}
-                  nameInput={'confirm'}
-                  placeholder={'*Digite novamente sua senha'}/>
+                    handleChange={handleChange}
+                    error={errors.confirm}
+                    nameInput={'confirm'}
+                    placeholder={'*Digite novamente sua senha'}
+                    style={{width: '500px'}}/>
                 </div>
               </>
             )
 
             }
-            <div className='registerControl'>
+            <RegisterControl>
               <button onClick={changeStep}>{step === 1 ? 'Próximo' : 'Voltar'}</button>
               {step === 2 && (
-                <button className='createBtn' onClick={createUser}>Criar Conta</button>
+                <button 
+                styled={{backgroundColor: '#FFD700'}} 
+                onClick={createUser}>
+                  Criar Conta
+                </button>
               )}
 
-            </div>
-            <p className='logLink'>tem uma conta? <span><Link to={"/login"} className='regislink'>conecte-se</Link></span></p>
-          </div>
-        </div>
-      </div>
+            </RegisterControl>
+            <LogLink>tem uma conta? <span><Regislink to={"/login"} >conecte-se</Regislink></span></LogLink>
+          </RegisterForm>
+        </RegisterContainer>
+      </BackgroundRegisterContainer>
     </>
   )
 }

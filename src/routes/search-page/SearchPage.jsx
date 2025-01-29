@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
-import './SearchPage.css'
 import { FaTimes } from 'react-icons/fa'
 import Pagination from '../../components/pagination/Pagination'
 import MovieTemplate from '../../components/movie-template/MovieTemplate'
 import backend from '../../../api/index'
 import { toast } from 'react-toastify'
+import { InputBtn, InputContainer, SearchContainer } from './styles'
 
 
 const SearchPage = () => {
@@ -34,8 +34,8 @@ const SearchPage = () => {
 
 
   return (
-    <div>
-      <div className='inputContainer'>
+    <SearchContainer >
+      <InputContainer>
         <input type="text"
           id='search'
           name='search'
@@ -45,16 +45,16 @@ const SearchPage = () => {
           autoComplete='off' />
         {
           name &&
-          <button className='inputBtn' onClick={cleanName}>
+          <InputBtn onClick={cleanName}>
             <FaTimes />
-          </button>
+          </InputBtn>
         }
-      </div>
+      </InputContainer>
 
       <Pagination objectList={movies} itemsPerPage={12}>
         <MovieTemplate />
       </Pagination>
-    </div>
+    </SearchContainer>
   )
 }
 

@@ -5,11 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie'
 import backend from '../../../api/index'
 import { toast } from 'react-toastify';
-import { InputSubit } from '../Input';
+import { InputSubit } from '../Input.js';
 import InputWithFilter from '../input-form/InputWithFilter';
 import InputWithoutFilter from '../input-form/InputWithoutFilter';
 import useForm from '../../hooks/UseForm';
-import { ChangePasswordContainer } from './ChangePasswordTemplate';
+import { ChangePasswordContainer } from './styles.js';
 
 const ChangePasswordTemplate = () => {
 

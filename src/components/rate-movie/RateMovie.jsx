@@ -1,0 +1,159 @@
+import React, { useEffect, useState } from 'react';
+import { FaPen, FaTimes } from 'react-icons/fa';
+import { useSelector, useDispatch } from 'react-redux';
+import { showLoginModal } from '../../redux/show-login-modal/actions';
+import StarRating from './../starRating/StarRating.jsx';
+import backend from '../../../api/index.ts'
+import Cookies from 'js-cookie'
+import { InputSubit } from '../Input.js';
+import InputText from '../input-form/InputText.jsx';
+import { 
+  CommentUserForm, 
+  EditBtn, 
+  HalfStar, 
+  RatingButton, 
+  Star, 
+  UserAvaliationContainer, 
+  UserAvaliationControl, 
+  UserIcon, 
+  UserImg, 
+  UserNameContainer } from './styles.js';
+
+const RateMovie = ({ id }) => {
+  const { currentUser } = useSelector(state => state.userReducer);
+  const dispatch = useDispatch();
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentReview, setCurrentReview] = useState(null)
+  const [rating, setRating] = useState(null);
+  const [comment, setComment] = useState('');
+
+  async function handleGetUserReview() {
+    try {
+      const response = await backend.reviewsAPI.getUserReview(currentUser.id, id, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('accessToken')}`
+        }
+      });
+
+      if (response.data) {
+        setCurrentReview(response.data);
+        setRating(response.data.rating);
+        setComment(response.data.comment);
+      }
+
+    } catch (err) {
+
+    }
+  }
+
+  useEffect(() => {
+    handleGetUserReview();
+
+  }, [currentUser, id]);
+
+
+  const handleAddRating = async (e) => {
+    e.preventDefault();
+    if (currentUser) {
+
+      const formData = {
+        comment: comment,
+        rating: rating,
+        movieId: id,
+      }
+
+      try {
+        if (currentReview) {
+          await backend.reviewsAPI.updateReview(currentReview.id, formData, {
+            headers: {
+              Authorization: `Bearer ${Cookies.get('accessToken')}`
+            }
+          })
+          setCurrentReview({
+            ...currentReview,
+            comment: comment,
+            rating: rating,
+          });
+
+        } else {
+          await backend.reviewsAPI.addReviewToFilm(formData, {
+            headers: {
+              Authorization: `Bearer ${Cookies.get('accessToken')}`
+            }
+          })
+          setCurrentReview({
+            ...currentReview,
+            comment: comment,
+            rating: rating,
+          });
+          handleGetUserReview();
+        }
+
+        setIsEditing(false);
+      } catch (err) {
+        console.log(err)
+      }
+    } else {
+      dispatch(showLoginModal());
+    }
+  };
+
+  const toggleEdit = () => {
+    setIsEditing(!isEditing);
+  };
+
+
+  return (
+    <UserAvaliationContainer>
+      <UserAvaliationControl>
+        <div>
+          {currentUser ? (
+            <UserImg src={currentUser.profileImg} alt={currentUser.name} />
+          ) : (
+            <UserIcon />
+          )}
+        </div>
+        <div>
+          {currentReview && !isEditing ? (
+            <>
+              <UserNameContainer>{currentUser.name}</UserNameContainer>
+              <StarRating rating={currentReview.rating} />
+              <p>{currentReview.comment}</p>
+            </>
+          ) : (
+            <>
+              {[1, 2, 3, 4, 5].map(index => (
+                <RatingButton
+                  key={index}
+                  onClick={() => setRating(index)}>
+                  {rating >= index ? <Star /> : <HalfStar />}
+                </RatingButton>
+              ))}
+              <CommentUserForm onSubmit={handleAddRating}>
+                <InputText 
+                  style={{width: '300px'}}
+                  error={''}
+                  handleChange={(e) => setComment(e.target.value)}
+                  nameInput={'comment'}
+                  placeholder={'adicione sua avaliação sobre o filme'}
+                  value={comment} />
+                <InputSubit 
+                  type="submit"
+                  value={currentUser ? 'Salvar' : 'Publicar'} />
+              </CommentUserForm>
+              
+            </>
+          )}
+        </div>
+      </UserAvaliationControl>
+      {currentReview && (
+        <EditBtn onClick={toggleEdit}>
+          {isEditing ? <FaTimes /> : <FaPen />}
+        </EditBtn>
+      )}
+    </UserAvaliationContainer>
+  );
+};
+
+export default RateMovie;

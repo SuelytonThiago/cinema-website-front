@@ -1,19 +1,19 @@
 import React from 'react'
-import InputWithMask from 'react-input-mask';
-import InputMaskError from 'react-input-mask';
-import './Input.css'
-import { MessageError } from '../Paragraph';
+import { MessageError } from '../Paragraph.js';
+import { InputWithMask, InputMaskError } from '../Input.js';
 
-const InputMaskComponent = ({ error, handleChange, nameInput, value, placeholder, mask }) => {
+const InputMaskComponent = ({ error, handleChange, nameInput, value, placeholder, mask, style }) => {
     return (
-        <div>   {error ? (
+        <div>   
+            {error ? (
             <InputMaskError
                 mask={mask}
                 placeholder={placeholder}
                 id={nameInput}
                 name={nameInput}
                 value={value}
-                onChange={handleChange} />
+                onChange={handleChange} 
+                style = {style}/>
         ) : (
             <InputWithMask
                 mask={mask}
@@ -21,7 +21,8 @@ const InputMaskComponent = ({ error, handleChange, nameInput, value, placeholder
                 id={nameInput}
                 name={nameInput}
                 value={value}
-                onChange={handleChange} />
+                onChange={handleChange}
+                style = {style} />
         )}
             <MessageError>{error}</MessageError>
         </div >

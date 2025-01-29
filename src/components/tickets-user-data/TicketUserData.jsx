@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import backend from '../../../api/index'
 import Cookies from 'js-cookie'
-import './TicketUserData.css'
-
 import TicketTemplate from './../ticket-template/TicketTemplate.jsx';
 import Pagination from '../pagination/Pagination';
+import { TicketsDetalContainer } from './styles.js';
 
 const TicketUserData = () => {
   const [tickets, setTickets] = useState([]);
@@ -28,12 +27,12 @@ const TicketUserData = () => {
 
 
   return (
-    <div className='ticketsDetalContainer'>
+    <TicketsDetalContainer>
       <h2>Meus ingressos</h2>
       <Pagination objectList={tickets} itemsPerPage={12}>
         <TicketTemplate/>
       </Pagination>
-    </div>
+    </TicketsDetalContainer>
   )
 }
 

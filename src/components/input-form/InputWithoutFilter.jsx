@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { ErrorInput, Input } from '../Input';
-import { EyesButton } from '../Button';
+import { ErrorInput, Input } from '../Input.js';
+import { EyesButton } from '../Button.js';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
-import './Input.css'
-import { MessageError } from '../Paragraph';
+import { MessageError } from '../Paragraph.js';
 
-const InputWithoutFilter = ({ handleChange, error, nameInput , placeholder }) => {
+
+const InputWithoutFilter = ({ handleChange, error, nameInput , placeholder,style }) => {
 
   const [show, setShow] = useState(false);
   const handleTogglePassword = (e) => {
@@ -15,7 +15,7 @@ const InputWithoutFilter = ({ handleChange, error, nameInput , placeholder }) =>
 
   return (
     <div>
-      <div className='createPasswordInput'>
+      <div style={{position: 'relative'}}>
         {error ? (
           <ErrorInput
             type={show ? 'text' : 'password'}
@@ -24,7 +24,7 @@ const InputWithoutFilter = ({ handleChange, error, nameInput , placeholder }) =>
             name={nameInput}
             onChange={handleChange}
             autocomplete="current-password" 
-          />) : (
+            style = {style}/>) : (
           <Input
             type={show ? 'text' : 'password'}
             placeholder={placeholder}
@@ -32,7 +32,7 @@ const InputWithoutFilter = ({ handleChange, error, nameInput , placeholder }) =>
             name={nameInput}
             onChange={handleChange}
             autocomplete="current-password" 
-          />)
+            style = {style}/>)
 
         }
         <MessageError>{error}</MessageError>
