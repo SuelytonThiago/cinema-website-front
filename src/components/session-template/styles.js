@@ -3,10 +3,11 @@ import styled from "styled-components";
 export const Session = styled.div `
     display: flex;
     height: auto;
-    background-color: #17191f;
+    background-color: ${(props) => props.theme.mainContainer};
     gap: 1rem;
-    padding: 1rem;
-    border-radius: 5px;
+    padding: 2rem 1rem;
+    border-bottom: ${(props) => props.theme.border};
+  
 `
 
 export const SessionDetails = styled.div `

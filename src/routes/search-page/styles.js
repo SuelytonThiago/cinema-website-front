@@ -20,7 +20,7 @@ export const InputContainer = styled.div`
         font-weight: bold;
         opacity: .7;
         transition: .3s;
-        color: #ccc;
+        color: ${(props) => props.theme.fontColor};
 
         &:focus {
             border-bottom: 2px solid #555;
@@ -37,7 +37,7 @@ export const InputBtn = styled.button`
     background-color: none;
     cursor: pointer;
     font-size: 20px;
-    color: #fff;
+    color: ${(props) => props.theme.fontColor};
     background-color: transparent;
     transition: .3s;
     opacity: .7;

@@ -24,6 +24,7 @@ export const UserFormInput = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    box-shadow: inset 0 0 1px 1px #ccc;
 
     &:focus-within {
         border-left: 8px solid ${(props) => (props.$error ? 'red' : '#1877F2')};
@@ -47,6 +48,7 @@ export const UserFormInput = styled.div`
 
 export const UserFormSubmit = styled(UserFormInput)`
     width: 250px;
+    box-shadow: inset 0 0 1px 1px #ccc;
     
 `
 
@@ -72,7 +74,7 @@ export const PasswordInputContainer = styled.div`
 `;
 
 export const UserDataSubmit = styled.div`
-    background-color: #17191f;
+    background-color: ${(props) => props.theme.mainContainer};
     padding: 2rem;
     border-radius: 15px;
     display: flex;
@@ -80,11 +82,11 @@ export const UserDataSubmit = styled.div`
     gap: 1rem;
 
     h3 {
-        color: #fff;
+        color: ${(props) => props.theme.fontColor};
     }
 
     p {
-        color: #ccc;
+        color: ${(props) => props.theme.fontColor};
     }
 `;
 
@@ -97,7 +99,8 @@ export const VerifyPassInput = styled.div`
     position: relative;
 
     input {
-        height: 20px
+        height: 20px;
+        
 
     }
 

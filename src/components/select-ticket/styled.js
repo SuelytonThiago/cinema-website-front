@@ -9,7 +9,7 @@ export const TicketContainer = styled.div`
 `
 
 export const Ticket = styled.div`
-    background-color: #2d2f36;
+    background-color:  ${(props) => props.theme.childrenContainer};
     padding: 1rem;
     flex: 1;
     color: #fff;
@@ -17,6 +17,7 @@ export const Ticket = styled.div`
     border-radius: 5px;
     align-items: center;
     justify-content: space-between;
+    border: ${(props) => props.theme.border}
 `
 
 export const TicketInfo = styled.div`
@@ -30,11 +31,13 @@ export const TicketInfo = styled.div`
 export const TicketIcon = styled(FaTicketAlt)`
     font-size: 34px;
     transform: rotate(45deg);
+    color: ${(props) => props.theme.fontColor};
 `
 
 export const TicketControl = styled.div`
     display: flex;
     gap: 10px;
+    color: ${(props) => props.theme.fontColor};
 `
 
 export const TicketButton  = styled.button`
@@ -59,5 +62,5 @@ export const TicketButton  = styled.button`
 `
 export const TicketTitle = styled.div`
     font-weight: bold;
-    color: #fff;
+    color: ${(props) => props.theme.fontColor};
 `

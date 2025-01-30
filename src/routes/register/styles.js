@@ -11,7 +11,7 @@ export const BackgroundRegisterContainer = styled.div `
 `
 
 export const RegisterContainer = styled.div `
-   background-color: #17191f;
+   background-color: ${(props) => props.theme.container};
    padding: 2rem;
    margin: 2rem    auto;
    border-radius: 10px;
@@ -48,18 +48,29 @@ export const RegisterControl = styled.div `
       border: none;
       border-radius: 25px;
       cursor: pointer;
+      color: #fff;
+      background-color: #1877F2;
 
       &:hover {
          background-color: #696969;
          color: #fff;
+      }
+
+      &.finishBtn:hover{
+         background-color: #FFD700;
+         color: #000;
+      }
+
+      &.stepBtn:hover {
+         background-color: #696969;
       }
    }
 `
 
 export const LogLink = styled.p `
    text-align: center;
-   font-weight: 100;
-   color: #fff;
+   
+   color: ${((props => props.theme.fontColor))}
    font-size: 15px;
 `
 

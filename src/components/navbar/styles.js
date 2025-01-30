@@ -4,9 +4,15 @@ import styled from "styled-components";
 //---------------navbar-styles-----------------
 
 export const NavbarContainer = styled.div `
-    background-color: #17191f;
+    background-color:${(props) => props.theme.container};
     display: flex;
     justify-content: center;
+    padding:1rem;
+    border-bottom: ${(props) => props.theme.border}
+`
+
+export const Logo = styled(Link)`
+    color: ${(props) => props.theme.fontColor}
 `
 
 export const NavbarInfo = styled.div` 
@@ -69,10 +75,10 @@ export const MenuItems = styled.ul`
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 4rem;
+    top: 4.3rem;
     right: -15px;
     z-index: 2000;
-    background-color: #000000;
+    background-color: ${(props) => props.theme.mainContainer};
     padding: 1rem;
     width: 190px;
 `
@@ -81,6 +87,8 @@ export const MenuItem = styled(Link) `
     display: flex;
     gap: .5rem;
     align-items: center;
+    padding: .5rem;
+
 `
 
 
@@ -88,7 +96,7 @@ export const OutBtn = styled.button `
     display: flex;
     align-items: center;
     background-color: transparent;
-    color: #fff;
+    color: ${(props) => props.theme.fontColor};
     border: none;
     cursor: pointer;
     font-weight: bold;

@@ -122,7 +122,7 @@ const Home = () => {
           ))}
         </SessionFilterContainer>
       </div>
-      <h2>Sessões para {formatDate(new Date(selectedDate)).formattedDate}</h2>
+      <h2 style={{marginBottom: '1rem'}}>Sessões para {formatDate(new Date(selectedDate)).formattedDate}</h2>
       <SessionsContainer>
         {selectedDate && groupedSessions[selectedDate] ? (
           groupedSessions[selectedDate].sessions.map(session => (

@@ -16,6 +16,8 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { CrossBtn } from '../../components/Button.js';
 import { BackgroundRegisterContainer, LogLink, RegisterContainer, RegisterControl, RegisterForm, RegisterFormControl } from './styles.js';
 import { Regislink } from '../../components/Link.js';
+import AuthBtns from '../../components/auth-btns/AuthBtns.jsx';
+import ThemeBtn from '../../components/theme-button/ThemeBtn.jsx';
 
 const Register = () => {
 
@@ -176,11 +178,11 @@ const Register = () => {
 
             }
             <RegisterControl>
-              <button onClick={changeStep}>{step === 1 ? 'Próximo' : 'Voltar'}</button>
+              <button onClick={changeStep} className='stepBtn'>{step === 1 ? 'Próximo' : 'Voltar'}</button>
               {step === 2 && (
                 <button 
-                styled={{backgroundColor: '#FFD700'}} 
-                onClick={createUser}>
+                  className='finishBtn' 
+                  onClick={createUser}>
                   Criar Conta
                 </button>
               )}

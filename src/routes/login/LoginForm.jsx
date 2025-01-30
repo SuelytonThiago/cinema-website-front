@@ -87,7 +87,7 @@ const LoginForm = ({loginSuccess}) => {
           placeholder={'* Digite sua senha'} />
 
         <ForgoutPass to={`/recover`}>
-          <p className="forgoutPass">esqueceu sua senha?</p>
+          <p>esqueceu sua senha?</p>
         </ForgoutPass>
 
         <InputSubit type="submit" value="Entrar" />

@@ -11,7 +11,7 @@ export const UserDataControl = styled.div`
     justify-content: space-between;
     width: 450px;
     height: 80vh;
-    background-color: #17191f;
+    background-color: ${(props) => props.theme.mainContainer};
     padding: 2rem 0 2rem 2rem;
 `
 
@@ -30,6 +30,7 @@ export const UserImg = styled.div`
     height: 65px;
     cursor: pointer;
 
+
     img {
         width: 100%;
         height: 100%;
@@ -37,6 +38,7 @@ export const UserImg = styled.div`
         background-color: #ccc;
         transition: .2s;
         z-index: 2;
+        border: ${(props) => props.theme.border};
 
         &:hover {
             opacity: .3;

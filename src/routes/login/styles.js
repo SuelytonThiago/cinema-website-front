@@ -6,13 +6,12 @@ export const SigContainer = styled.div `
     height: 100vh;  
     width: 100%;
     overflow: hidden;
-
 ` 
  
  
  
 export const SigninContainer = styled.div `
-  background-color: #efefef;
+  background-color: ${(props) => props.theme.container};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -49,6 +48,7 @@ export const SigninForm = styled.form`
   p {
     color: #1877F2;
     font-size: 15px;
+    text-align: center;
   }
  `
  
@@ -67,7 +67,7 @@ export const AuthenticationTab = styled.div`
   left: 70%;
   width: 30%;
   height: 100vh;
-  background-color: #202229;
+  background-color: ${(props) => props.theme.mainContainer};
   display: flex;
   flex-direction: column;
   gap: 20rem;
@@ -77,7 +77,7 @@ export const AuthenticationTab = styled.div`
 
 export const AuthenticationTitle = styled.div`
   padding: 1rem;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid #ccc;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -91,14 +91,14 @@ export const Title = styled.div`
 
 export const Btn = styled.button`
   background-color: transparent;
-  color: #fff;
+  color: ${(props) => props.theme.fontColor};
   border: none;
   font-size: 20px;
   opacity: .7;
   transition: .3s;
   cursor: pointer;
 
-  :hover{
+  &:hover{
     opacity: 1;
   }
 `

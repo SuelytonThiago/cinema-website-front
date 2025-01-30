@@ -6,3 +6,7 @@ export const ChangePasswordContainer = styled.form `
     gap: 2rem;
 `
 
+export const ChangePassowrdBtn = styled.div`
+    text-align: center;
+`
+

@@ -2,13 +2,12 @@ import { Link } from 'react-router-dom'
 import { FaSearch } from 'react-icons/fa';
 import Menu from './NavbarMenu.jsx'
 import { useSelector } from 'react-redux';
-import { ThemeBtn } from '../Button.js';
 import { FaMoon, FaSun } from 'react-icons/fa';
 import { LinkBtn, SearchBtn } from '../Link.js';
 import { NavbarContainer, NavbarInfo, NavbarLinks } from './styles.js';
+import ThemeBtn from '../theme-button/ThemeBtn.jsx';
 
-
-const Navbar = ({ themeToggler, theme }) => {
+const Navbar = () => {
 
     const { currentUser } = useSelector((rootReducer) => rootReducer.userReducer);
 
@@ -16,9 +15,9 @@ const Navbar = ({ themeToggler, theme }) => {
         <div>
             <NavbarContainer>
                 <NavbarInfo>
-                    <h2>
-                        <Link to={'/'}>cinemax</Link>
-                    </h2>
+                    <h1>
+                        <Link to={'/'} >cinemax</Link>
+                    </h1>
                     {currentUser ?
                         (
                             <div >
@@ -29,13 +28,7 @@ const Navbar = ({ themeToggler, theme }) => {
                                         </SearchBtn>
                                     </li>
                                     <li>
-                                        <ThemeBtn onClick={themeToggler}>
-                                            {theme === 'light' ?
-                                                (<FaMoon />)
-                                                :
-                                                (<FaSun />)
-                                            }
-                                        </ThemeBtn>
+                                        <ThemeBtn/>
                                     </li>
                                     <li>
                                         <LinkBtn to={"/category-movies"} className='btn'>
@@ -58,13 +51,7 @@ const Navbar = ({ themeToggler, theme }) => {
                                             </SearchBtn>
                                         </li>
                                         <li>
-                                            <ThemeBtn onClick={themeToggler}>
-                                                {theme === 'light' ?
-                                                    (<FaMoon />)
-                                                    :
-                                                    (<FaSun />)
-                                                }
-                                            </ThemeBtn>
+                                            <ThemeBtn/>
                                         </li>
                                         <li>
                                             <LinkBtn to={"/login"} >

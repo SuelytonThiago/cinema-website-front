@@ -4,7 +4,7 @@ export const CreateNewPassContainer = styled.form `
     position: fixed;
     top: 50%;
     left: 50%;
-    background-color: #17191f;
+    background-color: ${(props) => props.theme.mainContainer};
     transform: translate(-50%, -50%);
     z-index: 2;
     padding: 2rem;

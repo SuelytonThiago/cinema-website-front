@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 export const SessionInfoTime= styled.div`
     padding: 1rem;
-    background-color: #282c36;
+    background-color: ${(props) => props.theme.mainContainer};
+    border-bottom: 1px solid #ccc;
     display: flex;
     gap: 5rem;
     justify-content: center;
@@ -21,7 +22,7 @@ export const EditDate = styled.div`
 
 export const ChairsContainer = styled.div`
     display: flex;
-    background-color: #17191f;
+    background-color: ${(props) => props.theme.mainContainer};
     padding: 1rem;
     flex-direction: column;
 `
@@ -33,7 +34,7 @@ export const Chairs = styled.div `
     align-items: center;
     gap: 10px; 
     padding: 2rem;
-    background-color: #17191f;
+    background-color: ${(props) => props.theme.mainContainer};
     max-width:60%;
     margin: 0 auto;
 `
@@ -51,7 +52,7 @@ export const Chair = styled.button`
     padding: .5rem;
 
     &.chairAvailable {
-        background-color: #fff;
+        background-color: #E3D7A3;
         color: #000;
         opacity: .8;
         transition: .3s;
@@ -62,8 +63,7 @@ export const Chair = styled.button`
     }
 
     &.chairUnavailable {
-        background-color: #444;
-        color: white;
+        background-color: #B5A1C7;
     }
 
     &.selectedChair {
@@ -95,9 +95,10 @@ export const LegendContainer = styled.div `
     align-items: center;
     gap: 1rem;
     padding: 1rem ;
-    background-color: #17191f;
+    background-color: ${(props) => props.theme.mainContainer};
     justify-content: space-around;
-    border-top: 1px solid #fff;
+    border-top: 1px solid #ccc;
+
 `
 
 

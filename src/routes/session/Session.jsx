@@ -131,7 +131,7 @@ const Session = () => {
                         {!!selectedChairId && (
                             <ChairInformation>
                                 <ChairInfo>
-                                    <MdEventSeat color='#fff' size={20}/>
+                                    <MdEventSeat size={20}/>
                                      {selectedChairId}
                                 </ChairInfo>
                             </ChairInformation>

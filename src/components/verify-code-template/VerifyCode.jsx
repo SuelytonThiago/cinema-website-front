@@ -10,7 +10,7 @@ const VerifyCode = ({ goNext, goBack }) => {
 
   const [pins, setPins] = useState(["", "", "", "", "", ""]);
 
-  const [invalidCode, setInvalidCode] = useState(true);
+  const [invalidCode, setInvalidCode] = useState(false);
 
 
   const handleVerifyCode = async () => {
@@ -64,7 +64,6 @@ const VerifyCode = ({ goNext, goBack }) => {
   return (
     <div>
       <VerifyCodeContainer>
-        <img src="https://minhas-imagens-2025.s3.sa-east-1.amazonaws.com/gif-email.gif" alt="email-gif" />
         <h1>Autenticação de acesso via Email</h1>
         <p>Por favor informe o código de autenticação enviado para o seu email cadastrado em sua conta.</p>
         <h3>{email}</h3>

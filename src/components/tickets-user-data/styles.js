@@ -9,7 +9,7 @@ export const TicketsDetalContainer = styled.div `
     justify-content: center;
 
     h2 {
-        background-color: #17191f;
+        background-color: ${(props) => props.theme.mainContainer};
         width: 100%;
         text-align: center;
         padding: .5rem;

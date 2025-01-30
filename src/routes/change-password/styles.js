@@ -12,14 +12,14 @@ export const BackgroundChangeContainer = styled.div`
 `
 
 export const ChangeContainer = styled.div `
-    background-color: #FFF;
+    background-color: ${(props) => props.theme.mainContainer};
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: 700px;
     padding: 5rem; 
-    color: #4b4e55;
+    color: ${(props) => props.theme.fontColor};
     gap: 2rem;
 `
 

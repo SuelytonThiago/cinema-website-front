@@ -3,20 +3,15 @@ import styled from 'styled-components'
 
 export const Button = styled.button`   
     padding: .5rem 1rem;
-    background-color: #1877F2;
+    background-color:#1877F2;
     color: #fff;
-    border: 1px solid #17191f;
     cursor: pointer;
     transition: .2s;
     border-radius: 5px;
-    
+    border: none;
 
     &:hover {
-
-        background-color: #fff;
-        color: #17191f;
-        border: 1px solid #17191f;
-    
+        background-color: #0d63d3;
     }
 `
 
@@ -40,9 +35,8 @@ export const BaseBackButton = `
     transition: .2s;
     font-weight: bold;
     opacity: .8;
-    background-color: #FFF;
-    border: 3px solid #17191f;
-    color: #17191f;
+    background-color: #1877F2;
+    color: #fff;
 
     &:hover {
         opacity: 1;
@@ -64,35 +58,12 @@ export const NextButton = styled.button`
     transition: .2s;
     font-weight: bold;
     opacity: .8;
-    background-color: #17191f;
+    background-color: #1877F2;
     border: none;
     color: #fff;
 
     &:hover {
         opacity: 1;
-    }
-
-`
-
-export const ThemeBtn = styled.button`
-    padding: .5rem; 
-    font-size: 20px;
-    clip-path: circle(50%);
-    border-radius: 50%;  
-    width: 40px;  
-    height: 40px;  
-    background-color: transparent;
-    color: #fff;
-    border: 2px solid #fff;
-    opacity: .8;
-    cursor: pointer;
-    transition: .2s;
-
-    &:hover {
-        opacity: 1;
-        color:#000;
-        background-color: #fff;
-        border: 2px solid #000;
     }
 
 `

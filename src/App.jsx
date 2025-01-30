@@ -15,16 +15,12 @@ import { useEffect, useState } from 'react';
 import backend from '../api/index.ts'
 import { ThemeProvider } from 'styled-components'
 import { lightTheme, darkTheme } from './theme.js';
-
+import { useThemeContext } from './hooks/UseThemeContext.jsx';
 import { GlobalStyles } from './GlobalStyles.js';
 
 function App() {
   const dispatch = useDispatch()
-  const [theme, setTheme] = useState('dark');
-
-  const themeToggler = () => {
-    theme === 'light' ? setTheme('dark') : setTheme('light');
-  }
+  const {theme} = useThemeContext();
 
   useEffect(() => {
     async function getUserData() {
@@ -48,7 +44,7 @@ function App() {
     <>
       <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
         <GlobalStyles/>
-        <Navbar themeToggler={themeToggler} theme={theme}/>
+        <Navbar/>
         <div className="container">
           <ToastContainer />
           <Outlet />

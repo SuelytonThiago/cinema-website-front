@@ -16,11 +16,11 @@ export const EntryRequesting = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #17191f;
+    background-color: ${(props) => props.theme.mainContainer};
 `
 
 export const SessionRequestInformations = styled.div`
-    background: #17191f;
+    background-color: ${(props) => props.theme.mainContainer};
     flex: 1;
     padding: .5rem;
     display: flex;
@@ -39,6 +39,7 @@ export const ChairInfo = styled.p`
     justify-content: space-between;
     align-items: center;  
     width: 100%;
+    color: ${(props) => props.theme.fontColor}
 `;
 
 export const TicketInfo = styled.div `
@@ -78,7 +79,7 @@ export const EditDate = styled.div `
 export const SessionTime = styled.div`
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid #Fff;
+    border-bottom: 1px solid #ccc;
     padding: .5rem 0;
 
     p{
@@ -96,12 +97,12 @@ export const ChairInformation = styled.div`
     margin-top: 10px;
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid #Fff;
+    border-bottom: 1px solid #ccc;
     padding: .5rem 0;
 `
 
 export const TicketInformation = styled.div` 
-    border-bottom: 1px solid #Fff;
+    border-bottom: 1px solid #ccc;
     padding: .5rem 0;
 `
 
@@ -111,7 +112,7 @@ export const Info = styled.div`
 `
 
 export const SessionRequestControl = styled.div`
-    background-color: #17191f;
+    background-color: ${(props) => props.theme.mainContainer};
     padding: 2rem;
     display: flex;
     justify-content: space-between;
@@ -122,7 +123,7 @@ export const SessionControlBtn = styled.button`
     border-radius: 15px;
     border: none;
     font-weight: bold;
-    color: #ccc;
+    color: ${(props) => props.theme.fontColor};
     opacity: .7;
     transition: .3s;
     cursor: pointer;
@@ -141,7 +142,7 @@ export const SessionControlBtn = styled.button`
 
     &.back{
         background-color: transparent;
-        border: 3px solid #ccc;
+        border: 3px solid  ${(props) => props.theme.fontColor};
     } 
 
     &.next {

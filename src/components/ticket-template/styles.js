@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const TicketUserContainer = styled.div `
     display: flex;
     border-radius: 8px;
-    background-color: #17191f;
+    background-color: ${(props) => props.theme.mainContainer};
     position: relative;
     cursor: pointer;
     height: 160px;
@@ -28,7 +28,7 @@ export const TicketData = styled.div `
     display: flex;
     flex-direction: column;
     font-size: 14px;
-    background-color: #17191f;
+    background-color: ${(props) => props.theme.mainContainer};
     position: absolute;
     top: 60%;
     z-index: 2;

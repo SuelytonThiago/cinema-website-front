@@ -3,7 +3,7 @@ import { FaUser, FaStar, FaRegStar } from 'react-icons/fa';
 
 export const UserAvaliationContainer = styled.div`
     margin-bottom: .5rem;
-    background-color: #17191f;
+    background-color: ${(props) => props.theme.mainContainer};
     height: 150px;
     display: flex;
     gap: 1rem;
@@ -22,16 +22,17 @@ export const UserAvaliationControl = styled.div`
 `
 
 export const UserImgIcon = `
-    background-color: #fff;
-    color: #000;
     border-radius: 50%;
     font-size: 40px;
     width: 50px;
     height: 50px;
+    border:1px solid #000;
 `
 
 export const UserIcon = styled(FaUser)`
     ${UserImgIcon};
+    background-color: #fff;
+    color: #000;
     
 `
 
@@ -41,7 +42,7 @@ export const UserImg = styled.img`
 
 export const UserNameContainer = styled.p`
     font-weight: bold;
-    color: #fff;
+    ${(props) => props.theme.fontColor};
     text-transform: uppercase;
 `
 
@@ -67,7 +68,7 @@ export const RatingButton = styled.button`
 
 export const CommentUserForm = styled.form` 
     padding: .5rem 0;
-    color: #fff;
+    color: ${(props) => props.theme.fontColor};
     display: flex;
     align-items: center;
     gap: .5rem;
@@ -81,10 +82,15 @@ export const EditBtn = styled.button`
     cursor: pointer;
     border: none;
     transition: .3s;
+    clip-path: circle();
+    background-color:transparent;
+    color: #Fff;
+    background-color: #1877F2;
+    opacity: .9;
+    transition:.2s;
 
     &:hover{
-        background-color: #000;
-        color: #Fff;
+        opacity: 1;
     }
 `
 

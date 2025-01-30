@@ -1,26 +1,30 @@
 import styled from "styled-components";
 
 export const SessionFilterContainer = styled.div ` 
-    background-color: #17191f;
+    background-color:${(props) => props.theme.container};
     display: flex;
     height: 70px;
     justify-content: space-around;
     align-items: center;
     margin-bottom: 1rem;
+    border-bottom:${(props) => props.theme.border};
 `
 
 export const FilterBtn = styled.button `
     background-color: transparent;
-    color: #666;
+    color: ${(props) => props.theme.fontColor};
     border: none;
     font-weight: bold;
     font-size: 16px;
     cursor: pointer;
     text-transform: uppercase;
+    opacity: .8;
 
     &.selected {
+        opacity: 1;
         font-size: 20px;
-        color: #fff;
+        color: ${(props) => props.theme.fontColor};
+        
     }
 `
 
@@ -34,10 +38,11 @@ export const SessionsContainer = styled.div `
 export const Session = styled.div ` 
     display: flex;
     height: auto;
-    background-color: #17191f;
+    background-color: ${(props) => props.theme.container};
     gap: 1rem;
     padding: 1rem;
     border-radius: 5px;
+    border: ${(props) => props.theme.border}
 `
 
 export const SessionImg = styled.img `

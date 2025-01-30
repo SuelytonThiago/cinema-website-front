@@ -25,7 +25,7 @@ export const PaginationControls = styled.div`
 
 export const PaginationBtn = styled.button`
     padding: .3rem;
-    color: #fff;
+    color: ${(props) => props.theme.fontColor};
     background-color: transparent;
     border:none;
     font-size: 12px;
@@ -43,7 +43,7 @@ export const PaginationBtn = styled.button`
 
 export const AtualPage = styled.span`
     &.atualPage {
-        border-bottom: 1px solid #ccc;
+        border-bottom: 1px solid ${(props) => props.theme.fontColor};
     }
 `
 

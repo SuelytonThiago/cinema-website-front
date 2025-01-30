@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Review = styled.div`
-    background-color: #17191f;
+    background-color: ${(props) => props.theme.mainContainer};
     padding: 1rem;
     display: flex;
     gap: 1rem;

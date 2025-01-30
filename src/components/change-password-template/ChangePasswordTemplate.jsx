@@ -9,7 +9,7 @@ import { InputSubit } from '../Input.js';
 import InputWithFilter from '../input-form/InputWithFilter';
 import InputWithoutFilter from '../input-form/InputWithoutFilter';
 import useForm from '../../hooks/UseForm';
-import { ChangePasswordContainer } from './styles.js';
+import { ChangePassowrdBtn, ChangePasswordContainer } from './styles.js';
 
 const ChangePasswordTemplate = () => {
 
@@ -80,9 +80,9 @@ const ChangePasswordTemplate = () => {
                 nameInput={"confirm"} 
                 placeholder={"* Confirme a nova senha"} />
                 
-                <div className='changePassowrdBtn'>
+                <ChangePassowrdBtn>
                     <InputSubit type='submit' value='Salvar' />
-                </div>
+                </ChangePassowrdBtn>
 
             </ChangePasswordContainer>
         </div>

@@ -64,13 +64,13 @@ const UserData = () => {
         }
 
         try {
-            const res = await backend.fileAPI.uploadFile(request, {
+            const res = await backend.fileAPI.uploadFile(file, {
                 headers: {
                     Authorization: `Bearer ${Cookies.get('accessToken')}`,
                     "Content-Type": "multipart/form-data",
                 }
             })
-            dispatch(updateProfileImage(res));
+            dispatch(updateProfileImage(res.data));
         } catch (err) {
             toast.error('Algo deu errado');
             console.log(err);

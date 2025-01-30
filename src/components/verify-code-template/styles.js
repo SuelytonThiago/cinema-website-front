@@ -44,19 +44,18 @@ export const VerifyInput = styled.div `
 
 
 export const VerifyCodeBtn = styled.button`
-    background-color: #17191f;
-    border: 1px solid #17191f;
+    background-color: #1877F2;
+    border: 1px solid #fff;
     color: #fff;
     padding: 1rem;
     border: none;
     border-radius: 10px;
     transition: .2s;
     cursor: pointer;
+    opacity: .8;
 
     &:hover {
-        background-color: #fff;
-        color: #17191f;
-        border: 1px solid #17191f;
+        opacity: 1;
 
     }
 `

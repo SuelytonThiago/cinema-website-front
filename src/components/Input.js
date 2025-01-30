@@ -13,6 +13,7 @@ export const BaseInputStyles = `
     &:focus {
         outline: none;
         box-shadow: none;
+        border:1px solid #1877F2;
     }
 `;
 
@@ -50,7 +51,7 @@ export const InputSubit = styled.input`
     padding: .5rem 1rem;
     background-color: #1877F2;
     color: #fff;
-    border: 1px solid #17191f;
+    border: none;
     cursor: pointer;
     transition: .2s;
     border-radius: 5px;
@@ -58,7 +59,7 @@ export const InputSubit = styled.input`
     &:hover {
         background-color: #fff;
         color: #17191f;
-        border: 1px solid #17191f;
+        box-shadow: inset 0 0 1px 1px ${(props) => props.theme.fontColor}
     
     }
 `;

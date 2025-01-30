@@ -3,6 +3,8 @@ import styled from "styled-components"
 export const MovieHeader = styled.div ` 
     display: flex;
     gap: 1rem;
+    padding: 1rem;
+    background-color: ${(props) => props.theme.container};
 `
 
 export const MovieImg = styled.img `
@@ -84,6 +86,8 @@ export const ShowDescriptBtn = styled.button `
     cursor: pointer;
     opacity: .7;
     transition: .2;
+    color: ${(props) => props.theme.fontColor};
+    font-weight: bold;
 
     &:hover {
         opacity: 1;
@@ -94,13 +98,13 @@ export const ShowDescriptBtn = styled.button `
 export const BtnMovieContainer = styled.div` 
     display: flex;
     gap: 10px;
-    background-color: #17191f;
+    background-color: ${(props) => props.theme.mainContainer};
     border-bottom: 3px solid #c7baba2c;
-`
+`   
 
 export const BtnMovieInfoControl = styled.button`
     background-color: transparent;
-    color: #fff;
+    color: ${(props) => props.theme.fontColor};
     border: none;
     font-size: 20px;
     padding: .5rem;
@@ -115,5 +119,5 @@ export const BtnMovieInfoControl = styled.button`
 `
 
 export const SessionsMovieContainer = styled.div`
-    background-color: #17191f;
+    background-color: ${(props) => props.theme.mainContainer};
 `
