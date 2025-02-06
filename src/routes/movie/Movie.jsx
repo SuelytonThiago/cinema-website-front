@@ -65,10 +65,6 @@ const Movie = () => {
                 console.log(err)
             }
         }
-        handleGetMovieData();
-    }, [])
-
-    useEffect(() => {
         async function handleGetSessiosDate() {
             try {
                 const res = await backend.sessionAPI.findByMovie(id)
@@ -81,8 +77,9 @@ const Movie = () => {
         }
 
         handleGetSessiosDate();
+        handleGetMovieData();
     }, [])
-
+    
     const toggleShowSessions = (shouldShowSessions) => {
         if (shouldShowSessions !== showSessions) {
             setShowSessions(shouldShowSessions);

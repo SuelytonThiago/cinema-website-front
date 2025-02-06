@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
-export const SessionFilterContainer = styled.div ` 
+export const SessionFilterContainer = styled.div` 
     background-color:${(props) => props.theme.container};
     display: flex;
     height: 70px;
@@ -8,9 +8,10 @@ export const SessionFilterContainer = styled.div `
     align-items: center;
     margin-bottom: 1rem;
     border-bottom:${(props) => props.theme.border};
+
 `
 
-export const FilterBtn = styled.button `
+export const FilterBtn = styled.button`
     background-color: transparent;
     color: ${(props) => props.theme.fontColor};
     border: none;
@@ -28,41 +29,54 @@ export const FilterBtn = styled.button `
     }
 `
 
+export const H2 = styled.div`
+    margin-bottom: 1rem;
+    width: 250px;
+    height: 40px;
 
-export const SessionsContainer = styled.div `
+`
+
+
+export const SessionsContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 1rem;
+
 `
 
-export const Session = styled.div ` 
+export const LoadingImg = styled.div`
+    width: 200px;
+    height: 300px;
+`
+
+export const Session = styled.div` 
     display: flex;
     height: auto;
-    background-color: ${(props) => props.theme.container};
+    background-color: ${(props) => props.theme.loading};
     gap: 1rem;
     padding: 1rem;
     border-radius: 5px;
-    border: ${(props) => props.theme.border}
+    border: ${(props) => props.theme.border};
 `
 
-export const SessionImg = styled.img `
+export const SessionImg = styled.img`
     width: 200px;
-    border-radius: 5px;
+    border-radius: 5px; 
 `
 
-export const SessionTimes = styled.div `
+export const SessionTimes = styled.div`
     display: flex;
     align-items: center;
     gap: 10px;
 `
 
-export const SessionInfo = styled.div `
+export const SessionInfo = styled.div`
     margin-top: 1rem;
     display: flex;
     flex-direction: column;
     height: 70%;
 `
 
-export const Details = styled.div `
+export const Details = styled.div`
     flex-grow: 1;
 `

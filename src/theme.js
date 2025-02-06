@@ -7,6 +7,8 @@ export const lightTheme = {
     border: '1px solid #ccc',
     mainContainer: '#fff',
     childrenContainer : '#fff',
+    loadingBase: '#ccc',
+    loadingEfect: '#fff',
 }
 
 
@@ -19,4 +21,7 @@ export const darkTheme = {
     border: 'none',
     mainContainer: '#17191f',
     childrenContainer:  '#2d2f36',
+    loadingBase: '#313541',
+    loadingEfect: '#3b455e',
+
 }

@@ -4,12 +4,15 @@ import Pagination from '../../components/pagination/Pagination'
 import MovieTemplate from '../../components/movie-template/MovieTemplate'
 import backend from './../../../api/index'
 import { toast } from 'react-toastify'
+import Error from '../../components/error/Error'
 
 const CategoryMovies = () => {
 
     const [categoryId, setCategoryId] = useState(null);
-    const [movies, setMovies] = useState([])
-    
+    const [movies, setMovies] = useState(null)
+    const [isLoading, setIsLoading] = useState(true);
+    const [errorServer, setErrorServer] = useState(null);
+
     const handleSetActiveCategory = (id) => {
         setCategoryId(id)
     }
@@ -17,27 +20,37 @@ const CategoryMovies = () => {
     useEffect(() => {
         async function handleGetCategories() {
             try {
+                console.log(isLoading);
+                setErrorServer(null);
+                setIsLoading(true);
                 const res = await backend.movieAPI.findByCategory(categoryId);
                 setMovies(res.data)
+                setIsLoading(false);
 
-            } catch(err) {
-                toast.error(err.response.data.Message)
+            } catch (err) {
+                setErrorServer(err.response.data)
             }
         }
 
         handleGetCategories();
     }, [categoryId])
 
-
     return (
-        <div>
+        <>
             <ShowCategories handleSetActiveCategory={handleSetActiveCategory} />
-            {!!movies &&
-                <Pagination objectList={movies} itemsPerPage={12}>
-                    <MovieTemplate />
-                </Pagination>}
-        </div>
-    )
+            {errorServer ? (
+                <Error code={errorServer.status} message={errorServer.Message} />
+            ) : (
+                movies && (
+                    <Pagination objectList={movies} itemsPerPage={12} isLoading={isLoading}>
+                        <MovieTemplate />
+                    </Pagination>
+                )
+            )}
+        </>
+    );
+    
+
 }
 
 export default CategoryMovies

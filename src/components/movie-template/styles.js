@@ -1,13 +1,16 @@
 import styled from "styled-components";
 
+
+
 export const MovieContainer = styled.div`
   display: flex;
   justify-content: center;
   padding: 10px;
+  border-radius:5px;
 `
 
 export const MovieInfoContainer = styled.div `
-  max-width: 200px;
+  max-width: 300px;
   text-align: center;
   margin: 0 auto;
   display: flex;

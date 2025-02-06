@@ -8,15 +8,17 @@ const ShowCategories = ({handleSetActiveCategory}) => {
 
     const [activeBtn, setActiveBtn] = useState(null);
     const [ categories, setCategories ] = useState([]);
-    
+    const [isLoading, setIsLoading] = useState(true);
+    const [errorServer, setErrorServer] = useState({});
 
     useEffect(() => {
         async function handleGetCategories() {
             try {
                 const res = await backend.categoryAPI.findAll1();
                 setCategories(res.data);
+                setIsLoading(false)
             }catch(err) {
-                toast.error("Erro ao buscar as categorias");
+                setErrorServer(err.response.data);
             }
         }
 
@@ -34,7 +36,7 @@ const ShowCategories = ({handleSetActiveCategory}) => {
     }
 
     return (
-        <CategoriesContainer>
+        <CategoriesContainer className={isLoading ? 'loading' : ''}>
             {Array.isArray(categories) &&
                 categories.map(category => (
                     <CategoryBtn $active={activeBtn === category.id}

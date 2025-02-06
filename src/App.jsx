@@ -17,10 +17,13 @@ import { ThemeProvider } from 'styled-components'
 import { lightTheme, darkTheme } from './theme.js';
 import { useThemeContext } from './hooks/UseThemeContext.jsx';
 import { GlobalStyles } from './GlobalStyles.js';
+import { SkeletonTheme } from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css'
 
 function App() {
   const dispatch = useDispatch()
-  const {theme} = useThemeContext();
+  const { theme } = useThemeContext();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function getUserData() {
@@ -43,12 +46,14 @@ function App() {
   return (
     <>
       <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-        <GlobalStyles/>
-        <Navbar/>
-        <div className="container">
-          <ToastContainer />
-          <Outlet />
-        </div>
+        <SkeletonTheme>
+          <GlobalStyles />
+          <Navbar />
+          <div className="container">
+            <ToastContainer />
+            <Outlet />
+          </div>
+        </SkeletonTheme>
       </ThemeProvider>
     </>
   )

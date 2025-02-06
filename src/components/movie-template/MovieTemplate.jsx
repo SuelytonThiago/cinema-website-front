@@ -5,8 +5,10 @@ import { TitleH2 } from '../Title.js'
 import { LinkBtn } from '../Link.js'
 
 const MovieTemplate = ({ item }) => {
+
   return (
     <div>
+      {console.log(item)}
       <MovieContainer>
         <MovieInfoContainer>
           <div>
