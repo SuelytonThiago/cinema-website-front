@@ -13,31 +13,25 @@ const SkeletonSession = () => {
                 {[...Array(5)].map((_, i) => (
                     <Skeleton 
                     width='60px' 
-                    height='40px' 
-                    baseColor={theme.loadingBase}  
-                    highlightColor= {theme.loadingEfect}/>
+                    height='40px'/>
                 ))}             
             </SkeletonFilter>
             <Skeleton 
             width='180px' 
-            height='40px' 
-            baseColor={theme.loadingBase}  
-            highlightColor= {theme.loadingEfect}/>
+            height='40px' />
             <SkeletonContainer>
                 <div>
                     <Skeleton 
                     width='200px' 
-                    height='300px' 
-                    baseColor={theme.loadingBase}  
-                    highlightColor= {theme.loadingEfect} />
+                    height='300px' />
                 </div>
                 <SkeletonInfos>
                     <div>
-                        <Skeleton width='200px' height='40px' baseColor={theme.loadingBase} highlightColor= {theme.loadingEfect} />
-                        <Skeleton width='120px' height='20px' baseColor={theme.loadingBase} highlightColor= {theme.loadingEfect} />
-                        <Skeleton width='100px' height='20px' baseColor={theme.loadingBase} highlightColor= {theme.loadingEfect} />
+                        <Skeleton width='200px' height='40px' />
+                        <Skeleton width='120px' height='20px' />
+                        <Skeleton width='100px' height='20px' />
                     </div>
-                    <Skeleton width='130px' height='50px' baseColor={theme.loadingBase} highlightColor= {theme.loadingEfect} borderRadius='50px' />
+                    <Skeleton width='130px' height='50px' borderRadius='50px' />
                 </SkeletonInfos>
             </SkeletonContainer>
         </Container>

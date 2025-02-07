@@ -6,6 +6,7 @@ import Loading from '../../components/loading/Loading.jsx';
 import Sessions from '../../components/sessions/Sessions.jsx';
 import Error from '../../components/error/Error.jsx';
 import Skeleton from 'react-loading-skeleton';
+import SkeletonSession from '../../components/skeleton-loading/SkeletonSession.jsx';
 
 const Home = () => {
 
@@ -61,6 +62,7 @@ const Home = () => {
 
   return (
     <div>
+      <SkeletonSession/>
       {
         isError ? 
         (

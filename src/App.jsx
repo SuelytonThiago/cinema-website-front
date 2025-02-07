@@ -46,7 +46,9 @@ function App() {
   return (
     <>
       <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-        <SkeletonTheme>
+        <SkeletonTheme
+        baseColor={theme === 'light' ? lightTheme.loadingBase : darkTheme.loadingBase}
+        highlightColor={theme === 'light' ? lightTheme.loadingEfect : darkTheme.loadingEfect}>
           <GlobalStyles />
           <Navbar />
           <div className="container">

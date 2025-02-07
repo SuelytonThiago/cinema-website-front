@@ -12,6 +12,7 @@ import backend from '../../../api/index.ts'
 import { Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import { BtnMovieContainer, BtnMovieInfoControl, CategoriesFilm, ClassificationControl, ClassificationMovie, Description, InfoContainer, InfoHeader, MovieHeader, MovieImg, SessionsMovieContainer, ShowDescriptBtn } from './styles.js';
+import SkeletonMovie from '../../components/skeleton-loading/skeleton-movie/SkeletonMovie.jsx';
 
 const Movie = () => {
     const { id } = useParams();
@@ -21,6 +22,7 @@ const Movie = () => {
     const [showSessions, setShowSessions] = useState(false);
     const [comments, setComments] = useState([]);
     const [isExpanded, setIsExpanded] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     const toggleDescription = () => {
         setIsExpanded(!isExpanded);
@@ -61,6 +63,7 @@ const Movie = () => {
                 const res = await backend.movieAPI.findMovieById(id);
                 setMovieData(res.data);
                 setComments(res.data.reviews);
+                setIsLoading(false)
             } catch (err) {
                 console.log(err)
             }
@@ -79,7 +82,7 @@ const Movie = () => {
         handleGetSessiosDate();
         handleGetMovieData();
     }, [])
-    
+
     const toggleShowSessions = (shouldShowSessions) => {
         if (shouldShowSessions !== showSessions) {
             setShowSessions(shouldShowSessions);
@@ -104,99 +107,101 @@ const Movie = () => {
         }));
     };
 
-
-    if (!movieData || !sessionsMovieData) {
-        return <p>Carregando...</p>;
-    }
-
     return (
         <div >
-            <>
-                <MovieHeader>
-                    <div>
-                        <MovieImg src={movieData.imageUrl} alt={movieData.name} />
-                    </div>
-                    <InfoContainer>
-                        <InfoHeader>
+            {isLoading ? (<SkeletonMovie />) : (
+                <>
+                    <>
+                        <MovieHeader>
                             <div>
-                                <h2>{movieData.name}</h2>
-                                <StarRating rating={movieData.rating} />
-                                <p>Data de lançamento: {movieData.releaseData}</p>
+                                <MovieImg src={movieData.imageUrl} alt={movieData.name} />
                             </div>
-                            <CategoriesFilm>
-                                {movieData.categories.map((category) => (
-                                    <p key={category.name}>{category.name}</p>
-                                ))}
-                            </CategoriesFilm>
-                            <ClassificationControl>
-                                classificação:
-                                <ClassificationMovie
-                                    className={classificationMovie(movieData.classification)}>
-                                    {movieData.classification}
-                                </ClassificationMovie>
-                            </ClassificationControl>
-                            <div>
-                                <h3>Sinopse</h3>
-                                <Description $isExpanded={isExpanded}>
-                                    {movieData.description}
-                                </Description>
-
-                                <ShowDescriptBtn onClick={toggleDescription}>
-                                    {isExpanded ? 'Ler menos' : 'Ler mais'}
-                                </ShowDescriptBtn>
-                            </div>
-                        </InfoHeader>
-                    </InfoContainer>
-                </MovieHeader>
-                <BtnMovieContainer>
-                    <BtnMovieInfoControl
-                        className={showSessions ? 'isVisible' : ''}
-                        onClick={() => toggleShowSessions(true)}>
-                        Sessoes
-                    </BtnMovieInfoControl>
-                    <BtnMovieInfoControl
-                        className={!showSessions ? 'isVisible' : ''}
-                        onClick={() => toggleShowSessions(false)}>
-                        Comentários
-                    </BtnMovieInfoControl>
-                </BtnMovieContainer>
-                {showSessions ? (
-                    <SessionsMovieContainer>
-                        <div>
-                            {groupSessionsByDate(sessionsMovieData).length === 0 ? (
-                                <p>Nenhuma sessão encontrada para este filme.</p>
-                            ) : (
-                                groupSessionsByDate(sessionsMovieData).map(group => (
-                                    <div className='sessionInfo' key={group.dateKey}>
-                                        {group.sessions.map(session => (
-                                            <SessionTemplate key={session.id} session={session} />
-                                        ))}
+                            <InfoContainer>
+                                <InfoHeader>
+                                    <div>
+                                        <h2>{movieData.name}</h2>
+                                        <StarRating rating={movieData.rating} />
+                                        <p>Data de lançamento: {movieData.releaseData}</p>
                                     </div>
-                                ))
-                            )}
-                        </div>
-                    </SessionsMovieContainer>
-                ) : (
-                    <div>
-                        <div className='commentUserData'>
-                            <RateMovie id={id} />
-                        </div>
-                        <div className="commentsContainer">
-                            {comments === 0 ? (
-                                <p>Sem comentários ainda. Seja o primeiro a comentar!</p>
-                            ) : (
-                                comments.map((review) => (
-                                    <CommentTemplate review={review} key={review.id} />
-                                ))
-                            )}
-                        </div>
-                    </div>
+                                    <CategoriesFilm>
+                                        {movieData.categories.map((category) => (
+                                            <p key={category.name}>{category.name}</p>
+                                        ))}
+                                    </CategoriesFilm>
+                                    <ClassificationControl>
+                                        classificação:
+                                        <ClassificationMovie
+                                            className={classificationMovie(movieData.classification)}>
+                                            {movieData.classification}
+                                        </ClassificationMovie>
+                                    </ClassificationControl>
+                                    <div>
+                                        <h3>Sinopse</h3>
+                                        <Description $isExpanded={isExpanded}>
+                                            {movieData.description}
+                                        </Description>
+
+                                        <ShowDescriptBtn onClick={toggleDescription}>
+                                            {isExpanded ? 'Ler menos' : 'Ler mais'}
+                                        </ShowDescriptBtn>
+                                    </div>
+                                </InfoHeader>
+                            </InfoContainer>
+                        </MovieHeader>
+                        <BtnMovieContainer>
+                            <BtnMovieInfoControl
+                                className={showSessions ? 'isVisible' : ''}
+                                onClick={() => toggleShowSessions(true)}>
+                                Sessoes
+                            </BtnMovieInfoControl>
+                            <BtnMovieInfoControl
+                                className={!showSessions ? 'isVisible' : ''}
+                                onClick={() => toggleShowSessions(false)}>
+                                Comentários
+                            </BtnMovieInfoControl>
+                        </BtnMovieContainer>
+                        {showSessions ? (
+                            <SessionsMovieContainer>
+                                <div>
+                                    {groupSessionsByDate(sessionsMovieData).length === 0 ? (
+                                        <p>Nenhuma sessão encontrada para este filme.</p>
+                                    ) : (
+                                        groupSessionsByDate(sessionsMovieData).map(group => (
+                                            <div className='sessionInfo' key={group.dateKey}>
+                                                {group.sessions.map(session => (
+                                                    <SessionTemplate key={session.id} session={session} />
+                                                ))}
+                                            </div>
+                                        ))
+                                    )}
+                                </div>
+                            </SessionsMovieContainer>
+                        ) : (
+                            <div>
+                                <div className='commentUserData'>
+                                    <RateMovie id={id} />
+                                </div>
+                                <div className="commentsContainer">
+                                    {comments === 0 ? (
+                                        <p>Sem comentários ainda. Seja o primeiro a comentar!</p>
+                                    ) : (
+                                        comments.map((review) => (
+                                            <CommentTemplate review={review} key={review.id} />
+                                        ))
+                                    )}
+                                </div>
+                            </div>
+
+                        )
+                        }
+                    </>
+                    {isVisible && <LoginModal />}
+
+                </>
 
                 )
-                }
-            </>
-            {isVisible && <LoginModal />}
-        </div>
+            }
+        </div >
     );
 };
 
