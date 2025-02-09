@@ -254,7 +254,7 @@ paths:
       operationId: uploadFile
       requestBody:
         content:
-          multipart/form-data:
+          application/json:
             schema:
               required:
               - file
@@ -560,6 +560,23 @@ paths:
         required: true
         schema:
           type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/MovieResponseDto"
+      security:
+      - bearerAuth: []
+  "/api/movies/randomMovies":
+    get:
+      tags:
+      - movie-controller
+      summary: Get 10 random movies from the database
+      operationId: get10RandomMovies
       responses:
         '200':
           description: OK

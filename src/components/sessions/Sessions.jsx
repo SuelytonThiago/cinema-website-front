@@ -11,10 +11,9 @@ import {
     Session,
     SessionImg,
     SessionInfo,
-    H2,
 } from './styles.js';
-import Skeleton from 'react-loading-skeleton';
 import SkeletonSession from '../skeleton-loading/SkeletonSession.jsx';
+import { TitleH1, TitleH2 } from '../Title.js';
 
 const Sessions = ({ sessions, isLoading }) => {
 
@@ -80,16 +79,16 @@ const Sessions = ({ sessions, isLoading }) => {
                                 </div>
                             ))}
                         </SessionFilterContainer>
-
+                        <h2>
+                            Sessões para {selectedDate && formatDate(new Date(selectedDate.split('/').reverse().join('/'))).formattedDate}
+                        </h2>
                         <SessionsContainer>
                             {selectedDate &&
                                 groupedSessions[selectedDate] &&
                                 groupedSessions[selectedDate].sessions.map(session => (
                                     <Session key={session.id}>
                                         <div>
-                                            <SessionImg>
-                                                <SessionImg src={session.imageUrl} alt={session.movieName} />
-                                            </SessionImg>
+                                            <SessionImg src={session.imageUrl} alt={session.movieName} />
                                         </div>
                                         <div style={{ width: '100%' }}>
                                             <h2>{session.movieName}</h2>

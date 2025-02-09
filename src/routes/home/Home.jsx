@@ -7,6 +7,8 @@ import Sessions from '../../components/sessions/Sessions.jsx';
 import Error from '../../components/error/Error.jsx';
 import Skeleton from 'react-loading-skeleton';
 import SkeletonSession from '../../components/skeleton-loading/SkeletonSession.jsx';
+import RandomMovies from '../../components/random-movies/RandomMovies.jsx';
+import { Container } from './styles.js';
 
 const Home = () => {
 
@@ -16,24 +18,8 @@ const Home = () => {
   const [errorServer, setErrorServer] = useState({});
 
   useEffect(() => {
-    async function getSessions() {
-      try {
-        const response = await backend.sessionAPI.getAll();
-        setSessions(response.data);
-        setIsLoading(false);
-      } catch (err) {
-        setIsLoading(false);
-        setIsError(true);
-        setErrorServer(err.response.data);
-        console.log(err.response.data);
-      }
-    }
-    getSessions();
-  }, []);
-
-  useEffect(() => {
     const socket = new SockJS("http://localhost:8080/ws");
-    const stompClient = Stomp.over(socket);
+    const stompClient = Stomp.over(socket); 
 
     stompClient.connect({}, () => {
       stompClient.subscribe("/topic/sessions", (message) => {
@@ -59,21 +45,43 @@ const Home = () => {
     };
   }, []);
 
+  useEffect(() => {
+    async function getSessions() {
+      try {
+        const response = await backend.sessionAPI.getAll();
+        setSessions(response.data);
+        setIsLoading(false);
+      } catch (err) {
+        setIsLoading(false);
+        setIsError(true);
+        setErrorServer(err.response.data);
+        console.log(err.response.data);
+      }
+    }
+    getSessions();
+  }, []);
+
+
 
   return (
-    <div>
-      <SkeletonSession/>
+    <Container>
+      <h2>Filmes: </h2>
+      <RandomMovies />
       {
-        isError ? 
-        (
-          <Error code={errorServer.status} message={errorServer.Message}/>
-        ) 
-        : 
-        (
-          <Sessions sessions={sessions} isLoading={isLoading}/>
-        )
+        isError ?
+          (
+            <Error code={errorServer.status} message={errorServer.Message || "Algo deu errado"} />
+          )
+          :
+          (
+            <>
+              <h2 >Sessões: </h2>
+              <Sessions sessions={sessions} isLoading={isLoading} />
+            </>
+
+          )
       }
-    </div>
+    </Container>
 
   )
 }

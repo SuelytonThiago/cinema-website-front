@@ -441,6 +441,19 @@ export interface TicketsResponseDto {
 /**
  * 
  * @export
+ * @interface UploadFileRequest
+ */
+export interface UploadFileRequest {
+    /**
+     * 
+     * @type {File}
+     * @memberof UploadFileRequest
+     */
+    'file': File;
+}
+/**
+ * 
+ * @export
  * @interface UserLoginDto
  */
 export interface UserLoginDto {
@@ -1084,13 +1097,11 @@ export const FileControllerApiAxiosParamCreator = function (configuration?: Conf
         /**
          * 
          * @summary insert file into aws bucket
-         * @param {File} file 
+         * @param {UploadFileRequest} [uploadFileRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        uploadFile: async (file: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'file' is not null or undefined
-            assertParamExists('uploadFile', 'file', file)
+        uploadFile: async (uploadFileRequest?: UploadFileRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/files/upload`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1102,24 +1113,19 @@ export const FileControllerApiAxiosParamCreator = function (configuration?: Conf
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
-            if (file !== undefined) { 
-                localVarFormParams.append('file', file as any);
-            }
     
-    
-            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
-    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = localVarFormParams;
+            localVarRequestOptions.data = serializeDataIfNeeded(uploadFileRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1151,12 +1157,12 @@ export const FileControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary insert file into aws bucket
-         * @param {File} file 
+         * @param {UploadFileRequest} [uploadFileRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async uploadFile(file: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.uploadFile(file, options);
+        async uploadFile(uploadFileRequest?: UploadFileRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.uploadFile(uploadFileRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FileControllerApi.uploadFile']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1183,12 +1189,12 @@ export const FileControllerApiFactory = function (configuration?: Configuration,
         /**
          * 
          * @summary insert file into aws bucket
-         * @param {File} file 
+         * @param {UploadFileRequest} [uploadFileRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        uploadFile(file: File, options?: RawAxiosRequestConfig): AxiosPromise<string> {
-            return localVarFp.uploadFile(file, options).then((request) => request(axios, basePath));
+        uploadFile(uploadFileRequest?: UploadFileRequest, options?: RawAxiosRequestConfig): AxiosPromise<string> {
+            return localVarFp.uploadFile(uploadFileRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1214,13 +1220,13 @@ export class FileControllerApi extends BaseAPI {
     /**
      * 
      * @summary insert file into aws bucket
-     * @param {File} file 
+     * @param {UploadFileRequest} [uploadFileRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FileControllerApi
      */
-    public uploadFile(file: File, options?: RawAxiosRequestConfig) {
-        return FileControllerApiFp(this.configuration).uploadFile(file, options).then((request) => request(this.axios, this.basePath));
+    public uploadFile(uploadFileRequest?: UploadFileRequest, options?: RawAxiosRequestConfig) {
+        return FileControllerApiFp(this.configuration).uploadFile(uploadFileRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -1503,6 +1509,40 @@ export const MovieControllerApiAxiosParamCreator = function (configuration?: Con
         },
         /**
          * 
+         * @summary Get 10 random movies from the database
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        get10RandomMovies: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/movies/randomMovies`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary update movie data
          * @param {number} id 
          * @param {MovieRequestDto} movieRequestDto 
@@ -1647,6 +1687,18 @@ export const MovieControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get 10 random movies from the database
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async get10RandomMovies(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MovieResponseDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.get10RandomMovies(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MovieControllerApi.get10RandomMovies']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary update movie data
          * @param {number} id 
          * @param {MovieRequestDto} movieRequestDto 
@@ -1737,6 +1789,15 @@ export const MovieControllerApiFactory = function (configuration?: Configuration
          */
         findMovieById(id: number, options?: RawAxiosRequestConfig): AxiosPromise<MovieResponseDto> {
             return localVarFp.findMovieById(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get 10 random movies from the database
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        get10RandomMovies(options?: RawAxiosRequestConfig): AxiosPromise<Array<MovieResponseDto>> {
+            return localVarFp.get10RandomMovies(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1840,6 +1901,17 @@ export class MovieControllerApi extends BaseAPI {
      */
     public findMovieById(id: number, options?: RawAxiosRequestConfig) {
         return MovieControllerApiFp(this.configuration).findMovieById(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get 10 random movies from the database
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MovieControllerApi
+     */
+    public get10RandomMovies(options?: RawAxiosRequestConfig) {
+        return MovieControllerApiFp(this.configuration).get10RandomMovies(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

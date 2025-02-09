@@ -1,7 +1,7 @@
 import styled, { keyframes } from "styled-components";
 
 export const SessionFilterContainer = styled.div` 
-    background-color:${(props) => props.theme.container};
+    background-color:${(props) => props.theme.mainContainer};
     display: flex;
     height: 70px;
     justify-content: space-around;
@@ -29,13 +29,6 @@ export const FilterBtn = styled.button`
     }
 `
 
-export const H2 = styled.div`
-    margin-bottom: 1rem;
-    width: 250px;
-    height: 40px;
-
-`
-
 
 export const SessionsContainer = styled.div`
     display: flex;
@@ -52,7 +45,7 @@ export const LoadingImg = styled.div`
 export const Session = styled.div` 
     display: flex;
     height: auto;
-    background-color: ${(props) => props.theme.loading};
+    background-color: ${(props) => props.theme.mainContainer};
     gap: 1rem;
     padding: 1rem;
     border-radius: 5px;

@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const SearchContainer = styled.div `
-    background-color: ${props => props.theme.container};
+    background-color: ${props => props.theme.mainContainer};
+    padding: 1rem;
 `;
 
 export const InputContainer = styled.div`
@@ -11,7 +12,7 @@ export const InputContainer = styled.div`
     input{
         border: none;
         border-bottom: 2px solid #555;
-        margin-bottom: 5rem;
+        margin-bottom: 2rem;
         background-color: transparent;
         padding: 8px;
         padding-right: 30px;
@@ -42,11 +43,11 @@ export const InputBtn = styled.button`
     transition: .3s;
     opacity: .7;
     position: absolute;
-    right: 10px; /* Ajuste o valor conforme necessário para posicionar o botão corretamente */
-    top: 20%; 
+    right: 10px;
+    top:30px;
     transform: translateY(-50%);
     padding: 8px;
-    z-index: 1;  /* Corrige o alinhamento vertical do botão */
+    z-index: 1;
 
     &:hover{
         opacity: 1;
