@@ -3,7 +3,7 @@ import { FiChevronsLeft, FiChevronsRight } from 'react-icons/fi';
 import { AtualPage, ItemsResultContainer, PaginationBtn, PaginationContainer, PaginationControls } from './styles';
 import Loading from '../loading/Loading';
 
-const Pagination = ({ objectList, itemsPerPage, children, isLoading }) => {
+const Pagination = ({ objectList, itemsPerPage, children }) => {
 
   const totalPages = Math.ceil(objectList.length / itemsPerPage);
   const [currentPage, setCurrentPage] = useState(1);
@@ -28,53 +28,52 @@ const Pagination = ({ objectList, itemsPerPage, children, isLoading }) => {
 
   return (
     <>
-      {isLoading ? (<Loading />) :
-        (<PaginationContainer>
-          <ItemsResultContainer>
-            {currentItems.map((item, index) => (
-              React.cloneElement(children, { key: index, item: item })
-            ))}
-          </ItemsResultContainer>
+      <PaginationContainer>
+        <ItemsResultContainer>
+          {currentItems.map((item, index) => (
+            React.cloneElement(children, { key: index, item: item })
+          ))}
+        </ItemsResultContainer>
 
-          <PaginationControls>
-            {currentItems.length > 0 && (
-              <div >
-                <PaginationBtn
-                  className='fixed'
-                  onClick={goToFirstPage}
-                  disabled={currentPage === 1}
-                >
-                  <FiChevronsLeft />
-                </PaginationBtn>
+        <PaginationControls>
+          {currentItems.length > 0 && (
+            <div >
+              <PaginationBtn
+                className='fixed'
+                onClick={goToFirstPage}
+                disabled={currentPage === 1}
+              >
+                <FiChevronsLeft />
+              </PaginationBtn>
 
-                <PaginationBtn
-                  onClick={goToPreviousPage}
-                  disabled={currentPage === 1}
-                >
-                  {currentPage > 1 ? currentPage - 1 : null}
-                </PaginationBtn>
+              <PaginationBtn
+                onClick={goToPreviousPage}
+                disabled={currentPage === 1}
+              >
+                {currentPage > 1 ? currentPage - 1 : null}
+              </PaginationBtn>
 
-                <AtualPage className='atualPage'>{currentPage}</AtualPage>
+              <AtualPage className='atualPage'>{currentPage}</AtualPage>
 
-                <PaginationBtn
-                  onClick={goToNextPage}
-                  disabled={currentPage >= totalPages}
-                >
-                  {currentPage < totalPages ? currentPage + 1 : null}
-                </PaginationBtn>
+              <PaginationBtn
+                onClick={goToNextPage}
+                disabled={currentPage >= totalPages}
+              >
+                {currentPage < totalPages ? currentPage + 1 : null}
+              </PaginationBtn>
 
-                <PaginationBtn
-                  className='fixed'
-                  onClick={goToLastPage}
-                  disabled={currentPage === totalPages}
-                >
-                  <FiChevronsRight />
-                </PaginationBtn>
-              </div>
-            )}
-          </PaginationControls>
+              <PaginationBtn
+                className='fixed'
+                onClick={goToLastPage}
+                disabled={currentPage === totalPages}
+              >
+                <FiChevronsRight />
+              </PaginationBtn>
+            </div>
+          )}
+        </PaginationControls>
 
-        </PaginationContainer>)}
+      </PaginationContainer>
     </>
   );
 };

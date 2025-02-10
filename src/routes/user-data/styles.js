@@ -15,7 +15,7 @@ export const UserDataControl = styled.div`
     padding: 2rem 0 2rem 2rem;
 `
 
-export const UserImgProfileContainer = styled.div` 
+export const UserImgProfileContainer = styled.div`  
     display: flex;
     gap: 1rem;
     align-items: center;

@@ -1,6 +1,6 @@
 import React from 'react'
 import Skeleton from 'react-loading-skeleton'
-import { Container, SkeletonContainer, SkeletonFilter, SkeletonInfos } from './styles'
+import { Container, SkeletonContainer, SkeletonFilter, SkeletonInfos } from './styles.js'
 import { useTheme } from 'styled-components'
 
 const SkeletonSession = () => {
@@ -11,7 +11,7 @@ const SkeletonSession = () => {
         <Container>
             <SkeletonFilter>
                 {[...Array(5)].map((_, i) => (
-                    <Skeleton 
+                    <Skeleton key={i}
                     width='60px' 
                     height='40px'/>
                 ))}             

@@ -13,6 +13,7 @@ import { Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import { BtnMovieContainer, BtnMovieInfoControl, CategoriesFilm, ClassificationControl, ClassificationMovie, Description, InfoContainer, InfoHeader, MovieHeader, MovieImg, SessionsMovieContainer, ShowDescriptBtn } from './styles.js';
 import SkeletonMovie from '../../components/skeleton-loading/skeleton-movie/SkeletonMovie.jsx';
+import Error from '../../components/error/Error.jsx';
 
 const Movie = () => {
     const { id } = useParams();
@@ -164,7 +165,7 @@ const Movie = () => {
                             <SessionsMovieContainer>
                                 <div>
                                     {groupSessionsByDate(sessionsMovieData).length === 0 ? (
-                                        <p>Nenhuma sessão encontrada para este filme.</p>
+                                        <Error code={'404'} message={"nenhuma sessão encontrada para este filme"}/>
                                     ) : (
                                         groupSessionsByDate(sessionsMovieData).map(group => (
                                             <div className='sessionInfo' key={group.dateKey}>

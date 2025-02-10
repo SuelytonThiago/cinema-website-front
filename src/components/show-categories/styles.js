@@ -1,14 +1,4 @@
-import styled ,{keyframes} from "styled-components";
-
-const animation = keyframes`
-    0%{
-        opacity: 1;
-    }
-    100% {
-        opacity: 0.5;
-    }
-    
-`
+import styled from "styled-components";
 
 
 export const CategoriesContainer = styled.div`
@@ -20,13 +10,6 @@ export const CategoriesContainer = styled.div`
     margin-bottom: 1rem;
     padding: 1rem;
     border: ${(props) => props.theme.border};
-    
-    &.loading {
-        background-color: #17191f; 
-        animation: ${animation} 1.5s infinite alternate;
-        width: 100%;
-        height: 110px;
-    }
 `
 
 

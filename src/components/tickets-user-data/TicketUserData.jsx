@@ -4,9 +4,14 @@ import Cookies from 'js-cookie'
 import TicketTemplate from './../ticket-template/TicketTemplate.jsx';
 import Pagination from '../pagination/Pagination';
 import { TicketsDetalContainer } from './styles.js';
+import Error from '../error/Error.jsx';
+import MyTicketsSkeleton from '../skeleton-loading/user-skeleton/MyTicketsSkeleton.jsx';
 
 const TicketUserData = () => {
   const [tickets, setTickets] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [errorServer, setErrorServer] = useState(null);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     async function handleGetUserTickets() {
@@ -18,8 +23,10 @@ const TicketUserData = () => {
         })
 
         setTickets(response.data)
+        setIsLoading(false);
       } catch (err) {
-        console.log('algo deu errado')
+        setIsError(true);
+        setErrorServer(err.response?.data || { status: 500, Message: "Erro desconhecido" });
       }
     }
     handleGetUserTickets();
@@ -29,9 +36,15 @@ const TicketUserData = () => {
   return (
     <TicketsDetalContainer>
       <h2>Meus ingressos</h2>
-      <Pagination objectList={tickets} itemsPerPage={12}>
-        <TicketTemplate/>
-      </Pagination>
+      {isError ? (<Error code={errorServer.status} message={errorServer.Message} />)
+        : (
+          isLoading ? (<MyTicketsSkeleton />) : (
+            <Pagination objectList={tickets} itemsPerPage={12}>
+              <TicketTemplate />
+            </Pagination>
+          )
+        )
+      }
     </TicketsDetalContainer>
   )
 }

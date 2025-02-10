@@ -11,9 +11,9 @@ import {
     Session,
     SessionImg,
     SessionInfo,
-} from './styles.js';
-import SkeletonSession from '../skeleton-loading/SkeletonSession.jsx';
-import { TitleH1, TitleH2 } from '../Title.js';
+} 
+from './styles.js';
+import SkeletonSession from '../skeleton-loading/session-skeleton/SkeletonSession.jsx';
 
 const Sessions = ({ sessions, isLoading }) => {
 

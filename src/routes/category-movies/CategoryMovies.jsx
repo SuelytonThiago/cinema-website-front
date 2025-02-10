@@ -20,7 +20,6 @@ const CategoryMovies = () => {
     useEffect(() => {
         async function handleGetCategories() {
             try {
-                console.log(isLoading);
                 setErrorServer(null);
                 setIsLoading(true);
                 const res = await backend.movieAPI.findByCategory(categoryId);
@@ -42,7 +41,7 @@ const CategoryMovies = () => {
                 <Error code={errorServer.status} message={errorServer.Message} />
             ) : (
                 movies && (
-                    <Pagination objectList={movies} itemsPerPage={12} isLoading={isLoading}>
+                    <Pagination objectList={movies} itemsPerPage={12} >
                         <MovieTemplate />
                     </Pagination>
                 )

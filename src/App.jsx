@@ -37,7 +37,6 @@ function App() {
 
         dispatch(loginUser(response.data))
       } catch (err) {
-        console.log(err)
       }
     }
     getUserData();

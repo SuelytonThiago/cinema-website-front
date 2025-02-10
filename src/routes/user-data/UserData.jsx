@@ -10,6 +10,8 @@ import MyUserData from '../../components/my-user-data/MyUserData.jsx';
 import TicketUserData from '../../components/tickets-user-data/TicketUserData.jsx';
 import Cookies from 'js-cookie'
 import { Exit, UserDataBtn, UserDataContainer, UserDataControl, UserDataLinks, UserImg, UserImgProfileContainer, UserInfos } from './styles.js';
+import UserSkeleton from '../../components/skeleton-loading/user-skeleton/UserSkeleton.jsx';
+import MyUserDataSkeleton from '../../components/skeleton-loading/user-skeleton/MyUserDataSkeleton.jsx';
 
 const UserData = () => {
     const { currentUser } = useSelector((rootReducer) => rootReducer.userReducer);
@@ -87,53 +89,66 @@ const UserData = () => {
 
 
     return (
-        <UserDataContainer>
-            <UserDataControl>
-                <UserImgProfileContainer>
-                    <UserImg>
-                        <img onClick={handleButtonClick} src={formData.profileImg} alt="profileImg" />
-                        <input
-                            type="file"
-                            ref={inputFileRef}
-                            style={{ display: 'none' }}
-                            accept="image/*"
-                            onChange={handleFileChange}
-                        />
-                    </UserImg>
-                    <UserInfos>
-                        {!!currentUser && (
-                            <>
-                                <h3>Olá, {currentUser.name} :)</h3>
-                                <h3>Esta é sua conta.</h3>
-                                <p>{currentUser.email}</p>
-                            </>
-                        )
-                        }
-                    </UserInfos>
-                </UserImgProfileContainer>
-                <UserDataLinks>
-                    <UserDataBtn
-                        onClick={() => navigate("/user/data/meus-ingressos")}
-                        className={section === 'meus-ingressos' ? 'activatebtnSS' : ''}
-                    >
-                        <FaTicketAlt /> Meus Ingressos
-                    </UserDataBtn>
-                    <UserDataBtn
-                        onClick={() => navigate("/user/data/meus-dados")}
-                        className={section === 'meus-dados' ? 'activatebtnSS' : ''}
-                    >
-                        <FaIdCard /> Dados Pessoais
-                    </UserDataBtn>
-                </UserDataLinks>
-                <Exit onClick={handleLogoutClick}><FaSignOutAlt /> Sair</Exit>
-            </UserDataControl>
-            {section === 'meus-dados' ? (
-                <MyUserData formData={formData} handleChange={handleChange} />
-            ) : (
-                <TicketUserData />
-            )}
+        <>
+            <UserDataContainer>
+                {
+                    currentUser ? (
+                        <UserDataControl>
+                            <UserImgProfileContainer>
+                                <UserImg>
+                                    <img onClick={handleButtonClick} src={formData.profileImg} alt="profileImg" />
+                                    <input
+                                        type="file"
+                                        ref={inputFileRef}
+                                        style={{ display: 'none' }}
+                                        accept="image/*"
+                                        onChange={handleFileChange}
+                                    />
+                                </UserImg>
+                                <UserInfos>
+                                    {!!currentUser && (
+                                        <>
+                                            <h3>Olá, {currentUser.name} :)</h3>
+                                            <h3>Esta é sua conta.</h3>
+                                            <p>{currentUser.email}</p>
+                                        </>
+                                    )
+                                    }
+                                </UserInfos>
+                            </UserImgProfileContainer>
+                            <UserDataLinks>
+                                <UserDataBtn
+                                    onClick={() => navigate("/user/data/meus-ingressos")}
+                                    className={section === 'meus-ingressos' ? 'activatebtnSS' : ''}
+                                >
+                                    <FaTicketAlt /> Meus Ingressos
+                                </UserDataBtn>
+                                <UserDataBtn
+                                    onClick={() => navigate("/user/data/meus-dados")}
+                                    className={section === 'meus-dados' ? 'activatebtnSS' : ''}
+                                >
+                                    <FaIdCard /> Dados Pessoais
+                                </UserDataBtn>
+                            </UserDataLinks>
+                            <Exit onClick={handleLogoutClick}><FaSignOutAlt /> Sair</Exit>
+                        </UserDataControl>
+                    ) : (
+                        <UserSkeleton />
+                    )
+                }
+                {section === 'meus-dados' ? (
+                    currentUser ?
+                        (<MyUserData formData={formData} handleChange={handleChange} />)
+                        :
+                        (<MyUserDataSkeleton />)
+                ) : (
 
-        </UserDataContainer>
+                    <TicketUserData />
+
+                )}
+
+            </UserDataContainer>
+        </>
     );
 }
 

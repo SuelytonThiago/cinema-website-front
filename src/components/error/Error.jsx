@@ -6,6 +6,7 @@ const Error = ({code, message}) => {
   return (
     <Container>
         <FaExclamationCircle size={40} color="red" />
+        <p>{code}</p>
         <p>{message}</p>
     </Container>
     

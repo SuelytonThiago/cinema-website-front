@@ -1,6 +1,6 @@
 import React from 'react'
 import Skeleton from 'react-loading-skeleton'
-import { SkeletonContainer } from '../styles'
+import { SkeletonContainer } from './styles'
 import { MovieSkeleton } from './styles'
 
 const SearchMoviesSkeleton = () => {
@@ -8,7 +8,7 @@ const SearchMoviesSkeleton = () => {
         <div>
             <SkeletonContainer>
                 {[...Array(5)].map((_, i) => (
-                    <MovieSkeleton>
+                    <MovieSkeleton key={i}>
                         <Skeleton width='220px' height='300px'/>
                         <Skeleton  width='120px' height='20px'/>
                         <Skeleton  width='80px' height='10px'/>
