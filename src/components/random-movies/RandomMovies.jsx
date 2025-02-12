@@ -53,7 +53,7 @@ const RandomMovies = () => {
                         <Carousel ref={carousel}>
                             {
                                 movies.map(movie => (
-                                    <MovieTemplate item={movie} />
+                                    <MovieTemplate item={movie} key={movie.id}/>
                                 ))
                             }
                         </Carousel>

@@ -24,6 +24,7 @@ const Movie = () => {
     const [comments, setComments] = useState([]);
     const [isExpanded, setIsExpanded] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [sessionServerError, setSessionServerError] = useState(null);
 
     const toggleDescription = () => {
         setIsExpanded(!isExpanded);
@@ -57,7 +58,6 @@ const Movie = () => {
         };
     }, []);
 
-
     useEffect(() => {
         async function handleGetMovieData() {
             try {
@@ -76,7 +76,7 @@ const Movie = () => {
                 setSessionsMovieData(res.data)
 
             } catch (err) {
-                console.log(err)
+                setSessionServerError(err.response.data);
             }
         }
 
@@ -165,7 +165,7 @@ const Movie = () => {
                             <SessionsMovieContainer>
                                 <div>
                                     {groupSessionsByDate(sessionsMovieData).length === 0 ? (
-                                        <Error code={'404'} message={"nenhuma sessão encontrada para este filme"}/>
+                                        <Error code={sessionServerError.status} message={sessionServerError.Message}/>
                                     ) : (
                                         groupSessionsByDate(sessionsMovieData).map(group => (
                                             <div className='sessionInfo' key={group.dateKey}>

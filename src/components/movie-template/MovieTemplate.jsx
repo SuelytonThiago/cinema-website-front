@@ -8,7 +8,6 @@ const MovieTemplate = ({ item }) => {
 
   return (
     <div>
-      {console.log(item)}
       <MovieContainer>
         <MovieInfoContainer>
           <div>

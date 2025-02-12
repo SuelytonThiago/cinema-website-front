@@ -12,6 +12,7 @@ const useLogout = () => {
         Cookie.remove('refreshToken');
         dispatch(logoutUser());
         navigate('/');
+        localStorage.removeItem("user");
     };
 
     return logout;

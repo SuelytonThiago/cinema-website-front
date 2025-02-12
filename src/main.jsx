@@ -18,6 +18,7 @@ import store from './redux/store.js'
 import ChangePassword from './routes/change-password/ChangePassword.jsx'
 
 import { ThemeContextProvider } from './context/ThemeContext.jsx'
+import { EmailContextProvider } from './context/EmailContext.jsx'
 
 const router = createBrowserRouter([
   {
@@ -73,7 +74,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <React.StrictMode>
       <ThemeContextProvider>
-        <RouterProvider router={router} />
+        <EmailContextProvider>
+          <RouterProvider router={router} />
+        </EmailContextProvider>
       </ThemeContextProvider>
     </React.StrictMode>
   </Provider>

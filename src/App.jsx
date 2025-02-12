@@ -9,38 +9,27 @@ import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './components/navbar/Navbar.jsx'
 import { useDispatch } from 'react-redux';
 import { loginUser } from './redux/user/actions.js';
-import Cookies from 'js-cookie'
-import { useEffect, useState } from 'react';
+import { useEffect} from 'react';
 
-import backend from '../api/index.ts'
 import { ThemeProvider } from 'styled-components'
 import { lightTheme, darkTheme } from './theme.js';
 import { useThemeContext } from './hooks/UseThemeContext.jsx';
 import { GlobalStyles } from './GlobalStyles.js';
 import { SkeletonTheme } from 'react-loading-skeleton';
+
 import 'react-loading-skeleton/dist/skeleton.css'
 
 function App() {
   const dispatch = useDispatch()
   const { theme } = useThemeContext();
-  const [isLoading, setIsLoading] = useState(true);
 
+  const currentUser = localStorage.getItem("user");
+  const userObject = currentUser ? JSON.parse(currentUser) : null;
+  
   useEffect(() => {
-    async function getUserData() {
-      try {
-        const accessToken = Cookies.get('accessToken')
-        const response = await backend.userAPI.findById({
-          headers: {
-            Authorization: `Bearer ${accessToken}`
-          }
-        })
+    dispatch(loginUser(userObject));
+  },[])
 
-        dispatch(loginUser(response.data))
-      } catch (err) {
-      }
-    }
-    getUserData();
-  }, [dispatch])
 
   return (
     <>

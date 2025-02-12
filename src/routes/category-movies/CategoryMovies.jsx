@@ -23,11 +23,11 @@ const CategoryMovies = () => {
                 setErrorServer(null);
                 setIsLoading(true);
                 const res = await backend.movieAPI.findByCategory(categoryId);
-                setMovies(res.data)
+                setMovies(res?.data)
                 setIsLoading(false);
 
             } catch (err) {
-                setErrorServer(err.response.data)
+                setErrorServer(err.response?.data)
             }
         }
 

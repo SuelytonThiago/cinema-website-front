@@ -17,9 +17,24 @@ import type { Configuration } from './configuration';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import type { AxiosPromise, AxiosInstance, RawAxiosRequestConfig } from 'axios';
-import globalAxios from 'axios';
+import axios from 'axios';
 
 export const BASE_PATH = "http://localhost:8080".replace(/\/+$/, "");
+
+
+export const globalAxios = axios.create();
+
+const getUserLocale = () => localStorage.getItem("lang") || "pt";
+
+globalAxios.interceptors.request.use((config) => {
+    if(!config.params) {
+        config.params = {};
+    }
+
+    config.params.lang = getUserLocale();
+    return config;
+})
+
 
 /**
  *
