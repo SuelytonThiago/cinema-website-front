@@ -8,9 +8,14 @@ import { InputBtn, InputContainer, SearchContainer } from './styles'
 import Error from '../../components/error/Error'
 import RandomMovies from '../../components/random-movies/RandomMovies'
 import SearchMoviesSkeleton from '../../components/skeleton-loading/search-movies/SearchMoviesSkeleton'
+import { useTranslation } from 'react-i18next';
+import '../../lib/i18n/i18n.js';
 
 
 const SearchPage = () => {
+
+  const { t } = useTranslation();
+
   const [name, setName] = useState('');
   const [movies, setMovies] = useState([]);
   const [serverError, setServerError] = useState(null);
@@ -47,7 +52,7 @@ const SearchPage = () => {
           <input type="text"
             id='search'
             name='search'
-            placeholder='Buscar...'
+            placeholder={t('buscar')}
             value={name}
             onChange={(e) => setName(e.target.value)}
             autoComplete='off' />
@@ -60,7 +65,7 @@ const SearchPage = () => {
         </InputContainer>
         {!name ? (
           <>
-            <h2>Filmes: </h2>
+            <h2>{t('link-filmes')}: </h2>
             <RandomMovies />
           </>
 

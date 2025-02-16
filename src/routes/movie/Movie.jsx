@@ -14,8 +14,12 @@ import SockJS from "sockjs-client";
 import { BtnMovieContainer, BtnMovieInfoControl, CategoriesFilm, ClassificationControl, ClassificationMovie, Description, InfoContainer, InfoHeader, MovieHeader, MovieImg, SessionsMovieContainer, ShowDescriptBtn } from './styles.js';
 import SkeletonMovie from '../../components/skeleton-loading/skeleton-movie/SkeletonMovie.jsx';
 import Error from '../../components/error/Error.jsx';
+import { useTranslation } from 'react-i18next';
+import '../../lib/i18n/i18n.js';
 
 const Movie = () => {
+    const { t } = useTranslation();
+
     const { id } = useParams();
     const { isVisible } = useSelector((rootReducer) => rootReducer.loginModalReducer);
     const [movieData, setMovieData] = useState(null);
@@ -25,6 +29,7 @@ const Movie = () => {
     const [isExpanded, setIsExpanded] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [sessionServerError, setSessionServerError] = useState(null);
+    const [movieServerError, setMovieServerError] = useState(null);
 
     const toggleDescription = () => {
         setIsExpanded(!isExpanded);
@@ -66,7 +71,7 @@ const Movie = () => {
                 setComments(res.data.reviews);
                 setIsLoading(false)
             } catch (err) {
-                console.log(err)
+                setMovieServerError(err.response.data);
             }
         }
         async function handleGetSessiosDate() {
@@ -108,6 +113,10 @@ const Movie = () => {
         }));
     };
 
+    if(!!movieServerError) {
+        return <Error code={movieServerError.status} message={movieServerError.Message}/>
+    }
+
     return (
         <div >
             {isLoading ? (<SkeletonMovie />) : (
@@ -122,7 +131,7 @@ const Movie = () => {
                                     <div>
                                         <h2>{movieData.name}</h2>
                                         <StarRating rating={movieData.rating} />
-                                        <p>Data de lançamento: {movieData.releaseData}</p>
+                                        <p>{t('p-data-de-lancamento')} {movieData.releaseData}</p>
                                     </div>
                                     <CategoriesFilm>
                                         {movieData.categories.map((category) => (
@@ -130,20 +139,20 @@ const Movie = () => {
                                         ))}
                                     </CategoriesFilm>
                                     <ClassificationControl>
-                                        classificação:
+                                        {t('classificação')}
                                         <ClassificationMovie
                                             className={classificationMovie(movieData.classification)}>
                                             {movieData.classification}
                                         </ClassificationMovie>
                                     </ClassificationControl>
                                     <div>
-                                        <h3>Sinopse</h3>
+                                        <h3>{t('h3-sinopse')}</h3>
                                         <Description $isExpanded={isExpanded}>
                                             {movieData.description}
                                         </Description>
 
                                         <ShowDescriptBtn onClick={toggleDescription}>
-                                            {isExpanded ? 'Ler menos' : 'Ler mais'}
+                                            {isExpanded ? t('ler-menos') : t('ler-mais')}
                                         </ShowDescriptBtn>
                                     </div>
                                 </InfoHeader>
@@ -153,12 +162,12 @@ const Movie = () => {
                             <BtnMovieInfoControl
                                 className={showSessions ? 'isVisible' : ''}
                                 onClick={() => toggleShowSessions(true)}>
-                                Sessoes
+                                {t('sessoes')}
                             </BtnMovieInfoControl>
                             <BtnMovieInfoControl
                                 className={!showSessions ? 'isVisible' : ''}
                                 onClick={() => toggleShowSessions(false)}>
-                                Comentários
+                                {t('comentarios')}
                             </BtnMovieInfoControl>
                         </BtnMovieContainer>
                         {showSessions ? (
@@ -184,7 +193,7 @@ const Movie = () => {
                                 </div>
                                 <div className="commentsContainer">
                                     {comments === 0 ? (
-                                        <p>Sem comentários ainda. Seja o primeiro a comentar!</p>
+                                        <p>{t('p-sem-comentarios')}</p>
                                     ) : (
                                         comments.map((review) => (
                                             <CommentTemplate review={review} key={review.id} />

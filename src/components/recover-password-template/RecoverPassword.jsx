@@ -9,8 +9,13 @@ import { toast } from 'react-toastify';
 
 import { useEmailContext } from '../../hooks/UseEmailContext.jsx';
 
+import { useTranslation } from 'react-i18next';
+import '../../lib/i18n/i18n.js';
+
 
 const RecoverPassword = ({ goNext }) => {
+
+    const { t } = useTranslation();
 
     const [errorEmail, setErrorEmail] = useState("");
 
@@ -21,7 +26,7 @@ const RecoverPassword = ({ goNext }) => {
         let error = '';
 
         if (!isValidEmail(email)) {
-            error = 'insira um email válido';
+            error = t('validacao-email');
         }
 
         return error;
@@ -34,10 +39,10 @@ const RecoverPassword = ({ goNext }) => {
         
         if (!err) {
             try {
-                const response = await backend.recoverAPI.recoverPassword(email)
+                await backend.recoverAPI.recoverPassword(email);
                 goNext();
             } catch (err) {
-                toast.error('erro ao enviar email, tente novamente mais tarde');   
+                toast.error(t('erro-enviar-email'));   
             }
         }
     }
@@ -48,8 +53,8 @@ const RecoverPassword = ({ goNext }) => {
         <RecoverContainer>
             <TitleH1>CINEMAX</TitleH1>
 
-            <h2>Esqueceu sua senha?</h2>
-            <p>Informe seu endereço de e-mail ou CPF que, caso exista uma conta cadastrada, enviaremos um e-mail para recuperar sua senha.</p>
+            <h2>{t('h2-esqueceu-senha')}</h2>
+            <p>{t('p-informe-seu-email')}</p>
             <InputText 
                 error= {errorEmail} 
                 handleChange={(e) => setEmail(e.target.value)}  
@@ -57,8 +62,8 @@ const RecoverPassword = ({ goNext }) => {
                 value={email}/>
 
             <ControlRecoverContainer>
-                <BackButtonLink to={"/login"} className='bbutton'>Voltar</BackButtonLink>
-                <NextButton onClick={handleChangePassword}>Proximo</NextButton>
+                <BackButtonLink to={"/login"} className='bbutton'>{t('botao-voltar')}</BackButtonLink>
+                <NextButton onClick={handleChangePassword}>{t('botao-proximo')}</NextButton>
             </ControlRecoverContainer>
         </RecoverContainer>
 

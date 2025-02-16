@@ -18,10 +18,16 @@ import {
   UserIcon, 
   UserImg, 
   UserNameContainer } from './styles.js';
+import { toast } from 'react-toastify';
+
+import { useTranslation } from 'react-i18next';
+import '../../lib/i18n/i18n.js';
 
 const RateMovie = ({ id }) => {
   const { currentUser } = useSelector(state => state.userReducer);
   const dispatch = useDispatch();
+
+  const { t } = useTranslation();
 
   const [isEditing, setIsEditing] = useState(false);
   const [currentReview, setCurrentReview] = useState(null)
@@ -43,7 +49,7 @@ const RateMovie = ({ id }) => {
       }
 
     } catch (err) {
-
+        toast.error(err.response.data.Message);
     }
   }
 
@@ -136,11 +142,11 @@ const RateMovie = ({ id }) => {
                   error={''}
                   handleChange={(e) => setComment(e.target.value)}
                   nameInput={'comment'}
-                  placeholder={'adicione sua avaliação sobre o filme'}
+                  placeholder={t('placeholder-adicionar-avaliacao')}
                   value={comment} />
                 <InputSubit 
                   type="submit"
-                  value={currentUser ? 'Salvar' : 'Publicar'} />
+                  value={isEditing ? t('botao-salvar') : t('botao-publicar')} />
               </CommentUserForm>
               
             </>

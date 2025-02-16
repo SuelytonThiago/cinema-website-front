@@ -8,6 +8,8 @@ import { toast } from 'react-toastify';
 import Cookies from 'js-cookie'
 import InputWithFilter from '../input-form/InputWithFilter';
 import InputWithoutFilter from '../input-form/InputWithoutFilter';
+import { useTranslation } from 'react-i18next';
+import '../../lib/i18n/i18n.js';
 
 import useForm from '../../hooks/UseForm';
 import { ControlBtn, CreateNewPassContainer } from './styles.js';
@@ -15,6 +17,7 @@ import { Overlay } from '../Overlay.js';
 
 const CreatePasswordProfile = ({ handleShowWindow }) => {
     const [errors, setErrors] = useState({});
+    const { t } = useTranslation();
 
     const initialFormData = {
         oldPassword: "",
@@ -28,19 +31,19 @@ const CreatePasswordProfile = ({ handleShowWindow }) => {
         const errors = {}
 
         if (!isValidPassword(formData.newPassword)) {
-            errors.newPassword = 'a senha deve conter 8 caracteres incluindo letras e números';
+            errors.newPassword = t('validacao-senha-invalida');
         }
 
         if (formData.newPassword !== formData.confirm) {
-            errors.confirm = 'as senhas não coincidem';
+            errors.confirm = t('validacao-senhas-diferentes');
         }
 
         if (!formData.confirm) {
-            errors.confirm = 'não pode ficar em branco';
+            errors.confirm = t('validacao-campo-vazio');
         }
 
         if (!formData.oldPassword) {
-            errors.oldPassword = 'não pode ficar em branco';
+            errors.oldPassword =  t('validacao-campo-vazio');
         }
 
         return errors;
@@ -73,12 +76,12 @@ const CreatePasswordProfile = ({ handleShowWindow }) => {
             <Overlay></Overlay>
 
             <CreateNewPassContainer onSubmit={handleChangePassword} className='createNewPassContainer'>
-                <h1>Atualizar senha</h1>
+                <h1>{t('h1-atualizar-senha')}</h1>
                 <InputWithoutFilter 
                     handleChange={handleChange} 
                     error={errors.oldPassword} 
                     nameInput={"oldPassword"}
-                    placeholder={"* Digite a sua antiga senha"} />
+                    placeholder={t('placeholder-senha-antiga')} />
 
                 <InputWithFilter 
                     handleChange={handleChange} 
@@ -89,11 +92,11 @@ const CreatePasswordProfile = ({ handleShowWindow }) => {
                     handleChange={handleChange} 
                     error={errors.confirm} 
                     nameInput={"confirm"}
-                    placeholder={"* Confirme a senha"} />
+                    placeholder={t('placeholder-confirmacao-senha')} />
 
                 <ControlBtn >
-                    <Button onClick={handleShowWindow}>Cancelar</Button>
-                    <Button type='submit'>Salvar</Button>
+                    <Button onClick={handleShowWindow}>{t('botao-cancelar')}</Button>
+                    <Button type='submit'>{t('botao-salvar')}</Button>
                 </ControlBtn>
             </CreateNewPassContainer>
         </div>

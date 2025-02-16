@@ -16,9 +16,12 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { CrossBtn } from '../../components/Button.js';
 import { BackgroundRegisterContainer, LogLink, RegisterContainer, RegisterControl, RegisterForm, RegisterFormControl } from './styles.js';
 import { Regislink } from '../../components/Link.js';
-
+import { useTranslation } from 'react-i18next';
+import '../../lib/i18n/i18n.js';
 
 const Register = () => {
+
+  const { t } = useTranslation();
 
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
@@ -40,31 +43,31 @@ const Register = () => {
     const errors = {}
 
     if (!isValidCPF(formData.cpf)) {
-      errors.cpf = 'insira um cpf válido';
+      errors.cpf = t('validacao-cpf');
     }
 
     if (!isValidEmail(formData.email)) {
-      errors.email = 'insira um email válido';
+      errors.email = t('validacao-email');
     }
 
     if (!isValidName(formData.name)) {
-      errors.name = 'insira um nome válido';
+      errors.name = t('validacao-nome');
     }
 
     if (!isValidPassword(formData.newPassword)) {
-      errors.newPassword = 'a senha deve conter 8 caracteres incluindo letras e números';
+      errors.newPassword = t('validacao-senha-invalida');
     }
 
     if (!formData.contactNumber) {
-      errors.contactNumber = 'o telefone não pode estar vazio';
+      errors.contactNumber = t('validacao-campo-vazio');
     }
 
     if (!formData.confirm) {
-      errors.confirm = 'não pode ficar em branco';
+      errors.confirm = t('validacao-campo-vazio');
     }
 
     if (formData.newPassword !== formData.confirm) {
-      errors.confirm = 'as senhas não coincidem';
+      errors.confirm = t('validacao-senhas-diferentes');
     }
 
     return errors;
@@ -100,54 +103,54 @@ const Register = () => {
       <BackgroundRegisterContainer>
         <CrossBtn to={'/'}><AiOutlineClose /></CrossBtn>
         <RegisterContainer>
-          <h2>Cadastre-se</h2>
-          <p>Campos obrigatórios *</p>
+          <h2>{t('h2-cadastro')}</h2>
+          <p>{t('p-campos-obrigatorios')}</p>
           <RegisterForm>
             {step === 1 ? (
               <>
 
                 <RegisterFormControl>
-                  <label htmlFor="name">Nome</label>
+                  <label htmlFor="name">{t('label-nome')}</label>
                   <InputText
                     error={errors.name}
                     handleChange={handleChange}
                     nameInput={'name'}
                     value={formData.name}
-                    placeholder={'* Digite o seu nome'}
+                    placeholder={t('placeholder-digite-seu-nome')}
                     style={{width: '500px'}} />
                 </RegisterFormControl>
 
                 <div className={'registerFormControl'}>
-                  <label htmlFor="email">Email</label>
+                  <label htmlFor="email">{t('label-email')}</label>
                   <InputText
                     error={errors.email}
                     handleChange={handleChange}
                     nameInput={'email'}
                     value={formData.email}
-                    placeholder={'* Digite o seu email'} 
+                    placeholder={t('placeholder-digite-seu-email')} 
                     style={{width: '500px'}}/>
                 </div>
 
                 <div className={'registerFormControl'}>
-                  <label htmlFor="cpf">CPF</label>
+                  <label htmlFor="cpf">{t('label-cpf')}</label>
                   <InputMaskComponent
                     error={errors.cpf}
                     handleChange={handleChange}
                     nameInput={'cpf'}
                     value={formData.cpf}
-                    placeholder={'* Digite o seu cpf'}
+                    placeholder={t('placeholder-digite-seu-cpf')}
                     mask={'999.999.999-99'}
                     style={{width: '500px'}}/>
                 </div>
 
                 <div className={'registerFormControl'}>
-                  <label htmlFor="contactNumber">Telefone</label>
+                  <label htmlFor="contactNumber">{t('label-telefone')}</label>
                   <InputMaskComponent
                     error={errors.contactNumber}
                     handleChange={handleChange}
                     nameInput={'contactNumber'}
                     value={formData.contactNumber}
-                    placeholder={'* Digite o seu Telefone'}
+                    placeholder={t('placeholder-digite-seu-telefone')}
                     mask={"(99) 99999-9999"}
                     style={{width: '500px'}}/>
                 </div>
@@ -155,7 +158,7 @@ const Register = () => {
             ) : (
               <>
                 <div className={'registerFormControl'}>
-                  <label htmlFor="newPassword">Senha</label>
+                  <label htmlFor="newPassword">{t('label-senha')}</label>
                   <InputWithFilter 
                     handleChange={handleChange} 
                     error={errors.newPassword} 
@@ -164,12 +167,12 @@ const Register = () => {
 
                 </div>
                 <div className={'registerFormControl'}>
-                  <label htmlFor="confirmPassword">Confirmar senha</label>
+                  <label htmlFor="confirmPassword">{t('label-confirmar-senha')}</label>
                   <InputWithoutFilter
                     handleChange={handleChange}
                     error={errors.confirm}
                     nameInput={'confirm'}
-                    placeholder={'*Digite novamente sua senha'}
+                    placeholder={t('placeholder-novamente-sua-senha')}
                     style={{width: '500px'}}/>
                 </div>
               </>
@@ -177,17 +180,17 @@ const Register = () => {
 
             }
             <RegisterControl>
-              <button onClick={changeStep} className='stepBtn'>{step === 1 ? 'Próximo' : 'Voltar'}</button>
+              <button onClick={changeStep} className='stepBtn'>{step === 1 ? t('botao-proximo') : t('botao-voltar') }</button>
               {step === 2 && (
                 <button 
                   className='finishBtn' 
                   onClick={createUser}>
-                  Criar Conta
+                  {t('criar-conta')}
                 </button>
               )}
 
             </RegisterControl>
-            <LogLink>tem uma conta? <span><Regislink to={"/login"} >conecte-se</Regislink></span></LogLink>
+            <LogLink>{t('tem-uma-conta')} <span><Regislink to={"/login"} >{t('conecte-se')}</Regislink></span></LogLink>
           </RegisterForm>
         </RegisterContainer>
       </BackgroundRegisterContainer>

@@ -3,8 +3,13 @@ import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
 import backend from './../../../api/index'
 import { GoToBackBtn, InputCode, VerifyCodeBtn, VerifyCodeContainer, VerifyInput, VerifyInputContainer } from './styles';
+import { useTranslation } from 'react-i18next';
+import '../../lib/i18n/i18n.js';
 
 const VerifyCode = ({ goNext, goBack }) => {
+
+
+  const { t } = useTranslation();
 
   const email = Cookies.get('recoveryEmail');
 
@@ -64,11 +69,11 @@ const VerifyCode = ({ goNext, goBack }) => {
   return (
     <div>
       <VerifyCodeContainer>
-        <h1>Autenticação de acesso via Email</h1>
-        <p>Por favor informe o código de autenticação enviado para o seu email cadastrado em sua conta.</p>
+        <h1>{t('h1-autenticacao-de-acesso')}</h1>
+        <p>{t('p-informe-seu-codigo')}</p>
         <h3>{email}</h3>
         <VerifyInputContainer>
-          <h5>Informe o seu código de segurança</h5>
+          <h5>{t('h5-informe-seu-codigo')}</h5>
           <VerifyInput>
             {pins.map((pin, index) => (
               <InputCode $invalidCode={invalidCode}
@@ -83,11 +88,11 @@ const VerifyCode = ({ goNext, goBack }) => {
                 onPaste={handlePaste} />
             ))}
           </VerifyInput>
-          <VerifyCodeBtn onClick={handleVerifyCode}>Validar meu código</VerifyCodeBtn>
+          <VerifyCodeBtn onClick={handleVerifyCode}>{t('validar-meu-codigo')}</VerifyCodeBtn>
         </VerifyInputContainer>
-        <p>Não recebeu o código?{' '}
+        <p>{t('nao-recebeu-o-codigo')}{' '}
           <span>
-            <GoToBackBtn onClick={() => goBack(0)}> Reenviar por email </GoToBackBtn>
+            <GoToBackBtn onClick={() => goBack(0)}>{t('reeviar-por-email')}</GoToBackBtn>
           </span>
         </p>
       </VerifyCodeContainer>

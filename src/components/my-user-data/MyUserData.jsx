@@ -19,9 +19,13 @@ import {
     UserFormSubmit, 
     UserFormSubmitControl, 
     VerifyPassInput } from './styles.js';
+import { useTranslation } from 'react-i18next';
 
 
 const MyUserData = ({ formData, handleChange }) => {
+
+    const {t} = useTranslation();
+
     const [dataErrors, setDataErrors] = useState('');
     const [password, setPassword] = useState('');
     const [showChangePassWindow, setShowChangePassWindow] = useState(false);
@@ -41,13 +45,13 @@ const MyUserData = ({ formData, handleChange }) => {
     const validate = () => {
         const errors = {};
         if (!formData.contactNumber) {
-            errors.contactNumber = 'insira um numero de telefone válido';
+            errors.contactNumber = t('validacao-campo-vazio');
         }
         if (!isValidName(formData.name)) {
-            errors.name = 'insira um nome válido';
+            errors.name = t('validacao-nome');
         }
         if (!password) {
-            errors.password = 'insira a sua senha';
+            errors.password = t('validacao-campo-vazio');
         }
 
         return errors;
@@ -66,18 +70,18 @@ const MyUserData = ({ formData, handleChange }) => {
 
                 dispatch(updateUser(formData));
             } catch (err) {
-                toast.error('Senha incorreta!');
+                toast.error(err.response.data.Message);
             }
         }
     };
 
     return (
         <UserDataForm>
-            <h3>Dados Pessoais</h3>
+            <h3>{t('h3-dados-pessoais')}</h3>
             <UserFormControl>
                 <UserFormInput $error={dataErrors.name}>
                     <label htmlFor="name">
-                        <span>{dataErrors.name || 'Name *'}</span>
+                        <span>{dataErrors.name || t('label-nome')}</span>
                     </label>
                     <input
                         type="text"
@@ -89,18 +93,18 @@ const MyUserData = ({ formData, handleChange }) => {
                 </UserFormInput>
 
                 <UserFormInput $disabled>
-                    <label htmlFor="email">Email *</label>
+                    <label htmlFor="email">{t('label-email')}</label>
                     <input type="text" id="email" name="email" value={formData.email} disabled />
                 </UserFormInput>
 
                 <UserFormInput $disabled>
-                    <label htmlFor="cpf">CPF *</label>
+                    <label htmlFor="cpf">{t('label-cpf')}</label>
                     <input type="text" id="cpf" name="cpf" value={formData.cpf} disabled />
                 </UserFormInput>
 
                 <UserFormInput $error={dataErrors.contactNumber}>
                     <label htmlFor="contactNumber">
-                        <span>{dataErrors.contactNumber || 'Telefone *'}</span>
+                        <span>{dataErrors.contactNumber || t('label-telefone')}</span>
                     </label>
                     <InputMask
                         mask="(99)99999-9999"
@@ -113,19 +117,16 @@ const MyUserData = ({ formData, handleChange }) => {
 
                 <PasswordInputContainer>
                     <UserFormInput $disabled>
-                        <label htmlFor="senha">Senha *</label>
+                        <label htmlFor="senha">{t('label-senha')}</label>
                         <input type="password" id="password" disabled value="***********" />
                     </UserFormInput>
-                    <button style={{width: '150px'}} onClick={handleShowWindow}>alterar senha</button>
+                    <button style={{width: '150px'}} onClick={handleShowWindow}>{t('alterar-senha')}</button>
                 </PasswordInputContainer>
             </UserFormControl>
 
             <UserDataSubmit>
-                <h3>Salvar todas as alterações</h3>
-                <p>
-                    Por questões de segurança, você precisa digitar sua senha para confirmar as alterações
-                    feitas no seu cadastro.
-                </p>
+                <h3>{t('h3-salvar-alteracoes')}</h3>
+                <p>{t('p-insira-sua-senha')}</p>
                 <UserFormSubmitControl>
                     <UserFormSubmit $error={dataErrors.password}>
                         <VerifyPassInput>
@@ -139,7 +140,7 @@ const MyUserData = ({ formData, handleChange }) => {
                             </EyesButton>
                         </VerifyPassInput>
                     </UserFormSubmit>
-                    <Button onClick={handleChangeUserData}>Salvar</Button>
+                    <Button onClick={handleChangeUserData}>{t('botao-salvar')}</Button>
                 </UserFormSubmitControl>
             </UserDataSubmit>
 

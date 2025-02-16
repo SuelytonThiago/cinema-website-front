@@ -24,21 +24,9 @@ export const BASE_PATH = "http://localhost:8080".replace(/\/+$/, "");
 
 export const globalAxios = axios.create();
 
-const getUserLocale = () => localStorage.getItem("lang") || "pt";
-
-globalAxios.interceptors.request.use((config) => {
-    if(!config.params) {
-        config.params = {};
-    }
-
-    config.params.lang = getUserLocale();
-    return config;
-})
-
-
 /**
  *
- * @export
+ * @export 
  */
 export const COLLECTION_FORMATS = {
     csv: ",",

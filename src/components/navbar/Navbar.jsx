@@ -2,12 +2,15 @@ import { Link } from 'react-router-dom'
 import { FaSearch } from 'react-icons/fa';
 import Menu from './NavbarMenu.jsx'
 import { useSelector } from 'react-redux';
-import { FaMoon, FaSun } from 'react-icons/fa';
 import { LinkBtn, SearchBtn } from '../Link.js';
 import { NavbarContainer, NavbarInfo, NavbarLinks } from './styles.js';
 import ThemeBtn from '../theme-button/ThemeBtn.jsx';
+import LanguageBtn from '../language-btn/LanguageBtn.jsx';
+import { useTranslation } from 'react-i18next';
 
 const Navbar = () => {
+
+    const { t } = useTranslation();
 
     const { currentUser } = useSelector((rootReducer) => rootReducer.userReducer);
 
@@ -28,11 +31,14 @@ const Navbar = () => {
                                         </SearchBtn>
                                     </li>
                                     <li>
-                                        <ThemeBtn/>
+                                        <LanguageBtn />
+                                    </li>
+                                    <li>
+                                        <ThemeBtn />
                                     </li>
                                     <li>
                                         <LinkBtn to={"/category-movies"} className='btn'>
-                                            Filmes
+                                            {t('link-filmes')}
                                         </LinkBtn>
                                     </li>
                                     <li className='navbarMenuContainer'>
@@ -51,21 +57,24 @@ const Navbar = () => {
                                             </SearchBtn>
                                         </li>
                                         <li>
-                                            <ThemeBtn/>
+                                            <LanguageBtn />
+                                        </li>
+                                        <li>
+                                            <ThemeBtn />
                                         </li>
                                         <li>
                                             <LinkBtn to={"/login"} >
-                                                Entrar
+                                                {t('link-entrar')}
                                             </LinkBtn>
                                         </li>
                                         <li>
                                             <LinkBtn to={"/register"} >
-                                                Criar conta
+                                                {t('link-criar-conta')}
                                             </LinkBtn>
                                         </li>
                                         <li>
                                             <LinkBtn to={"/category-movies"}>
-                                                Filmes
+                                                {t('link-filmes')}
                                             </LinkBtn>
                                         </li>
                                     </NavbarLinks>

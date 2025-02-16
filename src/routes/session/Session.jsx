@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import formatDate from '../../js/formatDate';
 import formatHours from '../../js/formatHours';
-import { FaCalendarAlt, FaClock, FaTicketAlt  } from 'react-icons/fa';
+import { FaCalendarAlt, FaClock, FaTicketAlt } from 'react-icons/fa';
 import StarRating from '../../components/starRating/StarRating';
 import SelectChairComponent from '../../components/selectChairComponent/SelectChairComponent';
 import SelectTicket from '../../components/select-ticket/SelectTicket'
@@ -15,8 +15,13 @@ import { MdEventSeat } from "react-icons/md";
 import Cookies from 'js-cookie'
 import { toast } from 'react-toastify';
 import { ChairInfo, ChairInformation, EditDate, EntryRequesting, Info, MovieInformations, SessionContainer, SessionControlBtn, SessionInformations, SessionRequestControl, SessionRequestInformations, SessionTime, TicketInfo, TicketInformation, TicketRequestInformations } from './styles.js';
+import { useTranslation } from 'react-i18next';
+import '../../lib/i18n/i18n.js';
 
 const Session = () => {
+
+
+    const { t } = useTranslation();
 
     const navigate = useNavigate();
     const { id } = useParams();
@@ -56,11 +61,11 @@ const Session = () => {
 
     useEffect(() => {
         async function handleGetSessionData() {
-            
+
             try {
                 const res = await backend.sessionAPI.getInfoSession(id);
                 setSessionData(res.data);
-                
+
             } catch (err) {
                 toast.error(err.response.data.Message);
             }
@@ -82,15 +87,20 @@ const Session = () => {
     };
 
     const next = () => {
-        setShowComponent(false)
+        setShowComponent(false);
     }
 
     const back = () => {
-        setShowComponent(true)
-        setSelectedTicket(null)
+        if(showComponent){
+            navigate('/');
+        }
+        else{
+            setShowComponent(true);
+            setSelectedTicket(null);
+        }
     }
 
-    if(!sessionData){
+    if (!sessionData) {
         return <div>Loading</div>
     }
 
@@ -106,14 +116,14 @@ const Session = () => {
                     }
                 </EntryRequesting>
                 <SessionRequestInformations>
-                    <h3>Resumo do pedido</h3>
+                    <h3>{t('resumo-do-pedido')}</h3>
                     <TicketRequestInformations>
                         <MovieInformations>
                             <img src={sessionData.imageUrl} alt={sessionData.movieName} />
                             <div>
                                 <p>{sessionData.movieName}</p>
                                 <StarRating rating={sessionData.rating} />
-                                <p>duração {sessionData.duration}</p>
+                                <p>{t('duração')} {sessionData.duration}</p>
                             </div>
                         </MovieInformations>
                         <div className='chairInformations'>
@@ -131,8 +141,8 @@ const Session = () => {
                         {!!selectedChairId && (
                             <ChairInformation>
                                 <ChairInfo>
-                                    <MdEventSeat size={20}/>
-                                     {selectedChairId}
+                                    <MdEventSeat size={20} />
+                                    {selectedChairId}
                                 </ChairInfo>
                             </ChairInformation>
                         )}
@@ -151,18 +161,18 @@ const Session = () => {
                 </SessionRequestInformations>
             </SessionInformations>
             <SessionRequestControl>
-                <SessionControlBtn className='back' onClick={back}>Voltar</SessionControlBtn>
+                <SessionControlBtn className='back' onClick={back}>{t('botao-voltar')}</SessionControlBtn>
                 {showComponent ? (
-                    <SessionControlBtn 
-                    className={`next ${!selectedChairId ? 'disabled' : ''}`} 
-                    onClick={next} disabled={!selectedChairId}>
-                        Próximo
+                    <SessionControlBtn
+                        className={`next ${!selectedChairId ? 'disabled' : ''}`}
+                        onClick={next} disabled={!selectedChairId}>
+                        {t('botao-proximo')}
                     </SessionControlBtn>
                 ) : (
-                    <SessionControlBtn 
-                    className={`next ${!selectedTicket ? 'disabled' : ''}`} 
-                    onClick={handleAddTicket}>
-                        Finalizar
+                    <SessionControlBtn
+                        className={`next ${!selectedTicket ? 'disabled' : ''}`}
+                        onClick={handleAddTicket}>
+                        {t('botao-finalizar')}
                     </SessionControlBtn>
                 )}
 

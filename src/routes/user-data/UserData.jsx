@@ -12,8 +12,12 @@ import Cookies from 'js-cookie'
 import { Exit, UserDataBtn, UserDataContainer, UserDataControl, UserDataLinks, UserImg, UserImgProfileContainer, UserInfos } from './styles.js';
 import UserSkeleton from '../../components/skeleton-loading/user-skeleton/UserSkeleton.jsx';
 import MyUserDataSkeleton from '../../components/skeleton-loading/user-skeleton/MyUserDataSkeleton.jsx';
+import { useTranslation } from 'react-i18next';
+import '../../lib/i18n/i18n.js';
 
 const UserData = () => {
+    
+ const { t } = useTranslation();
     const { currentUser } = useSelector((rootReducer) => rootReducer.userReducer);
 
     const dispatch = useDispatch();
@@ -61,7 +65,7 @@ const UserData = () => {
         const file = event.target.files[0];
 
         if (!file) {
-            toast.error('Selecione uma imagem para enviar.');
+            toast.error(t('erro-selecione-uma-imagem'));
             return;
         }
 
@@ -74,8 +78,8 @@ const UserData = () => {
             })
             dispatch(updateProfileImage(res.data));
         } catch (err) {
-            toast.error('Algo deu errado');
-            console.log(err);
+            toast.error(t('erro-algo-deu-errado'));
+            
         }
     };
 
@@ -108,8 +112,8 @@ const UserData = () => {
                                 <UserInfos>
                                     {!!currentUser && (
                                         <>
-                                            <h3>Olá, {currentUser.name} :)</h3>
-                                            <h3>Esta é sua conta.</h3>
+                                            <h3>{t('ola')}, {currentUser.name} :)</h3>
+                                            <h3>{t('esta-e-sua-conta')}</h3>
                                             <p>{currentUser.email}</p>
                                         </>
                                     )
@@ -121,16 +125,16 @@ const UserData = () => {
                                     onClick={() => navigate("/user/data/meus-ingressos")}
                                     className={section === 'meus-ingressos' ? 'activatebtnSS' : ''}
                                 >
-                                    <FaTicketAlt /> Meus Ingressos
+                                    <FaTicketAlt /> {t('meus-ingressos')}
                                 </UserDataBtn>
                                 <UserDataBtn
                                     onClick={() => navigate("/user/data/meus-dados")}
                                     className={section === 'meus-dados' ? 'activatebtnSS' : ''}
                                 >
-                                    <FaIdCard /> Dados Pessoais
+                                    <FaIdCard /> {t('dados-pessoais')}
                                 </UserDataBtn>
                             </UserDataLinks>
-                            <Exit onClick={handleLogoutClick}><FaSignOutAlt /> Sair</Exit>
+                            <Exit onClick={handleLogoutClick}><FaSignOutAlt />{t('sair')}</Exit>
                         </UserDataControl>
                     ) : (
                         <UserSkeleton />

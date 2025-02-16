@@ -7,10 +7,14 @@ import tickets from '../../data/ticketData.js'
 import getDayOfWeek from '../../js/getDayOfWeek.js';
 import { BtnSession, Session, SessionDetails, SessionRoom, SessionTimes, TicketsContainer } from './styles.js';
 import { LinkBtn } from '../Link.js';
+import { useTranslation } from 'react-i18next';
+import '../../lib/i18n/i18n.js';
 
 const SessionTemplate = ({ session }) => {
 
     const [hoveredSessionId, setHoveredSessionId] = useState(null);
+
+    const { t } = useTranslation();
 
     return (
         <Session>
@@ -34,7 +38,7 @@ const SessionTemplate = ({ session }) => {
                         <LinkBtn to={`/session/${session.id}`}
                             onMouseEnter={() => setHoveredSessionId(session.id)}
                             onMouseLeave={() => setHoveredSessionId(null)}>
-                            {hoveredSessionId === session.id ? "Comprar" : formatHours(new Date(session.dateStart))}
+                            {hoveredSessionId === session.id ? t('comprar') : formatHours(new Date(session.dateStart))}
                         </LinkBtn>
                     </BtnSession>
                 </SessionRoom>

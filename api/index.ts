@@ -14,9 +14,14 @@ import {
 
 } from './client'
 
+const getUserLocale = () => localStorage.getItem("lang") || "pt";
+
 const instance = axios.create({
     withCredentials: true,
     baseURL: "http://localhost:8080",
+    params: {
+        lang: getUserLocale(),
+    }
 })
 
 export default {

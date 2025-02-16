@@ -3,8 +3,13 @@ import StarRating from './../starRating/StarRating'
 import { MovieContainer, MovieImg, MovieInfoContainer } from './styles'
 import { TitleH2 } from '../Title.js'
 import { LinkBtn } from '../Link.js'
+import { useTranslation } from 'react-i18next';
+import '../../lib/i18n/i18n.js';
+
 
 const MovieTemplate = ({ item }) => {
+
+  const { t } = useTranslation();
 
   return (
     <div>
@@ -17,7 +22,7 @@ const MovieTemplate = ({ item }) => {
           </div>
           <div>
             <LinkBtn to={`/movie/${item.id}`}>
-              ver detalhes
+              {t('ver-detalhes')}
             </LinkBtn>
           </div>
         </MovieInfoContainer>

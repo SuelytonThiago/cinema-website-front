@@ -14,8 +14,12 @@ import {
 } 
 from './styles.js';
 import SkeletonSession from '../skeleton-loading/session-skeleton/SkeletonSession.jsx';
+import { useTranslation } from 'react-i18next';
+import '../../lib/i18n/i18n.js';
 
 const Sessions = ({ sessions, isLoading }) => {
+
+    const { t } = useTranslation();
 
     const [groupedSessions, setGroupedSessions] = useState([]);
     const [selectedDate, setSelectedDate] = useState(null);
@@ -68,7 +72,7 @@ const Sessions = ({ sessions, isLoading }) => {
                                         onClick={() => setSelectedDate(date)}
                                     >
                                         {new Date(date).getDate() === new Date().getDate() ? (
-                                            <div>hoje</div>
+                                            <div>{t('hoje')}</div>
                                         ) : (
                                             <div>
                                                 <div>{getDayOfWeek(date.split('/').reverse().join('/'))}</div>
@@ -80,7 +84,7 @@ const Sessions = ({ sessions, isLoading }) => {
                             ))}
                         </SessionFilterContainer>
                         <h2>
-                            Sessões para {selectedDate && formatDate(new Date(selectedDate.split('/').reverse().join('/'))).formattedDate}
+                            {t('sessoes-para')}{selectedDate && formatDate(new Date(selectedDate.split('/').reverse().join('/'))).formattedDate}
                         </h2>
                         <SessionsContainer>
                             {selectedDate &&
@@ -94,11 +98,11 @@ const Sessions = ({ sessions, isLoading }) => {
                                             <h2>{session.movieName}</h2>
                                             <SessionInfo>
                                                 <div style={{ flexGrow: '1' }}>
-                                                    <p>duração: {session.duration}</p>
+                                                    <p>{t('duracao')} {session.duration}</p>
                                                     <StarRating rating={session.rating} />
                                                 </div>
                                                 <div style={{ flexGrow: '2' }}>
-                                                    <Link to={`/session/${session.id}`}><Button>Comprar</Button></Link>
+                                                    <Link to={`/session/${session.id}`}><Button>{t('comprar')}</Button></Link>
                                                 </div>
                                             </SessionInfo>
                                         </div>

@@ -1,0 +1,121 @@
+{
+    "validacao-senha-invalida": "A senha deve conter 8 caracteres incluindo letras e números",
+    "validacao-senhas-diferentes":"As senhas não coincidem",
+    "validacao-campo-vazio":"O campo não pode ficar em branco",
+    "validacao-email":"insira um email válido",
+    "validacao-cpf":"insira um cpf válido",
+    "validacao-nome":"insira um nome válido",
+
+
+    "placeholder-senha-antiga":"Digite a sua antiga senha",
+    "placeholder-senha-nova":"Digite a sua nova senha",
+    "placeholder-confirmacao-senha": "Confirme a senha",
+    "placeholder-adicionar-avaliacao": "Adicione sua avaliação sobre o filme",
+    "placeholder-digite-seu-email":"Digite o seu email",
+    "placeholder-digite-sua-senha":"Digite sua senha",
+    "placeholder-digite-seu-nome":"Digite seu nome",
+    "placeholder-digite-seu-cpf":"Digite seu cpf",
+    "placeholder-digite-seu-telefone":"Digite seu telefone",
+    "placeholder-novamente-sua-senha":"*Digite novamente sua senha",
+
+    "botao-salvar": "Salvar",
+    "botao-cancelar": "Cancelar",
+    "botao-publicar": "Publicar",
+    "botao-proximo": "Proximo",
+    "botao-voltar": "Voltar",
+    "botao-entrar": "Entrar",
+    "botao-finalizar":"Finalizar",
+
+    "h1-atualizar-senha": "Atualizar senha",
+    "h1-autenticacao-de-acesso":"Autenticação de acesso via Email",
+
+
+    "h2-esqueceu-senha": "Esqueceu sua senha?",
+    "h2-cadastro":"Cadastre-se",
+
+    "h3-sinopse" : "Sinopse",
+    "h3-dados-pessoais" : "Dados Pessoais",
+    "h3-salvar-alteracoes" : "Salvar todas as alterações",
+
+    "h5-informe-seu-codigo": "Informe o seu código de segurança",
+    
+    "p-informe-seu-email": "Informe seu endereço de e-mail ou CPF que, caso exista uma conta cadastrada, enviaremos um e-mail para recuperar sua senha.",
+    "p-cadeira-disponivel": "Cadeira disponível",
+    "p-cadeira-indisponivel": "Cadeira indisponível",
+    "p-cadeira-selecionada": "Cadeira selecionada",
+    "p-informe-seu-codigo": "Por favor informe o código de autenticação enviado para o seu email cadastrado em sua conta.",
+    "p-esqueceu-sua-senha": "esqueceu sua senha?",
+    "p-ainda-nao-tem-uma-conta": "Ainda não tem uma conta? ",
+    "p-data-de-lancamento": "Data de lançamento: ",
+    "p-sem-comentarios":"Sem comentários ainda. Seja o primeiro a comentar!",
+    "p-campos-obrigatorios":"Campos obrigatórios *",
+    "p-insira-sua-senha":"Por questões de segurança, você precisa digitar sua senha para confirmar as alterações feitas no seu cadastro.",
+
+    "label-nome":"Nome",
+    "label-email":"Email",
+    "label-cpf":"CPF",
+    "label-telefone":"Telefone",
+    "label-senha":"Senha",
+    "label-confirmar-senha":"Confirmar senha",
+
+
+    "ver-detalhes": "Ver detalhes",
+
+    "link-filmes": "Filmes",
+    "link-entrar": "Entrar",
+    "link-criar-conta": "Criar conta",
+
+    "erro-mensagem": "Erro desconhecido",
+    "erro-enviar-email": "Erro ao enviar email, tente novamente mais tarde",
+    "erro-cadeiras-indisponiveis": "Nenhuma cadeira disponível",
+    "erro-selecione-uma-imagem": "Selecione uma imagem para enviar.",
+    "erro-algo-deu-errado":"Algo deu errado",
+
+    "tela":"Tela",
+    "comprar": "Comprar",
+    "hoje": "Hoje",
+    "duração": "duração: ",
+    "sessoes-para": "Sessões para ",
+    "meus-ingressos": "Meus ingressos",
+    "reeviar-por-email": "Reenviar por email",
+    "validar-meu-codigo": "Validar meu código",
+    "nao-recebeu-o-codigo": "Não recebeu o código?",
+    "inteira": "Inteira",
+    "meia" : "Meia",
+    "sessoes":"Sessões",
+    "cadastre-se": "Cadastre-se agora",
+    "identificação":"Identificação",
+    "classificação": "classificação:",
+    "ler-menos":"Ler menos",
+    "ler-mais":"Ler mais",
+    "comentarios":"Comentários",
+    "criar-conta":"Criar Conta",
+    "tem-uma-conta":"tem uma conta?",
+    "conecte-se": "conecte-se",
+    "buscar":"Buscar...",
+    "resumo-do-pedido": "Resumo do pedido",
+    "ola":"Olá",
+    "esta-e-sua-conta":"Esta é sua conta.",
+    "dados-pessoais":" Dados Pessoais",
+    "sair":"Sair",  
+    "alterar-senha": "alterar senha",
+    "criterios":"Sua senha precisa atender aos seguintes critérios:",
+    "maiuscula":"Mínimo uma letra maiúscula *",
+    "minuscula":"Mínimo uma letra  minuscula*",
+    "numero":"Mínimo um número *",
+    "caracteres":"Mínimo de 8 caracteres *",
+    "meus-dados":"Meus dados",
+
+    
+
+
+    "DOM":"DOM",
+    "SEG":"SEG",
+    "TER":"TER",
+    "QUA":"QUA",
+    "QUI":"QUI",
+    "SEX":"SEX",
+    "SAB":"SAB"
+    
+
+}

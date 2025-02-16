@@ -6,9 +6,11 @@ import { FaPen } from 'react-icons/fa';
 import useLogout from '../../js/Logout'
 import { MenuButton, MenuContainer, MenuItem, MenuItems, OutBtn } from './styles'
 import { Overlay } from '../Overlay';
+import { useTranslation } from 'react-i18next';
 
 const menu = ({ user }) => {
 
+    const { t } = useTranslation();
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -32,7 +34,7 @@ const menu = ({ user }) => {
             <MenuButton
                 onClick={() => toggleMenu()}>
                 <img src={user.profileImg} alt="profileImg" />
-                <p>Olá, <span>{user.name}</span></p>
+                <p>{t('ola')}, <span>{user.name}</span></p>
             </MenuButton>
             {isOpen && (
                 <div>
@@ -40,18 +42,18 @@ const menu = ({ user }) => {
                     <MenuItems>
                         <li >
                             <MenuItem to={`/user/data/${'meus-dados'}`} onClick={() => setIsOpen(false)}>
-                                <FaPen /> Meus dados
+                                <FaPen /> {t('meus-dados')}
                             </MenuItem>
                         </li>
                         <li >
                             <MenuItem className='menuItem' to={`/user/data/${'meus-ingressos'}`} onClick={() => setIsOpen(false)}>
-                                <FaTicketAlt /> Meus ingressos
+                                <FaTicketAlt /> {t('meus-ingressos')}
                             </MenuItem>
                         </li>
                         <li >
                             <OutBtn
                                 onClick={handleLogoutClick}>
-                                <FaTimes /> Sair
+                                <FaTimes /> {t('sair')}
                             </OutBtn>
                         </li>
                     </MenuItems>

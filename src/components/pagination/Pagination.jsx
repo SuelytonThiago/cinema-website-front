@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FiChevronsLeft, FiChevronsRight } from 'react-icons/fi';
 import { AtualPage, ItemsResultContainer, PaginationBtn, PaginationContainer, PaginationControls } from './styles';
-import Loading from '../loading/Loading';
 
 const Pagination = ({ objectList, itemsPerPage, children }) => {
 

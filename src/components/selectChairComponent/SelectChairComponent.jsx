@@ -1,22 +1,28 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import formatDate from '../../js/formatDate';
 import formatHours from '../../js/formatHours';
 import { FaCalendarAlt } from 'react-icons/fa';
 import { FaClock } from 'react-icons/fa';
+import Error from '../error/Error'
 
 import backend from '../../../api/index'
 import { Chair, Chairs, ChairsContainer, EditDate, LegendContainer, LegendInfo, LegendSpan, RoomScreen, SessionInfoTime } from './styles';
 
+import { useTranslation } from 'react-i18next';
+import '../../lib/i18n/i18n.js';
+
 const SelectChairComponent = ({ session, id, onChairSelect, chairId }) => {
 
     const [chairsData, setChairsData] = useState([]);
+
+    const { t } = useTranslation();
 
     useEffect(() => {
         async function handleGetChairsSession() {
             try {
                 const response = await backend.chairAPI.getAllChairs(id)
                 setChairsData(response.data);
-            } catch(err) {
+            } catch (err) {
                 console.log(err)
             }
         }
@@ -27,9 +33,9 @@ const SelectChairComponent = ({ session, id, onChairSelect, chairId }) => {
     const handleChairClick = (chairId) => {
         onChairSelect(chairId);
     };
-    
+
     return (
-        <div style={{flex : '1'}}>
+        <div style={{ flex: '1' }}>
             <SessionInfoTime>
                 <EditDate>
                     <p><FaCalendarAlt />  {formatDate(new Date(session.dateStart)).dayOfWeek}</p>
@@ -52,22 +58,22 @@ const SelectChairComponent = ({ session, id, onChairSelect, chairId }) => {
                             </Chair>
                         ))
                     ) : (
-                        <p>Nenhuma cadeira disponível</p>
+                        <Error code={404} message={t('erro-cadeiras-indisponiveis')} />
                     )}
-                    <RoomScreen>Tela</RoomScreen>
+                    <RoomScreen>{t('tela')}</RoomScreen>
                 </Chairs>
                 <LegendContainer>
                     <LegendInfo>
                         <LegendSpan className='chair chairAvailable'>c</LegendSpan>
-                        <p> cadeira disponível</p>
+                        <p>{t('p-cadeira-disponivel')}</p>
                     </LegendInfo>
                     <LegendInfo>
                         <LegendSpan className='chair chairUnavailable'>c</LegendSpan>
-                        <p> cadeira indisponível</p>
+                        <p>{t('p-cadeira-indisponivel')}</p>
                     </LegendInfo>
                     <LegendInfo>
                         <LegendSpan className='chair selectedChair'>c</LegendSpan>
-                        <p> cadeira selecionada</p>
+                        <p>{t('p-cadeira-selecionada')}</p>
                     </LegendInfo>
                 </LegendContainer>
             </ChairsContainer>

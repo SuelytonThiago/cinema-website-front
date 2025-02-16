@@ -4,6 +4,8 @@ import { ArrowLeft, ArrowRight, Carousel, Container } from './style';
 import backend from '../../../api/index'
 import SearchMoviesSkeleton from '../skeleton-loading/search-movies/SearchMoviesSkeleton';
 import Error from '../error/Error';
+import { useTranslation } from 'react-i18next';
+import '../../lib/i18n/i18n.js';
 
 
 const RandomMovies = () => {
@@ -13,6 +15,8 @@ const RandomMovies = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState(false);
     const carousel = useRef(null);
+
+    const { t } = useTranslation();
 
     useEffect(() => {
         async function getRandomMovies() {
@@ -29,7 +33,7 @@ const RandomMovies = () => {
                 setIsError(true);
                 setServerError({
                     status: err.response?.data?.status || 500,
-                    Message: err.response?.data.Message || "Erro desconhecido",
+                    Message: err.response?.data.Message || t('erro-mensagem'),
                 });
             }
         }

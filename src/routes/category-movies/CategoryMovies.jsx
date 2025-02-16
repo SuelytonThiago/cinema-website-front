@@ -3,14 +3,12 @@ import ShowCategories from '../../components/show-categories/ShowCategories'
 import Pagination from '../../components/pagination/Pagination'
 import MovieTemplate from '../../components/movie-template/MovieTemplate'
 import backend from './../../../api/index'
-import { toast } from 'react-toastify'
 import Error from '../../components/error/Error'
 
 const CategoryMovies = () => {
 
     const [categoryId, setCategoryId] = useState(null);
     const [movies, setMovies] = useState(null)
-    const [isLoading, setIsLoading] = useState(true);
     const [errorServer, setErrorServer] = useState(null);
 
     const handleSetActiveCategory = (id) => {
@@ -20,11 +18,9 @@ const CategoryMovies = () => {
     useEffect(() => {
         async function handleGetCategories() {
             try {
-                setErrorServer(null);
-                setIsLoading(true);
+                setErrorServer(null);      
                 const res = await backend.movieAPI.findByCategory(categoryId);
                 setMovies(res?.data)
-                setIsLoading(false);
 
             } catch (err) {
                 setErrorServer(err.response?.data)

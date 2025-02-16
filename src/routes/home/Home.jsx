@@ -6,8 +6,12 @@ import Sessions from '../../components/sessions/Sessions.jsx';
 import Error from '../../components/error/Error.jsx';
 import RandomMovies from '../../components/random-movies/RandomMovies.jsx';
 import { Container } from './styles.js';
+import { useTranslation } from 'react-i18next';
+import '../../lib/i18n/i18n.js';
 
 const Home = () => {
+
+  const { t } = useTranslation();
 
   const [sessions, setSessions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -52,7 +56,7 @@ const Home = () => {
       } catch (err) {
         setIsLoading(false);
         setIsError(true);
-        setErrorServer(err.response?.data || { status: 500, Message: "Erro desconhecido" });
+        setErrorServer(err.response?.data || { status: 500, Message: t('erro-mensagem') });
       }
     }
     getSessions();
@@ -62,11 +66,11 @@ const Home = () => {
 
   return (
     <Container>
-      <h2>Filmes: </h2>
+      <h2>{t('link-filmes')}: </h2>
       <RandomMovies />
 
       <>
-        <h2 >Sessões: </h2>
+        <h2 >{t('sessoes')}: </h2>
         {isError ?
           (
             <Error code={errorServer.status} message={errorServer.Message} />

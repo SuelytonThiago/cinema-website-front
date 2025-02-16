@@ -10,8 +10,12 @@ import InputWithFilter from '../input-form/InputWithFilter';
 import InputWithoutFilter from '../input-form/InputWithoutFilter';
 import useForm from '../../hooks/UseForm';
 import { ChangePassowrdBtn, ChangePasswordContainer } from './styles.js';
+import { useTranslation } from 'react-i18next';
+import '../../lib/i18n/i18n.js';
 
 const ChangePasswordTemplate = () => {
+
+    const { t } = useTranslation();
 
     const navigate = useNavigate();
 
@@ -28,15 +32,15 @@ const ChangePasswordTemplate = () => {
         const errors = {}
 
         if (!isValidPassword(formData.newPassword)) {
-            errors.newPassword = 'a senha deve conter 8 caracteres incluindo letras e números';
+            errors.newPassword = t('validacao-senha-invalida');
         }
 
         if (formData.newPassword !== formData.confirm) {
-            errors.confirm = 'as senhas não coincidem';
+            errors.confirm = t('validacao-senhas-diferentes');
         }
 
         if (!formData.confirm) {
-            errors.confirm = 'não pode ficar em branco';
+            errors.confirm = t('validacao-campo-vazio');
         }
 
         return errors;
@@ -59,7 +63,7 @@ const ChangePasswordTemplate = () => {
                 Cookies.remove('recoveryEmail');
                 navigate('/login');
             } catch (err) {
-                toast.error("Algo de errado!")
+                toast.error(err.response.data.Message)
             }
         }
     }
@@ -67,7 +71,7 @@ const ChangePasswordTemplate = () => {
     return (
         <div>
             <ChangePasswordContainer onSubmit={handleChangePassword}>
-                <h1>Atualizar senha</h1>
+                <h1>{t('h1-atualizar-senha')}</h1>
 
                 <InputWithFilter 
                 error={errors.password} 
@@ -78,10 +82,10 @@ const ChangePasswordTemplate = () => {
                 error={errors.confirm} 
                 handleChange={handleChange} 
                 nameInput={"confirm"} 
-                placeholder={"* Confirme a nova senha"} />
+                placeholder={t('placeholder-confirmacao-senha')} />
                 
                 <ChangePassowrdBtn>
-                    <InputSubit type='submit' value='Salvar' />
+                    <InputSubit type='submit' value={t('botao-salvar')} />
                 </ChangePassowrdBtn>
 
             </ChangePasswordContainer>

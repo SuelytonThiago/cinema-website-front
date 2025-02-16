@@ -10,8 +10,12 @@ import { toast } from 'react-toastify';
 import { loginUser } from '../../redux/user/actions.js';
 import { ForgoutPass, RegisterLinkBtn, SigninForm } from './styles.js';
 import { Regislink } from '../../components/Link.js';
+import { useTranslation } from 'react-i18next';
+import '../../lib/i18n/i18n.js';
 
 const LoginForm = ({loginSuccess}) => {
+
+  const { t } = useTranslation();
 
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch()
@@ -27,13 +31,13 @@ const LoginForm = ({loginSuccess}) => {
   const validateErrors = () => {
     const errors = {};
     if (formData.email.trim() === '') {
-      errors.email = 'O campo não pode estar em branco';
+      errors.email = t('validacao-campo-vazio');
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      errors.email = 'Insira um email válido';
+      errors.email = t('validacao-email');
     }
 
     if (formData.password.trim() === '') {
-      errors.password = 'O campo não pode estar em branco';
+      errors.password = t('validacao-campo-vazio');
     }
 
     return errors;
@@ -63,8 +67,7 @@ const LoginForm = ({loginSuccess}) => {
         loginSuccess();
 
       } catch (err) {
-        toast.error('Email ou senha inválidos')
-        console.log(err)
+        toast.error(err.response.data.Message)
       }
 
 
@@ -79,21 +82,21 @@ const LoginForm = ({loginSuccess}) => {
           handleChange={handleChange}
           nameInput={'email'}
           value={formData.email}
-          placeholder={'* Digite o seu email'} />
+          placeholder={t('placeholder-digite-seu-email')} />
 
         <InputWithoutFilter
           error={errors.password}
           handleChange={handleChange}
           nameInput={"password"} 
-          placeholder={'* Digite sua senha'} />
+          placeholder={t('placeholder-digite-sua-senha')} />
 
         <ForgoutPass to={`/recover`}>
-          <p>esqueceu sua senha?</p>
+          <p>{t('p-esqueceu-sua-senha')}</p>
         </ForgoutPass>
 
-        <InputSubit type="submit" value="Entrar" />
+        <InputSubit type="submit" value={t('botao-entrar')}/>
         <RegisterLinkBtn>
-          <p>Ainda não tem uma conta? <span><Regislink to={"/register"}>Cadastre-se agora</Regislink></span></p>
+          <p>{t('p-ainda-nao-tem-uma-conta')} <span><Regislink to={"/register"}>{t('cadastre-se')}</Regislink></span></p>
         </RegisterLinkBtn>
       </SigninForm>
     </div>

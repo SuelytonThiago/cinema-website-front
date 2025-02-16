@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { FiChevronRight } from 'react-icons/fi';
 import backend from './../../../api/index'
-import { toast } from 'react-toastify';
 import { CategoriesContainer, CategoryBtn } from './styles';
 import Error from '../error/Error';
 import CategorySkeleton from '../skeleton-loading/category-skeleton/CategorySkeleton';
+import { useTranslation } from 'react-i18next';
+import '../../lib/i18n/i18n.js';
 
 const ShowCategories = ({ handleSetActiveCategory }) => {
+
+    const { t } = useTranslation();
 
     const [activeBtn, setActiveBtn] = useState(null);
     const [categories, setCategories] = useState([]);
@@ -22,11 +25,10 @@ const ShowCategories = ({ handleSetActiveCategory }) => {
                 setIsLoading(false)
             } catch (err) {
                 setIsError(true);
-                setErrorServer(err.response?.data || { status: 500, Message: "Erro desconhecido" });
+                setErrorServer(err.response?.data || { status: 500, Message: t('erro-mensagem') });
             }
         }
         handleGetCategories();
-        console.log(isError);
     }, [])  
 
 

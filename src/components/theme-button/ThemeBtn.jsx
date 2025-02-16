@@ -8,7 +8,9 @@ const ThemeBtn = () => {
     const { theme, setTheme } = useThemeContext();
 
     const themeToggler = () => {
-        theme === 'light' ? setTheme('dark') : setTheme('light');
+        const newTheme = theme === 'light' ? 'dark' : 'light';
+        setTheme(newTheme);  
+        localStorage.setItem('theme', newTheme); 
     }
 
     return (

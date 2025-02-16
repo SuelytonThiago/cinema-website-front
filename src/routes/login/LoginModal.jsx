@@ -5,8 +5,12 @@ import { hideLoginModal } from '../../redux/show-login-modal/actions';
 import { FaTimes , FaUser } from 'react-icons/fa';
 import { AuthenticationTab, AuthenticationTitle, Btn, Title } from './styles';
 import { Overlay } from '../../components/Overlay';
+import { useTranslation } from 'react-i18next';
+import '../../lib/i18n/i18n.js';
 
 const LoginModal = () => {
+
+  const { t } = useTranslation();
 
   const dispatch = useDispatch()
   
@@ -20,7 +24,7 @@ const LoginModal = () => {
         <AuthenticationTab>
           <AuthenticationTitle>
             <Title>
-              <FaUser />Identificação
+              <FaUser />{t('identificação')}
             </Title>
             <Btn onClick={handleHideLoginModal}>
               <FaTimes/>
