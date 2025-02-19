@@ -5,7 +5,7 @@ import SockJS from "sockjs-client";
 import Sessions from '../../components/sessions/Sessions.jsx';
 import Error from '../../components/error/Error.jsx';
 import RandomMovies from '../../components/random-movies/RandomMovies.jsx';
-import { Container } from './styles.js';
+import { Container, H2 } from './styles.js';
 import { useTranslation } from 'react-i18next';
 import '../../lib/i18n/i18n.js';
 
@@ -66,11 +66,11 @@ const Home = () => {
 
   return (
     <Container>
-      <h2>{t('link-filmes')}: </h2>
+      <H2>{t('link-filmes')}: </H2>
       <RandomMovies />
 
       <>
-        <h2 >{t('sessoes')}: </h2>
+        <H2 >{t('sessoes')}: </H2>
         {isError ?
           (
             <Error code={errorServer.status} message={errorServer.Message} />

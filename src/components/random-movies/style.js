@@ -16,7 +16,7 @@ export const Carousel = styled.div`
 
     &::-webkit-scrollbar {
         display: none;
-    }
+    };
 `
 
 export const Arrow = `

@@ -25,7 +25,21 @@ export const FilterBtn = styled.button`
         opacity: 1;
         font-size: 20px;
         color: ${(props) => props.theme.fontColor};
+
+        @media screen and (max-width: 425px){
+        font-size: 14px;
+    }
         
+    }
+
+    @media screen and (max-width: 425px){
+        font-size: 12px;
+    }
+`
+
+export const SessionsData = styled.h2`
+    @media screen and (max-width: 425px){
+        font-size: 19px;
     }
 `
 
@@ -55,6 +69,22 @@ export const Session = styled.div`
 export const SessionImg = styled.img`
     width: 200px;
     border-radius: 5px; 
+
+    @media screen and (max-width: 425px){
+        width: 150px;
+    }
+`
+
+export const H2 = styled.h2`
+    @media screen and (max-width: 425px){
+        font-size: 15px;
+    }
+`
+
+export const P = styled.h2`
+    @media screen and (max-width: 425px){
+        font-size: 12px;
+    }
 `
 
 export const SessionTimes = styled.div`

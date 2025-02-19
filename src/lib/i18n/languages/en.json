@@ -59,7 +59,7 @@
 
     "link-filmes": "Films",
     "link-entrar": "To enter",
-    "link-criar-conta": "Create account",
+    "link-criar-conta": "Register",
 
     "erro-mensagem": "Unknown error",
     "erro-enviar-email": "Error sending email, please try again later",
@@ -85,7 +85,7 @@
     "ler-menos":"Read less",
     "ler-mais":"Read more",
     "comentarios":"Comments",
-    "criar-conta":"Create Account",
+    "criar-conta":"Register",
     "tem-uma-conta":"Do you have an account?",
     "conecte-se": "connect",
     "buscar":"Search...",
@@ -93,7 +93,7 @@
     "ola":"Hello",
     "esta-e-sua-conta":"This is your account.",
     "dados-pessoais":" Personal Data",
-    "sair":"Logout",  
+    "sair":"Sign out",  
     
 
 
@@ -114,6 +114,8 @@
     "minuscula":"Minimum one lowercase letter*",
     "numero":"Minimum one number *",
     "caracteres":"Minimum 8 characters *",
-    "meus-dados":"My data"
+    "meus-dados":"My data",
+    "linguagem" : "language",
+    "tema":"theme"
 
 }

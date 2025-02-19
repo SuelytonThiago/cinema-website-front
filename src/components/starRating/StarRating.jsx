@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaStar, FaRegStar } from 'react-icons/fa';
+import { Star } from './styles';
 
 const StarRating = ({ rating }) => {
     const stars = [];
@@ -15,7 +16,7 @@ const StarRating = ({ rating }) => {
     return (
         <div className='starRatingContainer'>
             {stars.map((star, index) => (
-                <span style={{color: '#d4af37'}} key={index}>{star}</span>
+                <Star style={{color: '#d4af37'}} key={index}>{star}</Star>
             ))}
         </div>
     );

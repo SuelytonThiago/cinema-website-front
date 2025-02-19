@@ -11,6 +11,9 @@ import {
     Session,
     SessionImg,
     SessionInfo,
+    SessionsData,
+    H2,
+    P,
 } 
 from './styles.js';
 import SkeletonSession from '../skeleton-loading/session-skeleton/SkeletonSession.jsx';
@@ -55,6 +58,7 @@ const Sessions = ({ sessions, isLoading }) => {
         }
 
     }, [sessions]);
+
     return (
         <div>
             <div>
@@ -83,9 +87,9 @@ const Sessions = ({ sessions, isLoading }) => {
                                 </div>
                             ))}
                         </SessionFilterContainer>
-                        <h2>
+                        <SessionsData>
                             {t('sessoes-para')}{selectedDate && formatDate(new Date(selectedDate.split('/').reverse().join('/'))).formattedDate}
-                        </h2>
+                        </SessionsData>
                         <SessionsContainer>
                             {selectedDate &&
                                 groupedSessions[selectedDate] &&
@@ -95,10 +99,10 @@ const Sessions = ({ sessions, isLoading }) => {
                                             <SessionImg src={session.imageUrl} alt={session.movieName} />
                                         </div>
                                         <div style={{ width: '100%' }}>
-                                            <h2>{session.movieName}</h2>
+                                            <H2>{session.movieName}</H2>
                                             <SessionInfo>
                                                 <div style={{ flexGrow: '1' }}>
-                                                    <p>{t('duracao')} {session.duration}</p>
+                                                    <P>{t('duracao')} {session.duration}</P>
                                                     <StarRating rating={session.rating} />
                                                 </div>
                                                 <div style={{ flexGrow: '2' }}>

@@ -2,13 +2,15 @@ import React from 'react'
 import Flag from 'react-world-flags';
 import { BTN, Container } from './styles';
 import '../../lib/i18n/i18n.js';
+import i18next from 'i18next';
 
 const LanguageBtn = () => {
     const language = localStorage.getItem('lang');
 
     const languageToggler = () => {
-        language === 'pt' ? localStorage.setItem('lang', 'en') : localStorage.setItem('lang', 'pt');
-        window.location.reload();   
+        const newLanguage = language === 'pt' ? 'en' : 'pt';
+        localStorage.setItem('lang', newLanguage);
+        i18next.changeLanguage(newLanguage);
     }
 
 
@@ -16,9 +18,9 @@ const LanguageBtn = () => {
         <Container>
             <BTN onClick={languageToggler} >
                 {language === 'pt' ? (
-                    <Flag code="US" style={{ width: 30, height: 20 }}/>
+                    <Flag code="BR" style={{ width: 30, height: 20 }} />
                 ) : (
-                    <Flag code="BR" style={{ width: 30, height: 20 }}/>
+                    <Flag code="US" style={{ width: 30, height: 20 }} />
                 )}
             </BTN>
         </Container>

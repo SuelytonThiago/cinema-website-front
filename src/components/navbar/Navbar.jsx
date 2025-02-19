@@ -3,7 +3,7 @@ import { FaSearch } from 'react-icons/fa';
 import Menu from './NavbarMenu.jsx'
 import { useSelector } from 'react-redux';
 import { LinkBtn, SearchBtn } from '../Link.js';
-import { NavbarContainer, NavbarInfo, NavbarLinks } from './styles.js';
+import { Logo, MenuResponsive, MoviesLink, NavbarContainer, NavbarInfo, NavbarLinks, NavbarLinksContainer } from './styles.js';
 import ThemeBtn from '../theme-button/ThemeBtn.jsx';
 import LanguageBtn from '../language-btn/LanguageBtn.jsx';
 import { useTranslation } from 'react-i18next';
@@ -19,69 +19,68 @@ const Navbar = () => {
             <NavbarContainer>
                 <NavbarInfo>
                     <h1>
-                        <Link to={'/'} >cinemax</Link>
+                        <Logo to={'/'} >cinemax</Logo>
                     </h1>
-                    {currentUser ?
-                        (
-                            <div >
-                                <NavbarLinks>
-                                    <li>
-                                        <SearchBtn className='searchBtn' to={`/movies`}>
-                                            <FaSearch />
-                                        </SearchBtn>
-                                    </li>
-                                    <li>
-                                        <LanguageBtn />
-                                    </li>
-                                    <li>
-                                        <ThemeBtn />
-                                    </li>
-                                    <li>
-                                        <LinkBtn to={"/category-movies"} className='btn'>
-                                            {t('link-filmes')}
-                                        </LinkBtn>
-                                    </li>
-                                    <li className='navbarMenuContainer'>
-                                        <Menu user={currentUser} />
-                                    </li>
-                                </NavbarLinks>
-                            </div>
-                        ) :
-                        (
-                            <div>
-                                <div>
+                    <NavbarLinksContainer>
+                        {currentUser ?
+                            (
+                                <div >
                                     <NavbarLinks>
                                         <li>
-                                            <SearchBtn to={`/movies`}>
+                                            <SearchBtn className='searchBtn' to={`/movies`}>
                                                 <FaSearch />
                                             </SearchBtn>
                                         </li>
-                                        <li>
-                                            <LanguageBtn />
-                                        </li>
-                                        <li>
-                                            <ThemeBtn />
-                                        </li>
-                                        <li>
-                                            <LinkBtn to={"/login"} >
-                                                {t('link-entrar')}
-                                            </LinkBtn>
-                                        </li>
-                                        <li>
-                                            <LinkBtn to={"/register"} >
-                                                {t('link-criar-conta')}
-                                            </LinkBtn>
-                                        </li>
-                                        <li>
-                                            <LinkBtn to={"/category-movies"}>
+                                        <MoviesLink>
+                                            <LinkBtn to={"/category-movies"} className='btn'>
                                                 {t('link-filmes')}
                                             </LinkBtn>
+                                        </MoviesLink>
+                                        <li className='navbarMenuContainer'>
+                                            <Menu user={currentUser} />
                                         </li>
                                     </NavbarLinks>
                                 </div>
-                            </div>
-                        )
-                    }
+                            ) :
+                            (
+                                <div>
+                                    <div>
+                                        <NavbarLinks className='menu'>
+                                            <li>
+                                                <SearchBtn to={`/movies`}>
+                                                    <FaSearch />
+                                                </SearchBtn>
+                                            </li>
+                                            <li>
+                                                <LanguageBtn />
+                                            </li>
+                                            <li>
+                                                <ThemeBtn />
+                                            </li>
+                                            <li>
+                                                <LinkBtn to={"/login"} >
+                                                    {t('link-entrar')}
+                                                </LinkBtn>
+                                            </li>
+                                            <li>
+                                                <LinkBtn to={"/register"} >
+                                                    {t('link-criar-conta')}
+                                                </LinkBtn>
+                                            </li>
+                                            <MoviesLink>
+                                                <LinkBtn to={"/category-movies"}>
+                                                    {t('link-filmes')}
+                                                </LinkBtn>
+                                            </MoviesLink>
+                                        </NavbarLinks>
+                                    </div>
+                                </div>
+                            )
+                        }
+                    </NavbarLinksContainer>
+                    <MenuResponsive>
+                        <Menu user={currentUser} />
+                    </MenuResponsive>
                 </NavbarInfo>
             </NavbarContainer>
         </div>

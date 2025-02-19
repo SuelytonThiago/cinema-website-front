@@ -3,16 +3,22 @@ import styled from "styled-components";
 
 //---------------navbar-styles-----------------
 
-export const NavbarContainer = styled.div `
+export const NavbarContainer = styled.div`
     background-color:${(props) => props.theme.container};
     display: flex;
     justify-content: center;
+    align-items: center;
     padding:1rem;
-    border-bottom: ${(props) => props.theme.border}
+    border-bottom: ${(props) => props.theme.border};
 `
 
 export const Logo = styled(Link)`
-    color: ${(props) => props.theme.fontColor}
+    color: ${(props) => props.theme.fontColor};
+
+
+    @media screen and (max-width: 425px){
+        font-size: 25px;
+    }
 `
 
 export const NavbarInfo = styled.div` 
@@ -29,7 +35,7 @@ export const NavbarInfo = styled.div`
     ul {
         display: flex;
         gap: 1rem;
-    }
+    };
     
 `
 
@@ -38,15 +44,23 @@ export const NavbarLinks = styled.ul`
    align-items: center; 
 `
 
+export const MoviesLink = styled.li`
+
+    @media screen and (max-width: 768px){
+        display: none;
+    }
+
+`
+
 //---------------menu-styles-----------------
 
-export const MenuContainer = styled.div `
+export const MenuContainer = styled.div`
     position: relative;
     display: inline-block;
 
 `
 
-export const MenuButton = styled.button `
+export const MenuButton = styled.button`
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -60,6 +74,10 @@ export const MenuButton = styled.button `
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+
+        @media screen and (max-width: 425px){
+            display: none;
+        }
     }
 
     img {
@@ -83,16 +101,15 @@ export const MenuItems = styled.ul`
     width: 190px;
 `
 
-export const MenuItem = styled(Link) `
+export const MenuItem = styled(Link)`
     display: flex;
     gap: .5rem;
     align-items: center;
     padding: .5rem;
-
 `
 
 
-export const OutBtn = styled.button `
+export const OutBtn = styled.button`
     display: flex;
     align-items: center;
     background-color: transparent;
@@ -107,6 +124,36 @@ export const OutBtn = styled.button `
 
     &:hover {
         opacity: 1;
+    }
+`
+
+export const MenuBtn = styled.button`
+    background-color: transparent;
+    font-size: 20px;
+    color: ${(props) => props.theme.fontColor};
+    border: none;
+    cursor: pointer;
+`
+
+export const MenuBtnLi = styled.li`
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+    padding: .5rem;
+    cursor: pointer;
+`
+
+export const NavbarLinksContainer = styled.div`
+    @media screen and (max-width: 630px){
+        display: none;
+    }
+`
+
+export const MenuResponsive = styled.div`
+    display: none;
+
+    @media screen and (max-width: 630px){
+        display: block;
     }
 `
 
