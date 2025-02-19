@@ -6,6 +6,7 @@ export const TicketContainer = styled.div`
     width: 80%;
     flex-direction: column;
     gap: 2rem;
+    padding: 1rem;
 `
 
 export const Ticket = styled.div`

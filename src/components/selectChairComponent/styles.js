@@ -33,10 +33,15 @@ export const Chairs = styled.div `
     justify-content: center; 
     align-items: center;
     gap: 10px; 
-    padding: 2rem;
+    padding: .5rem;
     background-color: ${(props) => props.theme.mainContainer};
     max-width:60%;
     margin: 0 auto;
+
+    
+    @media screen and (max-width: 586px) {
+        max-width: none;
+    }  
 `
 
 export const Chair = styled.button`
@@ -98,6 +103,11 @@ export const LegendContainer = styled.div `
     background-color: ${(props) => props.theme.mainContainer};
     justify-content: space-around;
     border-top: 1px solid #ccc;
+
+    @media screen and (max-width: 400px) {
+        flex-direction: column;
+        align-items: start;
+    }   
 
 `
 

@@ -17,6 +17,7 @@ import { toast } from 'react-toastify';
 import { ChairInfo, ChairInformation, EditDate, EntryRequesting, Info, MovieInformations, SessionContainer, SessionControlBtn, SessionInformations, SessionRequestControl, SessionRequestInformations, SessionTime, TicketInfo, TicketInformation, TicketRequestInformations } from './styles.js';
 import { useTranslation } from 'react-i18next';
 import '../../lib/i18n/i18n.js';
+import scrollToTop from '../../js/scrollToTop.js';
 
 const Session = () => {
 
@@ -88,6 +89,7 @@ const Session = () => {
 
     const next = () => {
         setShowComponent(false);
+        scrollToTop();
     }
 
     const back = () => {
@@ -98,6 +100,7 @@ const Session = () => {
             setShowComponent(true);
             setSelectedTicket(null);
         }
+        scrollToTop();
     }
 
     if (!sessionData) {

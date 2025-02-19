@@ -42,6 +42,7 @@ export const NavbarInfo = styled.div`
 export const NavbarLinks = styled.ul`
    display: flex;
    align-items: center; 
+   justify-content: center;
 `
 
 export const MoviesLink = styled.li`
@@ -117,10 +118,11 @@ export const OutBtn = styled.button`
     border: none;
     cursor: pointer;
     font-weight: bold;
-    opacity: .6;
+    opacity: .8;
     font-size: 15px;
     transition: .3s;
     gap: .5rem;
+    padding: .5rem;
 
     &:hover {
         opacity: 1;

@@ -8,12 +8,12 @@ import Cookies from 'js-cookie'
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { loginUser } from '../../redux/user/actions.js';
-import { ForgoutPass, RegisterLinkBtn, SigninForm } from './styles.js';
+import { ForgoutPass, FormContainer, RegisterLinkBtn, SigninForm } from './styles.js';
 import { Regislink } from '../../components/Link.js';
 import { useTranslation } from 'react-i18next';
 import '../../lib/i18n/i18n.js';
 
-const LoginForm = ({loginSuccess}) => {
+const LoginForm = ({ loginSuccess }) => {
 
   const { t } = useTranslation();
 
@@ -61,7 +61,7 @@ const LoginForm = ({loginSuccess}) => {
             Authorization: `Bearer ${accessToken}`
           }
         })
-        
+
         localStorage.setItem("user", JSON.stringify(responseUser.data));
         dispatch(loginUser(responseUser.data));
         loginSuccess();
@@ -75,26 +75,27 @@ const LoginForm = ({loginSuccess}) => {
   };
 
   return (
-    <div className='signFormContainer'>
+    <div >
       <SigninForm onSubmit={handleLoginUser}>
-        <InputText
-          error={errors.email}
-          handleChange={handleChange}
-          nameInput={'email'}
-          value={formData.email}
-          placeholder={t('placeholder-digite-seu-email')} />
+        <FormContainer>
+          <InputText
+            error={errors.email}
+            handleChange={handleChange}
+            nameInput={'email'}
+            value={formData.email}
+            placeholder={t('placeholder-digite-seu-email')} />
 
-        <InputWithoutFilter
-          error={errors.password}
-          handleChange={handleChange}
-          nameInput={"password"} 
-          placeholder={t('placeholder-digite-sua-senha')} />
+          <InputWithoutFilter
+            error={errors.password}
+            handleChange={handleChange}
+            nameInput={"password"}
+            placeholder={t('placeholder-digite-sua-senha')} />
 
-        <ForgoutPass to={`/recover`}>
-          <p>{t('p-esqueceu-sua-senha')}</p>
-        </ForgoutPass>
-
-        <InputSubit type="submit" value={t('botao-entrar')}/>
+          <ForgoutPass to={`/recover`}>
+            <p>{t('p-esqueceu-sua-senha')}</p>
+          </ForgoutPass>
+          <InputSubit type="submit" value={t('botao-entrar')} />
+        </FormContainer>
         <RegisterLinkBtn>
           <p>{t('p-ainda-nao-tem-uma-conta')} <span><Regislink to={"/register"}>{t('cadastre-se')}</Regislink></span></p>
         </RegisterLinkBtn>

@@ -9,6 +9,10 @@ export const SessionContainer = styled.div`
 export const SessionInformations = styled.div `
     display: flex;
     gap: 1rem;
+
+    @media screen and (max-width: 868px){
+        flex-direction: column;
+    }
 `
 
 export const EntryRequesting = styled.div`
@@ -39,7 +43,7 @@ export const ChairInfo = styled.p`
     justify-content: space-between;
     align-items: center;  
     width: 100%;
-    color: ${(props) => props.theme.fontColor}
+    color: ${(props) => props.theme.fontColor};
 `;
 
 export const TicketInfo = styled.div `

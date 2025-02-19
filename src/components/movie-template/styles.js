@@ -10,7 +10,7 @@ export const MovieContainer = styled.div`
 `
 
 export const MovieInfoContainer = styled.div `
-  max-width: 200px;
+  max-width: 220px;
   text-align: center;
   margin: 0 auto;
   display: flex;
@@ -23,13 +23,13 @@ export const MovieInfoContainer = styled.div `
 `
   
 export const MovieImg = styled.img `
-  width: 200px;
-  height: 250px;
+  width: 220px;
+  height: 300px;
   object-fit: cover;
   border-radius: 8px;
   
   @media screen and (max-width: 425px){
-    width: 150px;
-    height: 200px;
+    width: 170px;
+    height: 250px;
   }
 `

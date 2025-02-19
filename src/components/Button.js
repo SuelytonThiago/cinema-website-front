@@ -26,6 +26,10 @@ export const EyesButton = styled.button`
     outline: none;
     color: #17191f;
 
+    @media screen and (max-width: 425px){
+        right: 40px;
+    }
+
 `
 
 export const BaseBackButton = `

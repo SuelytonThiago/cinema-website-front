@@ -3,7 +3,7 @@ import LoginForm from './LoginForm';
 import { useDispatch } from 'react-redux';
 import { hideLoginModal } from '../../redux/show-login-modal/actions';
 import { FaTimes , FaUser } from 'react-icons/fa';
-import { AuthenticationTab, AuthenticationTitle, Btn, Title } from './styles';
+import { AuthenticationTab, AuthenticationTitle, Btn, Container, Title } from './styles';
 import { Overlay } from '../../components/Overlay';
 import { useTranslation } from 'react-i18next';
 import '../../lib/i18n/i18n.js';
@@ -19,7 +19,7 @@ const LoginModal = () => {
   };
 
   return (
-    <div>
+    <Container>
         <Overlay></Overlay>
         <AuthenticationTab>
           <AuthenticationTitle>
@@ -32,7 +32,7 @@ const LoginModal = () => {
           </AuthenticationTitle>
           <LoginForm loginSuccess={handleHideLoginModal} />
         </AuthenticationTab>
-    </div>
+    </Container>
   );
 };
 

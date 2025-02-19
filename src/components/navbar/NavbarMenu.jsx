@@ -9,6 +9,7 @@ import { Overlay } from '../Overlay';
 import { useTranslation } from 'react-i18next';
 import { useThemeContext } from '../../hooks/UseThemeContext';
 import i18next from 'i18next';
+import { useTheme } from 'styled-components';
 
 const menu = ({ user }) => {
 
@@ -57,7 +58,12 @@ const menu = ({ user }) => {
                         <p>{t('ola')}, <span>{user.name}</span></p>
                     </>
                 ) : (
-                    isOpen ? (<FaTimes size={'24px'}/>) : (<FaBars size={'24px'}/>)
+                    isOpen ? (
+                        <FaTimes size={'24px'} color={useTheme().fontColor}/>
+                    ) : 
+                    (
+                        <FaBars size={'24px'} color={useTheme().fontColor}/>
+                    )
                 )}
             </MenuButton>
             {isOpen && (
