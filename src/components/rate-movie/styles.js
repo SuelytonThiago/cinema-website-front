@@ -17,7 +17,7 @@ export const UserAvaliationControl = styled.div`
     display: flex;
     gap: 15px;
     align-items: center;
-    min-width: 600px; /* Limita a largura máxima */
+    
    
 `
 
@@ -72,7 +72,12 @@ export const CommentUserForm = styled.form`
     display: flex;
     align-items: center;
     gap: .5rem;
+    max-width: 300px;
     
+    @media screen and (max-width: 425px){
+        flex-direction: column;
+    }
+
 `
 
 

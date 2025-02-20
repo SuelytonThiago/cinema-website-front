@@ -26,10 +26,6 @@ export const EyesButton = styled.button`
     outline: none;
     color: #17191f;
 
-    @media screen and (max-width: 425px){
-        right: 40px;
-    }
-
 `
 
 export const BaseBackButton = `
@@ -76,9 +72,9 @@ export const CrossBtn = styled(Link)`
    position: absolute;
    top: 0;
    right: 0;
-   margin: 3rem 5rem;
+   margin: 1rem 2rem;
    background-color: transparent;
-   color: #fff;
+   color: ${(props) => props.theme.fontColor };
    border: none;
    padding: .5rem;
    font-weight: bold;
@@ -89,6 +85,10 @@ export const CrossBtn = styled(Link)`
 
     &:hover {
         opacity: 1;
+    }
+
+    @media screen and (max-width: 768px){
+        color: ${(props) => props.theme.fontColor };
     }
 
 `

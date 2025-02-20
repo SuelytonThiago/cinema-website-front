@@ -101,8 +101,8 @@ const Register = () => {
   return (
     <>
       <BackgroundRegisterContainer>
-        <CrossBtn to={'/'}><AiOutlineClose /></CrossBtn>
         <RegisterContainer>
+        <CrossBtn to={'/'}><AiOutlineClose /></CrossBtn>
           <h2>{t('h2-cadastro')}</h2>
           <p>{t('p-campos-obrigatorios')}</p>
           <RegisterForm>
@@ -116,22 +116,20 @@ const Register = () => {
                     handleChange={handleChange}
                     nameInput={'name'}
                     value={formData.name}
-                    placeholder={t('placeholder-digite-seu-nome')}
-                    style={{width: '500px'}} />
+                    placeholder={t('placeholder-digite-seu-nome')}   />
                 </RegisterFormControl>
 
-                <div className={'registerFormControl'}>
+                <RegisterFormControl>
                   <label htmlFor="email">{t('label-email')}</label>
                   <InputText
                     error={errors.email}
                     handleChange={handleChange}
                     nameInput={'email'}
                     value={formData.email}
-                    placeholder={t('placeholder-digite-seu-email')} 
-                    style={{width: '500px'}}/>
-                </div>
+                    placeholder={t('placeholder-digite-seu-email')}/>
+                </RegisterFormControl>
 
-                <div className={'registerFormControl'}>
+                <RegisterFormControl>
                   <label htmlFor="cpf">{t('label-cpf')}</label>
                   <InputMaskComponent
                     error={errors.cpf}
@@ -139,11 +137,10 @@ const Register = () => {
                     nameInput={'cpf'}
                     value={formData.cpf}
                     placeholder={t('placeholder-digite-seu-cpf')}
-                    mask={'999.999.999-99'}
-                    style={{width: '500px'}}/>
-                </div>
+                    mask={'999.999.999-99'}/>
+                </RegisterFormControl>
 
-                <div className={'registerFormControl'}>
+                <RegisterFormControl>
                   <label htmlFor="contactNumber">{t('label-telefone')}</label>
                   <InputMaskComponent
                     error={errors.contactNumber}
@@ -151,29 +148,26 @@ const Register = () => {
                     nameInput={'contactNumber'}
                     value={formData.contactNumber}
                     placeholder={t('placeholder-digite-seu-telefone')}
-                    mask={"(99) 99999-9999"}
-                    style={{width: '500px'}}/>
-                </div>
+                    mask={"(99) 99999-9999"}/>
+                </RegisterFormControl>
               </>
             ) : (
               <>
-                <div className={'registerFormControl'}>
+                <RegisterFormControl>
                   <label htmlFor="newPassword">{t('label-senha')}</label>
                   <InputWithFilter 
                     handleChange={handleChange} 
                     error={errors.newPassword} 
-                    newPassword={formData.newPassword}
-                    style={{width: '500px'}}/>
+                    newPassword={formData.newPassword}/>
 
-                </div>
+                </RegisterFormControl>
                 <div className={'registerFormControl'}>
                   <label htmlFor="confirmPassword">{t('label-confirmar-senha')}</label>
                   <InputWithoutFilter
                     handleChange={handleChange}
                     error={errors.confirm}
                     nameInput={'confirm'}
-                    placeholder={t('placeholder-novamente-sua-senha')}
-                    style={{width: '500px'}}/>
+                    placeholder={t('placeholder-novamente-sua-senha')}/>
                 </div>
               </>
             )

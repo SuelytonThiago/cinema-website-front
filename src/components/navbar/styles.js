@@ -129,14 +129,6 @@ export const OutBtn = styled.button`
     }
 `
 
-export const MenuBtn = styled.button`
-    background-color: transparent;
-    font-size: 20px;
-    color: ${(props) => props.theme.fontColor};
-    border: none;
-    cursor: pointer;
-`
-
 export const MenuBtnLi = styled.li`
     display: flex;
     gap: .5rem;

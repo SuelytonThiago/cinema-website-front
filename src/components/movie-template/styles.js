@@ -29,7 +29,7 @@ export const MovieImg = styled.img `
   border-radius: 8px;
   
   @media screen and (max-width: 425px){
-    width: 170px;
+    width: 160px;
     height: 250px;
   }
 `

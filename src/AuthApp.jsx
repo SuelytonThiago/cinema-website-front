@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { ThemeProvider } from 'styled-components';
@@ -8,7 +8,11 @@ import { useThemeContext } from './hooks/UseThemeContext.jsx';
 
 const AuthLayout = () => {
 
-  const {theme} = useThemeContext();
+  const { theme, setTheme} = useThemeContext();
+
+  useEffect(() => {
+    setTheme(localStorage.getItem('theme'));
+  }, [])
 
   return (
     <div className="auth-container">

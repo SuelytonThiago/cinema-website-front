@@ -5,6 +5,11 @@ export const MovieHeader = styled.div `
     gap: 1rem;
     padding: 1rem;
     background-color: ${(props) => props.theme.container};
+
+    @media screen and (max-width: 612px){
+
+        flex-direction: column;
+    }
 `
 
 export const MovieImg = styled.img `

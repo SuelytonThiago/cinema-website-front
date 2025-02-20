@@ -14,8 +14,9 @@ const Login = () => {
 
   return (
     <SigContainer>
-      <CrossBtn to={'/'}><AiOutlineClose /></CrossBtn>
+
       <SigninContainer>
+        <CrossBtn to={'/'}><AiOutlineClose /></CrossBtn>
         <LoginForm loginSuccess={handleLoginSuccess} />
       </SigninContainer>
 

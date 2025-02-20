@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 export const CategoriesContainer = styled.div`
     display: flex;
+    
     flex-wrap: wrap;
     gap: 10px;
     background-color:${(props) => props.theme.container};
@@ -13,14 +14,15 @@ export const CategoriesContainer = styled.div`
 `
 
 
-export const CategoryBtn = styled.button `
+export const CategoryBtn = styled.button`
     display: flex;
     align-items: center;
     gap: 5px;
-    flex: 1 0 10%;
+    flex: 1 1 120px;
+    width: 120px;
     max-width: 10%;
     background-color: transparent;
-    color: ${(props) => props.$active ? '#1877F2' : props.theme.fontColor };
+    color: ${(props) => props.$active ? '#1877F2' : props.theme.fontColor};
     border: none;
     opacity: ${(props) => props.$active ? '1' : '.7'};
     transition: .3s;
@@ -30,6 +32,16 @@ export const CategoryBtn = styled.button `
 
     &:hover {
         opacity: 1
+    }
+
+    @media screen and (max-width: 1086px) {
+        max-width: 15%;
+    }
+    @media screen and (max-width: 938px) {
+        max-width: 20%;
+    }
+    @media screen and (max-width: 718px) {
+        max-width: 30%;
     }
 
 `

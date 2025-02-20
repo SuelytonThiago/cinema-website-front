@@ -17,7 +17,7 @@ export const BaseInputStyles = `
     }
 
     @media screen and (max-width: 425px){
-        width: 80%;
+        width: 100%;
     }
 `;
 
@@ -36,7 +36,7 @@ export const BaseInputStylesError = `
     }
 
     @media screen and (max-width: 425px){
-        width: 80%;
+        width: 100%;
     }
 `;
 

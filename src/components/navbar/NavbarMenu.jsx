@@ -1,10 +1,10 @@
 import React from 'react'
 import { useState } from 'react'
-import { FaMoon, FaSun, FaTimes, FaBars, FaSignInAlt , FaPlusCircle   } from 'react-icons/fa'
+import { FaMoon, FaSun, FaTimes, FaBars, FaSignInAlt, FaPlusCircle } from 'react-icons/fa'
 import { FaTicketAlt } from 'react-icons/fa';
 import { FaPen } from 'react-icons/fa';
 import useLogout from '../../js/Logout'
-import { MenuBtn, MenuBtnLi, MenuButton, MenuContainer, MenuItem, MenuItems, OutBtn} from './styles'
+import { MenuBtnLi, MenuButton, MenuContainer, MenuItem, MenuItems, OutBtn } from './styles'
 import { Overlay } from '../Overlay';
 import { useTranslation } from 'react-i18next';
 import { useThemeContext } from '../../hooks/UseThemeContext';
@@ -59,33 +59,33 @@ const menu = ({ user }) => {
                     </>
                 ) : (
                     isOpen ? (
-                        <FaTimes size={'24px'} color={useTheme().fontColor}/>
-                    ) : 
-                    (
-                        <FaBars size={'24px'} color={useTheme().fontColor}/>
-                    )
+                        <FaTimes size={'24px'} color={useTheme().fontColor} />
+                    ) :
+                        (
+                            <FaBars size={'24px'} color={useTheme().fontColor} />
+                        )
                 )}
             </MenuButton>
             {isOpen && (
                 <div>
                     <Overlay onClick={() => closeMenu()}></Overlay>
                     <MenuItems>
-                        <MenuBtnLi>
-                                <MenuBtn onClick={themeToggler}>
-                                    {theme === 'light' ?
-                                        (<FaMoon />)
-                                        :
-                                        (<FaSun />)
-                                    }
-                                </MenuBtn>
+                        <li>
+                            <MenuBtnLi onClick={themeToggler}>
+                                {theme === 'light' ?
+                                    (<FaMoon />)
+                                    :
+                                    (<FaSun />)
+                                }
                                 {t("tema")}
-                        </MenuBtnLi>
+                            </MenuBtnLi>
+                        </li>
                         <li>
                             <MenuBtnLi onClick={languageToggler}>
                                 {language === 'pt' ? (
-                                    <span style={{fontWeight: 'bold', fontSize: '20px'}}>🇧🇷</span>
+                                    <span style={{ fontWeight: 'bold', fontSize: '20px' }}>🇧🇷</span>
                                 ) : (
-                                    <span style={{fontWeight: 'bold', fontSize: '20px'}}>🇺🇸</span>
+                                    <span style={{ fontWeight: 'bold', fontSize: '20px' }}>🇺🇸</span>
                                 )}
                                 {t("linguagem")}
                             </MenuBtnLi>
@@ -108,12 +108,12 @@ const menu = ({ user }) => {
                             <>
                                 <li>
                                     <MenuItem to={"/login"} >
-                                        <FaSignInAlt/>{t('link-entrar')}
+                                        <FaSignInAlt />{t('link-entrar')}
                                     </MenuItem>
                                 </li>
                                 <li>
                                     <MenuItem to={"/register"} >
-                                        <FaPlusCircle/>{t('link-criar-conta')}
+                                        <FaPlusCircle />{t('link-criar-conta')}
                                     </MenuItem>
                                 </li>
                             </>

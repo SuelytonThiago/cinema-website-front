@@ -8,6 +8,7 @@ import RandomMovies from '../../components/random-movies/RandomMovies.jsx';
 import { Container, H2 } from './styles.js';
 import { useTranslation } from 'react-i18next';
 import '../../lib/i18n/i18n.js';
+import SearchMoviesSkeleton from '../../components/skeleton-loading/search-movies/SearchMoviesSkeleton.jsx';
 
 const Home = () => {
 
@@ -52,7 +53,7 @@ const Home = () => {
         const response = await backend.sessionAPI.getAll();
         setSessions(response.data);
         setIsLoading(false);
-        
+
       } catch (err) {
         setIsLoading(false);
         setIsError(true);

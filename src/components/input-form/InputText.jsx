@@ -2,12 +2,12 @@ import React from 'react'
 import { Input, ErrorInput } from '../Input.js'
 import { MessageError } from '../Paragraph.js'
 
-const InputText = ({ error, handleChange, nameInput, value, placeholder, style }) => {
+const InputText = ({ error, handleChange, nameInput, value, placeholder }) => {
     return (
         <div>
             {error ? (
                 <ErrorInput
-                    style = {style}
+                    
                     type="text"
                     id={nameInput}
                     name={nameInput}
@@ -17,7 +17,6 @@ const InputText = ({ error, handleChange, nameInput, value, placeholder, style }
                     placeholder={placeholder} />
             ) : (
                 <Input
-                    style = {style}
                     type="text"
                     id={nameInput}
                     name={nameInput}

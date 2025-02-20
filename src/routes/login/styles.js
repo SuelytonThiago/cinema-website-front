@@ -17,6 +17,7 @@ export const SigninContainer = styled.div`
   align-items: center;
   flex: 1;  
   height: 100%;  
+  position: relative;
 `
 
 
@@ -28,6 +29,10 @@ export const BackImg = styled.div`
     width: 100%; 
     height: 100%; 
     object-fit: cover; 
+  }
+
+  @media screen and (max-width: 768px){
+    display: none;
   }
 `
 
@@ -58,6 +63,10 @@ export const RegisterLinkBtn = styled.div`
   color: #000;
   font-size: 15px;
   text-align: center;
+
+  @media screen and (max-width: 354px){
+    font-size: 13px;
+  }
 
 `
 export const FormContainer = styled.div`

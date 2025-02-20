@@ -48,9 +48,7 @@ const RateMovie = ({ id }) => {
         setComment(response.data.comment);
       }
 
-    } catch (err) {
-        toast.error(err.response.data.Message);
-    }
+    } catch (err) { }
   }
 
   useEffect(() => {
@@ -98,7 +96,7 @@ const RateMovie = ({ id }) => {
 
         setIsEditing(false);
       } catch (err) {
-        console.log(err)
+        toast.error(err.response.data.Message);
       }
     } else {
       dispatch(showLoginModal());
@@ -138,7 +136,6 @@ const RateMovie = ({ id }) => {
               ))}
               <CommentUserForm onSubmit={handleAddRating}>
                 <InputText 
-                  style={{width: '300px'}}
                   error={''}
                   handleChange={(e) => setComment(e.target.value)}
                   nameInput={'comment'}

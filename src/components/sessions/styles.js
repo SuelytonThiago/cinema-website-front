@@ -76,6 +76,7 @@ export const SessionImg = styled.img`
 `
 
 export const H2 = styled.h2`
+    font-size: 30px;
     @media screen and (max-width: 425px){
         font-size: 15px;
     }

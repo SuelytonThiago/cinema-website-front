@@ -4,17 +4,20 @@ import Skeleton from 'react-loading-skeleton'
 export const SkeletonContainer = styled.div`
     display: flex;
     gap: 1rem;
-    justify-content: center ;
-    
-    @media screen and (max-width: 425px){
-        flex-direction: column;
-    }
+    justify-content: flex-start; 
+    overflow-x: auto; 
+    scroll-behavior: smooth; 
+    padding-bottom: 10px; 
 
+    &::-webkit-scrollbar {
+        display: none;
+    }
 `
+
+
 
 export const MovieSkeleton = styled.div`
     text-align: center;
-    overflow: hidden;
 
 `
 
