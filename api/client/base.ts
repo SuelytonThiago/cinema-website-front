@@ -17,16 +17,13 @@ import type { Configuration } from './configuration';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import type { AxiosPromise, AxiosInstance, RawAxiosRequestConfig } from 'axios';
-import axios from 'axios';
+import globalAxios from 'axios';
 
 export const BASE_PATH = "http://localhost:8080".replace(/\/+$/, "");
 
-
-export const globalAxios = axios.create();
-
 /**
  *
- * @export 
+ * @export
  */
 export const COLLECTION_FORMATS = {
     csv: ",",

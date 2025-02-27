@@ -7,7 +7,7 @@ const SearchMoviesSkeleton = () => {
     return (
         <div>
             <SkeletonContainer>
-                {[...Array(4)].map((_, i) => (
+                {[...Array(6)].map((_, i) => (
                     <MovieSkeleton key={i}>
                         <SkeletonImg/>
                         <Skeleton  width='120px' height='20px'/>

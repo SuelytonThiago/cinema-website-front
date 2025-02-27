@@ -441,19 +441,6 @@ export interface TicketsResponseDto {
 /**
  * 
  * @export
- * @interface UploadFileRequest
- */
-export interface UploadFileRequest {
-    /**
-     * 
-     * @type {File}
-     * @memberof UploadFileRequest
-     */
-    'file': File;
-}
-/**
- * 
- * @export
  * @interface UserLoginDto
  */
 export interface UserLoginDto {
@@ -1097,11 +1084,13 @@ export const FileControllerApiAxiosParamCreator = function (configuration?: Conf
         /**
          * 
          * @summary insert file into aws bucket
-         * @param {UploadFileRequest} [uploadFileRequest] 
+         * @param {File} file 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        uploadFile: async (uploadFileRequest?: UploadFileRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        uploadFile: async (file: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'file' is not null or undefined
+            assertParamExists('uploadFile', 'file', file)
             const localVarPath = `/api/files/upload`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1113,19 +1102,24 @@ export const FileControllerApiAxiosParamCreator = function (configuration?: Conf
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
+            if (file !== undefined) { 
+                localVarFormParams.append('file', file as any);
+            }
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(uploadFileRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = localVarFormParams;
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1157,12 +1151,12 @@ export const FileControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary insert file into aws bucket
-         * @param {UploadFileRequest} [uploadFileRequest] 
+         * @param {File} file 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async uploadFile(uploadFileRequest?: UploadFileRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.uploadFile(uploadFileRequest, options);
+        async uploadFile(file: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.uploadFile(file, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FileControllerApi.uploadFile']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1189,12 +1183,12 @@ export const FileControllerApiFactory = function (configuration?: Configuration,
         /**
          * 
          * @summary insert file into aws bucket
-         * @param {UploadFileRequest} [uploadFileRequest] 
+         * @param {File} file 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        uploadFile(uploadFileRequest?: UploadFileRequest, options?: RawAxiosRequestConfig): AxiosPromise<string> {
-            return localVarFp.uploadFile(uploadFileRequest, options).then((request) => request(axios, basePath));
+        uploadFile(file: File, options?: RawAxiosRequestConfig): AxiosPromise<string> {
+            return localVarFp.uploadFile(file, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1220,13 +1214,13 @@ export class FileControllerApi extends BaseAPI {
     /**
      * 
      * @summary insert file into aws bucket
-     * @param {UploadFileRequest} [uploadFileRequest] 
+     * @param {File} file 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FileControllerApi
      */
-    public uploadFile(uploadFileRequest?: UploadFileRequest, options?: RawAxiosRequestConfig) {
-        return FileControllerApiFp(this.configuration).uploadFile(uploadFileRequest, options).then((request) => request(this.axios, this.basePath));
+    public uploadFile(file: File, options?: RawAxiosRequestConfig) {
+        return FileControllerApiFp(this.configuration).uploadFile(file, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

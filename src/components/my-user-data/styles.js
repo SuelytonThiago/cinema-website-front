@@ -49,6 +49,10 @@ export const UserFormInput = styled.div`
 export const UserFormSubmit = styled(UserFormInput)`
     width: 250px;
     box-shadow: inset 0 0 1px 1px #ccc;
+
+    @media screen and (max-width: 434px){
+        width: 100%;
+    }
     
 `
 
@@ -88,11 +92,21 @@ export const UserDataSubmit = styled.div`
     p {
         color: ${(props) => props.theme.fontColor};
     }
+
+    @media screen {
+        
+    }
 `;
 
 export const UserFormSubmitControl = styled.div`
     display: flex;
     gap: 10px;
+    
+
+    @media screen and (max-width: 434px){
+        flex-direction: column;
+        width: 100%;
+    }
 `
 
 export const VerifyPassInput = styled.div`
@@ -100,8 +114,7 @@ export const VerifyPassInput = styled.div`
 
     input {
         height: 20px;
-        
-
+        width: 100%;
     }
 
 `;

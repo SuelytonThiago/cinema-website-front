@@ -3,6 +3,16 @@ import styled from "styled-components";
 export const UserDataContainer = styled.div`
     display: flex;
     gap: 2rem;
+
+    @media screen and (max-width: 700px){
+        flex-direction: column;
+        padding: 2rem;
+    }
+
+    @media screen and (max-width: 425px){
+        flex-direction: column;
+        padding: .5rem;
+    }
 `
 
 export const UserDataControl = styled.div`
@@ -13,6 +23,13 @@ export const UserDataControl = styled.div`
     height: 80vh;
     background-color: ${(props) => props.theme.mainContainer};
     padding: 2rem 0 2rem 2rem;
+
+    @media screen and (max-width: 700px){
+        width: 100%;
+        height: 200px;
+        padding: 0rem;
+    }
+
 `
 
 export const UserImgProfileContainer = styled.div`  
@@ -20,6 +37,10 @@ export const UserImgProfileContainer = styled.div`
     gap: 1rem;
     align-items: center;
     position: relative;
+
+    @media screen and (max-width: 700px){
+        padding: 2rem;
+    }
 `
 
 export const UserImg = styled.div` 
@@ -50,7 +71,7 @@ export const UserImg = styled.div`
 
 
 
-export const UserInfos = styled.div `
+export const UserInfos = styled.div`
     max-width: 200px;
 
     p {
@@ -66,15 +87,20 @@ export const UserInfos = styled.div `
     }
 `
 
-export const UserDataLinks = styled.div `
+export const UserDataLinks = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
     justify-content: space-around;
+
+    @media screen and (max-width: 700px){
+        flex-direction: row;
+        border-bottom: 1px solid #ccc;
+    }
 `
 
 
-export const UserDataBtn = styled.button `
+export const UserDataBtn = styled.button`
     background-color: #4f535f;
     padding: .5rem;
     border: none;
@@ -88,11 +114,24 @@ export const UserDataBtn = styled.button `
 
     &.activatebtnSS {
         background-color: #1877F2;
+        
+        @media screen and (max-width: 700px){
+            background-color: transparent;
+            border-radius: 0px;
+            border-bottom: 2px solid #1877F2;
+        }
+    }
+
+    @media screen and (max-width: 700px){
+        border-radius: none;
+        background-color: transparent;
+        color: ${(props) => props.theme.fontColor};
+        font-size: 14px;
     }
 
 `
 
-export const Exit = styled.button ` 
+export const Exit = styled.button` 
     background-color: transparent;
     color: #1877F2;
     border: none;
@@ -103,6 +142,10 @@ export const Exit = styled.button `
     cursor: pointer;
     opacity: .78;
     transition: .3s;
+
+    @media screen and (max-width: 700px){
+        display: none;
+    }
 `
 
 
