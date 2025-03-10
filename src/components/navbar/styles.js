@@ -144,10 +144,18 @@ export const NavbarLinksContainer = styled.div`
 `
 
 export const MenuResponsive = styled.div`
+
+`
+
+export const MenuResponsiveContainer = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
     display: none;
 
     @media screen and (max-width: 630px){
-        display: block;
+        display: flex;
     }
 `
 

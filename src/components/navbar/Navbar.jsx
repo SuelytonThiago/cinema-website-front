@@ -3,7 +3,7 @@ import { FaSearch } from 'react-icons/fa';
 import Menu from './NavbarMenu.jsx'
 import { useSelector } from 'react-redux';
 import { LinkBtn, SearchBtn } from '../Link.js';
-import { Logo, MenuResponsive, MoviesLink, NavbarContainer, NavbarInfo, NavbarLinks, NavbarLinksContainer } from './styles.js';
+import { Logo, MenuResponsive, MenuResponsiveContainer, MoviesLink, NavbarContainer, NavbarInfo, NavbarLinks, NavbarLinksContainer } from './styles.js';
 import ThemeBtn from '../theme-button/ThemeBtn.jsx';
 import LanguageBtn from '../language-btn/LanguageBtn.jsx';
 import { useTranslation } from 'react-i18next';
@@ -78,9 +78,16 @@ const Navbar = () => {
                             )
                         }
                     </NavbarLinksContainer>
-                    <MenuResponsive>
-                        <Menu user={currentUser} />
-                    </MenuResponsive>
+                    <MenuResponsiveContainer>
+                        <SearchBtn to={`/movies`}>
+                            <FaSearch />
+                        </SearchBtn>
+                        <MenuResponsive>
+
+                            <Menu user={currentUser} />
+                        </MenuResponsive>
+                    </MenuResponsiveContainer>
+
                 </NavbarInfo>
             </NavbarContainer>
         </div>
