@@ -5,6 +5,8 @@ export const RecoverContainer = styled.form`
     flex-direction: column;
     justify-content: center;
     gap: 1rem;
+
+
 `
 
 export const ControlRecoverContainer = styled.div`

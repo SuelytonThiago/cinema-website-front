@@ -10,6 +10,12 @@ export const VerifyCodeContainer = styled.div`
     p {
         text-align: center;
     }
+
+    @media screen and (max-width: 425px){
+        h1 {
+            font-size: 17px;
+        }
+    }
 `
 
 export const VerifyInputContainer = styled.div`
@@ -34,10 +40,15 @@ export const InputCode = styled.input`
         outline: none; 
         box-shadow: none;
     }
+
+    @media screen and (max-width: 425px){
+        width: 40px;
+        height: 40px;
+    }
 `
 
 
-export const VerifyInput = styled.div `
+export const VerifyInput = styled.div`
     display: flex;
     gap: 10px;
 `

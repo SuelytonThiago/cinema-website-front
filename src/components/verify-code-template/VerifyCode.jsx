@@ -11,7 +11,7 @@ const VerifyCode = ({ goNext, goBack }) => {
 
   const { t } = useTranslation();
 
-  const email = Cookies.get('recoveryEmail');
+  const email = localStorage.getItem('email');
 
   const [pins, setPins] = useState(["", "", "", "", "", ""]);
 
@@ -24,12 +24,12 @@ const VerifyCode = ({ goNext, goBack }) => {
       const res = await backend.recoverAPI.verifyCode(code, email);
       Cookies.set('accessToken', res.data)
       console.log(res);
-      goNext()
+      goNext();
     } catch (err) {
       setInvalidCode(true);
-      toast.error(err.response.data.Message)
+      toast.error(err.response.data.Message);
+      
     }
-    console.log(invalidCode);
   };
 
 
@@ -69,7 +69,7 @@ const VerifyCode = ({ goNext, goBack }) => {
   return (
     <div>
       <VerifyCodeContainer>
-        <h1>{t('h1-autenticacao-de-acesso')}</h1>
+        <h1 >{t('h1-autenticacao-de-acesso')}</h1>
         <p>{t('p-informe-seu-codigo')}</p>
         <h3>{email}</h3>
         <VerifyInputContainer>
@@ -82,7 +82,6 @@ const VerifyCode = ({ goNext, goBack }) => {
                 type="text"
                 maxLength="1"
                 value={pin}
-                onClick={() => handleClick(index)}
                 onChange={(e) => handleChange(e, index)}
                 onKeyDown={(e) => handleKeyDown(e, index)}
                 onPaste={handlePaste} />

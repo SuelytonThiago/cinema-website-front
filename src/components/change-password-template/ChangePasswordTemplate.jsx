@@ -58,9 +58,8 @@ const ChangePasswordTemplate = () => {
                         Authorization: `Bearer ${Cookies.get("accessToken")}`
                     }
                 })
-                Cookies.remove("recoveryEmail");
                 Cookies.remove("accessToken");
-                Cookies.remove('recoveryEmail');
+       
                 navigate('/login');
             } catch (err) {
                 toast.error(err.response.data.Message)

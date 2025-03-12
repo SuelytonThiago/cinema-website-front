@@ -21,6 +21,11 @@ export const ChangeContainer = styled.div `
     padding: 5rem; 
     color: ${(props) => props.theme.fontColor};
     gap: 2rem;
+
+    @media screen and (max-width: 320px){
+        width: 100%;
+        padding: 1rem;
+    }
 `
 
 export const CrossBtn = styled.button `

@@ -7,7 +7,6 @@ import { TitleH1 } from '../Title.js';
 import { BackButtonLink, NextButton } from '../Button.js';
 import { toast } from 'react-toastify';
 
-import { useEmailContext } from '../../hooks/UseEmailContext.jsx';
 
 import { useTranslation } from 'react-i18next';
 import '../../lib/i18n/i18n.js';
@@ -19,7 +18,7 @@ const RecoverPassword = ({ goNext }) => {
 
     const [errorEmail, setErrorEmail] = useState("");
 
-    const {email, setEmail} = useEmailContext();
+    const [email, setEmail] = useState("");
 
     const validateEmail = () => {
 
@@ -40,6 +39,7 @@ const RecoverPassword = ({ goNext }) => {
         if (!err) {
             try {
                 await backend.recoverAPI.recoverPassword(email);
+                localStorage.setItem('email',email);
                 goNext();
             } catch (err) {
                 toast.error(t('erro-enviar-email'));   
