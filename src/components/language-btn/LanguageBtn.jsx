@@ -10,7 +10,7 @@ const LanguageBtn = () => {
     const languageToggler = () => {
         const newLanguage = language === 'pt' ? 'en' : 'pt';
         localStorage.setItem('lang', newLanguage);
-        i18next.changeLanguage(newLanguage);
+        window.location.reload();
     }
 
 

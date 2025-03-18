@@ -19,14 +19,13 @@ const ChangePasswordTemplate = () => {
 
     const navigate = useNavigate();
 
-    const [errors, setErrors] = useState({});
 
     const initialState = {
         newPassword: '',
         confirm: ''
     }
 
-    const { formData, handleChange } = useForm(initialState);
+    const { formData, handleChange, errors, setErrors, handleOnFocus } = useForm(initialState);
 
     const validate = () => {
         const errors = {}
@@ -75,11 +74,13 @@ const ChangePasswordTemplate = () => {
                 <InputWithFilter 
                 error={errors.password} 
                 handleChange={handleChange} 
+                handleOnFocus={handleOnFocus}
                 newPassword={formData.newPassword} />
                 
                 <InputWithoutFilter 
                 error={errors.confirm} 
                 handleChange={handleChange} 
+                handleOnFocus={handleOnFocus}
                 nameInput={"confirm"} 
                 placeholder={t('placeholder-confirmacao-senha')} />
                 

@@ -8,7 +8,7 @@ import { MenuBtnLi, MenuButton, MenuContainer, MenuItem, MenuItems, OutBtn } fro
 import { Overlay } from '../Overlay';
 import { useTranslation } from 'react-i18next';
 import { useThemeContext } from '../../hooks/UseThemeContext';
-import i18next from 'i18next';
+
 import { useTheme } from 'styled-components';
 
 const menu = ({ user }) => {
@@ -26,7 +26,7 @@ const menu = ({ user }) => {
     const languageToggler = () => {
         const newLanguage = language === 'pt' ? 'en' : 'pt';
         localStorage.setItem('lang', newLanguage);
-        i18next.changeLanguage(newLanguage);
+        window.location.reload();
     }
 
     const { t } = useTranslation();

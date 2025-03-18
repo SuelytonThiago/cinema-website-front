@@ -5,6 +5,7 @@
     "validacao-email":"enter a valid email",
     "validacao-cpf":"enter a valid CPF",
     "validacao-nome":"enter a valid name",
+    "validacao-autoridade": "You are not authorized to access this page!",
 
 
     "placeholder-senha-antiga":"Enter your old password",
@@ -17,6 +18,7 @@
     "placeholder-digite-seu-cpf":"Enter your CPF",
     "placeholder-digite-seu-telefone":"Enter your phone",
     "placeholder-novamente-sua-senha":"*Re-enter your password",
+    "placeholder-digite-nome-categoria": "Enter category name",
 
     "botao-salvar": "Save",
     "botao-cancelar": "Cancel",
@@ -66,6 +68,8 @@
     "erro-cadeiras-indisponiveis": "No chair available",
     "erro-selecione-uma-imagem": "Select an image to send.",
     "erro-algo-deu-errado":"Something went wrong",
+
+    "message-success": "Operation performed successfully",
 
     "tela":"Screen",
     "comprar": "Buy",

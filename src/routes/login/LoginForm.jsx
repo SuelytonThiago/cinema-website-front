@@ -17,7 +17,6 @@ const LoginForm = ({ loginSuccess }) => {
 
   const { t } = useTranslation();
 
-  const [errors, setErrors] = useState({});
   const dispatch = useDispatch()
 
   const initialState = {
@@ -25,7 +24,7 @@ const LoginForm = ({ loginSuccess }) => {
     password: '',
   };
 
-  const { formData, handleChange } = useForm(initialState);
+  const { formData, handleChange, errors, setErrors, handleOnFocus } = useForm(initialState);
 
 
   const validateErrors = () => {
@@ -81,6 +80,7 @@ const LoginForm = ({ loginSuccess }) => {
           <InputText
             error={errors.email}
             handleChange={handleChange}
+            handleOnFocus={handleOnFocus}
             nameInput={'email'}
             value={formData.email}
             placeholder={t('placeholder-digite-seu-email')} />
@@ -88,6 +88,7 @@ const LoginForm = ({ loginSuccess }) => {
           <InputWithoutFilter
             error={errors.password}
             handleChange={handleChange}
+            handleOnFocus={handleOnFocus}
             nameInput={"password"}
             placeholder={t('placeholder-digite-sua-senha')} />
 

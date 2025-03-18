@@ -9,6 +9,7 @@ import { Container, H2 } from './styles.js';
 import { useTranslation } from 'react-i18next';
 import '../../lib/i18n/i18n.js';
 import SearchMoviesSkeleton from '../../components/skeleton-loading/search-movies/SearchMoviesSkeleton.jsx';
+import AddCategory from '../../components/admin-components/add-category/AddCategory.jsx';
 
 const Home = () => {
 

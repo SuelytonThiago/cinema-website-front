@@ -5,7 +5,7 @@ import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { MessageError } from '../Paragraph.js';
 
 
-const InputWithoutFilter = ({ handleChange, error, nameInput , placeholder,style }) => {
+const InputWithoutFilter = ({ handleChange, error, nameInput, placeholder, handleOnFocus }) => {
 
   const [show, setShow] = useState(false);
   const handleTogglePassword = (e) => {
@@ -15,26 +15,16 @@ const InputWithoutFilter = ({ handleChange, error, nameInput , placeholder,style
 
   return (
     <div>
-      <div style={{position: 'relative'}}>
-        {error ? (
-          <ErrorInput
-            type={show ? 'text' : 'password'}
-            placeholder={placeholder}
-            id={nameInput}
-            name={nameInput}
-            onChange={handleChange}
-            autocomplete="current-password" 
-            style = {style}/>) : (
-          <Input
-            type={show ? 'text' : 'password'}
-            placeholder={placeholder}
-            id={nameInput}
-            name={nameInput}
-            onChange={handleChange}
-            autocomplete="current-password" 
-            style = {style}/>)
-
-        }
+      <div style={{ position: 'relative' }}>
+        <Input
+          type={show ? 'text' : 'password'}
+          placeholder={placeholder}
+          id={nameInput}
+          name={nameInput}
+          onChange={handleChange}
+          onFocus={handleOnFocus}
+          autocomplete="current-password"
+          style={{ border: `1px solid ${error ? 'red' : '#1877F2'}` }} />
         <MessageError>{error}</MessageError>
 
         <EyesButton onClick={(e) => handleTogglePassword(e)}>

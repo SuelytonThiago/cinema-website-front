@@ -16,7 +16,6 @@ import { ControlBtn, CreateNewPassContainer } from './styles.js';
 import { Overlay } from '../Overlay.js';
 
 const CreatePasswordProfile = ({ handleShowWindow }) => {
-    const [errors, setErrors] = useState({});
     const { t } = useTranslation();
 
     const initialFormData = {
@@ -25,7 +24,7 @@ const CreatePasswordProfile = ({ handleShowWindow }) => {
         confirm: "",
     }
 
-    const { formData, handleChange } = useForm(initialFormData)
+    const { formData, handleChange, errors, setErrors, handleOnFocus } = useForm(initialState);
 
     const validate = () => {
         const errors = {}
@@ -79,17 +78,20 @@ const CreatePasswordProfile = ({ handleShowWindow }) => {
                 <h1>{t('h1-atualizar-senha')}</h1>
                 <InputWithoutFilter 
                     handleChange={handleChange} 
+                    handleOnFocus={handleOnFocus}
                     error={errors.oldPassword} 
                     nameInput={"oldPassword"}
                     placeholder={t('placeholder-senha-antiga')} />
 
                 <InputWithFilter 
                     handleChange={handleChange} 
+                    handleOnFocus={handleOnFocus}
                     error={errors.newPassword} 
                     newPassword={formData.newPassword} />
 
                 <InputWithoutFilter 
                     handleChange={handleChange} 
+                    handleOnFocus={handleOnFocus}
                     error={errors.confirm} 
                     nameInput={"confirm"}
                     placeholder={t('placeholder-confirmacao-senha')} />

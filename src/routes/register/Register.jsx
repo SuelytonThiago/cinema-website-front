@@ -24,7 +24,6 @@ const Register = () => {
   const { t } = useTranslation();
 
   const navigate = useNavigate();
-  const [errors, setErrors] = useState({});
 
   const initialState = {
     name: '',
@@ -35,7 +34,7 @@ const Register = () => {
     confirm: ''
   }
 
-  const { formData, handleChange } = useForm(initialState)
+  const { formData, handleChange, errors, setErrors, handleOnFocus } = useForm(initialState);
 
   const [step, setStep] = useState(1);
 
@@ -114,6 +113,7 @@ const Register = () => {
                   <InputText
                     error={errors.name}
                     handleChange={handleChange}
+                    handleOnFocus={handleOnFocus}
                     nameInput={'name'}
                     value={formData.name}
                     placeholder={t('placeholder-digite-seu-nome')}   />
@@ -124,6 +124,7 @@ const Register = () => {
                   <InputText
                     error={errors.email}
                     handleChange={handleChange}
+                    handleOnFocus={handleOnFocus}
                     nameInput={'email'}
                     value={formData.email}
                     placeholder={t('placeholder-digite-seu-email')}/>
@@ -134,6 +135,7 @@ const Register = () => {
                   <InputMaskComponent
                     error={errors.cpf}
                     handleChange={handleChange}
+                    handleOnFocus={handleOnFocus}
                     nameInput={'cpf'}
                     value={formData.cpf}
                     placeholder={t('placeholder-digite-seu-cpf')}
@@ -145,6 +147,7 @@ const Register = () => {
                   <InputMaskComponent
                     error={errors.contactNumber}
                     handleChange={handleChange}
+                    handleOnFocus={handleOnFocus}
                     nameInput={'contactNumber'}
                     value={formData.contactNumber}
                     placeholder={t('placeholder-digite-seu-telefone')}
@@ -157,6 +160,7 @@ const Register = () => {
                   <label htmlFor="newPassword">{t('label-senha')}</label>
                   <InputWithFilter 
                     handleChange={handleChange} 
+                    handleOnFocus={handleOnFocus}
                     error={errors.newPassword} 
                     newPassword={formData.newPassword}/>
 
@@ -165,6 +169,7 @@ const Register = () => {
                   <label htmlFor="confirmPassword">{t('label-confirmar-senha')}</label>
                   <InputWithoutFilter
                     handleChange={handleChange}
+                    handleOnFocus={handleOnFocus}
                     error={errors.confirm}
                     nameInput={'confirm'}
                     placeholder={t('placeholder-novamente-sua-senha')}/>

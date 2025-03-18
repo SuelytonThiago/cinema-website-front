@@ -5,6 +5,7 @@
     "validacao-email":"insira um email válido",
     "validacao-cpf":"insira um cpf válido",
     "validacao-nome":"insira um nome válido",
+    "validacao-autoridade": "você não é autorizado a acessar essa página!",
 
 
     "placeholder-senha-antiga":"Digite a sua antiga senha",
@@ -17,6 +18,7 @@
     "placeholder-digite-seu-cpf":"Digite seu cpf",
     "placeholder-digite-seu-telefone":"Digite seu telefone",
     "placeholder-novamente-sua-senha":"*Digite novamente sua senha",
+    "placeholder-digite-nome-categoria": "Digite o nome da categoria",
 
     "botao-salvar": "Salvar",
     "botao-cancelar": "Cancelar",
@@ -70,6 +72,9 @@
     "erro-cadeiras-indisponiveis": "Nenhuma cadeira disponível",
     "erro-selecione-uma-imagem": "Selecione uma imagem para enviar.",
     "erro-algo-deu-errado":"Algo deu errado",
+
+    
+    "message-success": "Operação realizada com sucesso",
 
     "tela":"Tela",
     "comprar": "Comprar",

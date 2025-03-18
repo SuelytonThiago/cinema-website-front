@@ -58,6 +58,7 @@ const RecoverPassword = ({ goNext }) => {
             <InputText 
                 error= {errorEmail} 
                 handleChange={(e) => setEmail(e.target.value)}  
+                handleOnFocus={() => setErrorEmail('')}
                 nameInput={'email'}
                 value={email}/>
 
