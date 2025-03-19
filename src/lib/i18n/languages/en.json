@@ -6,6 +6,10 @@
     "validacao-cpf":"enter a valid CPF",
     "validacao-nome":"enter a valid name",
     "validacao-autoridade": "You are not authorized to access this page!",
+    "validacao-description": "description cannot be empty or null",
+    "validacao-releaseData": "release data cannot be empty or null",
+    "validacao-classification": "classification cannot be empty or null",
+    "validacao-imageUrl": "image URL cannot be empty or null",
 
 
     "placeholder-senha-antiga":"Enter your old password",
@@ -70,6 +74,10 @@
     "erro-algo-deu-errado":"Something went wrong",
 
     "message-success": "Operation performed successfully",
+
+    "add-new-category":"Add a new category",
+    "add-new-category-to-movie":"Add a new category to a movie",
+    "add-movie": "Add a new movie",
 
     "tela":"Screen",
     "comprar": "Buy",

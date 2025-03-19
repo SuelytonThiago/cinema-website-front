@@ -6,13 +6,13 @@ import backend from '../../../../api/index.ts'
 import Cookies from 'js-cookie'
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import {  Container, Input } from './styles.js'
+import {  Container, Input } from './../styles.js'
 import { Button } from '../../Button.js'
 
 const AddCategory = () => {
 
   const { t } = useTranslation();
-  const user = JSON.parse(localStorage.getItem("user"));
+  
   const initialState = {
     name: '',
   }
@@ -52,7 +52,7 @@ const AddCategory = () => {
 
   return (
     <Container>
-      <h3>Adicione uma nova categoria</h3>
+      <h3>{t('add-new-category')}</h3>
       <Input>
         <InputText
           error={errors.name}

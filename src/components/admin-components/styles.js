@@ -9,6 +9,7 @@ export const Container = styled.div`
     background-color: #17181f;
     padding: 1rem;
     border-radius: 5px;
+    align-items: center;
 `
 
 export const Input = styled.div`

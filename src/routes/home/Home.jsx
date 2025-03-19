@@ -10,6 +10,8 @@ import { useTranslation } from 'react-i18next';
 import '../../lib/i18n/i18n.js';
 import SearchMoviesSkeleton from '../../components/skeleton-loading/search-movies/SearchMoviesSkeleton.jsx';
 import AddCategory from '../../components/admin-components/add-category/AddCategory.jsx';
+import AddCategoryToMovie from '../../components/admin-components/add-category-to-movie/AddCategoryToMovie.jsx';
+import AddFilm from '../../components/admin-components/add-film/AddFilm.jsx';
 
 const Home = () => {
 
@@ -70,7 +72,8 @@ const Home = () => {
     <Container>
       <H2>{t('link-filmes')}: </H2>
       <RandomMovies />
-
+      <AddCategory/>
+      <AddFilm/>
       <>
         <H2 >{t('sessoes')}: </H2>
         {isError ?

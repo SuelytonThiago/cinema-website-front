@@ -6,6 +6,10 @@
     "validacao-cpf":"insira um cpf válido",
     "validacao-nome":"insira um nome válido",
     "validacao-autoridade": "você não é autorizado a acessar essa página!",
+    "validacao-description": "a descrição não pode estar vazia ou nula",
+    "validacao-releaseData": "os dados de lançamento não podem estar vazios ou nulos",
+    "validacao-classification": "a classificação não pode ser vazia ou nula",
+    "validacao-imageUrl": "o URL da imagem não pode estar vazio ou nulo",
 
 
     "placeholder-senha-antiga":"Digite a sua antiga senha",
@@ -19,6 +23,10 @@
     "placeholder-digite-seu-telefone":"Digite seu telefone",
     "placeholder-novamente-sua-senha":"*Digite novamente sua senha",
     "placeholder-digite-nome-categoria": "Digite o nome da categoria",
+    "placeholder-digite-filme-description": "Digite a descrição do fillme",
+    "placeholder-digite-filme-name": "Digite o nome do filme",
+    "placeholder-digite-filme-releaseData": "Digite a data de lançamento",
+
 
     "botao-salvar": "Salvar",
     "botao-cancelar": "Cancelar",
@@ -75,6 +83,10 @@
 
     
     "message-success": "Operação realizada com sucesso",
+
+    "add-new-category":"Adicionar uma nova categoria",
+    "add-new-category-to-movie":"Adicionar uma nova categoria em um filme",
+    "add-movie": "Adicionar um novo filme",
 
     "tela":"Tela",
     "comprar": "Comprar",

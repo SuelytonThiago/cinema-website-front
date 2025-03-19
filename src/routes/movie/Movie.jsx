@@ -16,6 +16,7 @@ import SkeletonMovie from '../../components/skeleton-loading/skeleton-movie/Skel
 import Error from '../../components/error/Error.jsx';
 import { useTranslation } from 'react-i18next';
 import '../../lib/i18n/i18n.js';
+import AddCategoryToMovie from '../../components/admin-components/add-category-to-movie/AddCategoryToMovie.jsx';
 
 const Movie = () => {
     const { t } = useTranslation();
@@ -113,8 +114,8 @@ const Movie = () => {
         }));
     };
 
-    if(!!movieServerError) {
-        return <Error code={movieServerError.status} message={movieServerError.Message}/>
+    if (!!movieServerError) {
+        return <Error code={movieServerError.status} message={movieServerError.Message} />
     }
 
     return (
@@ -122,6 +123,7 @@ const Movie = () => {
             {isLoading ? (<SkeletonMovie />) : (
                 <>
                     <>
+                        <AddCategoryToMovie movieId ={id}/>
                         <MovieHeader>
                             <div>
                                 <MovieImg src={movieData.imageUrl} alt={movieData.name} />
@@ -174,7 +176,7 @@ const Movie = () => {
                             <SessionsMovieContainer>
                                 <div>
                                     {groupSessionsByDate(sessionsMovieData).length === 0 ? (
-                                        <Error code={sessionServerError.status} message={sessionServerError.Message}/>
+                                        <Error code={sessionServerError.status} message={sessionServerError.Message} />
                                     ) : (
                                         groupSessionsByDate(sessionsMovieData).map(group => (
                                             <div className='sessionInfo' key={group.dateKey}>
@@ -209,7 +211,7 @@ const Movie = () => {
 
                 </>
 
-                )
+            )
             }
         </div >
     );
