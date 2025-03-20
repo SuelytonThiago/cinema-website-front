@@ -218,15 +218,32 @@ paths:
       - movie-controller
       summary: add a new movie
       operationId: addMovie
+      parameters:
+      - name: movie
+        in: query
+        required: true
+        schema:
+          type: string
       requestBody:
         content:
-          application/json:
+          multipart/form-data:
             schema:
-              "$ref": "#/components/schemas/MovieRequestDto"
-        required: true
+              required:
+              - file
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
       responses:
         '200':
           description: OK
+          content:
+            "*/*":
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
       security:
       - bearerAuth: []
   "/api/movies/add/category":
@@ -553,7 +570,7 @@ paths:
       tags:
       - movie-controller
       summary: search movie by name
-      operationId: findByName
+      operationId: search
       parameters:
       - name: name
         in: query
@@ -720,7 +737,6 @@ components:
       required:
       - classification
       - description
-      - imageUrl
       - name
       - releaseData
       type: object
@@ -732,8 +748,6 @@ components:
         releaseData:
           type: string
         classification:
-          type: string
-        imageUrl:
           type: string
     UserRequestDto:
       required:
@@ -820,12 +834,16 @@ components:
     UserLoginDto:
       required:
       - email
-      - password
       type: object
       properties:
         email:
           type: string
         password:
+          type: string
+    RoleResponseDto:
+      type: object
+      properties:
+        nameRole:
           type: string
     UserResponseDto:
       type: object
@@ -845,6 +863,10 @@ components:
           type: string
         profileImg:
           type: string
+        roles:
+          type: array
+          items:
+            "$ref": "#/components/schemas/RoleResponseDto"
     TicketsResponseDto:
       type: object
       properties:

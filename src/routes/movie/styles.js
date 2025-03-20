@@ -50,23 +50,23 @@ export const ClassificationMovie = styled.p`
     color: #fff;
 
     &.rating-L{
-        background-color: #00FF00;
+        background-color:rgb(67, 204, 67);
     }
 
     &.rating-10{
-        background-color: #0000FF;
+        background-color:rgb(50, 50, 204);
     }
     &.rating-12{
-        background-color: #FFD700;
+        background-color:rgb(216, 189, 38);
     }
     &.rating-14{
-        background-color: #FFA500;
+        background-color:rgb(212, 146, 21);
     }
     &.rating-16{
-        background-color: #FF0000;
+        background-color:rgb(209, 32, 32);
     }
     &.rating-18{
-        background-color: #332f2f;
+        background-color:rgb(65, 59, 59);
     }
 `
 

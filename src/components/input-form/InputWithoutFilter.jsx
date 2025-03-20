@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { ErrorInput, Input } from '../Input.js';
+import {Input } from '../Input.js';
 import { EyesButton } from '../Button.js';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { MessageError } from '../Paragraph.js';

@@ -27,7 +27,7 @@ const SearchPage = () => {
     const timeoutId = setTimeout(async () => {
       if (name.trim()) {
         try {
-          const res = await backend.movieAPI.findByName(name);
+          const res = await backend.movieAPI.search(name);
           setMovies(res.data);
           setIsLoading(false);
         } catch (err) {

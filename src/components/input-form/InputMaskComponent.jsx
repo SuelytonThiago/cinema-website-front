@@ -1,6 +1,6 @@
 import React from 'react'
 import { MessageError } from '../Paragraph.js';
-import { InputWithMask, InputMaskError } from '../Input.js';
+import { InputWithMask } from '../Input.js';
 
 const InputMaskComponent = ({ error, handleChange, nameInput, value, placeholder, mask, handleOnFocus }) => {
     return (

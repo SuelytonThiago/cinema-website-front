@@ -136,12 +136,6 @@ export interface MovieRequestDto {
      * @memberof MovieRequestDto
      */
     'classification': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MovieRequestDto
-     */
-    'imageUrl': string;
 }
 /**
  * 
@@ -271,6 +265,19 @@ export interface ReviewsResponseDto {
      * @memberof ReviewsResponseDto
      */
     'date'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface RoleResponseDto
+ */
+export interface RoleResponseDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof RoleResponseDto
+     */
+    'nameRole'?: string;
 }
 /**
  * 
@@ -455,7 +462,7 @@ export interface UserLoginDto {
      * @type {string}
      * @memberof UserLoginDto
      */
-    'password': string;
+    'password'?: string;
 }
 /**
  * 
@@ -548,6 +555,12 @@ export interface UserResponseDto {
      * @memberof UserResponseDto
      */
     'profileImg'?: string;
+    /**
+     * 
+     * @type {Array<RoleResponseDto>}
+     * @memberof UserResponseDto
+     */
+    'roles'?: Array<RoleResponseDto>;
 }
 /**
  * 
@@ -1275,13 +1288,16 @@ export const MovieControllerApiAxiosParamCreator = function (configuration?: Con
         /**
          * 
          * @summary add a new movie
-         * @param {MovieRequestDto} movieRequestDto 
+         * @param {string} movie 
+         * @param {File} file 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addMovie: async (movieRequestDto: MovieRequestDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'movieRequestDto' is not null or undefined
-            assertParamExists('addMovie', 'movieRequestDto', movieRequestDto)
+        addMovie: async (movie: string, file: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'movie' is not null or undefined
+            assertParamExists('addMovie', 'movie', movie)
+            // verify required parameter 'file' is not null or undefined
+            assertParamExists('addMovie', 'file', file)
             const localVarPath = `/api/movies/add`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1293,19 +1309,28 @@ export const MovieControllerApiAxiosParamCreator = function (configuration?: Con
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
+            if (movie !== undefined) {
+                localVarQueryParameter['movie'] = movie;
+            }
 
+
+            if (file !== undefined) { 
+                localVarFormParams.append('file', file as any);
+            }
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(movieRequestDto, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = localVarFormParams;
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1424,47 +1449,6 @@ export const MovieControllerApiAxiosParamCreator = function (configuration?: Con
         },
         /**
          * 
-         * @summary search movie by name
-         * @param {string} name 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        findByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'name' is not null or undefined
-            assertParamExists('findByName', 'name', name)
-            const localVarPath = `/api/movies/search`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary search movie by id
          * @param {number} id 
          * @param {*} [options] Override http request option.
@@ -1523,6 +1507,47 @@ export const MovieControllerApiAxiosParamCreator = function (configuration?: Con
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary search movie by name
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        search: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('search', 'name', name)
+            const localVarPath = `/api/movies/search`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
 
 
     
@@ -1605,12 +1630,13 @@ export const MovieControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary add a new movie
-         * @param {MovieRequestDto} movieRequestDto 
+         * @param {string} movie 
+         * @param {File} file 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async addMovie(movieRequestDto: MovieRequestDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.addMovie(movieRequestDto, options);
+        async addMovie(movie: string, file: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: string; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addMovie(movie, file, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MovieControllerApi.addMovie']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1655,19 +1681,6 @@ export const MovieControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary search movie by name
-         * @param {string} name 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async findByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MovieResponseDto>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.findByName(name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MovieControllerApi.findByName']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
          * @summary search movie by id
          * @param {number} id 
          * @param {*} [options] Override http request option.
@@ -1689,6 +1702,19 @@ export const MovieControllerApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.get10RandomMovies(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MovieControllerApi.get10RandomMovies']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary search movie by name
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async search(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MovieResponseDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.search(name, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MovieControllerApi.search']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1728,12 +1754,13 @@ export const MovieControllerApiFactory = function (configuration?: Configuration
         /**
          * 
          * @summary add a new movie
-         * @param {MovieRequestDto} movieRequestDto 
+         * @param {string} movie 
+         * @param {File} file 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addMovie(movieRequestDto: MovieRequestDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.addMovie(movieRequestDto, options).then((request) => request(axios, basePath));
+        addMovie(movie: string, file: File, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: string; }> {
+            return localVarFp.addMovie(movie, file, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1766,16 +1793,6 @@ export const MovieControllerApiFactory = function (configuration?: Configuration
         },
         /**
          * 
-         * @summary search movie by name
-         * @param {string} name 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        findByName(name: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<MovieResponseDto>> {
-            return localVarFp.findByName(name, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary search movie by id
          * @param {number} id 
          * @param {*} [options] Override http request option.
@@ -1792,6 +1809,16 @@ export const MovieControllerApiFactory = function (configuration?: Configuration
          */
         get10RandomMovies(options?: RawAxiosRequestConfig): AxiosPromise<Array<MovieResponseDto>> {
             return localVarFp.get10RandomMovies(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary search movie by name
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        search(name: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<MovieResponseDto>> {
+            return localVarFp.search(name, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1829,13 +1856,14 @@ export class MovieControllerApi extends BaseAPI {
     /**
      * 
      * @summary add a new movie
-     * @param {MovieRequestDto} movieRequestDto 
+     * @param {string} movie 
+     * @param {File} file 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MovieControllerApi
      */
-    public addMovie(movieRequestDto: MovieRequestDto, options?: RawAxiosRequestConfig) {
-        return MovieControllerApiFp(this.configuration).addMovie(movieRequestDto, options).then((request) => request(this.axios, this.basePath));
+    public addMovie(movie: string, file: File, options?: RawAxiosRequestConfig) {
+        return MovieControllerApiFp(this.configuration).addMovie(movie, file, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1875,18 +1903,6 @@ export class MovieControllerApi extends BaseAPI {
 
     /**
      * 
-     * @summary search movie by name
-     * @param {string} name 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof MovieControllerApi
-     */
-    public findByName(name: string, options?: RawAxiosRequestConfig) {
-        return MovieControllerApiFp(this.configuration).findByName(name, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
      * @summary search movie by id
      * @param {number} id 
      * @param {*} [options] Override http request option.
@@ -1906,6 +1922,18 @@ export class MovieControllerApi extends BaseAPI {
      */
     public get10RandomMovies(options?: RawAxiosRequestConfig) {
         return MovieControllerApiFp(this.configuration).get10RandomMovies(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary search movie by name
+     * @param {string} name 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MovieControllerApi
+     */
+    public search(name: string, options?: RawAxiosRequestConfig) {
+        return MovieControllerApiFp(this.configuration).search(name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

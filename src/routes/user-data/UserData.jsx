@@ -69,7 +69,7 @@ const UserData = () => {
             return;
         }
 
-        try {Cookies
+        try {
             const res = await backend.fileAPI.uploadFile(file, {
                 headers: {
                     Authorization: `Bearer ${Cookies.get('accessToken')}`,

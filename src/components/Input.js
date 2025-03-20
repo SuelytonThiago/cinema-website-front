@@ -13,7 +13,7 @@ export const BaseInputStyles = `
     &:focus {
         outline: none;
         box-shadow: none;
-        border:1px solid #1877F2;
+        border:1px solid #1877F2;   
     }
 
     @media screen and (max-width: 425px){
@@ -21,24 +21,6 @@ export const BaseInputStyles = `
     }
 `;
 
-export const BaseInputStylesError = `
-    width: 100%;
-    padding: 10px;
-    padding-right: 40px;
-    font-size: 13px;
-    border-radius: 4px;
-    border: none;
-    border: 1px solid red;
-
-    &:focus {
-        outline: none;
-        box-shadow: none;
-    }
-
-    @media screen and (max-width: 425px){
-        width: 100%;
-    }
-`;
 
 export const Input = styled.input`
     ${BaseInputStyles}
@@ -46,14 +28,6 @@ export const Input = styled.input`
 
 export const InputWithMask = styled(InputMask)`
     ${BaseInputStyles}
-`;
-
-export const ErrorInput = styled.input`
-    ${BaseInputStylesError}
-`;
-
-export const InputMaskError = styled(InputMask)`
-    ${BaseInputStylesError}
 `;
 
 export const InputSubit = styled.input`
