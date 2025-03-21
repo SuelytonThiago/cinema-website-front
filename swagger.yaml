@@ -8,21 +8,44 @@ info:
     email: suelytonsouza0202@gmail.com
   version: v1
 servers:
-- url: http://localhost:8080
-  description: Generated server url
+  - url: http://localhost:8080
+    description: Generated server url
 paths:
+  "/api/categories/search":
+    get:
+      tags:
+        - category-controller
+      summary: search all categories by name
+      operationId: findLikeName
+      parameters:
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/CategoryResponseDto"
+      security:
+        - bearerAuth: []
   "/api/users/update":
     put:
       tags:
-      - user-controller
+        - user-controller
       summary: update user data
       operationId: updateUser
       parameters:
-      - name: password
-        in: query
-        required: true
-        schema:
-          type: string
+        - name: password
+          in: query
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -30,45 +53,45 @@ paths:
               "$ref": "#/components/schemas/UserUpdateRequestDto"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/users/update-password":
     put:
       tags:
-      - user-controller
+        - user-controller
       summary: change user password
       operationId: updateUserPassword
       parameters:
-      - name: oldPassword
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: newPassword
-        in: query
-        required: true
-        schema:
-          type: string
+        - name: oldPassword
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: newPassword
+          in: query
+          required: true
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: OK
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/movies/update/{id}":
     put:
       tags:
-      - movie-controller
+        - movie-controller
       summary: update movie data
       operationId: updateMovie
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
       requestBody:
         content:
           application/json:
@@ -76,40 +99,40 @@ paths:
               "$ref": "#/components/schemas/MovieRequestDto"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/verify-code":
     post:
       tags:
-      - recover-pass-controller
+        - recover-pass-controller
       summary: check if the code is correct
       operationId: verifyCode
       parameters:
-      - name: code
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: email
-        in: query
-        required: true
-        schema:
-          type: string
+        - name: code
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: email
+          in: query
+          required: true
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "*/*":
               schema:
                 type: string
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/users/create":
     post:
       tags:
-      - user-controller
+        - user-controller
       summary: create a new account
       operationId: createNewUser
       requestBody:
@@ -119,31 +142,31 @@ paths:
               "$ref": "#/components/schemas/UserRequestDto"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/users/change-password":
     post:
       tags:
-      - user-controller
+        - user-controller
       summary: change user password
       operationId: changePassword
       parameters:
-      - name: password
-        in: query
-        required: true
-        schema:
-          type: string
+        - name: password
+          in: query
+          required: true
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: OK
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/tickets/add":
     post:
       tags:
-      - ticket-controller
+        - ticket-controller
       summary: buy a new ticket
       operationId: addTicket
       requestBody:
@@ -153,14 +176,14 @@ paths:
               "$ref": "#/components/schemas/TicketRequestDto"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/sessions/add":
     post:
       tags:
-      - session-controller
+        - session-controller
       summary: add a new session
       operationId: addSession
       requestBody:
@@ -170,14 +193,14 @@ paths:
               "$ref": "#/components/schemas/SessionRequestDto"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/reviews/add":
     post:
       tags:
-      - review-controller
+        - review-controller
       summary: add a note and comment to the film
       operationId: addReviewToFilm
       requestBody:
@@ -187,56 +210,56 @@ paths:
               "$ref": "#/components/schemas/ReviewRequestDto"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/recover-password":
     post:
       tags:
-      - recover-pass-controller
+        - recover-pass-controller
       summary: send an email with a code to recover your password
       operationId: recoverPassword
       parameters:
-      - name: email
-        in: query
-        required: true
-        schema:
-          type: string
+        - name: email
+          in: query
+          required: true
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "*/*":
               schema:
                 type: string
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/movies/add":
     post:
       tags:
-      - movie-controller
+        - movie-controller
       summary: add a new movie
       operationId: addMovie
       parameters:
-      - name: movie
-        in: query
-        required: true
-        schema:
-          type: string
+        - name: movie
+          in: query
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           multipart/form-data:
             schema:
               required:
-              - file
+                - file
               type: object
               properties:
                 file:
                   type: string
                   format: binary
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "*/*":
@@ -245,11 +268,11 @@ paths:
                 additionalProperties:
                   type: string
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/movies/add/category":
     post:
       tags:
-      - movie-controller
+        - movie-controller
       summary: add a category to the movie
       operationId: addCategoryToFilm
       requestBody:
@@ -259,14 +282,14 @@ paths:
               "$ref": "#/components/schemas/AddCategoryToMovieRequestDto"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/files/upload":
     post:
       tags:
-      - file-controller
+        - file-controller
       summary: insert file into aws bucket
       operationId: uploadFile
       requestBody:
@@ -274,25 +297,25 @@ paths:
           multipart/form-data:
             schema:
               required:
-              - file
+                - file
               type: object
               properties:
                 file:
                   type: string
                   format: binary
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "*/*":
               schema:
                 type: string
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/categories/add":
     post:
       tags:
-      - category-controller
+        - category-controller
       summary: add a new category
       operationId: addNewCategory
       requestBody:
@@ -302,29 +325,29 @@ paths:
               "$ref": "#/components/schemas/CategoryRequestDto"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/auth/refresh":
     post:
       tags:
-      - auth-controller
+        - auth-controller
       summary: update access token
       operationId: refreshToken
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "*/*":
               schema:
                 type: string
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/auth/login":
     post:
       tags:
-      - auth-controller
+        - auth-controller
       summary: do user authentication
       operationId: login
       requestBody:
@@ -334,7 +357,7 @@ paths:
               "$ref": "#/components/schemas/UserLoginDto"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "*/*":
@@ -343,56 +366,56 @@ paths:
                 additionalProperties:
                   type: string
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/tickets/invalidate/{id}":
     patch:
       tags:
-      - ticket-controller
+        - ticket-controller
       summary: invalidate ticket
       operationId: invalidateTicket
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
-        '200':
+        "200":
           description: OK
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/sessions/update/{id}":
     patch:
       tags:
-      - session-controller
+        - session-controller
       summary: update sessions
       operationId: updateData
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
-        '200':
+        "200":
           description: OK
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/reviews/update/{id}":
     patch:
       tags:
-      - review-controller
+        - review-controller
       summary: update the note and/or comment
       operationId: updateReview
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
       requestBody:
         content:
           application/json:
@@ -400,32 +423,32 @@ paths:
               "$ref": "#/components/schemas/ReviewRequestDto"
         required: true
       responses:
-        '200':
+        "200":
           description: OK
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/users":
     get:
       tags:
-      - user-controller
+        - user-controller
       operationId: findById
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "*/*":
               schema:
                 "$ref": "#/components/schemas/UserResponseDto"
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/tickets":
     get:
       tags:
-      - ticket-controller
+        - ticket-controller
       summary: get user tickets
       operationId: getTickets
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "*/*":
@@ -434,15 +457,15 @@ paths:
                 items:
                   "$ref": "#/components/schemas/TicketsResponseDto"
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/sessions":
     get:
       tags:
-      - session-controller
+        - session-controller
       summary: search all sessions
       operationId: getAll
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "*/*":
@@ -451,22 +474,22 @@ paths:
                 items:
                   "$ref": "#/components/schemas/SessionResponseDto"
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/sessions/movie/{id}":
     get:
       tags:
-      - session-controller
+        - session-controller
       summary: search sessions by film
       operationId: findByMovie
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "*/*":
@@ -475,65 +498,65 @@ paths:
                 items:
                   "$ref": "#/components/schemas/SessionResponseDto"
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/sessions/info/{id}":
     get:
       tags:
-      - session-controller
+        - session-controller
       summary: get session information
       operationId: getInfoSession
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "*/*":
               schema:
                 "$ref": "#/components/schemas/SessionResponseDto"
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/reviews/data/{userId}/{movieId}":
     get:
       tags:
-      - review-controller
+        - review-controller
       summary: search user review by user id and movie id
       operationId: getUserReview
       parameters:
-      - name: userId
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
-      - name: movieId
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: movieId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "*/*":
               schema:
                 "$ref": "#/components/schemas/ReviewsResponseDto"
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/movies":
     get:
       tags:
-      - movie-controller
+        - movie-controller
       summary: search all movies
       operationId: findAll
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "*/*":
@@ -542,43 +565,43 @@ paths:
                 items:
                   "$ref": "#/components/schemas/MovieResponseDto"
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/movies/{id}":
     get:
       tags:
-      - movie-controller
+        - movie-controller
       summary: search movie by id
       operationId: findMovieById
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "*/*":
               schema:
                 "$ref": "#/components/schemas/MovieResponseDto"
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/movies/search":
     get:
       tags:
-      - movie-controller
+        - movie-controller
       summary: search movie by name
       operationId: search
       parameters:
-      - name: name
-        in: query
-        required: true
-        schema:
-          type: string
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "*/*":
@@ -587,15 +610,15 @@ paths:
                 items:
                   "$ref": "#/components/schemas/MovieResponseDto"
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/movies/randomMovies":
     get:
       tags:
-      - movie-controller
+        - movie-controller
       summary: Get 10 random movies from the database
       operationId: get10RandomMovies
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "*/*":
@@ -604,22 +627,22 @@ paths:
                 items:
                   "$ref": "#/components/schemas/MovieResponseDto"
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/movies/category/{id}":
     get:
       tags:
-      - movie-controller
+        - movie-controller
       summary: search movies by category
       operationId: findByCategory
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "*/*":
@@ -628,37 +651,37 @@ paths:
                 items:
                   "$ref": "#/components/schemas/MovieResponseDto"
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/files/presigned-url":
     get:
       tags:
-      - file-controller
+        - file-controller
       summary: get the image url from within the aws bucket
       operationId: getPresignedUrl
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "*/*":
               schema:
                 type: string
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/chairs/{id}":
     get:
       tags:
-      - chair-controller
+        - chair-controller
       summary: takes all available and unavailable chairs for the session
       operationId: getAllChairs
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "*/*":
@@ -667,15 +690,15 @@ paths:
                 items:
                   "$ref": "#/components/schemas/ChairResponseDto"
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/categories":
     get:
       tags:
-      - category-controller
+        - category-controller
       summary: search all categories
       operationId: findAll_1
       responses:
-        '200':
+        "200":
           description: OK
           content:
             "*/*":
@@ -684,49 +707,49 @@ paths:
                 items:
                   "$ref": "#/components/schemas/Categories"
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/reviews/delete/{id}":
     delete:
       tags:
-      - review-controller
+        - review-controller
       summary: delete user review
       operationId: deleteReview
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
-        '200':
+        "200":
           description: OK
       security:
-      - bearerAuth: []
+        - bearerAuth: []
   "/api/movies/delete/{id}":
     delete:
       tags:
-      - movie-controller
+        - movie-controller
       summary: delete the movie
       operationId: deleteMovie
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
-        '200':
+        "200":
           description: OK
       security:
-      - bearerAuth: []
+        - bearerAuth: []
 components:
   schemas:
     UserUpdateRequestDto:
       required:
-      - contactNumber
-      - name
+        - contactNumber
+        - name
       type: object
       properties:
         name:
@@ -735,10 +758,10 @@ components:
           type: string
     MovieRequestDto:
       required:
-      - classification
-      - description
-      - name
-      - releaseData
+        - classification
+        - description
+        - name
+        - releaseData
       type: object
       properties:
         name:
@@ -751,10 +774,10 @@ components:
           type: string
     UserRequestDto:
       required:
-      - contactNumber
-      - cpf
-      - email
-      - name
+        - contactNumber
+        - cpf
+        - email
+        - name
       type: object
       properties:
         name:
@@ -771,7 +794,7 @@ components:
           type: string
     TicketRequestDto:
       required:
-      - sessionId
+        - sessionId
       type: object
       properties:
         sessionId:
@@ -787,8 +810,8 @@ components:
           type: string
     SessionRequestDto:
       required:
-      - movieId
-      - name
+        - movieId
+        - name
       type: object
       properties:
         name:
@@ -802,7 +825,7 @@ components:
           type: string
     ReviewRequestDto:
       required:
-      - rating
+        - rating
       type: object
       properties:
         comment:
@@ -815,8 +838,8 @@ components:
           format: int64
     AddCategoryToMovieRequestDto:
       required:
-      - categoryName
-      - movieId
+        - categoryName
+        - movieId
       type: object
       properties:
         movieId:
@@ -826,14 +849,14 @@ components:
           type: string
     CategoryRequestDto:
       required:
-      - name
+        - name
       type: object
       properties:
         name:
           type: string
     UserLoginDto:
       required:
-      - email
+        - email
       type: object
       properties:
         email:
