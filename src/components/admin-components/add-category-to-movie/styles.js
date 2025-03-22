@@ -29,3 +29,12 @@ export const CategoryBtn = styled.button`
 export const Li = styled.li`
     border-bottom: 1px solid #ccc;
 `
+
+export const P = styled.p`
+    color: #000;
+    display: flex;
+    padding: .5rem;
+    gap: .5rem;
+    align-items: center;
+    justify-content: center;
+`

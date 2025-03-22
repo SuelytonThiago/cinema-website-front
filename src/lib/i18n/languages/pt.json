@@ -83,6 +83,7 @@
     "erro-cadeiras-indisponiveis": "Nenhuma cadeira disponível",
     "erro-selecione-uma-imagem": "Selecione uma imagem para enviar.",
     "erro-algo-deu-errado":"Algo deu errado",
+    "erro-buscar-categorias" : "categorias não encontradas",
 
     
     "message-success": "Operação realizada com sucesso",
