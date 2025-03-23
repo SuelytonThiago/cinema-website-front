@@ -84,6 +84,7 @@
     "erro-selecione-uma-imagem": "Selecione uma imagem para enviar.",
     "erro-algo-deu-errado":"Algo deu errado",
     "erro-buscar-categorias" : "categorias não encontradas",
+    "erro-campo-vazio": "o campo não pode estar vazio",
 
     
     "message-success": "Operação realizada com sucesso",

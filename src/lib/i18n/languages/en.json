@@ -78,6 +78,7 @@
     "erro-selecione-uma-imagem": "Select an image to send.",
     "erro-algo-deu-errado":"Something went wrong",
     "erro-buscar-categorias" : "categories not found",
+    "erro-campo-vazio": "the field cannot be empty",
 
     "message-success": "Operation performed successfully",
 

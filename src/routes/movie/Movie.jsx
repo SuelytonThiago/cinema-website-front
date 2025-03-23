@@ -17,6 +17,7 @@ import Error from '../../components/error/Error.jsx';
 import { useTranslation } from 'react-i18next';
 import '../../lib/i18n/i18n.js';
 import AddCategoryToMovie from '../../components/admin-components/add-category-to-movie/AddCategoryToMovie.jsx';
+import AddSession from '../../components/admin-components/add-session/AddSession.jsx';
 
 const Movie = () => {
     const { t } = useTranslation();
@@ -124,6 +125,7 @@ const Movie = () => {
                 <>
                     <>
                         <AddCategoryToMovie movieId ={id}/>
+                         <AddSession movieId ={id} MovieData={movieData}/>
                         <MovieHeader>
                             <div>
                                 <MovieImg src={movieData.imageUrl} alt={movieData.name} />

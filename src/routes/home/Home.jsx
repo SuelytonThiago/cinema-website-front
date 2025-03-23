@@ -10,7 +10,6 @@ import { useTranslation } from 'react-i18next';
 import '../../lib/i18n/i18n.js';
 import AddCategory from '../../components/admin-components/add-category/AddCategory.jsx';
 import AddFilm from '../../components/admin-components/add-film/AddFilm.jsx';
-import AddSession from '../../components/admin-components/add-session/AddSession.jsx';
 
 const Home = () => {
 
@@ -73,7 +72,6 @@ const Home = () => {
       <RandomMovies />
       <AddCategory/>
       <AddFilm/>
-      <AddSession/>
       <>
         <H2 >{t('sessoes')}: </H2>
         {isError ?

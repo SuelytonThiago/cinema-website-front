@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Container, Input } from '../styles'
+import { Container, Input, Li, ListBtn, ListItemsContainer, P } from '../styles'
 import InputText from '../../input-form/InputText'
 import useForm from '../../../hooks/UseForm'
 import backend from '../../../../api/index.ts'
@@ -8,7 +8,6 @@ import Cookies from 'js-cookie'
 import { toast } from 'react-toastify'
 import { Button } from '../../Button'
 import { useTranslation } from 'react-i18next';
-import { CategoriesContainer, CategoryBtn, Li, P } from './styles.js'
 import Error from '../../error/Error.jsx'
 import { FaExclamationCircle } from 'react-icons/fa';
 
@@ -108,21 +107,21 @@ const AddCategoryToMovie = ({ movieId }) => {
                     placeholder={t('placeholder-digite-nome-categoria')} />
             </Input>
 
-            <CategoriesContainer>
+            <ListItemsContainer style={{ top: '58%', left: '50%'}}>
                 <ul>
                     {
                     error ? (<P>{t('erro-buscar-categorias')} <FaExclamationCircle/></P>) :
                         categories.map((cat, index) => (
                             <Li key={index}>
-                                <CategoryBtn onClick={() => handleSelectCategory(cat.name)}>
+                                <ListBtn onClick={() => handleSelectCategory(cat.name)}>
                                     {cat.name}
-                                </CategoryBtn>
+                                </ListBtn>
                             </Li>
                         ))
                     }
                 </ul>
 
-            </CategoriesContainer>
+            </ListItemsContainer>
 
             <Button onClick={addCategoryToFilme}>
                 {t('botao-salvar')}

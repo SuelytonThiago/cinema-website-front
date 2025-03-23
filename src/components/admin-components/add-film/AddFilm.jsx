@@ -11,7 +11,7 @@ import { validateCategoryName, validateReleaseData } from '../../../js/Validatio
 import InputMaskComponent from '../../input-form/InputMaskComponent.jsx';
 import { CategoryBtn, ClassificationBtn, ClassificationContainer, FileContainer, FileInput, Textarea, XBtn } from './styles.js';
 import { MessageError } from '../../Paragraph.js';
-import { FaFileAlt, FaImage, FaTimes } from "react-icons/fa"; // Importando ícones
+import { FaFileAlt, FaImage, FaTimes } from "react-icons/fa"; 
 
 const AddFilm = () => {
 

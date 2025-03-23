@@ -1,65 +1,98 @@
-import React, { useEffect, useState } from 'react'
 import backend from '../../../../api/index'
 import useForm from '../../../hooks/UseForm'
 import { toast } from 'react-toastify'
 import Cookies from 'js-cookie'
+import { InputContainer, InputDate } from './styles'
+import { useTranslation } from 'react-i18next'
+import { Button } from '../../Button'
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import { Container } from '../styles'
+import { MessageError } from '../../Paragraph'
 
-const AddSession = () => {
+const AddSession = ({ MovieData, movieId }) => {
 
-  const [movie, setMovie] = useState({});
-  const [movies, setMovies] = useState([]);
-  const [serverError, setServerError] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const { t } = useTranslation();
 
   const initialState = {
-    name: '',
-    movieId: '',
     dateStart: '',
     dateEnd: '',
   }
 
-  const { formData, handleChangle, errors, setErrors, handleOnFocus } = useForm(initialState);
+  const { formData, handleChange, errors, setErrors, handleOnFocus } = useForm(initialState);
+
+  const validate = () => {
+    const errors = {};
+
+    if (!formData.dateStart) {
+      errors.dateStart = t('erro-campo-vazio')
+    }
+
+    if (!formData.dateEnd) {
+      errors.dateEnd = t('erro-campo-vazio')
+    }
+
+    return errors;
+  }
+
+  const formatToCustomDateTime = (dateString) => {
+    if (!dateString) return "";
+    return format(new Date(dateString), "dd/MM/yyyy HH:mm:ss a", { locale: ptBR });
+  };
 
   const handleAddSession = async () => {
-    try {
-      await backend.sessionAPI.addSession(formData, {
-        headers: {
-          Authorization: `Bearer ${Cookies.get('accessToken')}`
-        }
-      });
-    } catch (err) {
-      toast.error(err.response.data.Message)
+    const request = {
+      name: MovieData.name,
+      movieId: movieId,
+      dateStart: formatToCustomDateTime(formData.dateStart),
+      dateEnd: formatToCustomDateTime(formData.dateEnd),
+    }
+
+    const validateForm = validate();
+    setErrors(validateForm);
+    if (Object.keys(validateForm).length === 0) {
+      console.log(validateForm);
+      console.log(request);
+
+      try {
+        await backend.sessionAPI.addSession(request, {
+          headers: {
+            Authorization: `Bearer ${Cookies.get('accessToken')}`
+          }
+        });
+        toast.success(t('message-success'));
+      } catch (err) {
+        toast.error(err.response.data.Message)
+      }
     }
   }
 
-  useEffect(() => {
-    setServerError(null);
-    setIsLoading(true);
-    const timeoutId = setTimeout(async () => {
-      if (formData.name.trim()) {
-        try {
-          const res = await backend.movieAPI.search(formData.name);
-          setMovies(res.data);
-          setIsLoading(false);
-        } catch (err) {
-          setServerError(err.response.data);
-        }
-      }
-    }, 600);
-
-    return () => clearTimeout(timeoutId);
-  }, [formData.name]);
-
   return (
-    <div>
-      <input type="search" />
-      <input type="date" />
-      <input type="date" />
+    <Container>
+      <InputContainer>
       
-      <button onClick={handleAddSession}>
+        <InputDate
+          className={errors.dateStart ? 'error' : ''}
+          type="datetime-local"
+          onChange={handleChange}
+          name='dateStart'
+          onFocus={handleOnFocus} />
+
+        <InputDate
+          className={errors.dateEnd ? 'error' : ''}
+          type="datetime-local"
+          onChange={handleChange}
+          name='dateEnd'
+          onFocus={handleOnFocus} />
+
+      </InputContainer>
+      <MessageError>{errors.dateStart}</MessageError>
+
+      <Button onClick={handleAddSession}>
         Salvar
-      </button>
-    </div>
+      </Button>
+
+    </Container>
   )
 }
 
