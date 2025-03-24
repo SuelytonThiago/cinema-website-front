@@ -66,19 +66,33 @@ export const RatingButton = styled.button`
     cursor: pointer;
 `
 
-export const CommentUserForm = styled.form` 
-    padding: .5rem 0;
-    color: ${(props) => props.theme.fontColor};
+export const CommentFormContainer = styled`
     display: flex;
-    align-items: center;
-    gap: .5rem;
-    max-width: 300px;
-    
-    @media screen and (max-width: 425px){
-        flex-direction: column;
-    }
+    flex-direction: column;
 
 `
+
+export const CommentUserForm = styled.div`
+    color: ${(props) => props.theme.fontColor};
+    display: flex;
+
+    @media screen and (max-width: 425px) {
+        flex-direction: column;  /* Coloca os itens em coluna em telas pequenas */
+
+    }
+`
+
+export const FormContainer = styled.div`
+  display: flex;
+  align-items: center;    /* Centraliza horizontalmente os itens */
+  width: 100%;            /* Garante que ocupe toda a largura disponível */
+  max-width: 600px;       /* Limita a largura máxima do contêiner */
+  min-width: 400px;       /* Garante que o contêiner tenha pelo menos 400px */
+  margin: 0 auto;         /* Centraliza o contêiner */
+  gap: 10px;              /* Espaçamento entre os elementos */
+`;
+
+
 
 
 export const EditBtn = styled.button`
@@ -99,7 +113,7 @@ export const EditBtn = styled.button`
     }
 `
 
-export const UserAvaliatonForm = styled.div `
+export const UserAvaliatonForm = styled.div`
     width: 400px;
 `
 

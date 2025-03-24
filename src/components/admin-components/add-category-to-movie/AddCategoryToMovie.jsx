@@ -8,8 +8,9 @@ import Cookies from 'js-cookie'
 import { toast } from 'react-toastify'
 import { Button } from '../../Button'
 import { useTranslation } from 'react-i18next';
-import Error from '../../error/Error.jsx'
-import { FaExclamationCircle } from 'react-icons/fa';
+import { FaExclamationCircle, FaPlus } from 'react-icons/fa';
+import Modal from '../../modal/Modal'
+import { PainelBtns } from './styles.js'
 
 const AddCategoryToMovie = ({ movieId }) => {
 
@@ -17,6 +18,12 @@ const AddCategoryToMovie = ({ movieId }) => {
     const [error, setError] = useState(null);
     const [categories, setCategories] = useState([]);
     const [isCategorySelected, setIsCategorySelected] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+
+
+    const handleSetIsOpen = () => {
+        setIsOpen(!isOpen);
+    }
 
     const initialState = {
         name: '',
@@ -56,6 +63,7 @@ const AddCategoryToMovie = ({ movieId }) => {
                     }
                 })
                 toast.success(t('message-success'));
+                setIsOpen(false);
             } catch (err) {
                 toast.error(err.response.data.Message);
             }
@@ -63,7 +71,6 @@ const AddCategoryToMovie = ({ movieId }) => {
     }
 
     useEffect(() => {
-
         if (isCategorySelected) {
             setIsCategorySelected(false);
             return;
@@ -73,6 +80,7 @@ const AddCategoryToMovie = ({ movieId }) => {
             setError(null);
 
             if (formData.name.trim()) {
+                console.log(formData.name);
                 try {
                     const response = await backend.categoryAPI.findLikeName(formData.name, {
                         headers: {
@@ -94,39 +102,51 @@ const AddCategoryToMovie = ({ movieId }) => {
 
 
     return (
-        <Container style={{ position: 'relative', paddingBottom: '10px' }}>
-            <h4>{t('add-new-category-to-movie')}</h4>
+        <div>
+            <FaPlus onClick={handleSetIsOpen} cursor={'pointer'} size={'10px'} color='#1877F2'/>
+            {isOpen && (
+                <Modal isOpen={isOpen}>
+                    <Container style={{ position: 'relative', paddingBottom: '10px' }}>
+                        <h4>{t('add-new-category-to-movie')}</h4>
 
-            <Input>
-                <InputText
-                    error={errors.name}
-                    handleChange={handleChange}
-                    nameInput={'name'}
-                    value={formData.name}
-                    handleOnFocus={handleOnFocus}
-                    placeholder={t('placeholder-digite-nome-categoria')} />
-            </Input>
+                        <Input>
+                            <InputText
+                                error={errors.name}
+                                handleChange={handleChange}
+                                nameInput={'name'}
+                                value={formData.name}
+                                handleOnFocus={handleOnFocus}
+                                placeholder={t('placeholder-digite-nome-categoria')} />
+                        </Input>
 
-            <ListItemsContainer style={{ top: '58%', left: '50%'}}>
-                <ul>
-                    {
-                    error ? (<P>{t('erro-buscar-categorias')} <FaExclamationCircle/></P>) :
-                        categories.map((cat, index) => (
-                            <Li key={index}>
-                                <ListBtn onClick={() => handleSelectCategory(cat.name)}>
-                                    {cat.name}
-                                </ListBtn>
-                            </Li>
-                        ))
-                    }
-                </ul>
+                        <ListItemsContainer style={{ top: '63%', left: '50%' }}>
+                            <ul>
+                                {
+                                    error ? (<P>{t('erro-buscar-categorias')} <FaExclamationCircle /></P>) :
+                                        categories.map((cat, index) => (
+                                            <Li key={index}>
+                                                <ListBtn onClick={() => handleSelectCategory(cat.name)}>
+                                                    {cat.name}
+                                                </ListBtn>
+                                            </Li>
+                                        ))
+                                }
+                            </ul>
 
-            </ListItemsContainer>
+                        </ListItemsContainer>
+                        <PainelBtns>
+                            <Button onClick={handleSetIsOpen}>
+                                {t('botao-cancelar')}
+                            </Button>
+                            <Button onClick={addCategoryToFilme}>
+                                {t('botao-salvar')}
+                            </Button>
+                        </PainelBtns>
+                    </Container>
+                </Modal>
 
-            <Button onClick={addCategoryToFilme}>
-                {t('botao-salvar')}
-            </Button>
-        </Container>
+            )}
+        </div>
 
 
     )

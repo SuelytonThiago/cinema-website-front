@@ -11,19 +11,27 @@ import classificationMovie from '../../js/Classification.js'
 import backend from '../../../api/index.ts'
 import { Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
-import { BtnMovieContainer, BtnMovieInfoControl, CategoriesFilm, ClassificationControl, ClassificationMovie, Description, InfoContainer, InfoHeader, MovieHeader, MovieImg, SessionsMovieContainer, ShowDescriptBtn } from './styles.js';
+import { BtnMovieContainer, BtnMovieInfoControl, CategoriesFilm, ClassificationControl, ClassificationMovie, Description, Header, InfoContainer, InfoHeader, MovieHeader, MovieImg, SessionsMovieContainer, ShowDescriptBtn } from './styles.js';
 import SkeletonMovie from '../../components/skeleton-loading/skeleton-movie/SkeletonMovie.jsx';
 import Error from '../../components/error/Error.jsx';
 import { useTranslation } from 'react-i18next';
 import '../../lib/i18n/i18n.js';
+
+import DeleteMovie from '../../components/admin-components/delete-movie/DeleteMovie.jsx';
+import { useLocation } from 'react-router-dom';
+import Modal from '../../components/modal/Modal.jsx';
+
+import { FaPlus, FaTimes } from 'react-icons/fa';
 import AddCategoryToMovie from '../../components/admin-components/add-category-to-movie/AddCategoryToMovie.jsx';
-import AddSession from '../../components/admin-components/add-session/AddSession.jsx';
 
 const Movie = () => {
     const { t } = useTranslation();
 
+    const location = useLocation();
+
     const { id } = useParams();
     const { isVisible } = useSelector((rootReducer) => rootReducer.loginModalReducer);
+    const { currentUser } = useSelector((rootReducer) => rootReducer.userReducer);
     const [movieData, setMovieData] = useState(null);
     const [sessionsMovieData, setSessionsMovieData] = useState([]);
     const [showSessions, setShowSessions] = useState(false);
@@ -32,6 +40,7 @@ const Movie = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [sessionServerError, setSessionServerError] = useState(null);
     const [movieServerError, setMovieServerError] = useState(null);
+    const [isOpen, setIsOpen] = useState(false);
 
     const toggleDescription = () => {
         setIsExpanded(!isExpanded);
@@ -40,7 +49,6 @@ const Movie = () => {
     useEffect(() => {
         const socket = new SockJS("http://localhost:8080/ws");
         const stompClient = Stomp.over(socket);
-
         stompClient.connect({}, () => {
             stompClient.subscribe("/topic/comments", (message) => {
                 const updatedComment = JSON.parse(message.body);
@@ -67,13 +75,20 @@ const Movie = () => {
 
     useEffect(() => {
         async function handleGetMovieData() {
-            try {
-                const res = await backend.movieAPI.findMovieById(id);
-                setMovieData(res.data);
-                setComments(res.data.reviews);
-                setIsLoading(false)
-            } catch (err) {
-                setMovieServerError(err.response.data);
+            if (location.pathname.includes(`/movie/`)) {
+                try {
+                    const res = await backend.movieAPI.findMovieById(id);
+                    setMovieData(res.data);
+                    setComments(res.data.reviews);
+                    setIsLoading(false)
+                    document.body.style.backgroundImage = `url(${res.data.backgroundCover})`;
+                    document.body.style.backgroundSize = 'cover';
+                    document.body.style.backgroundPosition = 'center';
+                    document.body.style.backgroundAttachment = 'fixed';
+
+                } catch (err) {
+                    setMovieServerError(err.response.data);
+                }
             }
         }
         async function handleGetSessiosDate() {
@@ -89,6 +104,11 @@ const Movie = () => {
 
         handleGetSessiosDate();
         handleGetMovieData();
+
+        return () => {
+            document.body.style.backgroundImage = '';
+        };
+
     }, [])
 
     const toggleShowSessions = (shouldShowSessions) => {
@@ -119,48 +139,65 @@ const Movie = () => {
         return <Error code={movieServerError.status} message={movieServerError.Message} />
     }
 
+    const onClose = () => {
+        return setIsOpen(!isOpen);
+    }
+
     return (
         <div >
+
             {isLoading ? (<SkeletonMovie />) : (
                 <>
                     <>
-                        <AddCategoryToMovie movieId ={id}/>
-                         <AddSession movieId ={id} MovieData={movieData}/>
-                        <MovieHeader>
-                            <div>
-                                <MovieImg src={movieData.imageUrl} alt={movieData.name} />
-                            </div>
-                            <InfoContainer>
-                                <InfoHeader>
-                                    <div>
-                                        <h2>{movieData.name}</h2>
-                                        <StarRating rating={movieData.rating} />
-                                        <p>{t('p-data-de-lancamento')} {movieData.releaseData}</p>
-                                    </div>
-                                    <CategoriesFilm>
-                                        {movieData.categories.map((category) => (
-                                            <p key={category.name}>{category.name}</p>
-                                        ))}
-                                    </CategoriesFilm>
-                                    <ClassificationControl>
-                                        {t('classificação')}
-                                        <ClassificationMovie
-                                            className={classificationMovie(movieData.classification)}>
-                                            {movieData.classification}
-                                        </ClassificationMovie>
-                                    </ClassificationControl>
-                                    <div>
-                                        <h3>{t('h3-sinopse')}</h3>
-                                        <Description $isExpanded={isExpanded}>
-                                            {movieData.description}
-                                        </Description>
+                        <Modal isOpen={isOpen} onClose={onClose} >
+                            <DeleteMovie movieId={id} onClose={onClose} />
+                        </Modal>
 
-                                        <ShowDescriptBtn onClick={toggleDescription}>
-                                            {isExpanded ? t('ler-menos') : t('ler-mais')}
-                                        </ShowDescriptBtn>
-                                    </div>
-                                </InfoHeader>
-                            </InfoContainer>
+                        <MovieHeader>
+                            <Header>
+                                <div>
+                                    <MovieImg src={movieData.imageUrl} alt={movieData.name} />
+                                </div>
+                                <InfoContainer>
+                                    <InfoHeader>
+                                        <div>
+                                            <h2>{movieData.name}</h2>
+                                            <StarRating rating={movieData.rating} />
+                                            <p>{t('p-data-de-lancamento')} {movieData.releaseData}</p>
+                                        </div>
+                                        <CategoriesFilm>
+                                            {movieData.categories.map((category) => (
+                                                <p key={category.name}>{category.name}</p>
+                                            ))}
+
+                                            {currentUser?.roles.map(role => role.nameRole).includes('ROLE_ADMIN') && (
+                                                <AddCategoryToMovie movieId={id} />
+                                            )}
+
+                                        </CategoriesFilm>
+                                        <ClassificationControl>
+                                            {t('classificação')}
+                                            <ClassificationMovie
+                                                className={classificationMovie(movieData.classification)}>
+                                                {movieData.classification}
+                                            </ClassificationMovie>
+                                        </ClassificationControl>
+                                        <div>
+                                            <h3>{t('h3-sinopse')}</h3>
+                                            <Description $isExpanded={isExpanded}>
+                                                {movieData.description}
+                                            </Description>
+
+                                            <ShowDescriptBtn onClick={toggleDescription}>
+                                                {isExpanded ? t('ler-menos') : t('ler-mais')}
+                                            </ShowDescriptBtn>
+                                        </div>
+                                    </InfoHeader>
+                                </InfoContainer>
+                            </Header>
+                            {currentUser?.roles.map(role => role.nameRole).includes('ROLE_ADMIN') && (
+                                <DeleteMovie movieId={id} />
+                            )}
                         </MovieHeader>
                         <BtnMovieContainer>
                             <BtnMovieInfoControl

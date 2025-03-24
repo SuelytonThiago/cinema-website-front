@@ -51,9 +51,6 @@ const AddSession = ({ MovieData, movieId }) => {
     const validateForm = validate();
     setErrors(validateForm);
     if (Object.keys(validateForm).length === 0) {
-      console.log(validateForm);
-      console.log(request);
-
       try {
         await backend.sessionAPI.addSession(request, {
           headers: {

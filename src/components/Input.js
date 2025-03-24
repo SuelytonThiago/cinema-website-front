@@ -3,6 +3,7 @@ import InputMask from 'react-input-mask';
 
 export const BaseInputStyles = `
     width: 100%;
+    max-width: 400px; 
     padding: 10px;
     padding-right: 40px;
     font-size: 13px;
@@ -18,6 +19,7 @@ export const BaseInputStyles = `
 
     @media screen and (max-width: 425px){
         width: 100%;
+         max-width: none;  
     }
 `;
 

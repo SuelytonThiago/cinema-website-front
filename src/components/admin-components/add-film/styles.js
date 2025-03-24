@@ -48,6 +48,7 @@ export const ClassificationContainer = styled.div`
 export const FileInput = styled.label`
     background-color: #fff;
     color:#000;
+    cursor: pointer;
 `
 
 export const FileContainer = styled.div`

@@ -5,23 +5,25 @@ import { showLoginModal } from '../../redux/show-login-modal/actions';
 import StarRating from './../starRating/StarRating.jsx';
 import backend from '../../../api/index.ts'
 import Cookies from 'js-cookie'
-import { InputSubit } from '../Input.js';
 import InputText from '../input-form/InputText.jsx';
-import { 
-  CommentUserForm, 
-  EditBtn, 
-  HalfStar, 
-  RatingButton, 
-  Star, 
-  UserAvaliationContainer, 
-  UserAvaliationControl, 
-  UserIcon, 
-  UserImg, 
-  UserNameContainer } from './styles.js';
+import {
+  CommentUserForm,
+  EditBtn,
+  FormContainer,
+  HalfStar,
+  RatingButton,
+  Star,
+  UserAvaliationContainer,
+  UserAvaliationControl,
+  UserIcon,
+  UserImg,
+  UserNameContainer
+} from './styles.js'
 import { toast } from 'react-toastify';
 
 import { useTranslation } from 'react-i18next';
 import '../../lib/i18n/i18n.js';
+import { Button } from '../Button.js';
 
 const RateMovie = ({ id }) => {
   const { currentUser } = useSelector(state => state.userReducer);
@@ -126,27 +128,31 @@ const RateMovie = ({ id }) => {
               <p>{currentReview.comment}</p>
             </>
           ) : (
-            <>
-              {[1, 2, 3, 4, 5].map(index => (
-                <RatingButton
-                  key={index}
-                  onClick={() => setRating(index)}>
-                  {rating >= index ? <Star /> : <HalfStar />}
-                </RatingButton>
-              ))}
-              <CommentUserForm onSubmit={handleAddRating}>
-                <InputText 
+            <div>
+              <div>
+                {[1, 2, 3, 4, 5].map(index => (
+                  <RatingButton
+                    key={index}
+                    onClick={() => setRating(index)}>
+                    {rating >= index ? <Star /> : <HalfStar />}
+                  </RatingButton>
+                ))}
+              </div>
+              <FormContainer>
+                <input
+                  style={{ padding: '.5rem', width: '300px' }}
                   error={''}
-                  handleChange={(e) => setComment(e.target.value)}
-                  nameInput={'comment'}
+                  onChange={(e) => setComment(e.target.value)}
+                  name={'comment'}
                   placeholder={t('placeholder-adicionar-avaliacao')}
                   value={comment} />
-                <InputSubit 
-                  type="submit"
-                  value={isEditing ? t('botao-salvar') : t('botao-publicar')} />
-              </CommentUserForm>
-              
-            </>
+
+                <Button onClick={handleAddRating}>
+                  {isEditing ? t('botao-salvar') : t('botao-publicar')}
+                </Button>
+              </FormContainer>
+
+            </div>
           )}
         </div>
       </UserAvaliationControl>

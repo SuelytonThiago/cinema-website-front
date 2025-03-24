@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const Container = styled.div` 
-    text-align: center;
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -9,12 +8,14 @@ export const Container = styled.div`
     padding: 1rem 4rem;
     border-radius: 5px;
     max-width: 500px;
+    align-items: center;
 `
 
 export const Input = styled.div`
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    width: 100%;
 `
 
 export const P = styled.p`

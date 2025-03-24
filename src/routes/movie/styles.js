@@ -4,6 +4,7 @@ export const MovieHeader = styled.div `
     display: flex;
     gap: 1rem;
     padding: 1rem;
+    justify-content: space-between;
     background-color: ${(props) => props.theme.container};
 
     @media screen and (max-width: 612px){
@@ -12,9 +13,16 @@ export const MovieHeader = styled.div `
     }
 `
 
+export const Header = styled.div`
+    display: flex;
+    gap: .5rem;
+`
+
 export const MovieImg = styled.img `
-    max-width: 220px;
-    height: auto;
+    width: 200px; 
+    height: 100%; 
+    object-fit: cover;
+
 `
 
 export const InfoContainer = styled.div `
@@ -31,6 +39,7 @@ export const InfoHeader = styled.div`
 export const CategoriesFilm = styled.div `
     display: flex;
     gap: 10px;
+    align-items: center;
 `
 
 export const ClassificationControl = styled.div`

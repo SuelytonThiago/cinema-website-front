@@ -11,7 +11,8 @@ import { validateCategoryName, validateReleaseData } from '../../../js/Validatio
 import InputMaskComponent from '../../input-form/InputMaskComponent.jsx';
 import { CategoryBtn, ClassificationBtn, ClassificationContainer, FileContainer, FileInput, Textarea, XBtn } from './styles.js';
 import { MessageError } from '../../Paragraph.js';
-import { FaFileAlt, FaImage, FaTimes } from "react-icons/fa"; 
+import { FaFileAlt, FaImage, FaTimes } from "react-icons/fa";
+import InputFile from '../../input-form/input-file/InputFile.jsx';
 
 const AddFilm = () => {
 
@@ -20,19 +21,11 @@ const AddFilm = () => {
     description: "",
     releaseData: "",
   }
-  const fileInputRef = useRef(null);
   const { t } = useTranslation();
   const { formData, handleChange, errors, setErrors, handleOnFocus } = useForm(initialState);
-  const [file, setFile] = useState(null);
+  const [fileImg, setFileImg] = useState(null);
+  const [backgroundCover, setBackgroundCover] = useState(null);
   const [classification, setClassification] = useState('');
-
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-    setErrors((prevErr) => ({
-      ...prevErr,
-      file: '',
-    }))
-  };
 
   const handleClassificationChange = (value) => {
     setClassification(value);
@@ -41,13 +34,6 @@ const AddFilm = () => {
       classification: '',
     }))
   }
-
-  const clearFile = () => {
-    setFile(null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
-  };
 
   const validate = () => {
     const errors = {};
@@ -68,8 +54,12 @@ const AddFilm = () => {
       errors.classification = t('validacao-classification');
     }
 
-    if (!file) {
-      errors.file = t('erro-selecione-uma-imagem');
+    if (!fileImg) {
+      errors.fileImg = t('erro-selecione-uma-imagem');
+    }
+
+    if (!backgroundCover) {
+      errors.backgroundCover = t('erro-selecione-uma-imagem');
     }
 
     return errors;
@@ -85,8 +75,6 @@ const AddFilm = () => {
       classification: classification,
     }
 
-    console.log(request)
-
     const validateErrors = validate();
     setErrors(validateErrors);
 
@@ -94,9 +82,8 @@ const AddFilm = () => {
 
       const movie = JSON.stringify(request);
 
-      console.log(movie);
       try {
-        await backend.movieAPI.addMovie(movie, file, {
+        await backend.movieAPI.addMovie(movie, fileImg, backgroundCover, {
           headers: {
             Authorization: `Bearer ${Cookies.get('accessToken')}`,
           }
@@ -104,7 +91,7 @@ const AddFilm = () => {
 
         toast.success(t('message-success'));
       } catch (err) {
-        toast.error(err.response.data.Message);
+        toast.error(err.response.data.message ||err.response.data.Message);
       }
     }
   }
@@ -140,34 +127,19 @@ const AddFilm = () => {
           placeholder={t('placeholder-digite-data-filme')}
           mask={'99/99/9999'} />
 
-        <FileInput htmlFor="fileUpload">
-          {errors.file || t("selecione-um-arquivo")}
-        </FileInput>
-        <input
-          id="fileUpload"
-          type="file"
-          ref={fileInputRef}
-          accept="image/*"
-          style={{ display: 'none' }}
-          onChange={handleFileChange} />
+        <InputFile
+          setFile={setFileImg}
+          file={fileImg}
+          setErrors={setErrors}
+          fileName={"fileImg"} 
+          h3={"Selecione uma imagem para a capa do filme"}/>
 
-        {file && (
-          <FileContainer>
-            <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-              {file.type.startsWith("image/") ? (
-                <FaImage size={20} color="#007BFF" />
-              ) : (
-                <FaFileAlt size={20} color="#333" />
-              )}
-              <span>{file.name}</span>
-            </div>
-            <XBtn onClick={clearFile}>
-              <FaTimes />
-            </XBtn>
-          </FileContainer>
-        )}
-
-
+        <InputFile
+          setFile={setBackgroundCover}
+          file={backgroundCover}
+          setErrors={setErrors}
+          fileName={"backgroundCover"} 
+          h3={"Selecione uma imagem para o plano de fundo do filme"}/>
 
         <ClassificationContainer>
           <h4>{t("selecionar-classificacao")}</h4>

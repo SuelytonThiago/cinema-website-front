@@ -187,6 +187,12 @@ export interface MovieResponseDto {
     'classification'?: string;
     /**
      * 
+     * @type {string}
+     * @memberof MovieResponseDto
+     */
+    'backgroundCover'?: string;
+    /**
+     * 
      * @type {Array<CategoryResponseDto>}
      * @memberof MovieResponseDto
      */
@@ -1177,9 +1183,9 @@ export const FileControllerApiAxiosParamCreator = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        uploadFile: async (file: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        uploadUserFile: async (file: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'file' is not null or undefined
-            assertParamExists('uploadFile', 'file', file)
+            assertParamExists('uploadUserFile', 'file', file)
             const localVarPath = `/api/files/upload`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1244,10 +1250,10 @@ export const FileControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async uploadFile(file: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.uploadFile(file, options);
+        async uploadUserFile(file: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.uploadUserFile(file, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FileControllerApi.uploadFile']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FileControllerApi.uploadUserFile']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -1276,8 +1282,8 @@ export const FileControllerApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        uploadFile(file: File, options?: RawAxiosRequestConfig): AxiosPromise<string> {
-            return localVarFp.uploadFile(file, options).then((request) => request(axios, basePath));
+        uploadUserFile(file: File, options?: RawAxiosRequestConfig): AxiosPromise<string> {
+            return localVarFp.uploadUserFile(file, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1308,8 +1314,8 @@ export class FileControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FileControllerApi
      */
-    public uploadFile(file: File, options?: RawAxiosRequestConfig) {
-        return FileControllerApiFp(this.configuration).uploadFile(file, options).then((request) => request(this.axios, this.basePath));
+    public uploadUserFile(file: File, options?: RawAxiosRequestConfig) {
+        return FileControllerApiFp(this.configuration).uploadUserFile(file, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -1365,15 +1371,18 @@ export const MovieControllerApiAxiosParamCreator = function (configuration?: Con
          * 
          * @summary add a new movie
          * @param {string} movie 
-         * @param {File} file 
+         * @param {File} fileImg 
+         * @param {File} backgroundCover 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addMovie: async (movie: string, file: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        addMovie: async (movie: string, fileImg: File, backgroundCover: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'movie' is not null or undefined
             assertParamExists('addMovie', 'movie', movie)
-            // verify required parameter 'file' is not null or undefined
-            assertParamExists('addMovie', 'file', file)
+            // verify required parameter 'fileImg' is not null or undefined
+            assertParamExists('addMovie', 'fileImg', fileImg)
+            // verify required parameter 'backgroundCover' is not null or undefined
+            assertParamExists('addMovie', 'backgroundCover', backgroundCover)
             const localVarPath = `/api/movies/add`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1396,8 +1405,12 @@ export const MovieControllerApiAxiosParamCreator = function (configuration?: Con
             }
 
 
-            if (file !== undefined) { 
-                localVarFormParams.append('file', file as any);
+            if (fileImg !== undefined) { 
+                localVarFormParams.append('fileImg', fileImg as any);
+            }
+    
+            if (backgroundCover !== undefined) { 
+                localVarFormParams.append('backgroundCover', backgroundCover as any);
             }
     
     
@@ -1707,12 +1720,13 @@ export const MovieControllerApiFp = function(configuration?: Configuration) {
          * 
          * @summary add a new movie
          * @param {string} movie 
-         * @param {File} file 
+         * @param {File} fileImg 
+         * @param {File} backgroundCover 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async addMovie(movie: string, file: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: string; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.addMovie(movie, file, options);
+        async addMovie(movie: string, fileImg: File, backgroundCover: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: string; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addMovie(movie, fileImg, backgroundCover, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MovieControllerApi.addMovie']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1831,12 +1845,13 @@ export const MovieControllerApiFactory = function (configuration?: Configuration
          * 
          * @summary add a new movie
          * @param {string} movie 
-         * @param {File} file 
+         * @param {File} fileImg 
+         * @param {File} backgroundCover 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addMovie(movie: string, file: File, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: string; }> {
-            return localVarFp.addMovie(movie, file, options).then((request) => request(axios, basePath));
+        addMovie(movie: string, fileImg: File, backgroundCover: File, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: string; }> {
+            return localVarFp.addMovie(movie, fileImg, backgroundCover, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1933,13 +1948,14 @@ export class MovieControllerApi extends BaseAPI {
      * 
      * @summary add a new movie
      * @param {string} movie 
-     * @param {File} file 
+     * @param {File} fileImg 
+     * @param {File} backgroundCover 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MovieControllerApi
      */
-    public addMovie(movie: string, file: File, options?: RawAxiosRequestConfig) {
-        return MovieControllerApiFp(this.configuration).addMovie(movie, file, options).then((request) => request(this.axios, this.basePath));
+    public addMovie(movie: string, fileImg: File, backgroundCover: File, options?: RawAxiosRequestConfig) {
+        return MovieControllerApiFp(this.configuration).addMovie(movie, fileImg, backgroundCover, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
