@@ -42,6 +42,7 @@ export const ClassificationBtn = styled.div`
 export const ClassificationContainer = styled.div`
     display: flex;
     flex-direction: column;
+    margin: 0 auto;
     gap: 1rem;
 `
 

@@ -11,6 +11,7 @@ import {
   EditBtn,
   FormContainer,
   HalfStar,
+  Input,
   RatingButton,
   Star,
   UserAvaliationContainer,
@@ -98,7 +99,7 @@ const RateMovie = ({ id }) => {
 
         setIsEditing(false);
       } catch (err) {
-        toast.error(err.response.data.Message);
+        toast.error(err?.response?.data?.Message);
       }
     } else {
       dispatch(showLoginModal());
@@ -139,8 +140,7 @@ const RateMovie = ({ id }) => {
                 ))}
               </div>
               <FormContainer>
-                <input
-                  style={{ padding: '.5rem', width: '300px' }}
+                <Input
                   error={''}
                   onChange={(e) => setComment(e.target.value)}
                   name={'comment'}

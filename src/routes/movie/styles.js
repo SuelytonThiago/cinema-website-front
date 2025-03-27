@@ -79,6 +79,14 @@ export const ClassificationMovie = styled.p`
     }
 `
 
+export const AddSessionContainer = styled.div `
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+`
+
 export const ShowFullDescription = styled.p`
     display: block;
 `
@@ -134,4 +142,9 @@ export const BtnMovieInfoControl = styled.button`
 
 export const SessionsMovieContainer = styled.div`
     background-color: ${(props) => props.theme.mainContainer};
+`
+
+export const SessionsContainer = styled.div`
+
+padding: 1rem;
 `

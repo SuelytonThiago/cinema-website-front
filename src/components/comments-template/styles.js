@@ -21,8 +21,19 @@ export const Username = styled.h4`
     white-space: nowrap;
 `
 
-export const ReviewInfo = styled.div `
+export const ReviewInfo = styled.div`
     display: flex;
     flex-direction:column;
     
+`
+
+export const CommentContainer = styled.p`
+    width: 800px;
+    height: auto;  
+    word-wrap: break-word;  
+    overflow-wrap: break-word;   
+
+    @media screen and (max-width:744px){
+        
+    }
 `

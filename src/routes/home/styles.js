@@ -12,3 +12,9 @@ export const H2 = styled.h2`
         font-size: 19px;
     }
 `
+
+export const Div = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`

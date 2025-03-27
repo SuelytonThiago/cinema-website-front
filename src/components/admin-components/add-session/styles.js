@@ -28,5 +28,23 @@ export const InputDate = styled.input`
     &.error {
         border: 1px solid red;
     }
- 
+`
+
+
+export const AddBtn = styled.button`
+    background-color: transparent;
+    color: #1877F2;
+    border: 3px solid #1877F2;
+    padding: .3rem;
+    border-radius: 50%; 
+    cursor: pointer;
+    opacity: .8;
+    transition: .2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+        opacity: 1;
+    }
 `

@@ -60,7 +60,7 @@ const RecoverPassword = ({ goNext }) => {
                 handleChange={(e) => setEmail(e.target.value)}  
                 handleOnFocus={() => setErrorEmail('')}
                 nameInput={'email'}
-                value={email}/>
+                value={email} />
 
             <ControlRecoverContainer>
                 <BackButtonLink to={"/login"} className='bbutton'>{t('botao-voltar')}</BackButtonLink>

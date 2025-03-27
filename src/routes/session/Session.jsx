@@ -23,18 +23,12 @@ const Session = () => {
 
 
     const { t } = useTranslation();
-
     const navigate = useNavigate();
     const { id } = useParams();
     const [showComponent, setShowComponent] = useState(true);
     const [selectedChairId, setSelectedChairId] = useState(null);
     const [selectedTicket, setSelectedTicket] = useState(null);
     const [sessionData, setSessionData] = useState(null);
-
-    const { isVisible } = useSelector((rootReducer) => rootReducer.loginModalReducer)
-    const { currentUser } = useSelector((rootReducer) => rootReducer.userReducer);
-    const dispatch = useDispatch();
-
 
 
     const handleAddTicket = async () => {
@@ -43,26 +37,20 @@ const Session = () => {
             price: selectedTicket?.price,
             chairNumber: selectedChairId - 1,
         }
-        if (currentUser) {
-            try {
-                await backend.ticketAPI.addTicket(ticketData, {
-                    headers: {
-                        Authorization: `Bearer ${Cookies.get('accessToken')}`
-                    }
-                })
-                navigate('/');
-            } catch (err) {
-                toast.error(err.response.data.Message);
-            }
-
-        } else {
-            dispatch(showLoginModal());
+        try {
+            await backend.ticketAPI.addTicket(ticketData, {
+                headers: {
+                    Authorization: `Bearer ${Cookies.get('accessToken')}`
+                }
+            })
+            navigate('/');
+        } catch (err) {
+            toast.error(err.response.data.Message);
         }
     };
 
     useEffect(() => {
         async function handleGetSessionData() {
-
             try {
                 const res = await backend.sessionAPI.getInfoSession(id);
                 setSessionData(res.data);
@@ -93,10 +81,10 @@ const Session = () => {
     }
 
     const back = () => {
-        if(showComponent){
+        if (showComponent) {
             navigate('/');
         }
-        else{
+        else {
             setShowComponent(true);
             setSelectedTicket(null);
         }
@@ -178,9 +166,7 @@ const Session = () => {
                         {t('botao-finalizar')}
                     </SessionControlBtn>
                 )}
-
             </SessionRequestControl>
-            {isVisible && <LoginModal />}
         </SessionContainer>
     );
 };

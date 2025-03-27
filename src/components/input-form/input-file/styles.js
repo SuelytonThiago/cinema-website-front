@@ -5,8 +5,9 @@ export const FileInput = styled.label`
     color:#000;
     cursor: pointer;
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    gap: .5rem;
 `
 
 export const FileContainer = styled.div`
@@ -45,4 +46,16 @@ export const Container = styled.div`
     text-align: center;
     gap: .5rem;
 
+`
+
+export const P = styled.p`
+    color: ${(props) => props.theme.container} ;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
+
+export const Icon = styled.span`
+    font-size: 15px;
+    color: red;
 `

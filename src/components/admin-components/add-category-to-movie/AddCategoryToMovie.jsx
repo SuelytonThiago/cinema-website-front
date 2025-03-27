@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Container, Input, Li, ListBtn, ListItemsContainer, P } from '../styles'
+import { Container, Input, Li, ListBtn, ListItemsContainer, P, PainelBtns } from '../styles'
 import InputText from '../../input-form/InputText'
 import useForm from '../../../hooks/UseForm'
 import backend from '../../../../api/index.ts'
@@ -10,7 +10,6 @@ import { Button } from '../../Button'
 import { useTranslation } from 'react-i18next';
 import { FaExclamationCircle, FaPlus } from 'react-icons/fa';
 import Modal from '../../modal/Modal'
-import { PainelBtns } from './styles.js'
 
 const AddCategoryToMovie = ({ movieId }) => {
 

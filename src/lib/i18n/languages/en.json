@@ -79,6 +79,7 @@
     "erro-algo-deu-errado":"Something went wrong",
     "erro-buscar-categorias" : "categories not found",
     "erro-campo-vazio": "the field cannot be empty",
+    "erro-sessao-expirada"  : "Your session has expired, please log in again.",
 
     "message-success": "Operation performed successfully",
 
@@ -86,6 +87,7 @@
     "add-new-category-to-movie":"Add a new category to a movie",
     "add-movie": "Add a new movie",
     "selecionar-classificacao":"Select a rating",
+    "adicionar-nova-sessao": "Add a new session",
 
     "tela":"Screen",
     "comprar": "Buy",

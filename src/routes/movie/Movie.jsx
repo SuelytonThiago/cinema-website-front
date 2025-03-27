@@ -8,21 +8,17 @@ import CommentTemplate from '../../components/comments-template/CommentTemplate.
 import SessionTemplate from '../../components/session-template/SessionTemplate';
 import formatDate from '../../js/formatDate';
 import classificationMovie from '../../js/Classification.js'
-import backend from '../../../api/index.ts'
-import { Stomp } from "@stomp/stompjs";
-import SockJS from "sockjs-client";
-import { BtnMovieContainer, BtnMovieInfoControl, CategoriesFilm, ClassificationControl, ClassificationMovie, Description, Header, InfoContainer, InfoHeader, MovieHeader, MovieImg, SessionsMovieContainer, ShowDescriptBtn } from './styles.js';
+import backend from '../../../api/index.ts';
+import { AddSessionContainer, BtnMovieContainer, BtnMovieInfoControl, CategoriesFilm, ClassificationControl, ClassificationMovie, Description, Header, InfoContainer, InfoHeader, MovieHeader, MovieImg, SessionsContainer, SessionsMovieContainer, ShowDescriptBtn } from './styles.js';
 import SkeletonMovie from '../../components/skeleton-loading/skeleton-movie/SkeletonMovie.jsx';
 import Error from '../../components/error/Error.jsx';
 import { useTranslation } from 'react-i18next';
 import '../../lib/i18n/i18n.js';
-
 import DeleteMovie from '../../components/admin-components/delete-movie/DeleteMovie.jsx';
 import { useLocation } from 'react-router-dom';
 import Modal from '../../components/modal/Modal.jsx';
-
-import { FaPlus, FaTimes } from 'react-icons/fa';
 import AddCategoryToMovie from '../../components/admin-components/add-category-to-movie/AddCategoryToMovie.jsx';
+import AddSession from '../../components/admin-components/add-session/AddSession.jsx';
 
 const Movie = () => {
     const { t } = useTranslation();
@@ -47,39 +43,12 @@ const Movie = () => {
     };
 
     useEffect(() => {
-        const socket = new SockJS("http://localhost:8080/ws");
-        const stompClient = Stomp.over(socket);
-        stompClient.connect({}, () => {
-            stompClient.subscribe("/topic/comments", (message) => {
-                const updatedComment = JSON.parse(message.body);
-
-                setComments((prevComments) => {
-                    const existingCommentIndex = prevComments.findIndex(comment => comment.id === updatedComment.id);
-
-                    if (existingCommentIndex !== -1) {
-
-                        const updatedComments = [...prevComments];
-                        updatedComments[existingCommentIndex] = updatedComment;
-                        return updatedComments;
-                    } else {
-                        return [...prevComments, updatedComment];
-                    }
-                });
-            });
-        });
-
-        return () => {
-            stompClient.disconnect();
-        };
-    }, []);
-
-    useEffect(() => {
         async function handleGetMovieData() {
             if (location.pathname.includes(`/movie/`)) {
                 try {
                     const res = await backend.movieAPI.findMovieById(id);
-                    setMovieData(res.data);
-                    setComments(res.data.reviews);
+                    setMovieData(res?.data);
+                    setComments(res?.data.reviews);
                     setIsLoading(false)
                     document.body.style.backgroundImage = `url(${res.data.backgroundCover})`;
                     document.body.style.backgroundSize = 'cover';
@@ -87,29 +56,30 @@ const Movie = () => {
                     document.body.style.backgroundAttachment = 'fixed';
 
                 } catch (err) {
-                    setMovieServerError(err.response.data);
+                    setMovieServerError(err.response?.data || {});
                 }
             }
         }
+
         async function handleGetSessiosDate() {
             try {
                 const res = await backend.sessionAPI.findByMovie(id)
-
-                setSessionsMovieData(res.data)
-
+                setSessionsMovieData(res?.data)
+                console.log("response" + res);
             } catch (err) {
-                setSessionServerError(err.response.data);
+                console.log("erro" + err);
+                setSessionServerError(err.response?.data || {});
             }
         }
 
-        handleGetSessiosDate();
         handleGetMovieData();
+        handleGetSessiosDate();
 
         return () => {
             document.body.style.backgroundImage = '';
         };
 
-    }, [])
+    }, [id, location.pathname]);
 
     const toggleShowSessions = (shouldShowSessions) => {
         if (shouldShowSessions !== showSessions) {
@@ -118,6 +88,10 @@ const Movie = () => {
     }
 
     const groupSessionsByDate = (sessions) => {
+        if (!sessions || !Array.isArray(sessions)) {
+            return [];
+        }
+
         const grouped = {};
 
         sessions.forEach(session => {
@@ -135,7 +109,7 @@ const Movie = () => {
         }));
     };
 
-    if (!!movieServerError) {
+    if (movieServerError && movieServerError.status) {
         return <Error code={movieServerError.status} message={movieServerError.Message} />
     }
 
@@ -145,114 +119,121 @@ const Movie = () => {
 
     return (
         <div >
-
             {isLoading ? (<SkeletonMovie />) : (
                 <>
-                    <>
-                        <Modal isOpen={isOpen} onClose={onClose} >
-                            <DeleteMovie movieId={id} onClose={onClose} />
-                        </Modal>
+                    <Modal isOpen={isOpen} onClose={onClose} >
+                        <DeleteMovie movieId={id} onClose={onClose} />
+                    </Modal>
 
-                        <MovieHeader>
-                            <Header>
+                    <MovieHeader>
+
+                        <div>
+                            <MovieImg src={movieData.imageUrl} alt={movieData.name} />
+                        </div>
+                        <InfoContainer>
+                            <InfoHeader>
                                 <div>
-                                    <MovieImg src={movieData.imageUrl} alt={movieData.name} />
+                                    <h2>{movieData.name}</h2>
+                                    <StarRating rating={movieData.rating} />
+                                    <p>{t('p-data-de-lancamento')} {movieData.releaseData}</p>
                                 </div>
-                                <InfoContainer>
-                                    <InfoHeader>
-                                        <div>
-                                            <h2>{movieData.name}</h2>
-                                            <StarRating rating={movieData.rating} />
-                                            <p>{t('p-data-de-lancamento')} {movieData.releaseData}</p>
-                                        </div>
-                                        <CategoriesFilm>
-                                            {movieData.categories.map((category) => (
-                                                <p key={category.name}>{category.name}</p>
-                                            ))}
+                                <CategoriesFilm>
+                                    {movieData.categories.map((category) => (
+                                        <p key={category.name}>{category.name}</p>
+                                    ))}
 
-                                            {currentUser?.roles.map(role => role.nameRole).includes('ROLE_ADMIN') && (
-                                                <AddCategoryToMovie movieId={id} />
-                                            )}
+                                    {currentUser?.roles.map(role => role.nameRole).includes('ROLE_ADMIN') && (
+                                        <AddCategoryToMovie movieId={id} />
+                                    )}
 
-                                        </CategoriesFilm>
-                                        <ClassificationControl>
-                                            {t('classificação')}
-                                            <ClassificationMovie
-                                                className={classificationMovie(movieData.classification)}>
-                                                {movieData.classification}
-                                            </ClassificationMovie>
-                                        </ClassificationControl>
-                                        <div>
-                                            <h3>{t('h3-sinopse')}</h3>
-                                            <Description $isExpanded={isExpanded}>
-                                                {movieData.description}
-                                            </Description>
-
-                                            <ShowDescriptBtn onClick={toggleDescription}>
-                                                {isExpanded ? t('ler-menos') : t('ler-mais')}
-                                            </ShowDescriptBtn>
-                                        </div>
-                                    </InfoHeader>
-                                </InfoContainer>
-                            </Header>
-                            {currentUser?.roles.map(role => role.nameRole).includes('ROLE_ADMIN') && (
-                                <DeleteMovie movieId={id} />
-                            )}
-                        </MovieHeader>
-                        <BtnMovieContainer>
-                            <BtnMovieInfoControl
-                                className={showSessions ? 'isVisible' : ''}
-                                onClick={() => toggleShowSessions(true)}>
-                                {t('sessoes')}
-                            </BtnMovieInfoControl>
-                            <BtnMovieInfoControl
-                                className={!showSessions ? 'isVisible' : ''}
-                                onClick={() => toggleShowSessions(false)}>
-                                {t('comentarios')}
-                            </BtnMovieInfoControl>
-                        </BtnMovieContainer>
-                        {showSessions ? (
-                            <SessionsMovieContainer>
+                                </CategoriesFilm>
+                                <ClassificationControl>
+                                    {t('classificação')}
+                                    <ClassificationMovie
+                                        className={classificationMovie(movieData.classification)}>
+                                        {movieData.classification}
+                                    </ClassificationMovie>
+                                </ClassificationControl>
                                 <div>
-                                    {groupSessionsByDate(sessionsMovieData).length === 0 ? (
-                                        <Error code={sessionServerError.status} message={sessionServerError.Message} />
-                                    ) : (
-                                        groupSessionsByDate(sessionsMovieData).map(group => (
-                                            <div className='sessionInfo' key={group.dateKey}>
+                                    <h3>{t('h3-sinopse')}</h3>
+                                    <Description $isExpanded={isExpanded}>
+                                        {movieData.description}
+                                    </Description>
+
+                                    <ShowDescriptBtn onClick={toggleDescription}>
+                                        {isExpanded ? t('ler-menos') : t('ler-mais')}
+                                    </ShowDescriptBtn>
+                                </div>
+                            </InfoHeader>
+                        </InfoContainer>
+
+                        {currentUser?.roles.map(role => role.nameRole).includes('ROLE_ADMIN') && (
+                            <DeleteMovie movieId={id} />
+                        )}
+                    </MovieHeader>
+                    <BtnMovieContainer>
+                        <BtnMovieInfoControl
+                            className={showSessions ? 'isVisible' : ''}
+                            onClick={() => toggleShowSessions(true)}>
+                            {t('sessoes')}
+                        </BtnMovieInfoControl>
+                        <BtnMovieInfoControl
+                            className={!showSessions ? 'isVisible' : ''}
+                            onClick={() => toggleShowSessions(false)}>
+                            {t('comentarios')}
+                        </BtnMovieInfoControl>
+                    </BtnMovieContainer>
+                    {showSessions ? (
+                        <SessionsMovieContainer>
+                            <div>
+                                {groupSessionsByDate(sessionsMovieData).length === 0 ? (
+                                    <AddSessionContainer>
+                                        <Error code={sessionServerError?.status} message={sessionServerError?.Message} />
+                                        {currentUser?.roles.map(role => role.nameRole).includes('ROLE_ADMIN') && (
+                                            <AddSession MovieData={movieData} movieId={id} />
+                                        )}
+                                    </AddSessionContainer>
+                                ) : (
+                                    <SessionsContainer>
+                                        {groupSessionsByDate(sessionsMovieData).map(group => (
+                                            <div className='sessionInfo' key={group.date}>
                                                 {group.sessions.map(session => (
                                                     <SessionTemplate key={session.id} session={session} />
                                                 ))}
                                             </div>
-                                        ))
-                                    )}
-                                </div>
-                            </SessionsMovieContainer>
-                        ) : (
-                            <div>
-                                <div className='commentUserData'>
-                                    <RateMovie id={id} />
-                                </div>
-                                <div className="commentsContainer">
-                                    {comments === 0 ? (
-                                        <p>{t('p-sem-comentarios')}</p>
-                                    ) : (
-                                        comments.map((review) => (
-                                            <CommentTemplate review={review} key={review.id} />
-                                        ))
-                                    )}
-                                </div>
+                                        ))}
+                                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                            {currentUser?.roles.some(role => role.nameRole === 'ROLE_ADMIN') && (
+                                                <AddSession MovieData={movieData} movieId={id} />
+                                            )}
+                                        </div>
+                                    </SessionsContainer>
+
+                                )}
                             </div>
+                        </SessionsMovieContainer>
+                    ) : (
+                        <div>
+                            <div>
+                                <RateMovie id={id} />
+                            </div>
+                            <div >
+                                {comments.length === 0 ? (
+                                    <Error message={t('p-sem-comentarios')} />
+                                ) : (
+                                    comments.map((review) => (
+                                        <CommentTemplate review={review} key={review.id} />
+                                    ))
+                                )}
+                            </div>
+                        </div>
 
-                        )
-                        }
-                    </>
+                    )}
                     {isVisible && <LoginModal />}
-
                 </>
 
-            )
-            }
-        </div >
+            )}
+        </div>
     );
 };
 

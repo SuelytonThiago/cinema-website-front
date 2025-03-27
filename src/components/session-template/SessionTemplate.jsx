@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import formatHours from '../../js/formatHours';
-import { Link } from 'react-router-dom';
 import formatDate from '../../js/formatDate';
 import { FaCalendarAlt } from 'react-icons/fa';
 import tickets from '../../data/ticketData.js'

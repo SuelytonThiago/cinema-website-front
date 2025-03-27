@@ -5,11 +5,13 @@ import SockJS from "sockjs-client";
 import Sessions from '../../components/sessions/Sessions.jsx';
 import Error from '../../components/error/Error.jsx';
 import RandomMovies from '../../components/random-movies/RandomMovies.jsx';
-import { Container, H2 } from './styles.js';
+import { Container, Div, H2 } from './styles.js';
 import { useTranslation } from 'react-i18next';
 import '../../lib/i18n/i18n.js';
-import AddCategory from '../../components/admin-components/add-category/AddCategory.jsx';
-import AddFilm from '../../components/admin-components/add-film/AddFilm.jsx';
+import AdmMenu from '../../components/admin-components/adm-menu/AdmMenu.jsx';
+import { useSelector } from 'react-redux';
+import LoginModal from '../login/LoginModal.jsx';
+
 
 const Home = () => {
 
@@ -19,6 +21,7 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [errorServer, setErrorServer] = useState({});
+  const { currentUser } = useSelector((rootReducer) => rootReducer.userReducer);
 
   useEffect(() => {
     const socket = new SockJS("http://localhost:8080/ws");
@@ -68,10 +71,13 @@ const Home = () => {
 
   return (
     <Container>
-      <H2>{t('link-filmes')}: </H2>
+      <Div>
+        <H2>{t('link-filmes')}: </H2>
+        {currentUser?.roles.map(role => role.nameRole).includes('ROLE_ADMIN') && (
+          <AdmMenu/>
+        )}
+      </Div>
       <RandomMovies />
-      <AddCategory/>
-      <AddFilm/>
       <>
         <H2 >{t('sessoes')}: </H2>
         {isError ?

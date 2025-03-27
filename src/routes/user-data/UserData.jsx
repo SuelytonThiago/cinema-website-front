@@ -82,15 +82,11 @@ const UserData = () => {
             
         }
     };
-
-
     const logout = useLogout();
 
     const handleLogoutClick = () => {
         logout();
     };
-
-
 
     return (
         <>

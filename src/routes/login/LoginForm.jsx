@@ -60,7 +60,6 @@ const LoginForm = ({ loginSuccess }) => {
             Authorization: `Bearer ${accessToken}`
           }
         })
-
         localStorage.setItem("user", JSON.stringify(responseUser.data));
         dispatch(loginUser(responseUser.data));
         loginSuccess();

@@ -6,13 +6,20 @@ import backend from '../../../../api/index.ts'
 import Cookies from 'js-cookie'
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import {  Container, Input } from './../styles.js'
+import { Container, Input, PainelBtns } from './../styles.js'
 import { Button } from '../../Button.js'
+import { Paragraph } from '../../Paragraph.js'
+import Modal from '../../modal/Modal.jsx'
 
 const AddCategory = () => {
 
   const { t } = useTranslation();
-  
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleSetIsOpen = () => {
+    setIsOpen(!isOpen);
+  }
+
   const initialState = {
     name: '',
   }
@@ -43,31 +50,48 @@ const AddCategory = () => {
           }
         })
         toast.success(t('message-success'));
+        setIsOpen(false);
       }
       catch (err) {
-        toast.error(err.response.data.Message);
+        toast.error(err.response.data.Message || err.response.data.message);
+        console.log(err.response.data.message)
       }
     }
   }
 
   return (
-    <Container>
-      <h3>{t('add-new-category')}</h3>
-      <Input>
-        <InputText
-          error={errors.name}
-          handleChange={handleChange}
-          nameInput={'name'}
-          value={formData.name}
-          handleOnFocus={handleOnFocus}
-          placeholder={t('placeholder-digite-nome-categoria')} />
+    <div>
+      <Paragraph onClick={handleSetIsOpen}>Adicionar uma nova categoria</Paragraph>
+      {
+        isOpen && (
+          <Modal isOpen={isOpen}>
+            <Container>
+              <h3>{t('add-new-category')}</h3>
+              <Input>
+                <InputText
+                  error={errors.name}
+                  handleChange={handleChange}
+                  nameInput={'name'}
+                  value={formData.name}
+                  handleOnFocus={handleOnFocus}
+                  placeholder={t('placeholder-digite-nome-categoria')} />
 
-        <Button
-          onClick={createCategory}>
-          {t('botao-salvar')}
-        </Button>
-      </Input>
-    </Container>
+                <PainelBtns>
+                  <Button
+                    onClick={handleSetIsOpen}>
+                    {t('botao-cancelar')}
+                  </Button>
+                  <Button
+                    onClick={createCategory}>
+                    {t('botao-salvar')}
+                  </Button>
+                </PainelBtns>
+              </Input>
+            </Container>
+          </Modal>
+        )
+      }
+    </div>
   )
 }
 

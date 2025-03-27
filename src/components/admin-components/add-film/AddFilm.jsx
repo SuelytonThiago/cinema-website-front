@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { Container, Input } from './../styles.js'
+import { Container, Input, PainelBtns } from './../styles.js'
 import { Button } from '../../Button.js'
 import useForm from '../../../hooks/UseForm.jsx';
 import backend from "../../../../api/index.ts"
@@ -10,9 +10,9 @@ import InputText from '../../input-form/InputText.jsx';
 import { validateCategoryName, validateReleaseData } from '../../../js/Validations.js';
 import InputMaskComponent from '../../input-form/InputMaskComponent.jsx';
 import { CategoryBtn, ClassificationBtn, ClassificationContainer, FileContainer, FileInput, Textarea, XBtn } from './styles.js';
-import { MessageError } from '../../Paragraph.js';
-import { FaFileAlt, FaImage, FaTimes } from "react-icons/fa";
+import { MessageError, Paragraph } from '../../Paragraph.js';
 import InputFile from '../../input-form/input-file/InputFile.jsx';
+import Modal from '../../modal/Modal.jsx';
 
 const AddFilm = () => {
 
@@ -21,6 +21,14 @@ const AddFilm = () => {
     description: "",
     releaseData: "",
   }
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleSetIsOpen = () => {
+    setIsOpen(!isOpen);
+  }
+
+
   const { t } = useTranslation();
   const { formData, handleChange, errors, setErrors, handleOnFocus } = useForm(initialState);
   const [fileImg, setFileImg] = useState(null);
@@ -90,88 +98,105 @@ const AddFilm = () => {
         })
 
         toast.success(t('message-success'));
+        setIsOpen(false);
       } catch (err) {
-        toast.error(err.response.data.message ||err.response.data.Message);
+        toast.error(err.response.data.message || err.response.data.Message);
       }
     }
   }
 
   return (
-    <Container>
-      <h3>{t('add-movie')}</h3>
-      <Input>
+    <div>
+      <Paragraph onClick={handleSetIsOpen}>adicionar um novo filme</Paragraph>
+      {isOpen && (
+        <Modal isOpen={isOpen}>
+          <Container>
+            <h3>{t('add-movie')}</h3>
+            <Input>
 
-        <InputText
-          error={errors.name}
-          handleChange={handleChange}
-          nameInput={'name'}
-          value={formData.name}
-          handleOnFocus={handleOnFocus}
-          placeholder={t('placeholder-digite-nome-filme')} />
+              <InputText
+                error={errors.name}
+                handleChange={handleChange}
+                nameInput={'name'}
+                value={formData.name}
+                handleOnFocus={handleOnFocus}
+                placeholder={t('placeholder-digite-nome-filme')} />
 
-        <Textarea
-          className={errors.description ? 'error' : ''}
-          placeholder={t('placeholder-digite-descricao-filme')}
-          value={formData.description}
-          onChange={handleChange}
-          onFocus={handleOnFocus}
-          name='description' />
-        <MessageError>{errors.description}</MessageError>
+              <Textarea
+                className={errors.description ? 'error' : ''}
+                placeholder={t('placeholder-digite-descricao-filme')}
+                value={formData.description}
+                onChange={handleChange}
+                onFocus={handleOnFocus}
+                name='description' />
+              <MessageError>{errors.description}</MessageError>
 
-        <InputMaskComponent
-          error={errors.releaseData}
-          handleChange={handleChange}
-          nameInput={'releaseData'}
-          value={formData.releaseData}
-          handleOnFocus={handleOnFocus}
-          placeholder={t('placeholder-digite-data-filme')}
-          mask={'99/99/9999'} />
+              <InputMaskComponent
+                error={errors.releaseData}
+                handleChange={handleChange}
+                nameInput={'releaseData'}
+                value={formData.releaseData}
+                handleOnFocus={handleOnFocus}
+                placeholder={t('placeholder-digite-data-filme')}
+                mask={'99/99/9999'} />
 
-        <InputFile
-          setFile={setFileImg}
-          file={fileImg}
-          setErrors={setErrors}
-          fileName={"fileImg"} 
-          h3={"Selecione uma imagem para a capa do filme"}/>
+              <InputFile
+                setFile={setFileImg}
+                error={errors.fileImg}
+                file={fileImg}
+                setErrors={setErrors}
+                fileName={"fileImg"}
+                h3={"Selecione uma imagem para a capa do filme"} />
 
-        <InputFile
-          setFile={setBackgroundCover}
-          file={backgroundCover}
-          setErrors={setErrors}
-          fileName={"backgroundCover"} 
-          h3={"Selecione uma imagem para o plano de fundo do filme"}/>
+              <InputFile
+                setFile={setBackgroundCover}
+                error={errors.backgroundCover}
+                file={backgroundCover}
+                setErrors={setErrors}
+                fileName={"backgroundCover"}
+                h3={"Selecione uma imagem para o plano de fundo do filme"} />
 
-        <ClassificationContainer>
-          <h4>{t("selecionar-classificacao")}</h4>
-          <ClassificationBtn>
-            <CategoryBtn
-              className={`rating-L ${classification === 'L' ? 'activate' : ''}`}
-              onClick={() => handleClassificationChange('L')}>L</CategoryBtn>
-            <CategoryBtn
-              className={`rating-10 ${classification === '10' ? 'activate' : ''}`}
-              onClick={() => handleClassificationChange('10')}>10</CategoryBtn>
-            <CategoryBtn
-              className={`rating-12 ${classification === '12' ? 'activate' : ''}`}
-              onClick={() => handleClassificationChange('12')}>12</CategoryBtn>
-            <CategoryBtn
-              className={`rating-14 ${classification === '14' ? 'activate' : ''}`}
-              onClick={() => handleClassificationChange('14')}>14</CategoryBtn>
-            <CategoryBtn
-              className={`rating-16 ${classification === '16' ? 'activate' : ''}`}
-              onClick={() => handleClassificationChange('16')}>16</CategoryBtn>
-            <CategoryBtn
-              className={`rating-18 ${classification === '18' ? 'activate' : ''}`}
-              onClick={() => handleClassificationChange('18')}>18</CategoryBtn>
-          </ClassificationBtn>
-          <MessageError >{errors.classification}</MessageError>
-        </ClassificationContainer>
+              <ClassificationContainer>
+                <h4>{t("selecionar-classificacao")}</h4>
+                <ClassificationBtn>
+                  <CategoryBtn
+                    className={`rating-L ${classification === 'L' ? 'activate' : ''}`}
+                    onClick={() => handleClassificationChange('L')}>L</CategoryBtn>
+                  <CategoryBtn
+                    className={`rating-10 ${classification === '10' ? 'activate' : ''}`}
+                    onClick={() => handleClassificationChange('10')}>10</CategoryBtn>
+                  <CategoryBtn
+                    className={`rating-12 ${classification === '12' ? 'activate' : ''}`}
+                    onClick={() => handleClassificationChange('12')}>12</CategoryBtn>
+                  <CategoryBtn
+                    className={`rating-14 ${classification === '14' ? 'activate' : ''}`}
+                    onClick={() => handleClassificationChange('14')}>14</CategoryBtn>
+                  <CategoryBtn
+                    className={`rating-16 ${classification === '16' ? 'activate' : ''}`}
+                    onClick={() => handleClassificationChange('16')}>16</CategoryBtn>
+                  <CategoryBtn
+                    className={`rating-18 ${classification === '18' ? 'activate' : ''}`}
+                    onClick={() => handleClassificationChange('18')}>18</CategoryBtn>
+                </ClassificationBtn>
+                <MessageError >{errors.classification}</MessageError>
+              </ClassificationContainer>
 
-      </Input>
-      <Button
-        onClick={addNewMovie}>
-        {t('botao-salvar')}
-      </Button>
-    </Container>
+            </Input>
+            <PainelBtns>
+              <Button
+                onClick={handleSetIsOpen}>
+                {t('botao-cancelar')}
+              </Button>
+              <Button
+                onClick={addNewMovie}>
+                {t('botao-salvar')}
+              </Button>
+            </PainelBtns>
+          </Container>
+        </Modal>
+      )}
+    </div>
+
   )
 }
 

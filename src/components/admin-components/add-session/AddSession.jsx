@@ -2,17 +2,25 @@ import backend from '../../../../api/index'
 import useForm from '../../../hooks/UseForm'
 import { toast } from 'react-toastify'
 import Cookies from 'js-cookie'
-import { InputContainer, InputDate } from './styles'
+import { AddBtn, InputContainer, InputDate } from './styles'
 import { useTranslation } from 'react-i18next'
 import { Button } from '../../Button'
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { Container } from '../styles'
+import { Container, PainelBtns } from '../styles'
 import { MessageError } from '../../Paragraph'
+import Modal from '../../modal/Modal'
+import { useState } from 'react'
+import { FaPlus } from 'react-icons/fa'
 
 const AddSession = ({ MovieData, movieId }) => {
 
   const { t } = useTranslation();
+  const [isOpen, setIsOpen] = useState();
+
+  const handleSetIsOpen = () => {
+    setIsOpen(!isOpen);
+  }
 
   const initialState = {
     dateStart: '',
@@ -58,6 +66,7 @@ const AddSession = ({ MovieData, movieId }) => {
           }
         });
         toast.success(t('message-success'));
+        setIsOpen(false);
       } catch (err) {
         toast.error(err.response.data.Message)
       }
@@ -65,31 +74,45 @@ const AddSession = ({ MovieData, movieId }) => {
   }
 
   return (
-    <Container>
-      <InputContainer>
-      
-        <InputDate
-          className={errors.dateStart ? 'error' : ''}
-          type="datetime-local"
-          onChange={handleChange}
-          name='dateStart'
-          onFocus={handleOnFocus} />
+    <div>
+      <AddBtn onClick={handleSetIsOpen}><FaPlus /></AddBtn>
+      {
+        isOpen && (
+          <Modal isOpen={isOpen}>
+            <Container>
+              <h3>{t('adicionar-nova-sessao')}</h3>
+              <InputContainer>
+                <InputDate
+                  className={errors.dateStart ? 'error' : ''}
+                  type="datetime-local"
+                  onChange={handleChange}
+                  name='dateStart'
+                  onFocus={handleOnFocus} />
 
-        <InputDate
-          className={errors.dateEnd ? 'error' : ''}
-          type="datetime-local"
-          onChange={handleChange}
-          name='dateEnd'
-          onFocus={handleOnFocus} />
+                <InputDate
+                  className={errors.dateEnd ? 'error' : ''}
+                  type="datetime-local"
+                  onChange={handleChange}
+                  name='dateEnd'
+                  onFocus={handleOnFocus} />
 
-      </InputContainer>
-      <MessageError>{errors.dateStart}</MessageError>
+              </InputContainer>
+              <MessageError>{errors.dateStart}</MessageError>
 
-      <Button onClick={handleAddSession}>
-        Salvar
-      </Button>
+              <PainelBtns>
+                <Button onClick={handleSetIsOpen}>
+                  {t('botao-cancelar')}
+                </Button>
+                <Button onClick={handleAddSession}>
+                  {t('botao-salvar')}
+                </Button>
+              </PainelBtns>
+            </Container>
+          </Modal>
+        )
+      }
 
-    </Container>
+    </div>
   )
 }
 

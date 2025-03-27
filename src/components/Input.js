@@ -2,8 +2,7 @@ import styled from 'styled-components'
 import InputMask from 'react-input-mask';
 
 export const BaseInputStyles = `
-    width: 100%;
-    max-width: 400px; 
+    width: 100%; 
     padding: 10px;
     padding-right: 40px;
     font-size: 13px;
@@ -15,11 +14,6 @@ export const BaseInputStyles = `
         outline: none;
         box-shadow: none;
         border:1px solid #1877F2;   
-    }
-
-    @media screen and (max-width: 425px){
-        width: 100%;
-         max-width: none;  
     }
 `;
 

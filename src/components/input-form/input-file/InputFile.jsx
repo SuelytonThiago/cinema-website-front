@@ -1,10 +1,11 @@
 import React, { useRef } from 'react'
-import { Container, FileContainer, FileInfo, FileInput, Span, XBtn } from './styles'
+import { Container, FileContainer, FileInfo, FileInput, Icon, P, Span, XBtn } from './styles'
 import { FaFileAlt, FaImage, FaTimes } from 'react-icons/fa'
 import { useTranslation } from 'react-i18next';
-import { Paragraph } from '../../Paragraph';
+import { MessageError, Paragraph } from '../../Paragraph';
+import { FaExclamationCircle } from 'react-icons/fa';
 
-const InputFile = ({ setFile, file, setErrors, fileName, h3 }) => {
+const InputFile = ({ setFile, file, setErrors, fileName, h3, error }) => {
 
     const { t } = useTranslation();
 
@@ -31,6 +32,7 @@ const InputFile = ({ setFile, file, setErrors, fileName, h3 }) => {
             <FileInput htmlFor={fileName}>
                 {t("selecione-um-arquivo")}
             </FileInput>
+            <p>{error &&  (<MessageError>{error}</MessageError>)}</p>
             <input
                 id={fileName}
                 type="file"

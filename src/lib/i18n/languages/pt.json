@@ -85,6 +85,7 @@
     "erro-algo-deu-errado":"Algo deu errado",
     "erro-buscar-categorias" : "categorias não encontradas",
     "erro-campo-vazio": "o campo não pode estar vazio",
+    "erro-sessao-expirada"  : "Sua sessão expirou, faça login novamente",
 
     
     "message-success": "Operação realizada com sucesso",
@@ -93,6 +94,8 @@
     "add-new-category-to-movie":"Adicionar uma nova categoria em um filme",
     "add-movie": "Adicionar um novo filme", 
     "selecionar-classificacao":"Selecione uma classificação",
+    "adicionar-nova-sessao": "Adicionar uma nova sessão",
+
 
     "tela":"Tela",
     "comprar": "Comprar",

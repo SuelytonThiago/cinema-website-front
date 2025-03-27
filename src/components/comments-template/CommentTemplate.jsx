@@ -1,6 +1,6 @@
 import React from 'react'
 import StarRating from '../starRating/StarRating'
-import { Review, ReviewUserInfo, Username } from './styles.js'
+import { CommentContainer, Review, ReviewUserInfo, Username } from './styles.js'
 import { UserImg } from '../rate-movie/styles.js'
 import { ReviewInfo } from './styles.js'
 
@@ -14,10 +14,10 @@ const CommentTemplate = ({review}) => {
                         <Username>{review.userName}</Username>
                         <StarRating rating={review.rating} />
                     </ReviewUserInfo>
-                    <div>
+                    <CommentContainer>
                         <p style={{fontSize: '15px'}}>{review.comment}</p>
                         <p style={{fontSize: '12px'}}>{review.date}</p>
-                    </div>
+                    </CommentContainer>
                 </ReviewInfo>
             </Review>
         </div>

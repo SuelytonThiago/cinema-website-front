@@ -24,7 +24,7 @@ const CreatePasswordProfile = ({ handleShowWindow }) => {
         confirm: "",
     }
 
-    const { formData, handleChange, errors, setErrors, handleOnFocus } = useForm(initialState);
+    const { formData, handleChange, errors, setErrors, handleOnFocus } = useForm(initialFormData);
 
     const validate = () => {
         const errors = {}

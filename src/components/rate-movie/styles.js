@@ -84,12 +84,18 @@ export const CommentUserForm = styled.div`
 
 export const FormContainer = styled.div`
   display: flex;
-  align-items: center;    /* Centraliza horizontalmente os itens */
-  width: 100%;            /* Garante que ocupe toda a largura disponível */
-  max-width: 600px;       /* Limita a largura máxima do contêiner */
-  min-width: 400px;       /* Garante que o contêiner tenha pelo menos 400px */
-  margin: 0 auto;         /* Centraliza o contêiner */
-  gap: 10px;              /* Espaçamento entre os elementos */
+  align-items: center;    
+  width: 100%;            
+  max-width: 600px;           
+  margin: 0 auto;         
+  gap: 10px;  
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis;   
+  
+  @media screen and (max-width: 425px){
+    flex-direction: column;
+  }
 `;
 
 
@@ -115,6 +121,13 @@ export const EditBtn = styled.button`
 
 export const UserAvaliatonForm = styled.div`
     width: 400px;
+`
+
+export const Input = styled.input`
+    padding: .5rem;
+    min-width: 320px;
+
+
 `
 
 

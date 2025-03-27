@@ -80,22 +80,12 @@ export const FormContainer = styled.div`
 
 //------------menu-style-------------------
 
-export const Container = styled.div`
-`
-
 export const AuthenticationTab = styled.div`
-  position: fixed;
-  top: 0;
-  left: 70%;
-  width: 30%;
-  height: 100vh;
-  background-color: ${(props) => props.theme.mainContainer};
-  display: flex;
-  flex-direction: column;
-  gap: 20rem;
-  z-index: 2;
-
-  @media screen and (max-width: 1300px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    position: fixed;
+    top: 0;
     top: 50%;
     left: 50%;
     width: 80vw;
@@ -106,9 +96,7 @@ export const AuthenticationTab = styled.div`
     transform: translate(-50%, -50%);
     border-radius: 5px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    gap: 3rem;
-
-  }
+    z-index: 1000;
 
   @media screen and (max-width: 760px) {
     top: 0;
@@ -118,7 +106,7 @@ export const AuthenticationTab = styled.div`
     border-radius: 0; 
     transform: none;
     box-shadow: none; 
-    gap: 15rem;
+    gap: 5rem;
   }
 `
 
@@ -149,5 +137,11 @@ export const Btn = styled.button`
   &:hover{
     opacity: 1;
   }
+`
+
+export const H2 = styled.h2`
+  font-size: 15px;
+  text-align: center;
+  margin-bottom: 1rem;
 `
 
