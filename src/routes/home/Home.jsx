@@ -11,6 +11,7 @@ import '../../lib/i18n/i18n.js';
 import AdmMenu from '../../components/admin-components/adm-menu/AdmMenu.jsx';
 import { useSelector } from 'react-redux';
 import LoginModal from '../login/LoginModal.jsx';
+import ButtonWithCaption from '../../components/button-with-catpion/ButtonWithCaption.jsx';
 
 
 const Home = () => {
@@ -74,7 +75,10 @@ const Home = () => {
       <Div>
         <H2>{t('link-filmes')}: </H2>
         {currentUser?.roles.map(role => role.nameRole).includes('ROLE_ADMIN') && (
-          <AdmMenu/>
+          <>
+            <AdmMenu />
+            <ButtonWithCaption message={"clique aqui"} />
+          </>
         )}
       </Div>
       <RandomMovies />

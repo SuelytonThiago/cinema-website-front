@@ -41,8 +41,10 @@ const DeleteMovie = ({ movieId, onClose }) => {
         }
     }
     return (
-        <div style={{justifyContent: 'end'}}>
-            <FontAwesomeIcon icon={faTrash} color='red' onClick={handleSetIsOpen} cursor={'pointer'} />
+        <div style={{ justifyContent: 'end' }}>
+            <button>
+                <FontAwesomeIcon icon={faTrash} color='red' onClick={handleSetIsOpen} cursor={'pointer'} />
+            </button>
             {isOpen && (
                 <Modal isOpen={isOpen}>
                     <Container>
