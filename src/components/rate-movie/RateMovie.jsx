@@ -25,6 +25,7 @@ import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import '../../lib/i18n/i18n.js';
 import { Button } from '../Button.js';
+import ReviewMenu from './review-menu/ReviewMenu.jsx';
 
 const RateMovie = ({ id }) => {
   const { currentUser } = useSelector(state => state.userReducer);
@@ -156,11 +157,9 @@ const RateMovie = ({ id }) => {
           )}
         </div>
       </UserAvaliationControl>
-      {currentReview && (
-        <EditBtn onClick={toggleEdit}>
-          {isEditing ? <FaTimes /> : <FaPen />}
-        </EditBtn>
-      )}
+      {currentReview && 
+        <ReviewMenu toggleEdit={toggleEdit} isEditing={isEditing} idComment={currentReview.id}/>
+      }
     </UserAvaliationContainer>
   );
 };

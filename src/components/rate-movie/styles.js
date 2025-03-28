@@ -124,10 +124,23 @@ export const UserAvaliatonForm = styled.div`
 `
 
 export const Input = styled.input`
+    width: 350px;
     padding: .5rem;
-    min-width: 320px;
 
+    @media screen and (max-width: 425px){
+        width: 300px;
+    }
 
+    @media screen and (max-width: 375px){
+        width: 250px;
+    }
+
+    @media screen and (max-width: 320px){
+        width: 220px;
+    }
+    
 `
+
+
 
 

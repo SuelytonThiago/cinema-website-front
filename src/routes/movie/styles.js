@@ -1,31 +1,31 @@
 import styled from "styled-components"
 
-export const MovieHeader = styled.div ` 
+export const MovieHeader = styled.div` 
     display: flex;
     gap: 1rem;
     padding: 1rem;
     justify-content: space-between;
     background-color: ${(props) => props.theme.container};
 
-    @media screen and (max-width: 612px){
-
-        flex-direction: column;
-    }
 `
 
 export const Header = styled.div`
     display: flex;
     gap: .5rem;
+
+    @media screen and (max-width: 612px){
+        flex-direction: column;
+    }
 `
 
-export const MovieImg = styled.img `
+export const MovieImg = styled.img`
     width: 200px; 
     height: 100%; 
     object-fit: cover;
 
 `
 
-export const InfoContainer = styled.div `
+export const InfoContainer = styled.div`
     display: flex;
     flex-direction: column;
 `
@@ -36,7 +36,7 @@ export const InfoHeader = styled.div`
     gap: 1rem;
 `
 
-export const CategoriesFilm = styled.div `
+export const CategoriesFilm = styled.div`
     display: flex;
     gap: 10px;
     align-items: center;
@@ -79,7 +79,7 @@ export const ClassificationMovie = styled.p`
     }
 `
 
-export const AddSessionContainer = styled.div `
+export const AddSessionContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -92,8 +92,8 @@ export const ShowFullDescription = styled.p`
 `
 
 
-export const Description = styled.p `
-    display: ${(props) => props.$isExpanded ?  'block' : '-webkit-box'};
+export const Description = styled.p`
+    display: ${(props) => props.$isExpanded ? 'block' : '-webkit-box'};
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -101,7 +101,7 @@ export const Description = styled.p `
     
 `
 
-export const ShowDescriptBtn = styled.button `
+export const ShowDescriptBtn = styled.button`
     background-color: transparent;
     color: #fff;
     border: none;
@@ -122,7 +122,7 @@ export const BtnMovieContainer = styled.div`
     gap: 10px;
     background-color: ${(props) => props.theme.mainContainer};
     border-bottom: 3px solid #c7baba2c;
-`   
+`
 
 export const BtnMovieInfoControl = styled.button`
     background-color: transparent;

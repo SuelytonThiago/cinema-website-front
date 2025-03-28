@@ -26,7 +26,6 @@ const Movie = () => {
     const location = useLocation();
 
     const { id } = useParams();
-    const { isVisible } = useSelector((rootReducer) => rootReducer.loginModalReducer);
     const { currentUser } = useSelector((rootReducer) => rootReducer.userReducer);
     const [movieData, setMovieData] = useState(null);
     const [sessionsMovieData, setSessionsMovieData] = useState([]);
@@ -126,46 +125,47 @@ const Movie = () => {
                     </Modal>
 
                     <MovieHeader>
+                        <Header>
+                            <div>
+                                <MovieImg src={movieData.imageUrl} alt={movieData.name} />
+                            </div>
+                            <InfoContainer>
+                                <InfoHeader>
+                                    <div>
+                                        <h2>{movieData.name}</h2>
+                                        <StarRating rating={movieData.rating} />
+                                        <p>{t('p-data-de-lancamento')} {movieData.releaseData}</p>
+                                    </div>
+                                    <CategoriesFilm>
+                                        {movieData.categories.map((category) => (
+                                            <p key={category.name}>{category.name}</p>
+                                        ))}
 
-                        <div>
-                            <MovieImg src={movieData.imageUrl} alt={movieData.name} />
-                        </div>
-                        <InfoContainer>
-                            <InfoHeader>
-                                <div>
-                                    <h2>{movieData.name}</h2>
-                                    <StarRating rating={movieData.rating} />
-                                    <p>{t('p-data-de-lancamento')} {movieData.releaseData}</p>
-                                </div>
-                                <CategoriesFilm>
-                                    {movieData.categories.map((category) => (
-                                        <p key={category.name}>{category.name}</p>
-                                    ))}
+                                        {currentUser?.roles.map(role => role.nameRole).includes('ROLE_ADMIN') && (
+                                            <AddCategoryToMovie movieId={id} />
+                                        )}
 
-                                    {currentUser?.roles.map(role => role.nameRole).includes('ROLE_ADMIN') && (
-                                        <AddCategoryToMovie movieId={id} />
-                                    )}
+                                    </CategoriesFilm>
+                                    <ClassificationControl>
+                                        {t('classificação')}
+                                        <ClassificationMovie
+                                            className={classificationMovie(movieData.classification)}>
+                                            {movieData.classification}
+                                        </ClassificationMovie>
+                                    </ClassificationControl>
+                                    <div>
+                                        <h3>{t('h3-sinopse')}</h3>
+                                        <Description $isExpanded={isExpanded}>
+                                            {movieData.description}
+                                        </Description>
 
-                                </CategoriesFilm>
-                                <ClassificationControl>
-                                    {t('classificação')}
-                                    <ClassificationMovie
-                                        className={classificationMovie(movieData.classification)}>
-                                        {movieData.classification}
-                                    </ClassificationMovie>
-                                </ClassificationControl>
-                                <div>
-                                    <h3>{t('h3-sinopse')}</h3>
-                                    <Description $isExpanded={isExpanded}>
-                                        {movieData.description}
-                                    </Description>
-
-                                    <ShowDescriptBtn onClick={toggleDescription}>
-                                        {isExpanded ? t('ler-menos') : t('ler-mais')}
-                                    </ShowDescriptBtn>
-                                </div>
-                            </InfoHeader>
-                        </InfoContainer>
+                                        <ShowDescriptBtn onClick={toggleDescription}>
+                                            {isExpanded ? t('ler-menos') : t('ler-mais')}
+                                        </ShowDescriptBtn>
+                                    </div>
+                                </InfoHeader>
+                            </InfoContainer>
+                        </Header>
 
                         {currentUser?.roles.map(role => role.nameRole).includes('ROLE_ADMIN') && (
                             <DeleteMovie movieId={id} />
@@ -229,7 +229,6 @@ const Movie = () => {
                         </div>
 
                     )}
-                    {isVisible && <LoginModal />}
                 </>
 
             )}

@@ -82,7 +82,9 @@
     "erro-sessao-expirada"  : "Your session has expired, please log in again.",
 
     "message-success": "Operation performed successfully",
-
+    "message-alert-delete-movie": "Are you sure you want to delete the movie?",
+    "message-alert-delete-comment": "Are you sure you want to delete the comment?",
+    
     "add-new-category":"Add a new category",
     "add-new-category-to-movie":"Add a new category to a movie",
     "add-movie": "Add a new movie",

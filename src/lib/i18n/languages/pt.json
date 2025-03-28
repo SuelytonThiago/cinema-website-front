@@ -89,6 +89,8 @@
 
     
     "message-success": "Operação realizada com sucesso",
+    "message-alert-delete-movie": "Voce tem certeza que deseja excluir o filme?",
+    "message-alert-delete-comment": "Voce tem certeza que deseja excluir o comentário?",
 
     "add-new-category":"Adicionar uma nova categoria",
     "add-new-category-to-movie":"Adicionar uma nova categoria em um filme",

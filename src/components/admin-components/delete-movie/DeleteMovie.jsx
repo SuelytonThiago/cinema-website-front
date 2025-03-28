@@ -37,6 +37,7 @@ const DeleteMovie = ({ movieId, onClose }) => {
         }
         catch (err) {
             toast.error(err.response?.data.message);
+            setIsOpen(false);
         }
     }
     return (
@@ -46,7 +47,7 @@ const DeleteMovie = ({ movieId, onClose }) => {
                 <Modal isOpen={isOpen}>
                     <Container>
                         <AlertMessage>
-                            <p>Voce tem certeza que deseja excluir o filme?</p>
+                            <p>{t('message-alert-delete-movie')}</p>
                             <PainelBtn>
                                 <Button onClick={handleDeleteMovie}>Sim</Button>
                                 <Button onClick={handleSetIsOpen}>Nao</Button>

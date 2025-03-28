@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { FaWrench } from "react-icons/fa";
 import { AdmBtn, Container, Li, Menu, Overlay } from './styles';
-import { Paragraph } from '../../Paragraph';
 import AddCategory from '../add-category/AddCategory';
 import AddFilm from '../add-film/AddFilm';
 
