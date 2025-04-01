@@ -1,5 +1,5 @@
 import React from 'react'
-import { Loader, LoaderContainer, Logo } from './styles'
+import { Loader, LoaderContainer } from './styles'
 
 const Loading = () => {
   return (

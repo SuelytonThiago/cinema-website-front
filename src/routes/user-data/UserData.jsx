@@ -70,7 +70,7 @@ const UserData = () => {
         }
 
         try {
-            const res = await backend.fileAPI.uploadFile(file, {
+            const res = await backend.fileAPI.uploadUserFile(file, {
                 headers: {
                     Authorization: `Bearer ${Cookies.get('accessToken')}`,
                     "Content-Type": "multipart/form-data",
@@ -79,6 +79,7 @@ const UserData = () => {
             dispatch(updateProfileImage(res.data));
         } catch (err) {
             toast.error(t('erro-algo-deu-errado'));
+            console.log(err);
             
         }
     };

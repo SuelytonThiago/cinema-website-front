@@ -96,7 +96,7 @@ export const AuthenticationTab = styled.div`
     transform: translate(-50%, -50%);
     border-radius: 5px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+    z-index: 2000;
 
   @media screen and (max-width: 760px) {
     top: 0;

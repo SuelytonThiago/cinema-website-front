@@ -15,6 +15,11 @@ export const Button = styled.button`
     &:hover {
         background-color: #0d63d3;
     }
+
+    &.loading {
+        opacity: .7;
+        cursor: not-allowed;
+    }
 `
 
 export const EyesButton = styled.button`

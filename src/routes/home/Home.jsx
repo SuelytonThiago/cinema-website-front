@@ -77,7 +77,6 @@ const Home = () => {
         {currentUser?.roles.map(role => role.nameRole).includes('ROLE_ADMIN') && (
           <>
             <AdmMenu />
-            <ButtonWithCaption message={"clique aqui"} />
           </>
         )}
       </Div>

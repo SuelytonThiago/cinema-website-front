@@ -13,8 +13,11 @@ import { CategoryBtn, ClassificationBtn, ClassificationContainer, FileContainer,
 import { MessageError, Paragraph } from '../../Paragraph.js';
 import InputFile from '../../input-form/input-file/InputFile.jsx';
 import Modal from '../../modal/Modal.jsx';
+import Loading from '../../loading/Loading.jsx';
+import LoadingSpinner from '../../loading/loading-spinner/LoadingSpinner.jsx';
 
 const AddFilm = () => {
+  const [isLoading, setIsLoading] = useState(false);
 
   const initialState = {
     name: "",
@@ -74,6 +77,7 @@ const AddFilm = () => {
   }
 
   const addNewMovie = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
 
     const request = {
@@ -103,6 +107,7 @@ const AddFilm = () => {
         toast.error(err.response.data.message || err.response.data.Message);
       }
     }
+    setIsLoading(false);
   }
 
   return (
@@ -188,8 +193,14 @@ const AddFilm = () => {
                 {t('botao-cancelar')}
               </Button>
               <Button
-                onClick={addNewMovie}>
-                {t('botao-salvar')}
+                className={isLoading && 'loading'}
+                onClick={addNewMovie}
+                disabled={isLoading}>
+                {isLoading ? (
+                  <LoadingSpinner/>
+                ) : (
+                  t('botao-salvar')
+                )}
               </Button>
             </PainelBtns>
           </Container>

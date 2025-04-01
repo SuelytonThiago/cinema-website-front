@@ -15,11 +15,6 @@ export const LoaderContainer = styled.div`
     gap:.5rem;
 `
 
-export const Logo = styled.div`
-    font-size: 40px;
-    font-weight: bold;
-`
-
 export const Loader = styled.div`
     position: relative;
     height: 4px;

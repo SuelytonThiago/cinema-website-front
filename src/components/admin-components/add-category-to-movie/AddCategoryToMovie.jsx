@@ -10,6 +10,8 @@ import { Button } from '../../Button'
 import { useTranslation } from 'react-i18next';
 import { FaExclamationCircle, FaPlus } from 'react-icons/fa';
 import Modal from '../../modal/Modal'
+import ButtonWithCaption from '../../button-with-catpion/ButtonWithCaption.jsx'
+import LoadingSpinner from '../../loading/loading-spinner/LoadingSpinner.jsx'
 
 const AddCategoryToMovie = ({ movieId }) => {
 
@@ -18,6 +20,7 @@ const AddCategoryToMovie = ({ movieId }) => {
     const [categories, setCategories] = useState([]);
     const [isCategorySelected, setIsCategorySelected] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
 
     const handleSetIsOpen = () => {
@@ -47,6 +50,7 @@ const AddCategoryToMovie = ({ movieId }) => {
     }
 
     const addCategoryToFilme = async () => {
+        setIsLoading(true);
         const request = {
             movieId: movieId,
             categoryName: formData.name.trim().toLowerCase(),
@@ -67,6 +71,7 @@ const AddCategoryToMovie = ({ movieId }) => {
                 toast.error(err.response.data.Message);
             }
         }
+        setIsLoading(false);
     }
 
     useEffect(() => {
@@ -102,7 +107,9 @@ const AddCategoryToMovie = ({ movieId }) => {
 
     return (
         <div>
-            <FaPlus onClick={handleSetIsOpen} cursor={'pointer'} size={'10px'} color='#1877F2'/>
+            <ButtonWithCaption message={t('add-new-category')}>
+                <FaPlus onClick={handleSetIsOpen} cursor={'pointer'} size={'10px'} color='#1877F2' />
+            </ButtonWithCaption>
             {isOpen && (
                 <Modal isOpen={isOpen}>
                     <Container style={{ position: 'relative', paddingBottom: '10px' }}>
@@ -137,8 +144,15 @@ const AddCategoryToMovie = ({ movieId }) => {
                             <Button onClick={handleSetIsOpen}>
                                 {t('botao-cancelar')}
                             </Button>
-                            <Button onClick={addCategoryToFilme}>
-                                {t('botao-salvar')}
+                            <Button
+                                className={isLoading && 'loading'}
+                                onClick={addCategoryToFilme}
+                                disabled={isLoading}>
+                                {isLoading ? (
+                                    <LoadingSpinner />
+                                ) : (
+                                    t('botao-salvar')
+                                )}
                             </Button>
                         </PainelBtns>
                     </Container>

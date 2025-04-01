@@ -10,11 +10,13 @@ import { Container, Input, PainelBtns } from './../styles.js'
 import { Button } from '../../Button.js'
 import { Paragraph } from '../../Paragraph.js'
 import Modal from '../../modal/Modal.jsx'
+import LoadingSpinner from '../../loading/loading-spinner/LoadingSpinner.jsx'
 
 const AddCategory = () => {
 
-  const { t } = useTranslation();
+  const {t} = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSetIsOpen = () => {
     setIsOpen(!isOpen);
@@ -36,6 +38,7 @@ const AddCategory = () => {
   }
 
   const createCategory = async () => {
+    setIsLoading(true);
     const request = {
       name: formData.name,
     }
@@ -57,6 +60,7 @@ const AddCategory = () => {
         console.log(err.response.data.message)
       }
     }
+    setIsLoading(false);
   }
 
   return (
@@ -82,8 +86,14 @@ const AddCategory = () => {
                     {t('botao-cancelar')}
                   </Button>
                   <Button
-                    onClick={createCategory}>
-                    {t('botao-salvar')}
+                    className={isLoading && 'loading'}
+                    onClick={createCategory}
+                    disabled={isLoading}>
+                    {isLoading ? (
+                      <LoadingSpinner />
+                    ) : (
+                      t('botao-salvar')
+                    )}
                   </Button>
                 </PainelBtns>
               </Input>

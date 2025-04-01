@@ -12,11 +12,14 @@ import { MessageError } from '../../Paragraph'
 import Modal from '../../modal/Modal'
 import { useState } from 'react'
 import { FaPlus } from 'react-icons/fa'
+import LoadingSpinner from '../../loading/loading-spinner/LoadingSpinner'
 
 const AddSession = ({ MovieData, movieId }) => {
 
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  
 
   const handleSetIsOpen = () => {
     setIsOpen(!isOpen);
@@ -49,6 +52,7 @@ const AddSession = ({ MovieData, movieId }) => {
   };
 
   const handleAddSession = async () => {
+    setIsLoading(true);
     const request = {
       name: MovieData.name,
       movieId: movieId,
@@ -71,6 +75,7 @@ const AddSession = ({ MovieData, movieId }) => {
         toast.error(err.response.data.Message)
       }
     }
+    setIsLoading(false);
   }
 
   return (
@@ -103,8 +108,15 @@ const AddSession = ({ MovieData, movieId }) => {
                 <Button onClick={handleSetIsOpen}>
                   {t('botao-cancelar')}
                 </Button>
-                <Button onClick={handleAddSession}>
-                  {t('botao-salvar')}
+                <Button
+                  className={isLoading && 'loading'}
+                  onClick={handleAddSession}
+                  disabled={isLoading}>
+                  {isLoading ? (
+                    <LoadingSpinner />
+                  ) : (
+                    t('botao-salvar')
+                  )}
                 </Button>
               </PainelBtns>
             </Container>

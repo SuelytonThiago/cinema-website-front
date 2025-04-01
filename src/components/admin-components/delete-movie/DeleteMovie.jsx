@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next'
 import Modal from '../../modal/Modal'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import ButtonWithCaption from '../../button-with-catpion/ButtonWithCaption'
 
 
 const DeleteMovie = ({ movieId, onClose }) => {
@@ -42,9 +43,10 @@ const DeleteMovie = ({ movieId, onClose }) => {
     }
     return (
         <div style={{ justifyContent: 'end' }}>
-            <button>
+            <ButtonWithCaption message={t('delete-movie')}>
                 <FontAwesomeIcon icon={faTrash} color='red' onClick={handleSetIsOpen} cursor={'pointer'} />
-            </button>
+            </ButtonWithCaption>
+
             {isOpen && (
                 <Modal isOpen={isOpen}>
                     <Container>
