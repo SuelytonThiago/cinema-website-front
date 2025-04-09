@@ -9,7 +9,7 @@ import SessionTemplate from '../../components/session-template/SessionTemplate';
 import formatDate from '../../js/formatDate';
 import classificationMovie from '../../js/Classification.js'
 import backend from '../../../api/index.ts';
-import { AddSessionContainer, BtnMovieContainer, BtnMovieInfoControl, CategoriesFilm, ClassificationControl, ClassificationMovie, Description, Header, InfoContainer, InfoHeader, MovieHeader, MovieImg, SessionsContainer, SessionsMovieContainer, ShowDescriptBtn } from './styles.js';
+import { AddSessionContainer, AdmBtns, BtnMovieContainer, BtnMovieInfoControl, CategoriesFilm, ClassificationControl, ClassificationMovie, Description, Header, InfoContainer, InfoHeader, MovieHeader, MovieImg, SessionsContainer, SessionsMovieContainer, ShowDescriptBtn } from './styles.js';
 import SkeletonMovie from '../../components/skeleton-loading/skeleton-movie/SkeletonMovie.jsx';
 import Error from '../../components/error/Error.jsx';
 import { useTranslation } from 'react-i18next';
@@ -19,6 +19,7 @@ import { useLocation } from 'react-router-dom';
 import Modal from '../../components/modal/Modal.jsx';
 import AddCategoryToMovie from '../../components/admin-components/add-category-to-movie/AddCategoryToMovie.jsx';
 import AddSession from '../../components/admin-components/add-session/AddSession.jsx';
+import UpdateMovie from '../../components/admin-components/update-movie/UpdateMovie.jsx';
 
 const Movie = () => {
     const { t } = useTranslation();
@@ -49,6 +50,7 @@ const Movie = () => {
                     setMovieData(res?.data);
                     setComments(res?.data.reviews);
                     setIsLoading(false)
+                    console.log(res.data.backgroundCover);
                     document.body.style.backgroundImage = `url(${res.data.backgroundCover})`;
                     document.body.style.backgroundSize = 'cover';
                     document.body.style.backgroundPosition = 'center';
@@ -168,7 +170,10 @@ const Movie = () => {
                         </Header>
 
                         {currentUser?.roles.map(role => role.nameRole).includes('ROLE_ADMIN') && (
-                            <DeleteMovie movieId={id} />
+                            <AdmBtns>
+                                <DeleteMovie movieId={id} />
+                                <UpdateMovie movie={movieData} />
+                            </AdmBtns>
                         )}
                     </MovieHeader>
                     <BtnMovieContainer>

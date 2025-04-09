@@ -13,8 +13,7 @@ import { CategoryBtn, ClassificationBtn, ClassificationContainer, FileContainer,
 import { MessageError, Paragraph } from '../../Paragraph.js';
 import InputFile from '../../input-form/input-file/InputFile.jsx';
 import Modal from '../../modal/Modal.jsx';
-import Loading from '../../loading/Loading.jsx';
-import LoadingSpinner from '../../loading/loading-spinner/LoadingSpinner.jsx';
+import ButtonWithSpinner from '../../button-with-spinner/ButtonWithSpinner.jsx';
 
 const AddFilm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -192,16 +191,7 @@ const AddFilm = () => {
                 onClick={handleSetIsOpen}>
                 {t('botao-cancelar')}
               </Button>
-              <Button
-                className={isLoading && 'loading'}
-                onClick={addNewMovie}
-                disabled={isLoading}>
-                {isLoading ? (
-                  <LoadingSpinner/>
-                ) : (
-                  t('botao-salvar')
-                )}
-              </Button>
+              <ButtonWithSpinner isLoading={isLoading} handleRequest={addNewMovie} />
             </PainelBtns>
           </Container>
         </Modal>

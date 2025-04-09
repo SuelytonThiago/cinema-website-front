@@ -12,6 +12,7 @@ import { FaExclamationCircle, FaPlus } from 'react-icons/fa';
 import Modal from '../../modal/Modal'
 import ButtonWithCaption from '../../button-with-catpion/ButtonWithCaption.jsx'
 import LoadingSpinner from '../../loading/loading-spinner/LoadingSpinner.jsx'
+import ButtonWithSpinner from '../../button-with-spinner/ButtonWithSpinner.jsx'
 
 const AddCategoryToMovie = ({ movieId }) => {
 
@@ -144,16 +145,7 @@ const AddCategoryToMovie = ({ movieId }) => {
                             <Button onClick={handleSetIsOpen}>
                                 {t('botao-cancelar')}
                             </Button>
-                            <Button
-                                className={isLoading && 'loading'}
-                                onClick={addCategoryToFilme}
-                                disabled={isLoading}>
-                                {isLoading ? (
-                                    <LoadingSpinner />
-                                ) : (
-                                    t('botao-salvar')
-                                )}
-                            </Button>
+                            <ButtonWithSpinner isLoading={isLoading} handleRequest={addCategoryToFilme} />
                         </PainelBtns>
                     </Container>
                 </Modal>

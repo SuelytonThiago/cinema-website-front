@@ -1652,16 +1652,18 @@ export const MovieControllerApiAxiosParamCreator = function (configuration?: Con
         /**
          * 
          * @summary update movie data
+         * @param {string} movie 
          * @param {number} id 
-         * @param {MovieRequestDto} movieRequestDto 
+         * @param {File} [fileImg] 
+         * @param {File} [backgroundCover] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateMovie: async (id: number, movieRequestDto: MovieRequestDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateMovie: async (movie: string, id: number, fileImg?: File, backgroundCover?: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'movie' is not null or undefined
+            assertParamExists('updateMovie', 'movie', movie)
             // verify required parameter 'id' is not null or undefined
             assertParamExists('updateMovie', 'id', id)
-            // verify required parameter 'movieRequestDto' is not null or undefined
-            assertParamExists('updateMovie', 'movieRequestDto', movieRequestDto)
             const localVarPath = `/api/movies/update/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1674,19 +1676,32 @@ export const MovieControllerApiAxiosParamCreator = function (configuration?: Con
             const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
+            if (movie !== undefined) {
+                localVarQueryParameter['movie'] = movie;
+            }
 
+
+            if (fileImg !== undefined) { 
+                localVarFormParams.append('fileImg', fileImg as any);
+            }
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
+            if (backgroundCover !== undefined) { 
+                localVarFormParams.append('backgroundCover', backgroundCover as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(movieRequestDto, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = localVarFormParams;
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1810,13 +1825,15 @@ export const MovieControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary update movie data
+         * @param {string} movie 
          * @param {number} id 
-         * @param {MovieRequestDto} movieRequestDto 
+         * @param {File} [fileImg] 
+         * @param {File} [backgroundCover] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateMovie(id: number, movieRequestDto: MovieRequestDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateMovie(id, movieRequestDto, options);
+        async updateMovie(movie: string, id: number, fileImg?: File, backgroundCover?: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: string; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateMovie(movie, id, fileImg, backgroundCover, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MovieControllerApi.updateMovie']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1914,13 +1931,15 @@ export const MovieControllerApiFactory = function (configuration?: Configuration
         /**
          * 
          * @summary update movie data
+         * @param {string} movie 
          * @param {number} id 
-         * @param {MovieRequestDto} movieRequestDto 
+         * @param {File} [fileImg] 
+         * @param {File} [backgroundCover] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateMovie(id: number, movieRequestDto: MovieRequestDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.updateMovie(id, movieRequestDto, options).then((request) => request(axios, basePath));
+        updateMovie(movie: string, id: number, fileImg?: File, backgroundCover?: File, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: string; }> {
+            return localVarFp.updateMovie(movie, id, fileImg, backgroundCover, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2031,14 +2050,16 @@ export class MovieControllerApi extends BaseAPI {
     /**
      * 
      * @summary update movie data
+     * @param {string} movie 
      * @param {number} id 
-     * @param {MovieRequestDto} movieRequestDto 
+     * @param {File} [fileImg] 
+     * @param {File} [backgroundCover] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MovieControllerApi
      */
-    public updateMovie(id: number, movieRequestDto: MovieRequestDto, options?: RawAxiosRequestConfig) {
-        return MovieControllerApiFp(this.configuration).updateMovie(id, movieRequestDto, options).then((request) => request(this.axios, this.basePath));
+    public updateMovie(movie: string, id: number, fileImg?: File, backgroundCover?: File, options?: RawAxiosRequestConfig) {
+        return MovieControllerApiFp(this.configuration).updateMovie(movie, id, fileImg, backgroundCover, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

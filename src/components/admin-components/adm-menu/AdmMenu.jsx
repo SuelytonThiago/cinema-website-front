@@ -44,7 +44,6 @@ const AdmMenu = () => {
                         <Li>
                             <AddFilm/>
                         </Li>
-
                     </Menu>
                 </div>
             )}

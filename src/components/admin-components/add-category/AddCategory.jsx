@@ -11,6 +11,7 @@ import { Button } from '../../Button.js'
 import { Paragraph } from '../../Paragraph.js'
 import Modal from '../../modal/Modal.jsx'
 import LoadingSpinner from '../../loading/loading-spinner/LoadingSpinner.jsx'
+import ButtonWithSpinner from '../../button-with-spinner/ButtonWithSpinner.jsx'
 
 const AddCategory = () => {
 
@@ -85,16 +86,7 @@ const AddCategory = () => {
                     onClick={handleSetIsOpen}>
                     {t('botao-cancelar')}
                   </Button>
-                  <Button
-                    className={isLoading && 'loading'}
-                    onClick={createCategory}
-                    disabled={isLoading}>
-                    {isLoading ? (
-                      <LoadingSpinner />
-                    ) : (
-                      t('botao-salvar')
-                    )}
-                  </Button>
+                  <ButtonWithSpinner isLoading={isLoading} handleRequest={createCategory}/>
                 </PainelBtns>
               </Input>
             </Container>

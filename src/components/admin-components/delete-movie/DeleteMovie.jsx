@@ -13,7 +13,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import ButtonWithCaption from '../../button-with-catpion/ButtonWithCaption'
 
 
-const DeleteMovie = ({ movieId, onClose }) => {
+const DeleteMovie = ({ movieId }) => {
 
     const navigate = useNavigate();
     const { t } = useTranslation();

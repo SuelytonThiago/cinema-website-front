@@ -148,3 +148,8 @@ export const SessionsContainer = styled.div`
 
 padding: 1rem;
 `
+
+export const AdmBtns = styled.div`
+    display: flex;
+    gap: .5rem;
+`

@@ -13,13 +13,14 @@ import Modal from '../../modal/Modal'
 import { useState } from 'react'
 import { FaPlus } from 'react-icons/fa'
 import LoadingSpinner from '../../loading/loading-spinner/LoadingSpinner'
+import ButtonWithSpinner from '../../button-with-spinner/ButtonWithSpinner'
 
 const AddSession = ({ MovieData, movieId }) => {
 
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  
+
 
   const handleSetIsOpen = () => {
     setIsOpen(!isOpen);
@@ -108,16 +109,7 @@ const AddSession = ({ MovieData, movieId }) => {
                 <Button onClick={handleSetIsOpen}>
                   {t('botao-cancelar')}
                 </Button>
-                <Button
-                  className={isLoading && 'loading'}
-                  onClick={handleAddSession}
-                  disabled={isLoading}>
-                  {isLoading ? (
-                    <LoadingSpinner />
-                  ) : (
-                    t('botao-salvar')
-                  )}
-                </Button>
+                <ButtonWithSpinner isLoading={isLoading} handleRequest={handleAddSession} />
               </PainelBtns>
             </Container>
           </Modal>
