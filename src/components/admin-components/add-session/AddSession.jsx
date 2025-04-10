@@ -11,9 +11,9 @@ import { Container, PainelBtns } from '../styles'
 import { MessageError } from '../../Paragraph'
 import Modal from '../../modal/Modal'
 import { useState } from 'react'
-import { FaPlus } from 'react-icons/fa'
-import LoadingSpinner from '../../loading/loading-spinner/LoadingSpinner'
 import ButtonWithSpinner from '../../button-with-spinner/ButtonWithSpinner'
+import ButtonWithCaption from '../../button-with-catpion/ButtonWithCaption'
+import { FaPlus } from 'react-icons/fa'
 
 const AddSession = ({ MovieData, movieId }) => {
 
@@ -81,7 +81,9 @@ const AddSession = ({ MovieData, movieId }) => {
 
   return (
     <div>
-      <AddBtn onClick={handleSetIsOpen}><FaPlus /></AddBtn>
+      <ButtonWithCaption message={t('adicionar-nova-sessao')}>
+        <AddBtn onClick={handleSetIsOpen}><FaPlus /></AddBtn>
+      </ButtonWithCaption>
       {
         isOpen && (
           <Modal isOpen={isOpen}>

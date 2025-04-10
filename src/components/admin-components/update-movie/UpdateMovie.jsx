@@ -14,7 +14,9 @@ import InputFile from '../../input-form/input-file/InputFile';
 import { Button } from '../../Button';
 import ButtonWithSpinner from '../../button-with-spinner/ButtonWithSpinner';
 import { validateCategoryName, validateReleaseData } from '../../../js/Validations.js';
-import { FaPen } from 'react-icons/fa';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
+import ButtonWithCaption from '../../button-with-catpion/ButtonWithCaption.jsx';
 
 const UpdateMovie = ({ movie }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +43,7 @@ const UpdateMovie = ({ movie }) => {
   const [classification, setClassification] = useState('');
 
   useEffect(() => {
-
+    setClassification(movie.classification);
   }, [])
 
   const handleClassificationChange = (value) => {
@@ -116,9 +118,9 @@ const UpdateMovie = ({ movie }) => {
 
   return (
     <div>
-      <Paragraph onClick={handleSetIsOpen}>
-        <FaPen color='blue'/>
-      </Paragraph>
+      <ButtonWithCaption message={'atualizar'}>
+        <FontAwesomeIcon icon={faPen} color='white' onClick={handleSetIsOpen} cursor={'pointer'} />
+      </ButtonWithCaption>
       {isOpen && (
         <Modal isOpen={isOpen}>
           <Container>

@@ -68,10 +68,6 @@ const AddFilm = () => {
       errors.fileImg = t('erro-selecione-uma-imagem');
     }
 
-    if (!backgroundCover) {
-      errors.backgroundCover = t('erro-selecione-uma-imagem');
-    }
-
     return errors;
   }
 

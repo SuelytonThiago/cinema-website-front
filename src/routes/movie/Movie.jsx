@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import RateMovie from '../../components/rate-movie/RateMovie.jsx';
 import StarRating from '../../components/starRating/StarRating';
 import { useSelector } from 'react-redux';
-import LoginModal from '../login/LoginModal';
 import CommentTemplate from '../../components/comments-template/CommentTemplate.jsx';
 import SessionTemplate from '../../components/session-template/SessionTemplate';
 import formatDate from '../../js/formatDate';
@@ -16,7 +15,6 @@ import { useTranslation } from 'react-i18next';
 import '../../lib/i18n/i18n.js';
 import DeleteMovie from '../../components/admin-components/delete-movie/DeleteMovie.jsx';
 import { useLocation } from 'react-router-dom';
-import Modal from '../../components/modal/Modal.jsx';
 import AddCategoryToMovie from '../../components/admin-components/add-category-to-movie/AddCategoryToMovie.jsx';
 import AddSession from '../../components/admin-components/add-session/AddSession.jsx';
 import UpdateMovie from '../../components/admin-components/update-movie/UpdateMovie.jsx';
@@ -122,10 +120,6 @@ const Movie = () => {
         <div >
             {isLoading ? (<SkeletonMovie />) : (
                 <>
-                    <Modal isOpen={isOpen} onClose={onClose} >
-                        <DeleteMovie movieId={id} onClose={onClose} />
-                    </Modal>
-
                     <MovieHeader>
                         <Header>
                             <div>
@@ -235,7 +229,6 @@ const Movie = () => {
 
                     )}
                 </>
-
             )}
         </div>
     );
